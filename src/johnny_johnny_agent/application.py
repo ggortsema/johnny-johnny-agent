@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from johnny_johnny_agent.capabilities.backlog_sync import loader
-from johnny_johnny_agent.capabilities.backlog_sync import parser
+from johnny_johnny_agent.capabilities.backlog_sync.parser import markdown
 
 
 def start(backlog_path: str | Path = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md") -> None:
@@ -10,15 +10,24 @@ def start(backlog_path: str | Path = "data/input/backlog/Backlog-as-Code-Synchro
     print("Loading backlog...")
 
     backlog_markdown = loader.load_markdown(backlog_path)
+    backlog = markdown.parse_backlog(backlog_markdown)
 
     print(f"Loaded backlog markdown: {len(backlog_markdown)} characters")
+    print()
+
+    print(f"Epics found: {len(backlog.epics)}")
+
+    for epic in backlog.epics:
+        print()
+        print(f"Epic: {epic.title}")
+        print(f"Description: {epic.description}")
+        print(f"Issues found: {len(epic.issues)}")
+
+        for issue in epic.issues:
+            print(f"- {issue.title}")
+
+    print()
     print("Done.")
-
-    epic_title = parser.extract_epic_title(backlog_markdown)
-    print(f"Epic title:  {epic_title}")
-
-    num_of_stories = parser.count_stories(backlog_markdown)
-    print(f"Number of stories: {num_of_stories}")
 
 
 if __name__ == "__main__":
