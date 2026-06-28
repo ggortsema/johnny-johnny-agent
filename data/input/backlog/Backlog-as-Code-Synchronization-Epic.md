@@ -1,4 +1,4 @@
-th# Epic: Backlog-as-Code Synchronization
+# Epic: Backlog-as-Code Synchronization
 
 ## Goal
 
