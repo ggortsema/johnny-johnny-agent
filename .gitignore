@@ -42,7 +42,7 @@ dist/
 *.log
 
 # Generated data
-data/output/
+#data/output/
 
 # Local configuration
 config/local.yml
