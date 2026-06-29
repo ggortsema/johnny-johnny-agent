@@ -1,9 +1,14 @@
 version: 1
 
+project:
+  provider: github
+  name: "MycroftAI Engineering Roadmap"
+
 epics:
   - id: gke-workflow
     name: "GKE Workflow"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Implement Google Kubernetes Engine (GKE) as a first-class deployment target within StyxCD. The workflow should support provisioning, deployment, validation, rollback, and future promotion strategies while remaining consistent with the existing execution-plan architecture.
     acceptanceCriteria:
@@ -21,6 +26,7 @@ epics:
       - id: implement-gke-deployment-stage
         name: "Implement GKE deployment stage"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Description:
           
@@ -36,6 +42,7 @@ epics:
       - id: define-gke-authentication-strategy
         name: "Define GKE Authentication Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Description:
           
@@ -51,6 +58,7 @@ epics:
       - id: deploy-sample-application-to-gke
         name: "Deploy Sample Application to GKE"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Deploy a sample application to GKE using StyxCD to validate the complete workflow from YAML submission through deployment execution.
         acceptanceCriteria:
@@ -64,6 +72,7 @@ epics:
       - id: add-gke-rollback-support
         name: "Add GKE Rollback Support"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Design and implement rollback capabilities for GKE deployments.
         acceptanceCriteria:
@@ -77,6 +86,7 @@ epics:
       - id: add-gke-deployment-validation
         name: "Add GKE Deployment Validation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Implement deployment validation after application rollout.
         acceptanceCriteria:
@@ -90,6 +100,7 @@ epics:
       - id: define-gke-deployment-model
         name: "Define GKE Deployment Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define how GKE deployments are represented within the StyxCD workflow DSL.
         acceptanceCriteria:
@@ -103,6 +114,7 @@ epics:
       - id: implement-gke-sandbox-environment-support
         name: "Implement GKE Sandbox Environment Support"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Provide a repeatable sandbox environment for developing and testing GKE workflows.
         acceptanceCriteria:
@@ -116,6 +128,7 @@ epics:
   - id: platform-security
     name: "Platform Security"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Implement the security foundation for StyxCD. Define how users, services, execution engines, and external systems authenticate and authorize actions within the platform. The design should support both a single-user deployment model and future multi-user enterprise deployments.
     acceptanceCriteria:
@@ -133,6 +146,7 @@ epics:
       - id: evaluate-control-plane-authentication-strategy
         name: "Evaluate Control Plane Authentication Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Determine how users authenticate to the StyxCD control plane. Evaluate API keys, OAuth2, OIDC, and other approaches that support both personal and enterprise deployments.
         acceptanceCriteria:
@@ -146,6 +160,7 @@ epics:
       - id: implement-control-plane-authentication
         name: "Implement Control Plane Authentication"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Implement authentication for StyxCD APIs and UI access based on the selected authentication strategy. The solution should support both personal deployments and future enterprise deployments.
         acceptanceCriteria:
@@ -160,6 +175,7 @@ epics:
       - id: define-service-to-service-authentication-model
         name: "Define Service-to-Service Authentication Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define how StyxCD services authenticate with one another, including orchestrator, Jenkins, future execution engines, agents, and external integrations.
         acceptanceCriteria:
@@ -174,6 +190,7 @@ epics:
       - id: secure-jenkins-callback-endpoints
         name: "Secure Jenkins Callback Endpoints"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Protect orchestrator callback endpoints so only trusted execution engines can submit workflow status updates.
         acceptanceCriteria:
@@ -187,6 +204,7 @@ epics:
       - id: implement-secrets-management-strategy
         name: "Implement Secrets Management Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define and implement how StyxCD stores, retrieves, and manages sensitive credentials such as cloud provider credentials, API keys, deployment tokens, and future provider integrations.
         acceptanceCriteria:
@@ -201,6 +219,7 @@ epics:
       - id: define-authorization-and-rbac-model
         name: "Define Authorization and RBAC Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define how permissions are granted within StyxCD and establish a role-based access control model that can evolve with future multi-user and enterprise requirements.
         acceptanceCriteria:
@@ -215,6 +234,7 @@ epics:
       - id: secure-workflow-credential-usage
         name: "Secure Workflow Credential Usage"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define how workflows reference credentials without exposing sensitive information. Workflows should consume credentials through secure references rather than embedded values.
         acceptanceCriteria:
@@ -228,6 +248,7 @@ epics:
       - id: audit-security-sensitive-actions
         name: "Audit Security-Sensitive Actions"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Capture and retain security-relevant events such as authentication activity, authorization failures, credential access, workflow execution actions, and administrative changes.
         acceptanceCriteria:
@@ -242,6 +263,7 @@ epics:
       - id: define-multi-tenant-security-requirements
         name: "Define Multi-Tenant Security Requirements"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Document future requirements for supporting multiple teams, organizations, tenants, and delegated administration within StyxCD.
         acceptanceCriteria:
@@ -255,6 +277,7 @@ epics:
       - id: create-security-architecture-documentation
         name: "Create Security Architecture Documentation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Document the overall security architecture of StyxCD including authentication, authorization, secrets management, trust boundaries, audit logging, and future enterprise considerations.
         acceptanceCriteria:
@@ -269,6 +292,7 @@ epics:
       - id: implement-session-based-control-plane-auth
         name: "Implement Session-Based Control Plane Auth"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Implement initial control-plane authentication using Spring Security and server-side sessions before introducing more complex OIDC/JWT patterns.
         acceptanceCriteria:
@@ -283,6 +307,7 @@ epics:
   - id: workflow-templates-effective-yaml
     name: "Workflow Templates & Effective YAML"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Implement reusable workflow templates and an Effective YAML capability. Templates should allow platform teams to define standard workflow structures while application teams provide only the values that vary. StyxCD should render and display the fully resolved workflow before execution.
     acceptanceCriteria:
@@ -300,6 +325,7 @@ epics:
       - id: design-workflow-template-model
         name: "Design Workflow Template Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define the template architecture for StyxCD. Determine how templates, values, defaults, and overrides interact within workflow definitions.
         acceptanceCriteria:
@@ -313,6 +339,7 @@ epics:
       - id: implement-template-resolution-engine
         name: "Implement Template Resolution Engine"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Implement the backend logic that resolves templates and values into a final workflow definition suitable for planning and execution.
         acceptanceCriteria:
@@ -326,6 +353,7 @@ epics:
       - id: implement-effective-yaml-generation
         name: "Implement Effective YAML Generation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Generate a fully resolved workflow definition after template processing and before execution. The generated YAML should represent the exact workflow that will be executed.
         acceptanceCriteria:
@@ -339,6 +367,7 @@ epics:
       - id: display-effective-yaml-in-ui
         name: "Display Effective YAML in UI"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Provide a user interface for viewing the resolved workflow before execution and during execution review.
         acceptanceCriteria:
@@ -352,6 +381,7 @@ epics:
       - id: implement-workflow-validation-against-effective-yaml
         name: "Implement Workflow Validation Against Effective YAML"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Validate the final resolved workflow rather than only validating the original template inputs.
         acceptanceCriteria:
@@ -365,6 +395,7 @@ epics:
       - id: create-platform-workflow-templates
         name: "Create Platform Workflow Templates"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create reusable platform-managed templates for common deployment patterns such as ECS, EKS, GKE, and future cloud targets.
         acceptanceCriteria:
@@ -378,6 +409,7 @@ epics:
       - id: support-template-versioning
         name: "Support Template Versioning"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Allow templates to evolve over time while maintaining compatibility with existing workflows.
         acceptanceCriteria:
@@ -391,6 +423,7 @@ epics:
       - id: create-template-catalog-ui
         name: "Create Template Catalog UI"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Provide a catalog of available templates so users can discover and select approved workflow patterns.
         acceptanceCriteria:
@@ -404,6 +437,7 @@ epics:
       - id: add-template-resolution-testing-strategy
         name: "Add Template Resolution Testing Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create automated tests that validate template inheritance, substitution, and effective YAML generation.
         acceptanceCriteria:
@@ -417,6 +451,7 @@ epics:
       - id: design-effective-yaml-help-experience
         name: "Design Effective YAML Help Experience"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define how users should understand resolved YAML, template expansion, and final execution inputs before a workflow runs.
         acceptanceCriteria:
@@ -431,6 +466,7 @@ epics:
   - id: testing-strategy
     name: "Testing Strategy"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Establish a comprehensive testing strategy for StyxCD covering workflow parsing, planning, execution, validation, API behavior, and future end-to-end workflow verification. The goal is to provide confidence that workflows are interpreted and executed correctly while supporting future platform growth.
     acceptanceCriteria:
@@ -448,6 +484,7 @@ epics:
       - id: add-execution-plan-generation-tests
         name: "Add Execution Plan Generation Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Verify that workflow definitions produce the expected execution plans and stage maps.
         acceptanceCriteria:
@@ -461,6 +498,7 @@ epics:
       - id: add-workflow-planner-tests
         name: "Add Workflow Planner Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create unit tests for workflow planners and stage planners.
         acceptanceCriteria:
@@ -474,6 +512,7 @@ epics:
       - id: add-stage-inclusion-logic-tests
         name: "Add Stage Inclusion Logic Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Verify that workflow flags and configuration options correctly influence stage selection.
         acceptanceCriteria:
@@ -487,6 +526,7 @@ epics:
       - id: add-callback-processing-tests
         name: "Add Callback Processing Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Verify orchestrator handling of workflow callbacks and status transitions.
         acceptanceCriteria:
@@ -500,6 +540,7 @@ epics:
       - id: add-api-controller-tests
         name: "Add API Controller Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create automated tests for StyxCD REST APIs.
         acceptanceCriteria:
@@ -513,6 +554,7 @@ epics:
       - id: create-end-to-end-workflow-test-framework
         name: "Create End-to-End Workflow Test Framework"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Design a framework that executes sample workflows and validates expected execution behavior.
         acceptanceCriteria:
@@ -526,6 +568,7 @@ epics:
       - id: create-local-development-testing-environment
         name: "Create Local Development Testing Environment"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Provide a repeatable local testing environment that allows rapid development and validation of StyxCD functionality.
         acceptanceCriteria:
@@ -539,6 +582,7 @@ epics:
       - id: create-docker-compose-development-environment
         name: "Create Docker Compose Development Environment"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Provide a Docker Compose environment for local development and testing of StyxCD components.
         acceptanceCriteria:
@@ -552,6 +596,7 @@ epics:
       - id: define-behavior-testing-strategy
         name: "Define Behavior Testing Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Document a long-term testing approach that validates complete workflow behavior rather than only individual components.
         acceptanceCriteria:
@@ -565,6 +610,7 @@ epics:
       - id: add-yaml-parsing-tests
         name: "Add YAML Parsing Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add YAML Parsing Tests.
         acceptanceCriteria: []
@@ -574,6 +620,7 @@ epics:
       - id: add-stage-inclusion-tests
         name: "Add Stage Inclusion Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Stage Inclusion Tests.
         acceptanceCriteria: []
@@ -583,6 +630,7 @@ epics:
       - id: add-controller-api-tests
         name: "Add Controller/API Tests"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Controller/API Tests.
         acceptanceCriteria: []
@@ -592,6 +640,7 @@ epics:
       - id: create-behavior-testing-framework
         name: "Create Behavior Testing Framework"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Behavior Testing Framework.
         acceptanceCriteria: []
@@ -601,6 +650,7 @@ epics:
       - id: create-end-to-end-workflow-test-suite
         name: "Create End-to-End Workflow Test Suite"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create End-to-End Workflow Test Suite.
         acceptanceCriteria: []
@@ -610,6 +660,7 @@ epics:
       - id: add-local-testing-harness
         name: "Add Local Testing Harness"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Local Testing Harness.
         acceptanceCriteria: []
@@ -619,6 +670,7 @@ epics:
       - id: add-docker-compose-development-environment
         name: "Add Docker Compose Development Environment"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Docker Compose Development Environment.
         acceptanceCriteria: []
@@ -628,6 +680,7 @@ epics:
   - id: kharon-v1-ai-knowledge-assistant
     name: "Kharon V1 - AI Knowledge Assistant"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       ## Goal
       
@@ -662,6 +715,7 @@ epics:
       - id: kharon-001-create-python-project
         name: "KHARON-001 Create Python Project"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -677,6 +731,7 @@ epics:
       - id: kharon-002-create-chat-api
         name: "KHARON-002 Create Chat API"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -691,6 +746,7 @@ epics:
       - id: kharon-003-configure-postgresql-and-pgvector
         name: "KHARON-003 Configure PostgreSQL and pgvector"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -705,6 +761,7 @@ epics:
       - id: kharon-004-design-knowledge-schema
         name: "KHARON-004 Design Knowledge Schema"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -719,6 +776,7 @@ epics:
       - id: kharon-005-implement-document-ingestion
         name: "KHARON-005 Implement Document Ingestion"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -733,6 +791,7 @@ epics:
       - id: kharon-006-implement-chunking
         name: "KHARON-006 Implement Chunking"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -746,6 +805,7 @@ epics:
       - id: kharon-007-generate-embeddings
         name: "KHARON-007 Generate Embeddings"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -759,6 +819,7 @@ epics:
       - id: kharon-008-implement-retrieval
         name: "KHARON-008 Implement Retrieval"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -772,6 +833,7 @@ epics:
       - id: kharon-009-integrate-langchain
         name: "KHARON-009 Integrate LangChain"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -785,6 +847,7 @@ epics:
       - id: kharon-010-integrate-langgraph
         name: "KHARON-010 Integrate LangGraph"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -798,6 +861,7 @@ epics:
       - id: kharon-011-complete-rag-pipeline
         name: "KHARON-011 Complete RAG Pipeline"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -811,6 +875,7 @@ epics:
       - id: kharon-012-generate-styxcd-yaml
         name: "KHARON-012 Generate StyxCD YAML"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -824,6 +889,7 @@ epics:
       - id: kharon-013-prepare-service-boundary
         name: "KHARON-013 Prepare Service Boundary"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           **Description**
           
@@ -838,6 +904,7 @@ epics:
   - id: project-management-workflow-provider
     name: "Project Management Workflow Provider"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -848,6 +915,7 @@ epics:
       - id: define-pm-workflow-dsl
         name: "Define PM Workflow DSL"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define the YAML structure for project-management workflows, including provider configuration, epics, issues, labels, assignees, milestones, acceptance criteria, and provider metadata.
         acceptanceCriteria:
@@ -861,6 +929,7 @@ epics:
       - id: implement-github-issues-provider
         name: "Implement GitHub Issues Provider"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Implement the first PM workflow provider using the GitHub API to create roadmap issues in the configured repository.
         acceptanceCriteria:
@@ -875,6 +944,7 @@ epics:
       - id: support-epic-and-sub-issue-creation
         name: "Support Epic and Sub-Issue Creation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship model.
         acceptanceCriteria:
@@ -888,6 +958,7 @@ epics:
       - id: support-github-project-assignment
         name: "Support GitHub Project Assignment"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Add created or updated issues to the configured GitHub Project board.
         acceptanceCriteria:
@@ -901,6 +972,7 @@ epics:
       - id: add-pm-workflow-dry-run-mode
         name: "Add PM Workflow Dry-Run Mode"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider.
         acceptanceCriteria:
@@ -914,6 +986,7 @@ epics:
       - id: support-pm-workflow-idempotency
         name: "Support PM Workflow Idempotency"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist.
         acceptanceCriteria:
@@ -929,6 +1002,7 @@ epics:
       - id: synchronize-pm-workflow-yaml-from-provider
         name: "Synchronize PM Workflow YAML From Provider"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Read existing epics and issues from a project-management provider and update local PM workflow YAML with provider identifiers, links, and status metadata.
         acceptanceCriteria:
@@ -944,6 +1018,7 @@ epics:
       - id: support-provider-metadata-in-pm-workflow-yaml
         name: "Support Provider Metadata in PM Workflow YAML"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp, Jira, or future providers.
         acceptanceCriteria:
@@ -957,6 +1032,7 @@ epics:
       - id: support-provider-migration-for-pm-workflows
         name: "Support Provider Migration for PM Workflows"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Allow the same roadmap YAML to be projected into a different project-management provider.
         acceptanceCriteria:
@@ -971,6 +1047,7 @@ epics:
       - id: generate-pm-workflow-yaml-from-conversation
         name: "Generate PM Workflow YAML From Conversation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Use an AI-assisted step to transform roadmap discussion or session notes into PM workflow YAML.
         acceptanceCriteria:
@@ -984,6 +1061,7 @@ epics:
       - id: demonstrate-backlog-as-code-workflow
         name: "Demonstrate Backlog-as-Code Workflow"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Use StyxCD to create or update a real project-management backlog from committed PM workflow YAML.
         acceptanceCriteria:
@@ -998,6 +1076,7 @@ epics:
   - id: dogfooding-styxcd
     name: "Dogfooding StyxCD"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1008,6 +1087,7 @@ epics:
       - id: deploy-styxcd-using-styxcd
         name: "Deploy StyxCD Using StyxCD"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Deploy StyxCD Using StyxCD.
         acceptanceCriteria: []
@@ -1017,6 +1097,7 @@ epics:
       - id: create-styxcd-release-workflow
         name: "Create StyxCD Release Workflow"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create StyxCD Release Workflow.
         acceptanceCriteria: []
@@ -1026,6 +1107,7 @@ epics:
       - id: create-styxcd-promotion-workflow
         name: "Create StyxCD Promotion Workflow"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create StyxCD Promotion Workflow.
         acceptanceCriteria: []
@@ -1035,6 +1117,7 @@ epics:
       - id: implement-styxcd-self-update-workflow
         name: "Implement StyxCD Self-Update Workflow"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Implement StyxCD Self-Update Workflow.
         acceptanceCriteria: []
@@ -1044,6 +1127,7 @@ epics:
       - id: validate-upgrade-scenarios
         name: "Validate Upgrade Scenarios"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Validate Upgrade Scenarios.
         acceptanceCriteria: []
@@ -1053,6 +1137,7 @@ epics:
       - id: document-internal-release-process
         name: "Document Internal Release Process"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Document Internal Release Process.
         acceptanceCriteria: []
@@ -1062,6 +1147,7 @@ epics:
   - id: release-management
     name: "Release Management"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1072,6 +1158,7 @@ epics:
       - id: define-stable-environment-strategy
         name: "Define Stable Environment Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Define Stable Environment Strategy.
         acceptanceCriteria: []
@@ -1081,6 +1168,7 @@ epics:
       - id: define-development-environment-strategy
         name: "Define Development Environment Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Define Development Environment Strategy.
         acceptanceCriteria: []
@@ -1090,6 +1178,7 @@ epics:
       - id: implement-promotion-workflow
         name: "Implement Promotion Workflow"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Implement Promotion Workflow.
         acceptanceCriteria: []
@@ -1099,6 +1188,7 @@ epics:
       - id: implement-version-management-strategy
         name: "Implement Version Management Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Implement Version Management Strategy.
         acceptanceCriteria: []
@@ -1108,6 +1198,7 @@ epics:
       - id: document-release-process
         name: "Document Release Process"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Document Release Process.
         acceptanceCriteria: []
@@ -1117,6 +1208,7 @@ epics:
       - id: add-release-validation-checks
         name: "Add Release Validation Checks"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Release Validation Checks.
         acceptanceCriteria: []
@@ -1126,6 +1218,7 @@ epics:
       - id: define-terraform-and-deployment-boundary
         name: "Define Terraform and Deployment Boundary"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Document how StyxCD should separate infrastructure lifecycle from deployment lifecycle when Terraform or external infrastructure tools are involved.
         acceptanceCriteria:
@@ -1140,6 +1233,7 @@ epics:
   - id: multi-cloud-support
     name: "Multi-Cloud Support"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1150,6 +1244,7 @@ epics:
       - id: complete-gke-vertical-slice
         name: "Complete GKE Vertical Slice"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice.
         acceptanceCriteria: []
@@ -1159,6 +1254,7 @@ epics:
       - id: expand-ecs-deployment-support
         name: "Expand ECS Deployment Support"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Expand ECS Deployment Support.
         acceptanceCriteria: []
@@ -1168,6 +1264,7 @@ epics:
       - id: expand-eks-deployment-support
         name: "Expand EKS Deployment Support"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Expand EKS Deployment Support.
         acceptanceCriteria: []
@@ -1177,6 +1274,7 @@ epics:
       - id: evaluate-aks-support
         name: "Evaluate AKS Support"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Evaluate AKS Support.
         acceptanceCriteria: []
@@ -1186,6 +1284,7 @@ epics:
       - id: define-multi-cloud-abstraction-strategy
         name: "Define Multi-Cloud Abstraction Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Define Multi-Cloud Abstraction Strategy.
         acceptanceCriteria: []
@@ -1195,6 +1294,7 @@ epics:
       - id: create-cloud-capability-matrix
         name: "Create Cloud Capability Matrix"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Cloud Capability Matrix.
         acceptanceCriteria: []
@@ -1204,6 +1304,7 @@ epics:
       - id: implement-eks-execution-plan-shape
         name: "Implement EKS Execution Plan Shape"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Add EKS as a first-class StyxCD cloud workflow branch using the same conceptual deployment lifecycle proven by GKE, plus an EKS-specific load balancer controller preparation stage.
         acceptanceCriteria:
@@ -1218,6 +1319,7 @@ epics:
       - id: implement-eks-stage-logic-from-sandbox-code
         name: "Implement EKS Stage Logic From Sandbox Code"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Move the existing working EKS sandbox deployment logic into discrete StyxCD stages matching the new EKS execution plan.
         acceptanceCriteria:
@@ -1234,6 +1336,7 @@ epics:
       - id: create-formal-eks-yaml-specification
         name: "Create Formal EKS YAML Specification"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define the first formal EKS YAML model after the hello-world execution plan is validated.
         acceptanceCriteria:
@@ -1248,6 +1351,7 @@ epics:
       - id: document-gke-and-eks-stage-parity
         name: "Document GKE and EKS Stage Parity"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Capture the architectural mapping between GKE and EKS stages, including where the workflows align conceptually and where EKS requires provider-specific setup.
         acceptanceCriteria:
@@ -1262,6 +1366,7 @@ epics:
       - id: evaluate-aks-stage-mapping
         name: "Evaluate AKS Stage Mapping"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Use the GKE and EKS stage model as the reference point for evaluating how AKS maps into the StyxCD execution lifecycle.
         acceptanceCriteria:
@@ -1276,6 +1381,7 @@ epics:
       - id: map-ecs-native-deployment-lifecycle
         name: "Map ECS Native Deployment Lifecycle"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Revisit ECS without Terraform first to discover the native ECS deployment lifecycle and compare it to Kubernetes platform workflows.
         acceptanceCriteria:
@@ -1290,6 +1396,7 @@ epics:
       - id: implement-aws-load-balancer-controller-irsa-integration
         name: "Implement AWS Load Balancer Controller IRSA Integration"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Parent Epic: Epic: Multi-Cloud Support
         acceptanceCriteria: []
@@ -1299,6 +1406,7 @@ epics:
   - id: validation-deployment-verification
     name: "Validation & Deployment Verification"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1309,6 +1417,7 @@ epics:
       - id: define-validation-contract
         name: "Define Validation Contract"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Define Validation Contract.
         acceptanceCriteria: []
@@ -1318,6 +1427,7 @@ epics:
       - id: implement-validation-framework
         name: "Implement Validation Framework"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Implement Validation Framework.
         acceptanceCriteria: []
@@ -1327,6 +1437,7 @@ epics:
       - id: add-health-check-validation
         name: "Add Health Check Validation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Health Check Validation.
         acceptanceCriteria: []
@@ -1336,6 +1447,7 @@ epics:
       - id: add-smoke-test-validation
         name: "Add Smoke Test Validation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Smoke Test Validation.
         acceptanceCriteria: []
@@ -1345,6 +1457,7 @@ epics:
       - id: add-deployment-verification-reporting
         name: "Add Deployment Verification Reporting"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Deployment Verification Reporting.
         acceptanceCriteria: []
@@ -1354,6 +1467,7 @@ epics:
       - id: add-validation-dashboard-support
         name: "Add Validation Dashboard Support"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Validation Dashboard Support.
         acceptanceCriteria: []
@@ -1363,6 +1477,7 @@ epics:
   - id: slo-aware-promotion
     name: "SLO-Aware Promotion"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1373,6 +1488,7 @@ epics:
       - id: define-measurement-contract
         name: "Define Measurement Contract"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Define Measurement Contract.
         acceptanceCriteria: []
@@ -1382,6 +1498,7 @@ epics:
       - id: capture-validation-metrics
         name: "Capture Validation Metrics"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Capture Validation Metrics.
         acceptanceCriteria: []
@@ -1391,6 +1508,7 @@ epics:
       - id: store-validation-results
         name: "Store Validation Results"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Store Validation Results.
         acceptanceCriteria: []
@@ -1400,6 +1518,7 @@ epics:
       - id: evaluate-slo-thresholds
         name: "Evaluate SLO Thresholds"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Evaluate SLO Thresholds.
         acceptanceCriteria: []
@@ -1409,6 +1528,7 @@ epics:
       - id: support-promotion-gates
         name: "Support Promotion Gates"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Support Promotion Gates.
         acceptanceCriteria: []
@@ -1418,6 +1538,7 @@ epics:
       - id: document-slo-promotion-model
         name: "Document SLO Promotion Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Document SLO Promotion Model.
         acceptanceCriteria: []
@@ -1427,6 +1548,7 @@ epics:
   - id: artifact-management
     name: "Artifact Management"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1437,6 +1559,7 @@ epics:
       - id: define-artifact-metadata-model
         name: "Define Artifact Metadata Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Define Artifact Metadata Model.
         acceptanceCriteria: []
@@ -1446,6 +1569,7 @@ epics:
       - id: track-digest-based-deployments
         name: "Track Digest-Based Deployments"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Track Digest-Based Deployments.
         acceptanceCriteria: []
@@ -1455,6 +1579,7 @@ epics:
       - id: support-registry-replication
         name: "Support Registry Replication"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Support Registry Replication.
         acceptanceCriteria: []
@@ -1464,6 +1589,7 @@ epics:
       - id: store-promotion-history
         name: "Store Promotion History"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Store Promotion History.
         acceptanceCriteria: []
@@ -1473,6 +1599,7 @@ epics:
       - id: implement-artifact-audit-trail
         name: "Implement Artifact Audit Trail"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Implement Artifact Audit Trail.
         acceptanceCriteria: []
@@ -1482,6 +1609,7 @@ epics:
       - id: document-enterprise-artifact-strategy
         name: "Document Enterprise Artifact Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Document Enterprise Artifact Strategy.
         acceptanceCriteria: []
@@ -1491,6 +1619,7 @@ epics:
       - id: evaluate-build-once-promote-everywhere-pattern
         name: "Evaluate Build Once Promote Everywhere Pattern"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Explore an enterprise artifact-management model where images are built once, tracked by digest, and promoted or replicated across cloud-native registries.
         acceptanceCriteria:
@@ -1505,6 +1634,7 @@ epics:
   - id: observability
     name: "Observability"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1515,6 +1645,7 @@ epics:
       - id: add-prometheus-metrics
         name: "Add Prometheus Metrics"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Prometheus Metrics.
         acceptanceCriteria: []
@@ -1524,6 +1655,7 @@ epics:
       - id: add-grafana-dashboards
         name: "Add Grafana Dashboards"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Grafana Dashboards.
         acceptanceCriteria: []
@@ -1533,6 +1665,7 @@ epics:
       - id: expand-structured-logging
         name: "Expand Structured Logging"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Expand Structured Logging.
         acceptanceCriteria: []
@@ -1542,6 +1675,7 @@ epics:
       - id: track-workflow-metrics
         name: "Track Workflow Metrics"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Track Workflow Metrics.
         acceptanceCriteria: []
@@ -1551,6 +1685,7 @@ epics:
       - id: track-stage-metrics
         name: "Track Stage Metrics"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Track Stage Metrics.
         acceptanceCriteria: []
@@ -1560,6 +1695,7 @@ epics:
       - id: add-deployment-analytics
         name: "Add Deployment Analytics"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Deployment Analytics.
         acceptanceCriteria: []
@@ -1569,6 +1705,7 @@ epics:
       - id: design-environment-agnostic-log-collection
         name: "Design Environment-Agnostic Log Collection"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Design a log collection architecture that works across EC2, ECS, GKE, EKS, and future runtimes while preserving consistent structured application logging.
         acceptanceCriteria:
@@ -1583,6 +1720,7 @@ epics:
   - id: documentation-knowledge-base
     name: "Documentation & Knowledge Base"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1593,6 +1731,7 @@ epics:
       - id: create-architecture-documentation
         name: "Create Architecture Documentation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Architecture Documentation.
         acceptanceCriteria: []
@@ -1602,6 +1741,7 @@ epics:
       - id: create-workflow-authoring-guide
         name: "Create Workflow Authoring Guide"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Workflow Authoring Guide.
         acceptanceCriteria: []
@@ -1611,6 +1751,7 @@ epics:
       - id: create-platform-guides
         name: "Create Platform Guides"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Platform Guides.
         acceptanceCriteria: []
@@ -1620,6 +1761,7 @@ epics:
       - id: create-troubleshooting-guide
         name: "Create Troubleshooting Guide"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Troubleshooting Guide.
         acceptanceCriteria: []
@@ -1629,6 +1771,7 @@ epics:
       - id: create-knowledge-base-structure
         name: "Create Knowledge Base Structure"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Knowledge Base Structure.
         acceptanceCriteria: []
@@ -1638,6 +1781,7 @@ epics:
       - id: create-example-workflow-library
         name: "Create Example Workflow Library"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Example Workflow Library.
         acceptanceCriteria: []
@@ -1647,6 +1791,7 @@ epics:
       - id: define-human-and-rag-documentation-strategy
         name: "Define Human and RAG Documentation Strategy"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Decide how StyxCD documentation should serve both human readers today and future retrieval-augmented generation use cases.
         acceptanceCriteria:
@@ -1661,6 +1806,7 @@ epics:
       - id: formalize-yaml-specification-documentation
         name: "Formalize YAML Specification Documentation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create a formal documentation model for StyxCD YAML specs, including cloud workflow specs, PM workflow specs, examples, and help files.
         acceptanceCriteria:
@@ -1675,6 +1821,7 @@ epics:
       - id: clean-up-documentation-structure
         name: "Clean Up Documentation Structure"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Organize existing and future StyxCD docs into a clean structure that supports product documentation, architecture history, implementation notes, and AI retrieval.
         acceptanceCriteria:
@@ -1689,6 +1836,7 @@ epics:
       - id: create-architecture-decision-records
         name: "Create Architecture Decision Records"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Introduce lightweight ADRs for major StyxCD design decisions such as execution-plan stages, platform abstraction boundaries, Terraform boundaries, and documentation strategy.
         acceptanceCriteria:
@@ -1703,6 +1851,7 @@ epics:
   - id: local-development-experience
     name: "Local Development Experience"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1713,6 +1862,7 @@ epics:
       - id: add-in-memory-database-mode
         name: "Add In-Memory Database Mode"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add In-Memory Database Mode.
         acceptanceCriteria: []
@@ -1722,6 +1872,7 @@ epics:
       - id: create-docker-compose-environment
         name: "Create Docker Compose Environment"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Docker Compose Environment.
         acceptanceCriteria: []
@@ -1731,6 +1882,7 @@ epics:
       - id: support-local-workflow-execution
         name: "Support Local Workflow Execution"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Support Local Workflow Execution.
         acceptanceCriteria: []
@@ -1740,6 +1892,7 @@ epics:
       - id: improve-developer-setup-documentation
         name: "Improve Developer Setup Documentation"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Improve Developer Setup Documentation.
         acceptanceCriteria: []
@@ -1749,6 +1902,7 @@ epics:
       - id: create-local-demo-environment
         name: "Create Local Demo Environment"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Local Demo Environment.
         acceptanceCriteria: []
@@ -1758,6 +1912,7 @@ epics:
   - id: ui-enhancements
     name: "UI Enhancements"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1768,6 +1923,7 @@ epics:
       - id: load-yaml-from-file
         name: "Load YAML From File"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Load YAML From File.
         acceptanceCriteria: []
@@ -1777,6 +1933,7 @@ epics:
       - id: load-yaml-from-url
         name: "Load YAML From URL"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Load YAML From URL.
         acceptanceCriteria: []
@@ -1786,6 +1943,7 @@ epics:
       - id: create-workflow-templates-ui
         name: "Create Workflow Templates UI"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Create Workflow Templates UI.
         acceptanceCriteria: []
@@ -1795,6 +1953,7 @@ epics:
       - id: display-effective-yaml
         name: "Display Effective YAML"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Display Effective YAML.
         acceptanceCriteria: []
@@ -1804,6 +1963,7 @@ epics:
       - id: improve-mobile-experience
         name: "Improve Mobile Experience"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Improve Mobile Experience.
         acceptanceCriteria: []
@@ -1813,6 +1973,7 @@ epics:
       - id: add-execution-filtering
         name: "Add Execution Filtering"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Execution Filtering.
         acceptanceCriteria: []
@@ -1822,6 +1983,7 @@ epics:
       - id: add-execution-comparison-view
         name: "Add Execution Comparison View"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Execution Comparison View.
         acceptanceCriteria: []
@@ -1831,6 +1993,7 @@ epics:
       - id: add-template-catalog-ui
         name: "Add Template Catalog UI"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Add Template Catalog UI.
         acceptanceCriteria: []
@@ -1840,6 +2003,7 @@ epics:
       - id: remember-yaml-editor-state
         name: "Remember YAML Editor State"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Improve the StyxCD UI by remembering the user's last submitted YAML and editor/layout state.
         acceptanceCriteria:
@@ -1854,6 +2018,7 @@ epics:
   - id: planning-decision-engine
     name: "Planning & Decision Engine"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1864,6 +2029,7 @@ epics:
       - id: define-planningdecision-model
         name: "Define PlanningDecision Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Define PlanningDecision Model.
         acceptanceCriteria: []
@@ -1873,6 +2039,7 @@ epics:
       - id: integrate-drools-decision-engine
         name: "Integrate Drools Decision Engine"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Integrate Drools Decision Engine.
         acceptanceCriteria: []
@@ -1882,6 +2049,7 @@ epics:
       - id: separate-planning-from-execution
         name: "Separate Planning From Execution"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Separate Planning From Execution.
         acceptanceCriteria: []
@@ -1891,6 +2059,7 @@ epics:
       - id: implement-decision-rules-framework
         name: "Implement Decision Rules Framework"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Implement Decision Rules Framework.
         acceptanceCriteria: []
@@ -1900,6 +2069,7 @@ epics:
       - id: document-planning-architecture
         name: "Document Planning Architecture"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           TODO: Define scope and acceptance criteria for Document Planning Architecture.
         acceptanceCriteria: []
@@ -1909,6 +2079,7 @@ epics:
       - id: rename-validation-map-concepts
         name: "Rename Validation Map Concepts"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Revisit naming around VALIDATE_MAP, paramMap, and stageSpecificMap to better reflect execution planning, workflow context, and stage telemetry.
         acceptanceCriteria:
@@ -1923,6 +2094,7 @@ epics:
   - id: kharon-assistant
     name: "Kharon Assistant"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1933,6 +2105,7 @@ epics:
       - id: create-rag-context-retrieval-layer
         name: "Create RAG Context Retrieval Layer"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create a retrieval layer that can index StyxCD documentation, specs, architecture decisions, backlog YAML, and session handoffs so Kharon can recover project context accurately.
         acceptanceCriteria:
@@ -1947,6 +2120,7 @@ epics:
       - id: define-kharon-project-memory-sources
         name: "Define Kharon Project Memory Sources"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Define which repositories, documents, and generated artifacts should become trusted sources for Kharon contextual answers.
         acceptanceCriteria:
@@ -1961,6 +2135,7 @@ epics:
   - id: styxcd-command-line-tool
     name: "StyxCD Command Line Tool"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
     acceptanceCriteria: []
@@ -1971,6 +2146,7 @@ epics:
       - id: implement-ui-parity-command-using-ferry-verb
         name: "Implement UI Parity Command Using Ferry Verb"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           Create the initial StyxCD CLI command that provides parity with the current Next.js operations UI. The command should submit workflow YAML to the orchestrator and return execution metadata including execution ID, status, Jenkins links, Grafana links, and future execution details.
         acceptanceCriteria:
@@ -1988,6 +2164,7 @@ epics:
   - id: backlog-as-code-synchronization
     name: "Backlog-as-Code Synchronization"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: |
       Create a portable project-management synchronization engine that treats
       
@@ -2010,6 +2187,7 @@ epics:
       - id: design-canonical-backlog-model
         name: "Design Canonical Backlog Model"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Define portable backlog.yml schema.
           
@@ -2021,6 +2199,7 @@ epics:
       - id: implement-github-project-export
         name: "Implement GitHub Project Export"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Read GitHub Projects, Issues, labels, milestones, priorities,
           
@@ -2032,6 +2211,7 @@ epics:
       - id: generate-canonical-backlog-yml
         name: "Generate Canonical `backlog.yml`"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Stable deterministic output.
           
@@ -2045,6 +2225,7 @@ epics:
       - id: generate-human-readable-backlog-md
         name: "Generate Human-Readable `backlog.md`"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Organized by epic.
           
@@ -2058,6 +2239,7 @@ epics:
       - id: detect-backlog-changes
         name: "Detect Backlog Changes"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Detect additions, deletions, renames, status changes, priority
           
@@ -2069,6 +2251,7 @@ epics:
       - id: generate-synchronization-report
         name: "Generate Synchronization Report"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Added, updated, removed, duplicate, warning, and error
           
@@ -2080,6 +2263,7 @@ epics:
       - id: regenerate-github-from-ssot
         name: "Regenerate GitHub From SSOT"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Create/update issues.
           
@@ -2093,6 +2277,7 @@ epics:
       - id: implement-idempotent-synchronization
         name: "Implement Idempotent Synchronization"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Safe repeated execution.
           
@@ -2104,6 +2289,7 @@ epics:
       - id: implement-dry-run-mode
         name: "Implement Dry-Run Mode"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Preview create/update/delete/no-op actions.
         acceptanceCriteria: []
@@ -2113,6 +2299,7 @@ epics:
       - id: support-provider-adapters
         name: "Support Provider Adapters"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   GitHub first.
           
@@ -2124,6 +2311,7 @@ epics:
       - id: dogfood-backlog-as-code-synchronization
         name: "Dogfood Backlog-as-Code Synchronization"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: |
           -   Export StyxCD roadmap.
           

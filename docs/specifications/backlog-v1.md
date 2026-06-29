@@ -2,7 +2,9 @@
 
 ## Purpose
 
-The Johnny-Johnny Backlog YAML format is the provider-neutral source of truth for project-management backlog data.
+The Johnny-Johnny Backlog YAML format is the canonical source of truth for project-management backlog data.
+
+Version 1 supports a single project target while allowing each epic and issue to explicitly declare the repository in which it should be created. This supports GitHub Projects that span multiple repositories without relying on implicit inheritance.
 
 It represents the desired backlog structure independently from GitHub, Jira, Linear, ClickUp, Azure DevOps, StyxCD, or any other execution or project-management provider.
 
@@ -33,6 +35,10 @@ The `version` field identifies the schema version used to validate the document.
 ```yaml
 version: 1
 
+project:
+  provider: github
+  name: "MycroftAI Engineering Roadmap"
+
 epics:
   - id: project-management-workflow-provider
     name: "Project Management Workflow Provider"
@@ -52,6 +58,7 @@ epics:
 | Field | Type | Required | Description |
 |---|---:|---:|---|
 | `version` | integer | yes | Backlog YAML schema version. Must be `1`. |
+| `project` | object | yes | Target project for this backlog projection. |
 | `epics` | array | yes | List of top-level epics. Must contain at least one epic. |
 
 ## Epic Object
@@ -64,6 +71,7 @@ An epic represents a top-level unit of backlog organization.
 |---|---:|---:|---|
 | `id` | string | yes | Stable Johnny-Johnny ID. Not a provider ID. |
 | `name` | string | yes | Human-readable epic name. |
+| `repository` | string | yes | Repository where this epic issue will be created. |
 | `state` | string | yes | Canonical portable work state. |
 | `description` | string | yes | Epic description. May be an empty string. |
 | `issues` | array | yes | Child issues under the epic. May be empty. |
@@ -87,6 +95,7 @@ An issue represents a child work item under an epic.
 |---|---:|---:|---|
 | `id` | string | yes | Stable Johnny-Johnny ID. Not a provider ID. |
 | `name` | string | yes | Human-readable issue name. |
+| `repository` | string | yes | Repository where this issue will be created. |
 | `state` | string | yes | Canonical portable work state. |
 | `description` | string | yes | Issue description. May be an empty string. |
 
@@ -163,9 +172,6 @@ Examples:
 The canonical backlog YAML must not include:
 
 - `workflow`
-- `provider`
-- `repository`
-- `project`
 - `jenkins_creds`
 - GitHub issue IDs
 - GitHub node IDs

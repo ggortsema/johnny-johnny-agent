@@ -1,9 +1,14 @@
 version: 1
 
+project:
+  provider: github
+  name: "MycroftAI Engineering Roadmap"
+
 epics:
   - id: project-management-workflow-provider
     name: "Project Management Workflow Provider"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: "Implement a provider-neutral project-management workflow that can create, update, synchronize, and migrate roadmap items across project-management providers using YAML as the durable source of truth."
     acceptanceCriteria:
       - "Project-management workflows can be represented as YAML."
@@ -20,6 +25,7 @@ epics:
       - id: define-pm-workflow-dsl
         name: "Define PM Workflow DSL"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: "Define the YAML structure for project-management backlogs, including epics, issues, labels, assignees, milestones, acceptance criteria, and portable state."
         acceptanceCriteria:
           - "Backlog YAML schema is documented."
@@ -34,6 +40,7 @@ epics:
       - id: implement-github-project-reader
         name: "Implement GitHub Project Reader"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: "Read the current state of a GitHub Project and convert it into the Johnny-Johnny canonical backlog model."
         acceptanceCriteria:
           - "GitHub ProjectV2 items can be fetched."
@@ -50,6 +57,7 @@ epics:
       - id: validate-generated-backlog-yaml
         name: "Validate Generated Backlog YAML"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: "Ensure every generated backlog.yml document validates against the official v1 JSON Schema before the export is considered successful."
         acceptanceCriteria:
           - "Generated YAML is parsed after writing."

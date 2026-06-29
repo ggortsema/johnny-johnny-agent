@@ -1,12 +1,18 @@
 version: 1
 
+project:
+  provider: github
+  name: "MycroftAI Engineering Roadmap"
+
 epics:
   - id: project-management-workflow-provider
     name: "Project Management Workflow Provider"
     state: todo
+    repository: "ggortsema/styxcd-docs"
     description: "Implement a provider-neutral project-management workflow."
     issues:
       - id: define-pm-workflow-dsl
         name: "Define PM Workflow DSL"
         state: todo
+        repository: "ggortsema/styxcd-docs"
         description: "Define the portable YAML structure for project-management work."

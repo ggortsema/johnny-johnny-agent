@@ -7,6 +7,10 @@ from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
     publish_backlog_from_markdown,
 )
 from johnny_johnny_agent.capabilities.github.project_reader import print_project_issues
+from johnny_johnny_agent.capabilities.backlog_sync.validator import (
+    validate_backlog_yaml,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
 DEFAULT_GITHUB_OWNER = "ggortsema"
@@ -81,6 +85,39 @@ def publish_backlog(
         project_title=project,
     )
 
+@backlog_app.command("validate")
+def validate_backlog(
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ],
+        schema: Annotated[
+            str,
+            typer.Option("--schema", "-s", help="Path to the JSON Schema file."),
+        ] = "docs/schemas/backlog-v1.schema.json",
+) -> None:
+    """Validate a backlog YAML file against the v1 JSON Schema."""
+    validate_backlog_yaml(
+        backlog_path=file,
+        schema_path=schema,
+    )
+
+@backlog_app.command("inspect")
+def inspect_backlog(
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ],
+) -> None:
+    """Inspect a canonical backlog YAML file."""
+    backlog = load_backlog_yaml(file)
+
+    issue_count = sum(len(epic.issues) for epic in backlog.epics)
+
+    typer.echo(f"Project: {backlog.project.name}")
+    typer.echo(f"Provider: {backlog.project.provider}")
+    typer.echo(f"Epics: {len(backlog.epics)}")
+    typer.echo(f"Issues: {issue_count}")
 
 @backlog_app.command("pull")
 def pull_backlog(
