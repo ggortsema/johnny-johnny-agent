@@ -241,33 +241,51 @@ def add_sub_issue(
 
 def list_project_issues(project_id: str) -> list[dict]:
     query = """
-    query ListProjectIssues($projectId: ID!, $after: String) {
-      node(id: $projectId) {
-        ... on ProjectV2 {
-          items(first: 100, after: $after) {
-            pageInfo {
-              hasNextPage
-              endCursor
-            }
-            nodes {
+query ListProjectIssues($projectId: ID!, $after: String) {
+  node(id: $projectId) {
+    ... on ProjectV2 {
+      items(first: 100, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
+          id
+          content {
+            ... on Issue {
               id
-              content {
-                ... on Issue {
-                  id
-                  databaseId
-                  number
-                  title
-                  body
-                  url
-                  state
+              databaseId
+              number
+              title
+              body
+              url
+              state
+              createdAt
+              updatedAt
+              repository {
+                nameWithOwner
+              }
+              labels(first: 50) {
+                nodes {
+                  name
                 }
+              }
+              assignees(first: 50) {
+                nodes {
+                  login
+                }
+              }
+              milestone {
+                title
               }
             }
           }
         }
       }
     }
-    """
+  }
+}
+"""
 
     issues: list[dict] = []
     after: str | None = None
@@ -303,6 +321,22 @@ def list_project_issues(project_id: str) -> list[dict]:
                     "body": content.get("body") or "",
                     "url": content["url"],
                     "state": content["state"],
+                    "created_at": content["createdAt"],
+                    "updated_at": content["updatedAt"],
+                    "repository": content["repository"]["nameWithOwner"],
+                    "labels": [
+                        label["name"]
+                        for label in content["labels"]["nodes"]
+                    ],
+                    "assignees": [
+                        assignee["login"]
+                        for assignee in content["assignees"]["nodes"]
+                    ],
+                    "milestone": (
+                        content["milestone"]["title"]
+                        if content.get("milestone")
+                        else None
+                    ),
                 }
             )
 
@@ -314,3 +348,14 @@ def list_project_issues(project_id: str) -> list[dict]:
         after = page_info["endCursor"]
 
     return issues
+
+def delete_issue(issue_id: str) -> None:
+    mutation = """
+    mutation DeleteIssue($issueId: ID!) {
+      deleteIssue(input: {issueId: $issueId}) {
+        clientMutationId
+      }
+    }
+    """
+
+    execute_graphql(mutation, {"issueId": issue_id})

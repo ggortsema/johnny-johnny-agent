@@ -2,6 +2,7 @@ from typing import Annotated
 
 import typer
 import uvicorn
+import json
 
 from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
     publish_backlog_from_markdown,
@@ -12,6 +13,22 @@ from johnny_johnny_agent.capabilities.backlog_sync.validator import (
 )
 from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
 from johnny_johnny_agent.capabilities.github.renderer import render_epic_body
+from johnny_johnny_agent.capabilities.backlog_sync.planner import (
+    AttachIssueOperation,
+    CreateEpicOperation,
+    CreateIssueOperation,
+    plan_reconcile_backlog,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.executor import (
+    execute_reconciliation_plan,
+)
+from johnny_johnny_agent.capabilities.github.client import (
+    get_viewer_project_by_title,
+    list_project_issues,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.purge import (
+    purge_johnny_managed_issues,
+)
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
 DEFAULT_GITHUB_OWNER = "ggortsema"
@@ -141,12 +158,98 @@ def preview_epic_body(
 
     raise RuntimeError(f"Epic not found: {epic_id}")
 
+@backlog_app.command("reconcile")
+def reconcile_backlog(
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ],
+        dry_run: Annotated[
+            bool,
+            typer.Option("--dry-run", help="Show the reconciliation plan without making changes."),
+        ] = False,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Execute the reconciliation plan."),
+        ] = False,
+) -> None:
+    """Reconcile the configured provider from the canonical backlog."""
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
+
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to execute.")
+        raise typer.Exit(code=1)
+
+    backlog = load_backlog_yaml(file)
+    plan = plan_reconcile_backlog(backlog)
+
+    if dry_run:
+        _print_reconciliation_plan(plan)
+        return
+
+    execute_reconciliation_plan(
+        plan=plan,
+        project_title=backlog.project.name,
+    )
+
 @backlog_app.command("pull")
 def pull_backlog(
         project: Annotated[
             str,
             typer.Option("--project", "-p", help="GitHub ProjectV2 title."),
-        ],
+        ] = DEFAULT_GITHUB_PROJECT_TITLE,
 ) -> None:
-    """Read issues from a GitHub ProjectV2."""
-    print_project_issues(project)
+    """Pull the current GitHub ProjectV2 projection as JSON."""
+    github_project = get_viewer_project_by_title(project)
+    issues = list_project_issues(github_project["id"])
+
+    typer.echo(
+        json.dumps(
+            {
+                "project": github_project,
+                "issues": issues,
+            },
+            indent=2,
+        )
+    )
+
+def _print_reconciliation_plan(plan) -> None:
+    typer.echo("Execution Plan")
+    typer.echo()
+
+    for operation in plan.operations:
+        if isinstance(operation, CreateEpicOperation):
+            typer.echo(f"+ Create epic: {operation.epic.title} [{operation.epic.id}]")
+        elif isinstance(operation, CreateIssueOperation):
+            typer.echo(
+                f"+ Create issue: {operation.issue.title} "
+                f"[{operation.issue.id}] "
+                f"in {operation.issue.repository}"
+            )
+        elif isinstance(operation, AttachIssueOperation):
+            typer.echo(
+                f"+ Attach issue: {operation.issue.title} "
+                f"-> {operation.parent_epic.title}"
+            )
+
+    typer.echo()
+    typer.echo(f"Operations: {len(plan.operations)}")
+
+@backlog_app.command("purge")
+def purge_backlog_projection(
+        project: Annotated[
+            str,
+            typer.Option("--project", "-p", help="GitHub ProjectV2 title."),
+        ] = DEFAULT_GITHUB_PROJECT_TITLE,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Delete Johnny-managed GitHub issues."),
+        ] = False,
+) -> None:
+    """Delete Johnny-managed issues from a GitHub ProjectV2 projection."""
+    purge_johnny_managed_issues(
+        project_title=project,
+        confirm=confirm,
+    )
