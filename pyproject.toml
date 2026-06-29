@@ -3,7 +3,11 @@ name = "johnny-johnny-agent"
 version = "0.1.0"
 description = "Python runtime for the Johnny-Johnny personal engineering assistant."
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastapi",
+    "typer",
+    "uvicorn",
+]
 
 [build-system]
 requires = ["uv_build>=0.11.7,<0.12.0"]
@@ -14,4 +18,5 @@ module-name = "johnny_johnny_agent"
 module-root = "src"
 
 [project.scripts]
-johnny-johnny = "johnny_johnny_agent.application:start"
+jj = "johnny_johnny_agent.cli.main:app"
+johnny-johnny = "johnny_johnny_agent.cli.main:app"

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mycroftai.org/schemas/johnny-johnny/backlog-v1.schema.json",
+  "title": "Johnny-Johnny Backlog YAML v1",
+  "description": "Provider-neutral canonical backlog schema for Johnny-Johnny. This schema validates the portable backlog SSOT only; workflow, provider configuration, credentials, and provider-specific IDs are intentionally excluded.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "epics"
+  ],
+  "properties": {
+    "version": {
+      "description": "Backlog YAML schema version.",
+      "type": "integer",
+      "const": 1
+    },
+    "epics": {
+      "description": "Top-level backlog epics.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/epic"
+      }
+    }
+  },
+  "$defs": {
+    "canonicalState": {
+      "description": "Portable work state. Provider-specific statuses should be mapped into one of these canonical states.",
+      "type": "string",
+      "enum": [
+        "todo",
+        "in_progress",
+        "done",
+        "blocked",
+        "wont_do"
+      ]
+    },
+    "stableId": {
+      "description": "Provider-neutral Johnny-Johnny stable identifier. This is not a GitHub/Jira/Linear provider ID.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "acceptanceCriteria": {
+      "description": "Human-readable acceptance criteria.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "default": []
+    },
+    "epic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "state",
+        "description",
+        "issues"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "state": {
+          "$ref": "#/$defs/canonicalState"
+        },
+        "description": {
+          "type": "string"
+        },
+        "acceptanceCriteria": {
+          "$ref": "#/$defs/acceptanceCriteria"
+        },
+        "labels": {
+          "$ref": "#/$defs/stringList"
+        },
+        "assignees": {
+          "$ref": "#/$defs/stringList"
+        },
+        "milestone": {
+          "type": "string",
+          "default": ""
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          },
+          "default": []
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "state",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "state": {
+          "$ref": "#/$defs/canonicalState"
+        },
+        "description": {
+          "type": "string"
+        },
+        "acceptanceCriteria": {
+          "$ref": "#/$defs/acceptanceCriteria"
+        },
+        "labels": {
+          "$ref": "#/$defs/stringList"
+        },
+        "assignees": {
+          "$ref": "#/$defs/stringList"
+        },
+        "milestone": {
+          "type": "string",
+          "default": ""
+        }
+      }
+    }
+  }
+}

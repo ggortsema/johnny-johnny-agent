@@ -1,0 +1,2140 @@
+version: 1
+
+epics:
+  - id: gke-workflow
+    name: "GKE Workflow"
+    state: todo
+    description: |
+      Implement Google Kubernetes Engine (GKE) as a first-class deployment target within StyxCD. The workflow should support provisioning, deployment, validation, rollback, and future promotion strategies while remaining consistent with the existing execution-plan architecture.
+    acceptanceCriteria:
+      - "GKE is supported as a first-class StyxCD deployment target."
+      - "Applications can be deployed to GKE through a StyxCD workflow."
+      - "Authentication and credential management strategy is defined."
+      - "Deployment validation is supported."
+      - "Rollback capability is supported."
+      - "Workflow DSL supports GKE-specific configuration."
+      - "End-to-end deployment can be demonstrated using StyxCD."
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: implement-gke-deployment-stage
+        name: "Implement GKE deployment stage"
+        state: todo
+        description: |
+          Description:
+          
+          Replace the current hello-world GKE stage with a real implementation that executes gcloud and kubectl commands. The stage should deploy an application to a target GKE cluster using workflow configuration provided by the orchestrator.
+        acceptanceCriteria:
+          - "GKE stage executes real deployment commands."
+          - "Deployment parameters are supplied through the execution plan."
+          - "Stage reports success and failure through existing callback mechanisms."
+          - "Deployment can be demonstrated end-to-end."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-gke-authentication-strategy
+        name: "Define GKE Authentication Strategy"
+        state: todo
+        description: |
+          Description:
+          
+          Determine how StyxCD authenticates to GKE clusters. Evaluate service accounts, workload identity, and credential management approaches.
+        acceptanceCriteria:
+          - "Authentication approach documented."
+          - "Credentials are not stored in workflow definitions."
+          - "Solution supports automated deployments."
+          - "Security considerations documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: deploy-sample-application-to-gke
+        name: "Deploy Sample Application to GKE"
+        state: todo
+        description: |
+          Deploy a sample application to GKE using StyxCD to validate the complete workflow from YAML submission through deployment execution.
+        acceptanceCriteria:
+          - "Application successfully deployed."
+          - "Deployment initiated through StyxCD workflow."
+          - "Application reachable after deployment."
+          - "Workflow execution recorded by orchestrator."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-gke-rollback-support
+        name: "Add GKE Rollback Support"
+        state: todo
+        description: |
+          Design and implement rollback capabilities for GKE deployments.
+        acceptanceCriteria:
+          - "Rollback strategy documented."
+          - "Rollback can be triggered through workflow configuration."
+          - "Previous deployment version can be restored."
+          - "Rollback status reported to orchestrator."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-gke-deployment-validation
+        name: "Add GKE Deployment Validation"
+        state: todo
+        description: |
+          Implement deployment validation after application rollout.
+        acceptanceCriteria:
+          - "Validation stage executes after deployment."
+          - "Health checks are configurable."
+          - "Validation results reported to orchestrator."
+          - "Failed validation marks deployment unsuccessful."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-gke-deployment-model
+        name: "Define GKE Deployment Model"
+        state: todo
+        description: |
+          Define how GKE deployments are represented within the StyxCD workflow DSL.
+        acceptanceCriteria:
+          - "GKE workflow model documented."
+          - "Required and optional fields identified."
+          - "Example workflow provided."
+          - "Model aligns with future multi-cloud support."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-gke-sandbox-environment-support
+        name: "Implement GKE Sandbox Environment Support"
+        state: todo
+        description: |
+          Provide a repeatable sandbox environment for developing and testing GKE workflows.
+        acceptanceCriteria:
+          - "Sandbox deployment process documented."
+          - "Test workflow executes successfully."
+          - "Environment can be recreated consistently."
+          - "Suitable for future automated testing."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: platform-security
+    name: "Platform Security"
+    state: todo
+    description: |
+      Implement the security foundation for StyxCD. Define how users, services, execution engines, and external systems authenticate and authorize actions within the platform. The design should support both a single-user deployment model and future multi-user enterprise deployments.
+    acceptanceCriteria:
+      - "Authentication strategy is defined."
+      - "Service-to-service authentication is implemented."
+      - "Sensitive credentials are managed securely."
+      - "Authorization model is documented."
+      - "Jenkins and future execution engines can be trusted and verified."
+      - "Security architecture supports future enterprise requirements."
+      - "Security design is documented."
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: evaluate-control-plane-authentication-strategy
+        name: "Evaluate Control Plane Authentication Strategy"
+        state: todo
+        description: |
+          Determine how users authenticate to the StyxCD control plane. Evaluate API keys, OAuth2, OIDC, and other approaches that support both personal and enterprise deployments.
+        acceptanceCriteria:
+          - "Authentication options evaluated."
+          - "Recommended approach documented."
+          - "Enterprise requirements considered."
+          - "User experience considerations documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-control-plane-authentication
+        name: "Implement Control Plane Authentication"
+        state: todo
+        description: |
+          Implement authentication for StyxCD APIs and UI access based on the selected authentication strategy. The solution should support both personal deployments and future enterprise deployments.
+        acceptanceCriteria:
+          - "Unauthenticated requests are rejected."
+          - "Authenticated users can access authorized resources."
+          - "Authentication integrates with the UI."
+          - "Authentication is covered by automated tests."
+          - "Authentication approach is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-service-to-service-authentication-model
+        name: "Define Service-to-Service Authentication Model"
+        state: todo
+        description: |
+          Define how StyxCD services authenticate with one another, including orchestrator, Jenkins, future execution engines, agents, and external integrations.
+        acceptanceCriteria:
+          - "Trust model documented."
+          - "Authentication mechanism selected."
+          - "Credential lifecycle defined."
+          - "Future execution engines supported."
+          - "Service authentication approach documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: secure-jenkins-callback-endpoints
+        name: "Secure Jenkins Callback Endpoints"
+        state: todo
+        description: |
+          Protect orchestrator callback endpoints so only trusted execution engines can submit workflow status updates.
+        acceptanceCriteria:
+          - "Callback requests are authenticated."
+          - "Unauthorized callbacks are rejected."
+          - "Existing callback functionality remains operational."
+          - "Security approach is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-secrets-management-strategy
+        name: "Implement Secrets Management Strategy"
+        state: todo
+        description: |
+          Define and implement how StyxCD stores, retrieves, and manages sensitive credentials such as cloud provider credentials, API keys, deployment tokens, and future provider integrations.
+        acceptanceCriteria:
+          - "Secrets are not stored in workflow definitions."
+          - "Secrets management approach documented."
+          - "Cloud provider credentials supported."
+          - "Local and cloud deployment models supported."
+          - "Secret rotation strategy considered."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-authorization-and-rbac-model
+        name: "Define Authorization and RBAC Model"
+        state: todo
+        description: |
+          Define how permissions are granted within StyxCD and establish a role-based access control model that can evolve with future multi-user and enterprise requirements.
+        acceptanceCriteria:
+          - "RBAC model documented."
+          - "Initial roles defined."
+          - "Resource ownership model defined."
+          - "Future enterprise requirements considered."
+          - "Authorization approach documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: secure-workflow-credential-usage
+        name: "Secure Workflow Credential Usage"
+        state: todo
+        description: |
+          Define how workflows reference credentials without exposing sensitive information. Workflows should consume credentials through secure references rather than embedded values.
+        acceptanceCriteria:
+          - "Credential reference model defined."
+          - "Credentials never appear in workflow definitions."
+          - "Credential lookup process documented."
+          - "Secure usage demonstrated in a workflow."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: audit-security-sensitive-actions
+        name: "Audit Security-Sensitive Actions"
+        state: todo
+        description: |
+          Capture and retain security-relevant events such as authentication activity, authorization failures, credential access, workflow execution actions, and administrative changes.
+        acceptanceCriteria:
+          - "Security events identified."
+          - "Audit logging implemented."
+          - "Audit records are searchable."
+          - "Retention strategy documented."
+          - "Audit approach documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-multi-tenant-security-requirements
+        name: "Define Multi-Tenant Security Requirements"
+        state: todo
+        description: |
+          Document future requirements for supporting multiple teams, organizations, tenants, and delegated administration within StyxCD.
+        acceptanceCriteria:
+          - "Multi-tenant requirements documented."
+          - "Isolation boundaries identified."
+          - "Security implications documented."
+          - "Future roadmap impact assessed."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-security-architecture-documentation
+        name: "Create Security Architecture Documentation"
+        state: todo
+        description: |
+          Document the overall security architecture of StyxCD including authentication, authorization, secrets management, trust boundaries, audit logging, and future enterprise considerations.
+        acceptanceCriteria:
+          - "Security architecture documented."
+          - "Trust boundaries identified."
+          - "Authentication flows documented."
+          - "Authorization model documented."
+          - "Security documentation reviewed for completeness."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-session-based-control-plane-auth
+        name: "Implement Session-Based Control Plane Auth"
+        state: todo
+        description: |
+          Implement initial control-plane authentication using Spring Security and server-side sessions before introducing more complex OIDC/JWT patterns.
+        acceptanceCriteria:
+          - "Spring Security is configured for the orchestrator."
+          - "Protected APIs require authentication."
+          - "Server-side sessions are used for initial implementation."
+          - "Future OIDC/JWT integration remains possible."
+          - "Authentication architecture is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: workflow-templates-effective-yaml
+    name: "Workflow Templates & Effective YAML"
+    state: todo
+    description: |
+      Implement reusable workflow templates and an Effective YAML capability. Templates should allow platform teams to define standard workflow structures while application teams provide only the values that vary. StyxCD should render and display the fully resolved workflow before execution.
+    acceptanceCriteria:
+      - "Workflow templates are supported."
+      - "Variable substitution is supported."
+      - "Template inheritance/composition is supported."
+      - "Effective YAML can be generated before execution."
+      - "Effective YAML can be viewed in the UI."
+      - "Users can validate resolved workflows prior to execution."
+      - "Template design supports future multi-cloud workflows."
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: design-workflow-template-model
+        name: "Design Workflow Template Model"
+        state: todo
+        description: |
+          Define the template architecture for StyxCD. Determine how templates, values, defaults, and overrides interact within workflow definitions.
+        acceptanceCriteria:
+          - "Template architecture documented."
+          - "Override behavior defined."
+          - "Variable resolution order defined."
+          - "Example templates provided."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-template-resolution-engine
+        name: "Implement Template Resolution Engine"
+        state: todo
+        description: |
+          Implement the backend logic that resolves templates and values into a final workflow definition suitable for planning and execution.
+        acceptanceCriteria:
+          - "Templates can be resolved into executable workflows."
+          - "Variable substitution is supported."
+          - "Missing required values generate validation errors."
+          - "Resolution logic is covered by automated tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-effective-yaml-generation
+        name: "Implement Effective YAML Generation"
+        state: todo
+        description: |
+          Generate a fully resolved workflow definition after template processing and before execution. The generated YAML should represent the exact workflow that will be executed.
+        acceptanceCriteria:
+          - "Effective YAML is generated during workflow processing."
+          - "Generated YAML reflects all template substitutions."
+          - "Generated YAML is stored with the execution."
+          - "Generated YAML can be used for debugging and auditing."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: display-effective-yaml-in-ui
+        name: "Display Effective YAML in UI"
+        state: todo
+        description: |
+          Provide a user interface for viewing the resolved workflow before execution and during execution review.
+        acceptanceCriteria:
+          - "Effective YAML is viewable from the UI."
+          - "YAML formatting is preserved."
+          - "Users can compare source and resolved workflow definitions."
+          - "Effective YAML is accessible from execution history."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-workflow-validation-against-effective-yaml
+        name: "Implement Workflow Validation Against Effective YAML"
+        state: todo
+        description: |
+          Validate the final resolved workflow rather than only validating the original template inputs.
+        acceptanceCriteria:
+          - "Validation occurs against the resolved workflow."
+          - "Validation errors reference the resolved configuration."
+          - "Validation results are surfaced to users."
+          - "Invalid workflows cannot execute."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-platform-workflow-templates
+        name: "Create Platform Workflow Templates"
+        state: todo
+        description: |
+          Create reusable platform-managed templates for common deployment patterns such as ECS, EKS, GKE, and future cloud targets.
+        acceptanceCriteria:
+          - "Platform template structure defined."
+          - "Example templates created."
+          - "Templates reduce duplicate workflow definitions."
+          - "Templates are documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-template-versioning
+        name: "Support Template Versioning"
+        state: todo
+        description: |
+          Allow templates to evolve over time while maintaining compatibility with existing workflows.
+        acceptanceCriteria:
+          - "Template versions are supported."
+          - "Workflow references can target specific template versions."
+          - "Breaking changes can be managed safely."
+          - "Versioning strategy documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-template-catalog-ui
+        name: "Create Template Catalog UI"
+        state: todo
+        description: |
+          Provide a catalog of available templates so users can discover and select approved workflow patterns.
+        acceptanceCriteria:
+          - "Available templates are listed in the UI."
+          - "Template descriptions are displayed."
+          - "Template versions are visible."
+          - "Users can select templates when authoring workflows."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-template-resolution-testing-strategy
+        name: "Add Template Resolution Testing Strategy"
+        state: todo
+        description: |
+          Create automated tests that validate template inheritance, substitution, and effective YAML generation.
+        acceptanceCriteria:
+          - "Resolution engine tests exist."
+          - "Variable substitution tests exist."
+          - "Effective YAML generation tests exist."
+          - "Failure scenarios are covered."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: design-effective-yaml-help-experience
+        name: "Design Effective YAML Help Experience"
+        state: todo
+        description: |
+          Define how users should understand resolved YAML, template expansion, and final execution inputs before a workflow runs.
+        acceptanceCriteria:
+          - "Effective YAML view requirements are documented."
+          - "Help files explain how raw YAML becomes effective YAML."
+          - "Resolved examples show platform defaults, template inheritance, and provider-specific values."
+          - "Effective YAML is positioned as an audit/debugging aid."
+          - "Future RAG retrieval use cases are considered in the documentation format."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: testing-strategy
+    name: "Testing Strategy"
+    state: todo
+    description: |
+      Establish a comprehensive testing strategy for StyxCD covering workflow parsing, planning, execution, validation, API behavior, and future end-to-end workflow verification. The goal is to provide confidence that workflows are interpreted and executed correctly while supporting future platform growth.
+    acceptanceCriteria:
+      - "Testing strategy is documented."
+      - "Core planning and execution logic is covered by automated tests."
+      - "Workflow parsing and validation are tested."
+      - "API behavior is tested."
+      - "End-to-end workflow verification approach is defined."
+      - "Local development and testing workflows are supported."
+      - "Testing approach supports future execution engines."
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: add-execution-plan-generation-tests
+        name: "Add Execution Plan Generation Tests"
+        state: todo
+        description: |
+          Verify that workflow definitions produce the expected execution plans and stage maps.
+        acceptanceCriteria:
+          - "Execution plans are generated correctly."
+          - "Stage ordering is verified."
+          - "Conditional stage inclusion is verified."
+          - "Execution plan output matches expected results."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-workflow-planner-tests
+        name: "Add Workflow Planner Tests"
+        state: todo
+        description: |
+          Create unit tests for workflow planners and stage planners.
+        acceptanceCriteria:
+          - "Planner logic is tested."
+          - "Stage planner outputs are verified."
+          - "Invalid configurations are handled correctly."
+          - "Planner behavior is documented through tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-stage-inclusion-logic-tests
+        name: "Add Stage Inclusion Logic Tests"
+        state: todo
+        description: |
+          Verify that workflow flags and configuration options correctly influence stage selection.
+        acceptanceCriteria:
+          - "Conditional stages are tested."
+          - "Flag combinations are tested."
+          - "Unexpected configurations are handled safely."
+          - "Stage inclusion behavior is documented through tests."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-callback-processing-tests
+        name: "Add Callback Processing Tests"
+        state: todo
+        description: |
+          Verify orchestrator handling of workflow callbacks and status transitions.
+        acceptanceCriteria:
+          - "Callback processing is tested."
+          - "Status transitions are verified."
+          - "Invalid callback scenarios are tested."
+          - "Failure handling is verified."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-api-controller-tests
+        name: "Add API Controller Tests"
+        state: todo
+        description: |
+          Create automated tests for StyxCD REST APIs.
+        acceptanceCriteria:
+          - "Controller endpoints are tested."
+          - "Validation behavior is tested."
+          - "Error responses are verified."
+          - "Authentication integration can be tested."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-end-to-end-workflow-test-framework
+        name: "Create End-to-End Workflow Test Framework"
+        state: todo
+        description: |
+          Design a framework that executes sample workflows and validates expected execution behavior.
+        acceptanceCriteria:
+          - "Framework design documented."
+          - "Sample workflows created."
+          - "Expected execution plans verified."
+          - "Success and failure scenarios supported."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-local-development-testing-environment
+        name: "Create Local Development Testing Environment"
+        state: todo
+        description: |
+          Provide a repeatable local testing environment that allows rapid development and validation of StyxCD functionality.
+        acceptanceCriteria:
+          - "Local development environment documented."
+          - "Developers can execute workflows locally."
+          - "Required services can be started consistently."
+          - "Environment supports testing workflows."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-docker-compose-development-environment
+        name: "Create Docker Compose Development Environment"
+        state: todo
+        description: |
+          Provide a Docker Compose environment for local development and testing of StyxCD components.
+        acceptanceCriteria:
+          - "Docker Compose configuration created."
+          - "Core services start successfully."
+          - "Environment supports local testing."
+          - "Setup documentation provided."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-behavior-testing-strategy
+        name: "Define Behavior Testing Strategy"
+        state: todo
+        description: |
+          Document a long-term testing approach that validates complete workflow behavior rather than only individual components.
+        acceptanceCriteria:
+          - "Behavior testing approach documented."
+          - "Example workflow scenarios identified."
+          - "Success criteria defined."
+          - "Future automation opportunities identified."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-yaml-parsing-tests
+        name: "Add YAML Parsing Tests"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add YAML Parsing Tests.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-stage-inclusion-tests
+        name: "Add Stage Inclusion Tests"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Stage Inclusion Tests.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-controller-api-tests
+        name: "Add Controller/API Tests"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Controller/API Tests.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-behavior-testing-framework
+        name: "Create Behavior Testing Framework"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Behavior Testing Framework.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-end-to-end-workflow-test-suite
+        name: "Create End-to-End Workflow Test Suite"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create End-to-End Workflow Test Suite.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-local-testing-harness
+        name: "Add Local Testing Harness"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Local Testing Harness.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-docker-compose-development-environment
+        name: "Add Docker Compose Development Environment"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Docker Compose Development Environment.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: kharon-v1-ai-knowledge-assistant
+    name: "Kharon V1 - AI Knowledge Assistant"
+    state: todo
+    description: |
+      ## Goal
+      
+      Build the first production-quality version of **Kharon**, the AI knowledge assistant for StyxCD.
+      
+      Kharon is an independent Python service responsible for retrieval, reasoning,
+      knowledge ingestion, and AI interactions. StyxCD remains the deterministic
+      deployment platform while Kharon provides AI-assisted capabilities.
+      
+      **Guiding Principle**
+      
+      > StyxCD authorizes.  
+      > Kharon advises.
+      
+      ---
+      
+      # Success Criteria
+      
+      - Standalone Python service
+      - Chat endpoint operational
+      - RAG implemented using StyxCD documentation
+      - PostgreSQL + pgvector knowledge store
+      - LangChain and LangGraph integrated
+      - Able to answer StyxCD-specific questions using retrieved documentation
+      
+      ---
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: kharon-001-create-python-project
+        name: "KHARON-001 Create Python Project"
+        state: todo
+        description: |
+          **Description**
+          
+          Create the initial Python project.
+        acceptanceCriteria:
+          - "FastAPI configured"
+          - "Project structure established"
+          - "Local execution working"
+          - "---"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-002-create-chat-api
+        name: "KHARON-002 Create Chat API"
+        state: todo
+        description: |
+          **Description**
+          
+          Implement the initial REST endpoint.
+        acceptanceCriteria:
+          - "POST /chat"
+          - "Request/response DTOs"
+          - "Health endpoint"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-003-configure-postgresql-and-pgvector
+        name: "KHARON-003 Configure PostgreSQL and pgvector"
+        state: todo
+        description: |
+          **Description**
+          
+          Prepare the knowledge database.
+        acceptanceCriteria:
+          - "PostgreSQL running"
+          - "pgvector enabled"
+          - "Connectivity verified"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-004-design-knowledge-schema
+        name: "KHARON-004 Design Knowledge Schema"
+        state: todo
+        description: |
+          **Description**
+          
+          Create the initial knowledge model.
+        acceptanceCriteria:
+          - "documents table"
+          - "document_chunks table"
+          - "metadata fields defined"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-005-implement-document-ingestion
+        name: "KHARON-005 Implement Document Ingestion"
+        state: todo
+        description: |
+          **Description**
+          
+          Load StyxCD documentation into the knowledge store.
+        acceptanceCriteria:
+          - "Markdown files imported"
+          - "Documents persisted"
+          - "---"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-006-implement-chunking
+        name: "KHARON-006 Implement Chunking"
+        state: todo
+        description: |
+          **Description**
+          
+          Create the initial chunking strategy.
+        acceptanceCriteria:
+          - "Paragraph/block chunking"
+          - "Metadata preserved"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-007-generate-embeddings
+        name: "KHARON-007 Generate Embeddings"
+        state: todo
+        description: |
+          **Description**
+          
+          Generate embeddings for document chunks.
+        acceptanceCriteria:
+          - "Embeddings stored in pgvector"
+          - "Re-index process documented"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-008-implement-retrieval
+        name: "KHARON-008 Implement Retrieval"
+        state: todo
+        description: |
+          **Description**
+          
+          Retrieve relevant document chunks.
+        acceptanceCriteria:
+          - "Semantic search operational"
+          - "Top-N retrieval configurable"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-009-integrate-langchain
+        name: "KHARON-009 Integrate LangChain"
+        state: todo
+        description: |
+          **Description**
+          
+          Use LangChain abstractions for embeddings, retrieval and model interaction.
+        acceptanceCriteria:
+          - "LangChain integrated"
+          - "Minimal custom plumbing"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-010-integrate-langgraph
+        name: "KHARON-010 Integrate LangGraph"
+        state: todo
+        description: |
+          **Description**
+          
+          Build the initial chat workflow using LangGraph.
+        acceptanceCriteria:
+          - "Chat workflow executes"
+          - "Foundation established for future orchestration"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-011-complete-rag-pipeline
+        name: "KHARON-011 Complete RAG Pipeline"
+        state: todo
+        description: |
+          **Description**
+          
+          Connect retrieval with LLM prompting.
+        acceptanceCriteria:
+          - "Retrieved context injected"
+          - "StyxCD questions answered from documentation"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-012-generate-styxcd-yaml
+        name: "KHARON-012 Generate StyxCD YAML"
+        state: todo
+        description: |
+          **Description**
+          
+          Generate valid StyxCD YAML from natural language.
+        acceptanceCriteria:
+          - "Uses retrieved documentation"
+          - "Produces planner-compatible YAML"
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: kharon-013-prepare-service-boundary
+        name: "KHARON-013 Prepare Service Boundary"
+        state: todo
+        description: |
+          **Description**
+          
+          Define the service contract for future StyxCD integration.
+        acceptanceCriteria:
+          - "API documented"
+          - "Request/response models finalized"
+          - "No StyxCD dependency required"
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: project-management-workflow-provider
+    name: "Project Management Workflow Provider"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: define-pm-workflow-dsl
+        name: "Define PM Workflow DSL"
+        state: todo
+        description: |
+          Define the YAML structure for project-management workflows, including provider configuration, epics, issues, labels, assignees, milestones, acceptance criteria, and provider metadata.
+        acceptanceCriteria:
+          - "PM workflow YAML schema is documented."
+          - "Epics and issues are represented clearly."
+          - "Optional fields such as labels, assignees, and milestones are supported."
+          - "Provider-specific metadata can be stored without polluting the portable model."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-github-issues-provider
+        name: "Implement GitHub Issues Provider"
+        state: todo
+        description: |
+          Implement the first PM workflow provider using the GitHub API to create roadmap issues in the configured repository.
+        acceptanceCriteria:
+          - "GitHub provider can authenticate using Jenkins credentials."
+          - "Provider can create epic issues."
+          - "Provider can create child issues."
+          - "Provider can apply labels, assignees, and milestones when supplied."
+          - "Provider errors are reported clearly."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-epic-and-sub-issue-creation
+        name: "Support Epic and Sub-Issue Creation"
+        state: todo
+        description: |
+          Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship model.
+        acceptanceCriteria:
+          - "Epic issue is created first."
+          - "Child issues are created under the correct epic."
+          - "Parent-child relationships are preserved."
+          - "Created items are added to the configured project board."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-github-project-assignment
+        name: "Support GitHub Project Assignment"
+        state: todo
+        description: |
+          Add created or updated issues to the configured GitHub Project board.
+        acceptanceCriteria:
+          - "Project can be identified from YAML configuration."
+          - "Created epics are added to the project."
+          - "Created issues are added to the project."
+          - "Default status can be set when supported."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-pm-workflow-dry-run-mode
+        name: "Add PM Workflow Dry-Run Mode"
+        state: todo
+        description: |
+          Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider.
+        acceptanceCriteria:
+          - "Dry-run mode performs no writes."
+          - "Dry-run output lists epics and issues that would be created."
+          - "Dry-run output lists items that would be updated."
+          - "Dry-run output identifies potential duplicates or conflicts."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-pm-workflow-idempotency
+        name: "Support PM Workflow Idempotency"
+        state: todo
+        description: |
+          Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist.
+        acceptanceCriteria:
+          - "Existing epics are detected."
+          - "Existing issues are detected."
+          - "Matching can use provider ID when available."
+          - "Matching can fall back to title when ID is missing."
+          - "Duplicate creation is prevented."
+          - "Dry-run output reports create/update/no-op actions."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: synchronize-pm-workflow-yaml-from-provider
+        name: "Synchronize PM Workflow YAML From Provider"
+        state: todo
+        description: |
+          Read existing epics and issues from a project-management provider and update local PM workflow YAML with provider identifiers, links, and status metadata.
+        acceptanceCriteria:
+          - "Existing provider issues can be fetched."
+          - "Issues are matched to YAML entries by title."
+          - "Provider issue IDs are written back to YAML."
+          - "Provider URLs are written back to YAML."
+          - "Existing YAML descriptions are preserved."
+          - "Missing or renamed issues are reported."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-provider-metadata-in-pm-workflow-yaml
+        name: "Support Provider Metadata in PM Workflow YAML"
+        state: todo
+        description: |
+          Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp, Jira, or future providers.
+        acceptanceCriteria:
+          - "Provider-specific IDs are stored under provider metadata."
+          - "Portable fields remain provider-neutral."
+          - "Multiple provider mappings can be represented."
+          - "Provider metadata structure is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-provider-migration-for-pm-workflows
+        name: "Support Provider Migration for PM Workflows"
+        state: todo
+        description: |
+          Allow the same roadmap YAML to be projected into a different project-management provider.
+        acceptanceCriteria:
+          - "PM workflow provider model is abstracted."
+          - "Provider-specific IDs are stored separately."
+          - "YAML can support multiple provider mappings."
+          - "Roadmap can be recreated in a new provider."
+          - "Migration process is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: generate-pm-workflow-yaml-from-conversation
+        name: "Generate PM Workflow YAML From Conversation"
+        state: todo
+        description: |
+          Use an AI-assisted step to transform roadmap discussion or session notes into PM workflow YAML.
+        acceptanceCriteria:
+          - "Conversation/session notes can be converted into PM workflow YAML."
+          - "Generated YAML follows the PM workflow schema."
+          - "Generated YAML can be reviewed before execution."
+          - "Generated YAML can be committed to styxcd-docs."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: demonstrate-backlog-as-code-workflow
+        name: "Demonstrate Backlog-as-Code Workflow"
+        state: todo
+        description: |
+          Use StyxCD to create or update a real project-management backlog from committed PM workflow YAML.
+        acceptanceCriteria:
+          - "PM workflow YAML exists in styxcd-docs."
+          - "Workflow can be executed through StyxCD."
+          - "GitHub issues are created or updated."
+          - "Execution output shows create/update/no-op results."
+          - "Demo is documented."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: dogfooding-styxcd
+    name: "Dogfooding StyxCD"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: deploy-styxcd-using-styxcd
+        name: "Deploy StyxCD Using StyxCD"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Deploy StyxCD Using StyxCD.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-styxcd-release-workflow
+        name: "Create StyxCD Release Workflow"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create StyxCD Release Workflow.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-styxcd-promotion-workflow
+        name: "Create StyxCD Promotion Workflow"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create StyxCD Promotion Workflow.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-styxcd-self-update-workflow
+        name: "Implement StyxCD Self-Update Workflow"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Implement StyxCD Self-Update Workflow.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: validate-upgrade-scenarios
+        name: "Validate Upgrade Scenarios"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Validate Upgrade Scenarios.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: document-internal-release-process
+        name: "Document Internal Release Process"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Document Internal Release Process.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: release-management
+    name: "Release Management"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: define-stable-environment-strategy
+        name: "Define Stable Environment Strategy"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Define Stable Environment Strategy.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-development-environment-strategy
+        name: "Define Development Environment Strategy"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Define Development Environment Strategy.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-promotion-workflow
+        name: "Implement Promotion Workflow"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Implement Promotion Workflow.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-version-management-strategy
+        name: "Implement Version Management Strategy"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Implement Version Management Strategy.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: document-release-process
+        name: "Document Release Process"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Document Release Process.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-release-validation-checks
+        name: "Add Release Validation Checks"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Release Validation Checks.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-terraform-and-deployment-boundary
+        name: "Define Terraform and Deployment Boundary"
+        state: todo
+        description: |
+          Document how StyxCD should separate infrastructure lifecycle from deployment lifecycle when Terraform or external infrastructure tools are involved.
+        acceptanceCriteria:
+          - "Long-lived infrastructure responsibilities are identified."
+          - "Release-time deployment responsibilities are identified."
+          - "Fuzzy-boundary resources such as DNS, load balancers, target groups, ECS services, and ingress are discussed."
+          - "Modes are documented: native deploy, Terraform-provisioned foundation, Terraform stage, and external infra contract."
+          - "Decision supports future ECS and Terraform work."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: multi-cloud-support
+    name: "Multi-Cloud Support"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: complete-gke-vertical-slice
+        name: "Complete GKE Vertical Slice"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: expand-ecs-deployment-support
+        name: "Expand ECS Deployment Support"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Expand ECS Deployment Support.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: expand-eks-deployment-support
+        name: "Expand EKS Deployment Support"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Expand EKS Deployment Support.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: evaluate-aks-support
+        name: "Evaluate AKS Support"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Evaluate AKS Support.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-multi-cloud-abstraction-strategy
+        name: "Define Multi-Cloud Abstraction Strategy"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Define Multi-Cloud Abstraction Strategy.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-cloud-capability-matrix
+        name: "Create Cloud Capability Matrix"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Cloud Capability Matrix.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-eks-execution-plan-shape
+        name: "Implement EKS Execution Plan Shape"
+        state: todo
+        description: |
+          Add EKS as a first-class StyxCD cloud workflow branch using the same conceptual deployment lifecycle proven by GKE, plus an EKS-specific load balancer controller preparation stage.
+        acceptanceCriteria:
+          - "CloudWorkflow emits EKS stages when platform.name is eks."
+          - "EKS execution plan includes load balancer controller installation, namespace creation, per-app deploy/validate stages, ingress, DNS, and service validation."
+          - "Jenkins stage map resolves all EKS stage classes."
+          - "Hello-world EKS stage execution validates end-to-end stage ordering."
+          - "Existing GKE workflow continues to work after EKS planner changes."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-eks-stage-logic-from-sandbox-code
+        name: "Implement EKS Stage Logic From Sandbox Code"
+        state: todo
+        description: |
+          Move the existing working EKS sandbox deployment logic into discrete StyxCD stages matching the new EKS execution plan.
+        acceptanceCriteria:
+          - "EksInstallLoadBalancerController installs or validates AWS Load Balancer Controller support."
+          - "EksCreateNamespace ensures the application namespace exists."
+          - "EksDeployApplication creates deployment, service, secrets, and environment configuration."
+          - "EksValidateDeployment performs rollout validation and captures diagnostics."
+          - "EksCreateIngress creates the ALB-backed Kubernetes ingress."
+          - "EksConfigureDns updates Route53 records for the ALB ingress endpoint."
+          - "EksValidateService validates public application reachability."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-formal-eks-yaml-specification
+        name: "Create Formal EKS YAML Specification"
+        state: todo
+        description: |
+          Define the first formal EKS YAML model after the hello-world execution plan is validated.
+        acceptanceCriteria:
+          - "EKS YAML captures AWS region, cluster name, namespace, credentials, ingress class, ALB settings, DNS settings, and application mappings."
+          - "The spec distinguishes portable Kubernetes concepts from EKS-specific implementation options."
+          - "Example EKS YAML deploys Johnny-Johnny backend and UI."
+          - "The EKS YAML can generate the validated EKS execution plan."
+          - "Spec documentation explains differences from the GKE YAML."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: document-gke-and-eks-stage-parity
+        name: "Document GKE and EKS Stage Parity"
+        state: todo
+        description: |
+          Capture the architectural mapping between GKE and EKS stages, including where the workflows align conceptually and where EKS requires provider-specific setup.
+        acceptanceCriteria:
+          - "Documentation includes a GKE/EKS stage mapping table."
+          - "Documentation explains why EksInstallLoadBalancerController is separate from EksCreateIngress."
+          - "Documentation explains the funnel model: cluster capability, namespace, app resources, ingress, DNS, validation."
+          - "Documentation captures the principle that platform abstraction means common lifecycle plus provider-specific stage implementation."
+          - "Document is stored in styxcd-docs."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: evaluate-aks-stage-mapping
+        name: "Evaluate AKS Stage Mapping"
+        state: todo
+        description: |
+          Use the GKE and EKS stage model as the reference point for evaluating how AKS maps into the StyxCD execution lifecycle.
+        acceptanceCriteria:
+          - "AKS stage mapping is compared against GKE and EKS."
+          - "Any AKS-specific platform preparation stages are identified."
+          - "Planner impact is documented before implementation."
+          - "AKS evaluation avoids premature over-abstraction."
+          - "Decision is captured in architecture docs."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: map-ecs-native-deployment-lifecycle
+        name: "Map ECS Native Deployment Lifecycle"
+        state: todo
+        description: |
+          Revisit ECS without Terraform first to discover the native ECS deployment lifecycle and compare it to Kubernetes platform workflows.
+        acceptanceCriteria:
+          - "ECS native deployment responsibilities are identified."
+          - "Task definition, service update, load balancer, target group, DNS, and validation responsibilities are mapped."
+          - "StyxCD ECS stages are proposed based on working implementation behavior."
+          - "Terraform is deferred until native lifecycle boundaries are understood."
+          - "ECS mapping is documented for later comparison."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-aws-load-balancer-controller-irsa-integration
+        name: "Implement AWS Load Balancer Controller IRSA Integration"
+        state: todo
+        description: |
+          Parent Epic: Epic: Multi-Cloud Support
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: validation-deployment-verification
+    name: "Validation & Deployment Verification"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: define-validation-contract
+        name: "Define Validation Contract"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Define Validation Contract.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-validation-framework
+        name: "Implement Validation Framework"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Implement Validation Framework.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-health-check-validation
+        name: "Add Health Check Validation"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Health Check Validation.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-smoke-test-validation
+        name: "Add Smoke Test Validation"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Smoke Test Validation.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-deployment-verification-reporting
+        name: "Add Deployment Verification Reporting"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Deployment Verification Reporting.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-validation-dashboard-support
+        name: "Add Validation Dashboard Support"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Validation Dashboard Support.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: slo-aware-promotion
+    name: "SLO-Aware Promotion"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: define-measurement-contract
+        name: "Define Measurement Contract"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Define Measurement Contract.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: capture-validation-metrics
+        name: "Capture Validation Metrics"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Capture Validation Metrics.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: store-validation-results
+        name: "Store Validation Results"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Store Validation Results.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: evaluate-slo-thresholds
+        name: "Evaluate SLO Thresholds"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Evaluate SLO Thresholds.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-promotion-gates
+        name: "Support Promotion Gates"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Support Promotion Gates.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: document-slo-promotion-model
+        name: "Document SLO Promotion Model"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Document SLO Promotion Model.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: artifact-management
+    name: "Artifact Management"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: define-artifact-metadata-model
+        name: "Define Artifact Metadata Model"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Define Artifact Metadata Model.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: track-digest-based-deployments
+        name: "Track Digest-Based Deployments"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Track Digest-Based Deployments.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-registry-replication
+        name: "Support Registry Replication"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Support Registry Replication.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: store-promotion-history
+        name: "Store Promotion History"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Store Promotion History.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-artifact-audit-trail
+        name: "Implement Artifact Audit Trail"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Implement Artifact Audit Trail.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: document-enterprise-artifact-strategy
+        name: "Document Enterprise Artifact Strategy"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Document Enterprise Artifact Strategy.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: evaluate-build-once-promote-everywhere-pattern
+        name: "Evaluate Build Once Promote Everywhere Pattern"
+        state: todo
+        description: |
+          Explore an enterprise artifact-management model where images are built once, tracked by digest, and promoted or replicated across cloud-native registries.
+        acceptanceCriteria:
+          - "Canonical artifact metadata model is proposed."
+          - "Digest-based deployment support is evaluated."
+          - "Registry replication/promotion use cases are documented."
+          - "Cost and complexity tradeoffs are captured."
+          - "Feature is positioned as optional enterprise governance, not the default deployment path."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: observability
+    name: "Observability"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: add-prometheus-metrics
+        name: "Add Prometheus Metrics"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Prometheus Metrics.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-grafana-dashboards
+        name: "Add Grafana Dashboards"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Grafana Dashboards.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: expand-structured-logging
+        name: "Expand Structured Logging"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Expand Structured Logging.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: track-workflow-metrics
+        name: "Track Workflow Metrics"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Track Workflow Metrics.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: track-stage-metrics
+        name: "Track Stage Metrics"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Track Stage Metrics.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-deployment-analytics
+        name: "Add Deployment Analytics"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Deployment Analytics.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: design-environment-agnostic-log-collection
+        name: "Design Environment-Agnostic Log Collection"
+        state: todo
+        description: |
+          Design a log collection architecture that works across EC2, ECS, GKE, EKS, and future runtimes while preserving consistent structured application logging.
+        acceptanceCriteria:
+          - "Per-runtime collector options are evaluated."
+          - "Alloy patterns for EC2 and Kubernetes are documented."
+          - "ECS/CloudWatch/FireLens integration options are evaluated."
+          - "Structured JSON logging contract is defined."
+          - "Exceptions and execution-plan errors can flow to Loki/Grafana regardless of runtime."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: documentation-knowledge-base
+    name: "Documentation & Knowledge Base"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: create-architecture-documentation
+        name: "Create Architecture Documentation"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Architecture Documentation.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-workflow-authoring-guide
+        name: "Create Workflow Authoring Guide"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Workflow Authoring Guide.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-platform-guides
+        name: "Create Platform Guides"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Platform Guides.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-troubleshooting-guide
+        name: "Create Troubleshooting Guide"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Troubleshooting Guide.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-knowledge-base-structure
+        name: "Create Knowledge Base Structure"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Knowledge Base Structure.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-example-workflow-library
+        name: "Create Example Workflow Library"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Example Workflow Library.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-human-and-rag-documentation-strategy
+        name: "Define Human and RAG Documentation Strategy"
+        state: todo
+        description: |
+          Decide how StyxCD documentation should serve both human readers today and future retrieval-augmented generation use cases.
+        acceptanceCriteria:
+          - "Human-readable documentation categories are defined."
+          - "RAG-oriented documentation structure is defined."
+          - "Document metadata conventions are proposed."
+          - "Architecture decisions, YAML specs, examples, troubleshooting guides, and session handoffs are categorized."
+          - "Guidelines explain what belongs in narrative docs versus machine-retrievable reference docs."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: formalize-yaml-specification-documentation
+        name: "Formalize YAML Specification Documentation"
+        state: todo
+        description: |
+          Create a formal documentation model for StyxCD YAML specs, including cloud workflow specs, PM workflow specs, examples, and help files.
+        acceptanceCriteria:
+          - "YAML fields are documented with purpose, required/optional status, examples, and provider-specific notes."
+          - "GKE and EKS examples are included."
+          - "Spec help files are designed to be readable by humans and useful for future assistant retrieval."
+          - "Versioning strategy for YAML specs is documented."
+          - "Effective YAML documentation requirements are captured."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: clean-up-documentation-structure
+        name: "Clean Up Documentation Structure"
+        state: todo
+        description: |
+          Organize existing and future StyxCD docs into a clean structure that supports product documentation, architecture history, implementation notes, and AI retrieval.
+        acceptanceCriteria:
+          - "Repository documentation folders are proposed."
+          - "Architecture docs, ADRs, specs, examples, backlog YAML, and handoff docs have clear homes."
+          - "Redundant or stale documents are identified."
+          - "A naming convention for dated session/context docs is defined."
+          - "Documentation cleanup plan is added to the roadmap."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-architecture-decision-records
+        name: "Create Architecture Decision Records"
+        state: todo
+        description: |
+          Introduce lightweight ADRs for major StyxCD design decisions such as execution-plan stages, platform abstraction boundaries, Terraform boundaries, and documentation strategy.
+        acceptanceCriteria:
+          - "ADR template is created."
+          - "GKE/EKS stage parity decision is captured as an ADR."
+          - "Native ECS before Terraform decision is captured as an ADR."
+          - "Stable orchestration plus replaceable implementations principle is captured."
+          - "ADRs are stored in styxcd-docs."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: local-development-experience
+    name: "Local Development Experience"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: add-in-memory-database-mode
+        name: "Add In-Memory Database Mode"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add In-Memory Database Mode.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-docker-compose-environment
+        name: "Create Docker Compose Environment"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Docker Compose Environment.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-local-workflow-execution
+        name: "Support Local Workflow Execution"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Support Local Workflow Execution.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: improve-developer-setup-documentation
+        name: "Improve Developer Setup Documentation"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Improve Developer Setup Documentation.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-local-demo-environment
+        name: "Create Local Demo Environment"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Local Demo Environment.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: ui-enhancements
+    name: "UI Enhancements"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: load-yaml-from-file
+        name: "Load YAML From File"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Load YAML From File.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: load-yaml-from-url
+        name: "Load YAML From URL"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Load YAML From URL.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: create-workflow-templates-ui
+        name: "Create Workflow Templates UI"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Create Workflow Templates UI.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: display-effective-yaml
+        name: "Display Effective YAML"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Display Effective YAML.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: improve-mobile-experience
+        name: "Improve Mobile Experience"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Improve Mobile Experience.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-execution-filtering
+        name: "Add Execution Filtering"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Execution Filtering.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-execution-comparison-view
+        name: "Add Execution Comparison View"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Execution Comparison View.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: add-template-catalog-ui
+        name: "Add Template Catalog UI"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Add Template Catalog UI.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: remember-yaml-editor-state
+        name: "Remember YAML Editor State"
+        state: todo
+        description: |
+          Improve the StyxCD UI by remembering the user's last submitted YAML and editor/layout state.
+        acceptanceCriteria:
+          - "Last submitted YAML can be restored from local storage."
+          - "Editor/layout preferences can be remembered."
+          - "Clear editor behavior remains available."
+          - "Draft restore behavior is predictable and documented."
+          - "Feature does not interrupt current workflow execution."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: planning-decision-engine
+    name: "Planning & Decision Engine"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: define-planningdecision-model
+        name: "Define PlanningDecision Model"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Define PlanningDecision Model.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: integrate-drools-decision-engine
+        name: "Integrate Drools Decision Engine"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Integrate Drools Decision Engine.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: separate-planning-from-execution
+        name: "Separate Planning From Execution"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Separate Planning From Execution.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-decision-rules-framework
+        name: "Implement Decision Rules Framework"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Implement Decision Rules Framework.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: document-planning-architecture
+        name: "Document Planning Architecture"
+        state: todo
+        description: |
+          TODO: Define scope and acceptance criteria for Document Planning Architecture.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: rename-validation-map-concepts
+        name: "Rename Validation Map Concepts"
+        state: todo
+        description: |
+          Revisit naming around VALIDATE_MAP, paramMap, and stageSpecificMap to better reflect execution planning, workflow context, and stage telemetry.
+        acceptanceCriteria:
+          - "Candidate names are reviewed: PlanningDecision/DecisionMap, ExecutionContext, StageTelemetry."
+          - "Current naming pain points are documented."
+          - "Renaming plan avoids disrupting current implementation flow."
+          - "Decision is captured in architecture documentation."
+          - "Code changes are deferred until timing is appropriate."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: kharon-assistant
+    name: "Kharon Assistant"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: create-rag-context-retrieval-layer
+        name: "Create RAG Context Retrieval Layer"
+        state: todo
+        description: |
+          Create a retrieval layer that can index StyxCD documentation, specs, architecture decisions, backlog YAML, and session handoffs so Kharon can recover project context accurately.
+        acceptanceCriteria:
+          - "Supported source document types are identified."
+          - "Chunking and metadata strategy is defined."
+          - "Retrieval results can include source references."
+          - "Initial corpus includes architecture docs, YAML specs, backlog YAML, and handoff documents."
+          - "Assistant can answer contextual questions about prior decisions without relying only on conversation memory."
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: define-kharon-project-memory-sources
+        name: "Define Kharon Project Memory Sources"
+        state: todo
+        description: |
+          Define which repositories, documents, and generated artifacts should become trusted sources for Kharon contextual answers.
+        acceptanceCriteria:
+          - "Trusted source list is documented."
+          - "styxcd-docs is treated as the primary project knowledge source."
+          - "Generated session handoffs have a clear lifecycle."
+          - "Deprecated or experimental documents are marked clearly."
+          - "Source freshness and authority rules are documented."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: styxcd-command-line-tool
+    name: "StyxCD Command Line Tool"
+    state: todo
+    description: |
+      Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: implement-ui-parity-command-using-ferry-verb
+        name: "Implement UI Parity Command Using Ferry Verb"
+        state: todo
+        description: |
+          Create the initial StyxCD CLI command that provides parity with the current Next.js operations UI. The command should submit workflow YAML to the orchestrator and return execution metadata including execution ID, status, Jenkins links, Grafana links, and future execution details.
+        acceptanceCriteria:
+          - "CLI supports: styxcd ferry -f workflow.yml"
+          - "Workflow YAML can be submitted to the orchestrator."
+          - "Execution ID is returned to the user."
+          - "Execution status is returned to the user."
+          - "Jenkins execution URL is returned when available."
+          - "Grafana log URL is returned when available."
+          - "Response can be displayed as structured JSON."
+          - "Command behavior matches the current operations UI submission flow."
+        labels: []
+        assignees: []
+        milestone: ""
+  - id: backlog-as-code-synchronization
+    name: "Backlog-as-Code Synchronization"
+    state: todo
+    description: |
+      Create a portable project-management synchronization engine that treats
+      
+      GitHub Projects as a planning interface while maintaining a
+      
+      provider-independent Source of Truth (SSOT).
+      
+      The synchronization engine must support bidirectional synchronization
+      
+      between GitHub and the canonical backlog model while preserving
+      
+      portability across future providers such as Jira, Bitbucket, Azure
+      
+      DevOps, or Linear.
+    acceptanceCriteria: []
+    labels: []
+    assignees: []
+    milestone: ""
+    issues:
+      - id: design-canonical-backlog-model
+        name: "Design Canonical Backlog Model"
+        state: todo
+        description: |
+          -   Define portable backlog.yml schema.
+          
+          -   Support epics, stories, acceptance criteria, provider metadata.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-github-project-export
+        name: "Implement GitHub Project Export"
+        state: todo
+        description: |
+          -   Read GitHub Projects, Issues, labels, milestones, priorities,
+          
+          estimates, relationships.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: generate-canonical-backlog-yml
+        name: "Generate Canonical `backlog.yml`"
+        state: todo
+        description: |
+          -   Stable deterministic output.
+          
+          -   Idempotent generation.
+          
+          -   Provider metadata isolated.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: generate-human-readable-backlog-md
+        name: "Generate Human-Readable `backlog.md`"
+        state: todo
+        description: |
+          -   Organized by epic.
+          
+          -   Acceptance criteria included.
+          
+          -   GitHub links included.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: detect-backlog-changes
+        name: "Detect Backlog Changes"
+        state: todo
+        description: |
+          -   Detect additions, deletions, renames, status changes, priority
+          
+          changes, moved stories.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: generate-synchronization-report
+        name: "Generate Synchronization Report"
+        state: todo
+        description: |
+          -   Added, updated, removed, duplicate, warning, and error
+          
+          reporting.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: regenerate-github-from-ssot
+        name: "Regenerate GitHub From SSOT"
+        state: todo
+        description: |
+          -   Create/update issues.
+          
+          -   Restore project assignments and metadata.
+          
+          -   Preserve relationships.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-idempotent-synchronization
+        name: "Implement Idempotent Synchronization"
+        state: todo
+        description: |
+          -   Safe repeated execution.
+          
+          -   Matching by provider ID then title.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: implement-dry-run-mode
+        name: "Implement Dry-Run Mode"
+        state: todo
+        description: |
+          -   Preview create/update/delete/no-op actions.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: support-provider-adapters
+        name: "Support Provider Adapters"
+        state: todo
+        description: |
+          -   GitHub first.
+          
+          -   Architecture supports Jira, Azure DevOps, Bitbucket, Linear.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""
+      - id: dogfood-backlog-as-code-synchronization
+        name: "Dogfood Backlog-as-Code Synchronization"
+        state: todo
+        description: |
+          -   Export StyxCD roadmap.
+          
+          -   Generate canonical backlog.
+          
+          -   Regenerate GitHub.
+          
+          -   Validate round-trip.
+          
+          -   Document the demonstration.
+        acceptanceCriteria: []
+        labels: []
+        assignees: []
+        milestone: ""

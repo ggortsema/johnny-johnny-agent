@@ -1,0 +1,62 @@
+version: 1
+
+epics:
+  - id: project-management-workflow-provider
+    name: "Project Management Workflow Provider"
+    state: todo
+    description: "Implement a provider-neutral project-management workflow that can create, update, synchronize, and migrate roadmap items across project-management providers using YAML as the durable source of truth."
+    acceptanceCriteria:
+      - "Project-management workflows can be represented as YAML."
+      - "Epics and child issues can be represented in the canonical backlog model."
+      - "The backlog model remains portable across providers."
+      - "Generated YAML validates against the v1 JSON Schema."
+    labels:
+      - platform
+      - project-management
+    assignees: []
+    milestone: "v1"
+
+    issues:
+      - id: define-pm-workflow-dsl
+        name: "Define PM Workflow DSL"
+        state: todo
+        description: "Define the YAML structure for project-management backlogs, including epics, issues, labels, assignees, milestones, acceptance criteria, and portable state."
+        acceptanceCriteria:
+          - "Backlog YAML schema is documented."
+          - "Epics and issues are represented clearly."
+          - "Optional fields such as labels, assignees, and milestones are supported."
+          - "Provider-specific metadata is excluded from the canonical backlog document."
+        labels:
+          - schema
+        assignees: []
+        milestone: "v1"
+
+      - id: implement-github-project-reader
+        name: "Implement GitHub Project Reader"
+        state: todo
+        description: "Read the current state of a GitHub Project and convert it into the Johnny-Johnny canonical backlog model."
+        acceptanceCriteria:
+          - "GitHub ProjectV2 items can be fetched."
+          - "Epic issues can be identified."
+          - "Child issues can be associated with their parent epic."
+          - "GitHub statuses can be mapped into canonical states."
+          - "The resulting model can be exported to backlog.yml."
+        labels:
+          - github
+          - adapter
+        assignees: []
+        milestone: "v1"
+
+      - id: validate-generated-backlog-yaml
+        name: "Validate Generated Backlog YAML"
+        state: todo
+        description: "Ensure every generated backlog.yml document validates against the official v1 JSON Schema before the export is considered successful."
+        acceptanceCriteria:
+          - "Generated YAML is parsed after writing."
+          - "Parsed YAML is validated against schemas/backlog-v1.schema.json."
+          - "Validation failures stop the export."
+          - "Validation errors are reported clearly."
+        labels:
+          - validation
+        assignees: []
+        milestone: "v1"
