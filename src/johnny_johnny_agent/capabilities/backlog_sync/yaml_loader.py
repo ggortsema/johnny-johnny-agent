@@ -19,6 +19,7 @@ def load_backlog_yaml(backlog_path: str) -> Backlog:
     for epic_data in data.get("epics", []):
         issues = [
             Issue(
+                id=issue_data["id"],
                 title=issue_data["name"],
                 repository=issue_data["repository"],
                 description=issue_data.get("description", ""),
@@ -28,6 +29,7 @@ def load_backlog_yaml(backlog_path: str) -> Backlog:
 
         epics.append(
             Epic(
+                id=epic_data["id"],
                 title=epic_data["name"],
                 repository=epic_data["repository"],
                 description=epic_data.get("description", ""),

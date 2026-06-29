@@ -11,6 +11,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.validator import (
     validate_backlog_yaml,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
+from johnny_johnny_agent.capabilities.github.renderer import render_epic_body
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
 DEFAULT_GITHUB_OWNER = "ggortsema"
@@ -118,6 +119,27 @@ def inspect_backlog(
     typer.echo(f"Provider: {backlog.project.provider}")
     typer.echo(f"Epics: {len(backlog.epics)}")
     typer.echo(f"Issues: {issue_count}")
+
+@backlog_app.command("preview-epic-body")
+def preview_epic_body(
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ],
+        epic_id: Annotated[
+            str,
+            typer.Option("--epic-id", help="Canonical epic id."),
+        ],
+) -> None:
+    """Preview the GitHub issue body for a canonical epic."""
+    backlog = load_backlog_yaml(file)
+
+    for epic in backlog.epics:
+        if epic.id == epic_id:
+            typer.echo(render_epic_body(epic))
+            return
+
+    raise RuntimeError(f"Epic not found: {epic_id}")
 
 @backlog_app.command("pull")
 def pull_backlog(

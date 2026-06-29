@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 
 @dataclass
 class Issue:
+    id: str
     title: str
     repository: str
     description: str = ""
@@ -10,6 +11,7 @@ class Issue:
 
 @dataclass
 class Epic:
+    id: str
     title: str
     repository: str
     description: str = ""
