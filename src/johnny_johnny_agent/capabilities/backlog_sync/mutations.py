@@ -114,3 +114,43 @@ def delete_issue(
                 return issue
 
     raise RuntimeError(f"Issue not found: {issue_id}")
+
+def create_epic(
+        backlog: Backlog,
+        title: str,
+        *,
+        epic_id: str | None = None,
+        description: str = "",
+        repository: str,
+        acceptance_criteria: list[str] | None = None,
+) -> Epic:
+    resolved_epic_id = epic_id or _slugify(title)
+
+    _ensure_item_id_is_unique(backlog, resolved_epic_id)
+
+    epic = Epic(
+        id=resolved_epic_id,
+        type="epic",
+        title=title,
+        repository=repository,
+        status="Backlog",
+        issue_state="OPEN",
+        order=_next_epic_order(backlog),
+        description=description,
+        acceptance_criteria=acceptance_criteria or [],
+        labels=[],
+        assignees=[],
+        milestone=None,
+        provider_metadata={"github": {}},
+        issues=[],
+    )
+
+    backlog.epics.append(epic)
+
+    return epic
+
+def _next_epic_order(backlog: Backlog) -> int:
+    if not backlog.epics:
+        return 1000
+
+    return max(epic.order for epic in backlog.epics) + 1000

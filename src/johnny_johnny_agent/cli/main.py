@@ -36,6 +36,7 @@ from johnny_johnny_agent.capabilities.github.backlog_exporter import (
     generate_backlog_yaml_from_github_project,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
+    create_epic,
     create_issue,
     delete_issue,
     update_issue_status,
@@ -66,7 +67,6 @@ maintenance_app = typer.Typer(
 )
 
 app.add_typer(maintenance_app, name="maintenance")
-
 app.add_typer(backlog_app, name="backlog")
 
 
@@ -245,6 +245,13 @@ def reconcile_backlog(
         project_title=backlog.project.title,
     )
 
+    save_backlog_yaml(
+        backlog=backlog,
+        backlog_path=file,
+    )
+
+    typer.echo(f"Saved hydrated metadata: {file}")
+
 
 @backlog_app.command("pull")
 def pull_backlog(
@@ -353,6 +360,13 @@ def create_backlog_issue(
             project_title=backlog.project.title,
         )
 
+        save_backlog_yaml(
+            backlog=backlog,
+            backlog_path=file,
+        )
+
+        typer.echo(f"Saved hydrated metadata: {file}")
+
 
 @backlog_app.command("update-issue")
 def update_issue(
@@ -419,6 +433,14 @@ def update_issue(
                 project_title=backlog.project.title,
             )
 
+            save_backlog_yaml(
+                backlog=backlog,
+                backlog_path=file,
+            )
+
+            typer.echo(f"Saved hydrated metadata: {file}")
+
+
 @backlog_app.command("list-epics")
 def list_epics(
         file: Annotated[
@@ -435,6 +457,94 @@ def list_epics(
 
     for epic in sorted(backlog.epics, key=lambda item: item.order):
         typer.echo(f"{epic.title} [{epic.id}]")
+
+
+@backlog_app.command("create-epic")
+def create_backlog_epic(
+        title: Annotated[
+            str,
+            typer.Option("--title", "-t", help="Epic title."),
+        ],
+        repository: Annotated[
+            str,
+            typer.Option("--repository", "-r", help="Repository name with owner."),
+        ],
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        epic_id: Annotated[
+            str | None,
+            typer.Option("--id", help="Stable Johnny-Johnny epic id. Defaults to a slugified title."),
+        ] = None,
+        description: Annotated[
+            str,
+            typer.Option("--description", "-d", help="Epic description."),
+        ] = "",
+        acceptance: Annotated[
+            list[str] | None,
+            typer.Option("--acceptance", help="Acceptance criterion. Can be repeated."),
+        ] = None,
+        dry_run: Annotated[
+            bool,
+            typer.Option("--dry-run", help="Preview reconciliation without saving."),
+        ] = False,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Save and reconcile."),
+        ] = False,
+) -> None:
+    """Create a new canonical backlog epic."""
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
+
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        raise typer.Exit(code=1)
+
+    backlog = load_backlog_yaml(file)
+
+    epic = create_epic(
+        backlog=backlog,
+        title=title,
+        epic_id=epic_id,
+        description=description,
+        repository=repository,
+        acceptance_criteria=acceptance or [],
+    )
+
+    typer.echo(f"Created canonical epic: {epic.title}")
+    typer.echo(f"ID: {epic.id}")
+    typer.echo(f"Status: {epic.status}")
+    typer.echo(f"Repository: {epic.repository}")
+
+    plan = _plan_reconcile(backlog)
+    _print_reconciliation_plan(plan)
+
+    if dry_run:
+        return
+
+    save_backlog_yaml(
+        backlog=backlog,
+        backlog_path=file,
+    )
+
+    typer.echo(f"Saved: {file}")
+
+    if plan.operations:
+        execute_reconciliation_plan(
+            plan=plan,
+            project_title=backlog.project.title,
+        )
+
+        save_backlog_yaml(
+            backlog=backlog,
+            backlog_path=file,
+        )
+
+        typer.echo(f"Saved hydrated metadata: {file}")
+
 
 @maintenance_app.command("delete-issue")
 def delete_backlog_issue(
@@ -481,6 +591,14 @@ def delete_backlog_issue(
             plan=plan,
             project_title=backlog.project.title,
         )
+
+        save_backlog_yaml(
+            backlog=backlog,
+            backlog_path=file,
+        )
+
+        typer.echo(f"Saved hydrated metadata: {file}")
+
 
 @maintenance_app.command("purge")
 def purge_backlog_projection(
@@ -548,10 +666,11 @@ def _print_reconciliation_plan(plan) -> None:
                 f"{operation.issue.title} "
                 f"{operation.current_status} -> {operation.desired_status}"
             )
+
         elif isinstance(operation, DeleteIssueOperation):
             typer.echo(
                 f"- Delete issue: {operation.issue.title} [{operation.issue.id}]"
-    )
+            )
 
     typer.echo()
     typer.echo(f"Operations: {len(plan.operations)}")

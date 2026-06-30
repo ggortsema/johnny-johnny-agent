@@ -35,7 +35,7 @@ epics:
     title: Implement GKE deployment stage
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 1000
     description: Replace the current hello-world GKE stage with a real implementation that executes gcloud and kubectl commands.
       The stage should deploy an application to a target GKE cluster using workflow configuration provided by the orchestrator.
@@ -55,7 +55,7 @@ epics:
     title: Define GKE Authentication Strategy
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 2000
     description: Determine how StyxCD authenticates to GKE clusters. Evaluate service accounts, workload identity, and credential
       management approaches.
@@ -75,7 +75,7 @@ epics:
     title: Deploy Sample Application to GKE
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 3000
     description: Deploy a sample application to GKE using StyxCD to validate the complete workflow from YAML submission through
       deployment execution.
@@ -114,7 +114,7 @@ epics:
     title: Add GKE Deployment Validation
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 5000
     description: Implement deployment validation after application rollout.
     acceptance_criteria: []
@@ -133,7 +133,7 @@ epics:
     title: Define GKE Deployment Model
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 6000
     description: Define how GKE deployments are represented within the StyxCD workflow DSL.
     acceptance_criteria: []
@@ -152,7 +152,7 @@ epics:
     title: Implement GKE Sandbox Environment Support
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 7000
     description: Provide a repeatable sandbox environment for developing and testing GKE workflows.
     acceptance_criteria: []
@@ -1327,7 +1327,7 @@ epics:
     title: Support Epic and Sub-Issue Creation
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 3000
     description: Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship
       model.
@@ -1347,7 +1347,7 @@ epics:
     title: Support GitHub Project Assignment
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 4000
     description: Add created or updated issues to the configured GitHub Project board.
     acceptance_criteria: []
@@ -1366,7 +1366,7 @@ epics:
     title: Add PM Workflow Dry-Run Mode
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 5000
     description: Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider.
     acceptance_criteria: []
@@ -1385,7 +1385,7 @@ epics:
     title: Support PM Workflow Idempotency
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 6000
     description: Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist.
     acceptance_criteria: []
@@ -1424,7 +1424,7 @@ epics:
     title: Support Provider Metadata in PM Workflow YAML
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 8000
     description: Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp,
       Jira, or future providers.
@@ -1809,7 +1809,7 @@ epics:
     title: Complete GKE Vertical Slice
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice.'
     acceptance_criteria: []
@@ -1982,7 +1982,7 @@ epics:
     title: Document GKE and EKS Stage Parity
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 10000
     description: Capture the architectural mapping between GKE and EKS stages, including where the workflows align conceptually
       and where EKS requires provider-specific setup.
@@ -2891,7 +2891,7 @@ epics:
     repository: ggortsema/styxcd-docs
     status: Backlog
     issue_state: OPEN
-    order: 3000
+    order: 2000
     description: 'TODO: Define scope and acceptance criteria for Support Local Workflow Execution.'
     acceptance_criteria: []
     labels: []
@@ -2910,7 +2910,7 @@ epics:
     repository: ggortsema/styxcd-docs
     status: Backlog
     issue_state: OPEN
-    order: 4000
+    order: 3000
     description: 'TODO: Define scope and acceptance criteria for Improve Developer Setup Documentation.'
     acceptance_criteria: []
     labels: []
@@ -2929,7 +2929,7 @@ epics:
     repository: ggortsema/styxcd-docs
     status: Backlog
     issue_state: OPEN
-    order: 5000
+    order: 4000
     description: 'TODO: Define scope and acceptance criteria for Create Local Demo Environment.'
     acceptance_criteria: []
     labels: []
@@ -3412,7 +3412,7 @@ epics:
     title: Design Canonical Backlog Model
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 1000
     description: '-   Define portable backlog.yml schema.
 
@@ -3434,7 +3434,7 @@ epics:
     title: Implement GitHub Project Export
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 2000
     description: '-   Read GitHub Projects, Issues, labels, milestones, priorities,
 
@@ -3456,7 +3456,7 @@ epics:
     title: Generate Canonical `backlog.yml`
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 3000
     description: '-   Stable deterministic output.
 
@@ -3480,7 +3480,7 @@ epics:
     type: issue
     title: Generate Human-Readable `backlog.md`
     repository: ggortsema/styxcd-docs
-    status: Ready
+    status: In progress
     issue_state: OPEN
     order: 4000
     description: '-   Organized by epic.
@@ -3505,7 +3505,7 @@ epics:
     type: issue
     title: Detect Backlog Changes
     repository: ggortsema/styxcd-docs
-    status: Ready
+    status: Done
     issue_state: OPEN
     order: 5000
     description: '-   Detect additions, deletions, renames, status changes, priority
@@ -3527,7 +3527,7 @@ epics:
     type: issue
     title: Generate Synchronization Report
     repository: ggortsema/styxcd-docs
-    status: Ready
+    status: Done
     issue_state: OPEN
     order: 6000
     description: '-   Added, updated, removed, duplicate, warning, and error
@@ -3550,7 +3550,7 @@ epics:
     title: Regenerate GitHub From SSOT
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 7000
     description: '-   Create/update issues.
 
@@ -3596,7 +3596,7 @@ epics:
     type: issue
     title: Implement Dry-Run Mode
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 9000
     description: '-   Preview create/update/delete/no-op actions.'
@@ -3615,7 +3615,7 @@ epics:
     type: issue
     title: Support Provider Adapters
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: In progress
     issue_state: OPEN
     order: 10000
     description: '-   GitHub first.
@@ -3638,7 +3638,7 @@ epics:
     title: Dogfood Backlog-as-Code Synchronization
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 11000
     description: '-   Export StyxCD roadmap.
 
@@ -3669,7 +3669,7 @@ epics:
     title: Create Issue Command
     repository: ggortsema/styxcd-docs
     status: Done
-    issue_state: OPEN
+    issue_state: CLOSED
     order: 12000
     description: ''
     acceptance_criteria: []
@@ -3677,172 +3677,394 @@ epics:
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHI2J9Q
+        database_id: 4774005237
+        number: 957
+        url: https://github.com/ggortsema/styxcd-docs/issues/957
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPV-E
   - id: create-epic-command
     type: issue
     title: Create Epic Command
     repository: ggortsema/styxcd-docs
-    status: Ready
+    status: Done
     issue_state: OPEN
     order: 13000
     description: Add a create-epic command that creates a canonical epic and reconciles it to GitHub.
-    acceptance_criteria:
-    - Create a canonical epic.
-    - Dry-run previews reconciliation.
-    - Confirm creates the GitHub epic.
-    - Regenerate backlog preserves provider metadata.
-    - 'Reconcile dry-run reports Operations: 0.'
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHI9epw
+        database_id: 4774125223
+        number: 959
+        url: https://github.com/ggortsema/styxcd-docs/issues/959
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPeyg
   - id: expand-update-issue-command
     type: issue
     title: Expand Update Issue Command
     repository: ggortsema/styxcd-docs
-    status: Ready
+    status: In progress
     issue_state: OPEN
     order: 14000
     description: Extend update-issue to modify additional canonical issue properties beyond status.
-    acceptance_criteria:
-    - Update issue title.
-    - Update description.
-    - Update acceptance criteria.
-    - Update repository.
-    - Immediate reconciliation after confirmation.
-    - 'Reconcile dry-run reports Operations: 0.'
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHI9hlw
+        database_id: 4774125975
+        number: 960
+        url: https://github.com/ggortsema/styxcd-docs/issues/960
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPe24
   - id: list-issues-command
     type: issue
     title: List Issues Command
     repository: ggortsema/styxcd-docs
-    status: Ready
+    status: In progress
     issue_state: OPEN
     order: 15000
     description: Add a list-issues command that displays canonical issues with their identifiers, status, and parent epic.
-    acceptance_criteria:
-    - List every canonical issue.
-    - Display issue id.
-    - Display title.
-    - Display status.
-    - Display parent epic.
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHI9lqg
+        database_id: 4774127018
+        number: 961
+        url: https://github.com/ggortsema/styxcd-docs/issues/961
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPe7Q
   - id: update-epic-command
     type: issue
     title: Update Epic Command
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: In progress
     issue_state: OPEN
     order: 16000
     description: Add an update-epic command that modifies canonical epic properties and reconciles them to GitHub. V1 updates
       only the epic itself and does not cascade changes to child issues.
-    acceptance_criteria:
-    - Update epic status.
-    - Update epic title.
-    - Update epic description.
-    - Dry-run previews reconciliation.
-    - Confirm updates the GitHub epic.
-    - Child issues are not modified.
-    - 'Reconcile dry-run reports Operations: 0.'
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJFgsw
+        database_id: 4774256819
+        number: 962
+        url: https://github.com/ggortsema/styxcd-docs/issues/962
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPmYw
   - id: find-issue-command
     type: issue
     title: Find Issue Command
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: In progress
     issue_state: OPEN
     order: 17000
     description: Add a fuzzy find-issue command that searches canonical backlog issues by id, title, description, status,
       and parent epic so users can quickly find issue IDs for follow-up commands.
-    acceptance_criteria:
-    - Search is case-insensitive.
-    - Search matches issue id.
-    - Search matches issue title.
-    - Search matches description.
-    - Search matches parent epic title or id.
-    - Display issue id.
-    - Display issue title.
-    - Display parent epic.
-    - Display status.
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJGnqQ
+        database_id: 4774274985
+        number: 963
+        url: https://github.com/ggortsema/styxcd-docs/issues/963
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPniw
   - id: execute-commands-command
     type: issue
     title: Execute Commands Command
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: In progress
     issue_state: OPEN
     order: 18000
     description: Add an execute commands command that reads a plain text file containing Johnny-Johnny CLI commands and executes
       them sequentially. V1 supports simple command replay for batch operations such as backlog grooming.
-    acceptance_criteria:
-    - Accept a text file containing one Johnny-Johnny command per line.
-    - Ignore blank lines.
-    - Ignore comment lines beginning with '#'.
-    - Echo each command before execution.
-    - Stop execution on the first error.
-    - Return a summary of successful and failed commands.
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJKFKA
+        database_id: 4774331688
+        number: 964
+        url: https://github.com/ggortsema/styxcd-docs/issues/964
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPqk0
   - id: execute-playbook-command
     type: issue
     title: Execute Playbook Command
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: In progress
     issue_state: OPEN
     order: 19000
     description: Add an execute playbook command that interprets a declarative Johnny-Johnny playbook describing engineering
       intents rather than raw CLI commands. Playbooks become the foundation for reusable engineering automation across all
       Johnny-Johnny capabilities.
-    acceptance_criteria:
-    - Load a declarative YAML playbook.
-    - Support sequential execution of engineering steps.
-    - Validate the playbook before execution.
-    - Support dry-run execution.
-    - Produce an execution summary.
-    - Serve as the foundation for future variables, conditions, loops, and reusable engineering automation.
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJKIbg
+        database_id: 4774332526
+        number: 965
+        url: https://github.com/ggortsema/styxcd-docs/issues/965
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPqnE
   - id: move-issue-command
     type: issue
     title: Move Issue Command
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: In progress
     issue_state: OPEN
     order: 20000
     description: Add a move-issue command that reparents an existing canonical issue to a different epic and reconciles the
       relationship to GitHub. This allows backlog reorganization without manually editing GitHub or the canonical backlog.
-    acceptance_criteria:
-    - Move an issue to another epic.
-    - Update the canonical backlog.
-    - Reconcile the new parent relationship to GitHub.
-    - Dry-run previews the move.
-    - Confirm applies the move.
-    - 'Reconcile dry-run reports Operations: 0.'
+    acceptance_criteria: []
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
-      github: {}
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJKe1w
+        database_id: 4774338263
+        number: 966
+        url: https://github.com/ggortsema/styxcd-docs/issues/966
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPq7A
+  - id: enhance-update-issue-command-for-progress-tracking
+    type: issue
+    title: Enhance Update Issue Command for Progress Tracking
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 21000
+    description: Extend the update-issue command to support appending implementation notes and other progress information
+      without overwriting the original issue specification. This allows Johnny-Johnny and engineers to maintain a running
+      implementation log while preserving the canonical problem statement and acceptance criteria.
+    acceptance_criteria:
+    - Support appending implementation notes to an issue without replacing the original description.
+    - Automatically timestamp appended implementation notes.
+    - Allow status updates and note appends in the same command.
+    - Preserve the original description as the canonical specification.
+    - Persist implementation notes in the canonical backlog model for future RAG retrieval.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJjSSw
+        database_id: 4774744651
+        number: 976
+        url: https://github.com/ggortsema/styxcd-docs/issues/976
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQD7Y
+  - id: normalize-project-status-values-across-providers
+    type: issue
+    title: Normalize Project Status Values Across Providers
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 22000
+    description: Add status normalization between the canonical backlog model and provider-specific status values so Johnny-Johnny
+      can preserve canonical status names while sending the exact option values required by GitHub Projects.
+    acceptance_criteria:
+    - Keep canonical backlog statuses provider-independent.
+    - Map canonical statuses to GitHub Project status option names before provider execution.
+    - Handle GitHub option casing differences such as In Progress versus In progress.
+    - Fail with a clear error when a canonical status has no provider mapping.
+    - Document where provider-specific status mappings are defined.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJja7Q
+        database_id: 4774746861
+        number: 977
+        url: https://github.com/ggortsema/styxcd-docs/issues/977
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQEE4
+- id: johnny-johnny-core-cli
+  type: epic
+  title: Johnny-Johnny Core CLI
+  repository: ggortsema/styxcd-docs
+  status: Backlog
+  issue_state: OPEN
+  order: 21000
+  description: Build the core command-line interface for Johnny-Johnny. The CLI is the primary deterministic interface for
+    invoking engineering capabilities, managing project artifacts, and serving as the execution layer that future AI agents
+    and orchestration systems will call.
+  acceptance_criteria:
+  - Provide an extensible Typer-based CLI architecture.
+  - Support capability-based command groups.
+  - Implement deterministic command execution.
+  - Support dry-run and confirm semantics for mutating commands.
+  - Serve as the stable execution interface for future LangGraph agents.
+  labels: []
+  assignees: []
+  milestone: null
+  provider_metadata:
+    github:
+      issue_id: I_kwDOR_b51c8AAAABHJc6nw
+      database_id: 4774640287
+      number: 969
+      url: https://github.com/ggortsema/styxcd-docs/issues/969
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP9SA
+  issues:
+  - id: implement-langgraph-tool-adapter
+    type: issue
+    title: Implement LangGraph Tool Adapter
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 1000
+    description: Create the first LangGraph tool adapter capable of invoking deterministic Johnny-Johnny capabilities. This
+      adapter becomes the bridge between AI reasoning and the existing Johnny-Johnny command architecture while preserving
+      deterministic execution.
+    acceptance_criteria:
+    - Implement a LangGraph tool wrapper around one Johnny-Johnny capability.
+    - Support create-issue as the first tool.
+    - Demonstrate end-to-end tool execution from LangGraph.
+    - Preserve the existing deterministic planner/executor pipeline.
+    - Provide a foundation for registering additional Johnny-Johnny tools.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJdHSg
+        database_id: 4774643530
+        number: 970
+        url: https://github.com/ggortsema/styxcd-docs/issues/970
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP9fk
+  - id: add-postgresql-vector-store-support
+    type: issue
+    title: Add PostgreSQL Vector Store Support
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 2000
+    description: Set up pgvector support in the existing Johnny-Johnny PostgreSQL database so project documents, ADRs, backlog
+      files, and session context can be embedded and retrieved for RAG workflows.
+    acceptance_criteria:
+    - Define the database schema for storing documents, chunks, embeddings, metadata, and source paths.
+    - Support pgvector extension initialization or clear setup instructions.
+    - Add configuration for PostgreSQL connection settings.
+    - Provide a small verification command or script that confirms vector storage is available.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJeNNA
+        database_id: 4774661428
+        number: 971
+        url: https://github.com/ggortsema/styxcd-docs/issues/971
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-nc
+  - id: implement-project-document-ingestion
+    type: issue
+    title: Implement Project Document Ingestion
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 3000
+    description: Create a document ingestion pipeline that loads Johnny-Johnny project context into the vector store, including
+      README files, ADRs, specifications, backlog YAML, schemas, and session handoffs.
+    acceptance_criteria:
+    - Load selected project files from configurable paths.
+    - Split documents into retrievable chunks.
+    - Store chunks with source metadata.
+    - Avoid duplicating unchanged documents on repeated ingestion.
+    - Provide a CLI command to run ingestion.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJeRbQ
+        database_id: 4774662509
+        number: 972
+        url: https://github.com/ggortsema/styxcd-docs/issues/972
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-rg
+  - id: implement-rag-retrieval-command
+    type: issue
+    title: Implement RAG Retrieval Command
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 4000
+    description: Add a minimal command that queries the project vector store and returns relevant Johnny-Johnny context for
+      a natural-language request.
+    acceptance_criteria:
+    - Accept a natural-language query from the CLI.
+    - Retrieve relevant chunks from the vector store.
+    - Display source paths and concise matching excerpts.
+    - Support enough retrieval quality to feed a future LangGraph agent.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJeWgg
+        database_id: 4774663810
+        number: 973
+        url: https://github.com/ggortsema/styxcd-docs/issues/973
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-w0
+  - id: add-ai-configuration-management
+    type: issue
+    title: Add AI Configuration Management
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 5000
+    description: Centralize configuration for AI-related features including model names, embedding provider, vector database
+      settings, ingestion paths, and mutating-command confirmation policy.
+    acceptance_criteria:
+    - Define environment variables or config file settings for AI features.
+    - Support separate configuration for embeddings and chat models.
+    - Document required local setup.
+    - Ensure mutating AI-driven commands require explicit confirmation.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJedrg
+        database_id: 4774665646
+        number: 974
+        url: https://github.com/ggortsema/styxcd-docs/issues/974
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-3M
+  - id: design-capability-orchestrating-chat-interface
+    type: issue
+    title: Design Capability-Orchestrating Chat Interface
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 6000
+    description: Design the chatbot architecture as a conversational interface to Johnny-Johnny's capability system, not as
+      a provider-specific or backlog-specific chatbot. The design should define how RAG, LangGraph, capability discovery,
+      intent classification, confirmation, and deterministic command execution work together.
+    acceptance_criteria:
+    - Define the chatbot as an orchestrator of Johnny-Johnny capabilities.
+    - Describe how RAG retrieves both project context and capability/tool definitions.
+    - Describe how LangGraph selects and routes to deterministic capabilities.
+    - Require explicit confirmation before mutating commands execute.
+    - Preserve the boundary that providers are implementation details behind capabilities.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABHJgQwQ
+        database_id: 4774695105
+        number: 975
+        url: https://github.com/ggortsema/styxcd-docs/issues/975
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQA5Y

@@ -52,7 +52,14 @@ def execute_reconciliation_plan(
                 body=body,
             )
 
-            add_issue_to_project(project_id, issue["id"])
+            project_item = add_issue_to_project(project_id, issue["id"])
+
+            _hydrate_github_metadata(
+                item=epic,
+                issue=issue,
+                project_item=project_item,
+            )
+
             created_epics[epic.id] = issue
 
             print(f"Created epic #{issue['number']}")
@@ -77,6 +84,11 @@ def execute_reconciliation_plan(
                 body=body,
             )
 
+            _hydrate_github_metadata(
+                item=issue_model,
+                issue=issue,
+            )
+
             created_issues[issue_model.id] = issue
 
             print(f"Created issue #{issue['number']}")
@@ -89,7 +101,13 @@ def execute_reconciliation_plan(
 
             print(f"Adding issue to project: {issue_model.title}")
 
-            add_issue_to_project(project_id, issue["id"])
+            project_item = add_issue_to_project(project_id, issue["id"])
+
+            _hydrate_github_metadata(
+                item=issue_model,
+                issue=issue,
+                project_item=project_item,
+            )
 
             print("Added to project.")
             print()
@@ -146,6 +164,34 @@ def execute_reconciliation_plan(
 
             print("Deleted.")
             print()
+
+
+def _hydrate_github_metadata(
+        item,
+        issue: dict,
+        project_item: dict | None = None,
+) -> None:
+    current_github_metadata = item.provider_metadata.get("github", {})
+
+    github_metadata = {
+        **current_github_metadata,
+        "issue_id": issue.get("id") or issue.get("issue_id"),
+        "database_id": issue.get("databaseId") or issue.get("database_id"),
+        "number": issue.get("number"),
+        "url": issue.get("url"),
+    }
+
+    if project_item:
+        github_metadata["project_item_id"] = (
+                project_item.get("id")
+                or project_item.get("project_item_id")
+        )
+
+    item.provider_metadata["github"] = {
+        key: value
+        for key, value in github_metadata.items()
+        if value is not None
+    }
 
 
 def _get_project_item_id(issue_model) -> str:
