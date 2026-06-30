@@ -1,5 +1,6 @@
 from johnny_johnny_agent.capabilities.backlog_sync.planner import (
-    AttachIssueOperation,
+    AddIssueToProjectOperation,
+    AttachIssueToEpicOperation,
     CreateEpicOperation,
     CreateIssueOperation,
     ExecutionPlan,
@@ -72,23 +73,33 @@ def execute_reconciliation_plan(
                 body=body,
             )
 
-            add_issue_to_project(project_id, issue["id"])
             created_issues[issue_model.id] = issue
 
             print(f"Created issue #{issue['number']}")
             print(f"URL: {issue['url']}")
             print()
 
-        elif isinstance(operation, AttachIssueOperation):
+        elif isinstance(operation, AddIssueToProjectOperation):
+            issue_model = operation.issue
+            issue = _get_created_issue(issue_model.id, created_issues)
+
+            print(f"Adding issue to project: {issue_model.title}")
+
+            add_issue_to_project(project_id, issue["id"])
+
+            print("Added to project.")
+            print()
+
+        elif isinstance(operation, AttachIssueToEpicOperation):
             epic = operation.parent_epic
             issue_model = operation.issue
 
-            parent_issue = created_epics[epic.id]
-            child_issue = created_issues[issue_model.id]
+            parent_issue = _get_created_epic(epic.id, created_epics)
+            child_issue = _get_created_issue(issue_model.id, created_issues)
 
             owner, repo = issue_model.repository.split("/", maxsplit=1)
 
-            print(f"Attaching issue: {issue_model.title} -> {epic.title}")
+            print(f"Attaching issue to epic: {issue_model.title} -> {epic.title}")
 
             add_sub_issue(
                 owner=owner,
@@ -97,8 +108,32 @@ def execute_reconciliation_plan(
                 child_issue_database_id=child_issue["databaseId"],
             )
 
-            print("Attached.")
+            print("Attached to epic.")
             print()
+
+
+def _get_created_epic(
+        epic_id: str,
+        created_epics: dict[str, dict],
+) -> dict:
+    if epic_id not in created_epics:
+        raise RuntimeError(
+            f"Cannot attach issue to epic because epic was not created in this execution: {epic_id}"
+        )
+
+    return created_epics[epic_id]
+
+
+def _get_created_issue(
+        issue_id: str,
+        created_issues: dict[str, dict],
+) -> dict:
+    if issue_id not in created_issues:
+        raise RuntimeError(
+            f"Cannot operate on issue because it was not created in this execution: {issue_id}"
+        )
+
+    return created_issues[issue_id]
 
 
 def _get_repository(

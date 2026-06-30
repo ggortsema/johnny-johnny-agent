@@ -2,69 +2,86 @@ version: 1
 
 project:
   provider: github
-  name: "MycroftAI Engineering Roadmap"
+  title: MycroftAI Engineering Roadmap
+  number: 1
+  url: https://github.com/users/ggortsema/projects/1
+  provider_metadata:
+    github:
+      project_id: PVT_example
 
 epics:
   - id: project-management-workflow-provider
-    name: "Project Management Workflow Provider"
-    state: todo
-    repository: "ggortsema/styxcd-docs"
-    description: "Implement a provider-neutral project-management workflow that can create, update, synchronize, and migrate roadmap items across project-management providers using YAML as the durable source of truth."
-    acceptanceCriteria:
-      - "Project-management workflows can be represented as YAML."
-      - "Epics and child issues can be represented in the canonical backlog model."
-      - "The backlog model remains portable across providers."
-      - "Generated YAML validates against the v1 JSON Schema."
+    type: epic
+    title: Project Management Workflow Provider
+    repository: ggortsema/styxcd-docs
+    status: OPEN
+    order: 1000
+    description: |
+      Implement a provider-neutral project-management workflow system.
+    acceptance_criteria:
+      - Define a canonical backlog YAML format.
+      - Support provider metadata without making provider IDs semantic identity.
+      - Preserve enough metadata to reconcile with GitHub Projects.
     labels:
       - platform
-      - project-management
-    assignees: []
-    milestone: "v1"
-
+      - backlog
+    assignees:
+      - ggortsema
+    milestone: Backlog v1
+    provider_metadata:
+      github:
+        issue_id: I_example
+        project_item_id: PVTI_example
+        database_id: 123456
+        number: 283
+        url: https://github.com/ggortsema/styxcd-docs/issues/283
     issues:
       - id: define-pm-workflow-dsl
-        name: "Define PM Workflow DSL"
-        state: todo
-        repository: "ggortsema/styxcd-docs"
-        description: "Define the YAML structure for project-management backlogs, including epics, issues, labels, assignees, milestones, acceptance criteria, and portable state."
-        acceptanceCriteria:
-          - "Backlog YAML schema is documented."
-          - "Epics and issues are represented clearly."
-          - "Optional fields such as labels, assignees, and milestones are supported."
-          - "Provider-specific metadata is excluded from the canonical backlog document."
+        type: issue
+        title: Define PM Workflow DSL
+        repository: ggortsema/styxcd-docs
+        status: OPEN
+        order: 1000
+        description: |
+          Define the portable YAML structure for project-management workflows.
+        acceptance_criteria:
+          - Epics and issues can be represented.
+          - Provider metadata is isolated under provider_metadata.
+          - Stable Johnny-Johnny IDs are used as semantic identity.
         labels:
-          - schema
-        assignees: []
-        milestone: "v1"
+          - design
+        assignees:
+          - ggortsema
+        milestone: Backlog v1
+        provider_metadata:
+          github:
+            issue_id: I_child_example
+            project_item_id: PVTI_child_example
+            database_id: 123457
+            number: 284
+            url: https://github.com/ggortsema/styxcd-docs/issues/284
 
-      - id: implement-github-project-reader
-        name: "Implement GitHub Project Reader"
-        state: todo
-        repository: "ggortsema/styxcd-docs"
-        description: "Read the current state of a GitHub Project and convert it into the Johnny-Johnny canonical backlog model."
-        acceptanceCriteria:
-          - "GitHub ProjectV2 items can be fetched."
-          - "Epic issues can be identified."
-          - "Child issues can be associated with their parent epic."
-          - "GitHub statuses can be mapped into canonical states."
-          - "The resulting model can be exported to backlog.yml."
+      - id: implement-github-issues-provider
+        type: issue
+        title: Implement GitHub Issues Provider
+        repository: ggortsema/styxcd-docs
+        status: OPEN
+        order: 2000
+        description: |
+          Implement the first provider integration using GitHub Issues and GitHub Projects.
+        acceptance_criteria:
+          - GitHub issues can be created from canonical backlog YAML.
+          - GitHub project items can be associated with created issues.
+          - Repeated execution is safe and idempotent.
         labels:
           - github
-          - adapter
+          - integration
         assignees: []
-        milestone: "v1"
-
-      - id: validate-generated-backlog-yaml
-        name: "Validate Generated Backlog YAML"
-        state: todo
-        repository: "ggortsema/styxcd-docs"
-        description: "Ensure every generated backlog.yml document validates against the official v1 JSON Schema before the export is considered successful."
-        acceptanceCriteria:
-          - "Generated YAML is parsed after writing."
-          - "Parsed YAML is validated against schemas/backlog-v1.schema.json."
-          - "Validation failures stop the export."
-          - "Validation errors are reported clearly."
-        labels:
-          - validation
-        assignees: []
-        milestone: "v1"
+        milestone: Backlog v1
+        provider_metadata:
+          github:
+            issue_id: I_second_child_example
+            project_item_id: PVTI_second_child_example
+            database_id: 123458
+            number: 285
+            url: https://github.com/ggortsema/styxcd-docs/issues/285

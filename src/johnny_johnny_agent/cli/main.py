@@ -14,7 +14,8 @@ from johnny_johnny_agent.capabilities.backlog_sync.validator import (
 from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
 from johnny_johnny_agent.capabilities.github.renderer import render_epic_body
 from johnny_johnny_agent.capabilities.backlog_sync.planner import (
-    AttachIssueOperation,
+    AddIssueToProjectOperation,
+    AttachIssueToEpicOperation,
     CreateEpicOperation,
     CreateIssueOperation,
     plan_reconcile_backlog,
@@ -28,6 +29,9 @@ from johnny_johnny_agent.capabilities.github.client import (
 )
 from johnny_johnny_agent.capabilities.backlog_sync.purge import (
     purge_johnny_managed_issues,
+)
+from johnny_johnny_agent.capabilities.github.backlog_exporter import (
+    generate_backlog_yaml_from_github_project,
 )
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
@@ -72,6 +76,24 @@ def serve(
         reload=reload,
     )
 
+@backlog_app.command("generate")
+def generate_backlog_yaml(
+        project: Annotated[
+            str,
+            typer.Option("--project", "-p", help="GitHub ProjectV2 title."),
+        ] = DEFAULT_GITHUB_PROJECT_TITLE,
+        output: Annotated[
+            str,
+            typer.Option("--output", "-o", help="Path to write generated backlog YAML."),
+        ] = "data/input/backlog/backlog.yml",
+) -> None:
+    """Generate canonical backlog YAML from the current GitHub ProjectV2."""
+    generate_backlog_yaml_from_github_project(
+        project_title=project,
+        output_path=output,
+    )
+
+    typer.echo(f"Wrote canonical backlog YAML: {output}")
 
 @backlog_app.command("publish")
 def publish_backlog(
@@ -183,8 +205,13 @@ def reconcile_backlog(
         raise typer.Exit(code=1)
 
     backlog = load_backlog_yaml(file)
-    plan = plan_reconcile_backlog(backlog)
+    github_project = get_viewer_project_by_title(backlog.project.title)
+    current_project_issues = list_project_issues(github_project["id"])
 
+    plan = plan_reconcile_backlog(
+        backlog=backlog,
+        current_project_issues=current_project_issues,
+    )
     if dry_run:
         _print_reconciliation_plan(plan)
         return
@@ -219,18 +246,28 @@ def _print_reconciliation_plan(plan) -> None:
     typer.echo("Execution Plan")
     typer.echo()
 
+    if not plan.operations:
+        typer.echo("No operations.")
+
     for operation in plan.operations:
         if isinstance(operation, CreateEpicOperation):
             typer.echo(f"+ Create epic: {operation.epic.title} [{operation.epic.id}]")
+
         elif isinstance(operation, CreateIssueOperation):
             typer.echo(
                 f"+ Create issue: {operation.issue.title} "
                 f"[{operation.issue.id}] "
                 f"in {operation.issue.repository}"
             )
-        elif isinstance(operation, AttachIssueOperation):
+
+        elif isinstance(operation, AddIssueToProjectOperation):
             typer.echo(
-                f"+ Attach issue: {operation.issue.title} "
+                f"+ Add issue to project: {operation.issue.title}"
+            )
+
+        elif isinstance(operation, AttachIssueToEpicOperation):
+            typer.echo(
+                f"+ Attach issue to epic: {operation.issue.title} "
                 f"-> {operation.parent_epic.title}"
             )
 

@@ -2,60 +2,28 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://mycroftai.org/schemas/johnny-johnny/backlog-v1.schema.json",
   "title": "Johnny-Johnny Backlog YAML v1",
-  "description": "Provider-neutral canonical backlog schema for Johnny-Johnny. This schema validates the portable backlog SSOT only; workflow, provider configuration, credentials, and provider-specific IDs are intentionally excluded.",
+  "description": "Machine-owned canonical backlog schema for Johnny-Johnny. Semantic identity is provider-neutral; provider-specific IDs are isolated under provider_metadata.",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "version",
-    "project",
-    "epics"
-  ],
+  "required": ["version", "project", "epics"],
   "properties": {
     "version": {
-      "description": "Backlog YAML schema version.",
       "type": "integer",
       "const": 1
     },
+    "project": {
+      "$ref": "#/$defs/project"
+    },
     "epics": {
-      "description": "Top-level backlog epics.",
       "type": "array",
-      "minItems": 1,
       "items": {
         "$ref": "#/$defs/epic"
-      }
-    },
-    "project": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "provider",
-        "name"
-      ],
-      "properties": {
-        "provider": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "minLength": 1
-        }
-      }
+      },
+      "default": []
     }
   },
   "$defs": {
-    "canonicalState": {
-      "description": "Portable work state. Provider-specific statuses should be mapped into one of these canonical states.",
-      "type": "string",
-      "enum": [
-        "todo",
-        "in_progress",
-        "done",
-        "blocked",
-        "wont_do"
-      ]
-    },
     "stableId": {
-      "description": "Provider-neutral Johnny-Johnny stable identifier. This is not a GitHub/Jira/Linear provider ID.",
       "type": "string",
       "minLength": 1,
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
@@ -71,39 +39,87 @@
       },
       "default": []
     },
+    "nullableString": {
+      "type": ["string", "null"]
+    },
+    "providerMetadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "default": {}
+    },
     "acceptanceCriteria": {
-      "description": "Human-readable acceptance criteria.",
       "type": "array",
       "items": {
         "$ref": "#/$defs/nonEmptyString"
       },
       "default": []
     },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "title", "provider_metadata"],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "number": {
+          "type": ["integer", "null"]
+        },
+        "url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "provider_metadata": {
+          "$ref": "#/$defs/providerMetadata"
+        }
+      }
+    },
     "epic": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "id",
-        "name",
-        "state",
+        "type",
+        "title",
         "repository",
+        "status",
+        "order",
         "description",
+        "acceptance_criteria",
+        "labels",
+        "assignees",
+        "milestone",
+        "provider_metadata",
         "issues"
       ],
       "properties": {
         "id": {
           "$ref": "#/$defs/stableId"
         },
-        "name": {
+        "type": {
+          "type": "string",
+          "const": "epic"
+        },
+        "title": {
           "$ref": "#/$defs/nonEmptyString"
         },
-        "state": {
-          "$ref": "#/$defs/canonicalState"
+        "repository": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
         },
         "description": {
           "type": "string"
         },
-        "acceptanceCriteria": {
+        "acceptance_criteria": {
           "$ref": "#/$defs/acceptanceCriteria"
         },
         "labels": {
@@ -113,8 +129,10 @@
           "$ref": "#/$defs/stringList"
         },
         "milestone": {
-          "type": "string",
-          "default": ""
+          "$ref": "#/$defs/nullableString"
+        },
+        "provider_metadata": {
+          "$ref": "#/$defs/providerMetadata"
         },
         "issues": {
           "type": "array",
@@ -122,11 +140,6 @@
             "$ref": "#/$defs/issue"
           },
           "default": []
-        },
-        "repository": {
-          "description": "Repository where this work item should be projected.",
-          "type": "string",
-          "minLength": 1
         }
       }
     },
@@ -135,25 +148,43 @@
       "additionalProperties": false,
       "required": [
         "id",
-        "name",
-        "state",
+        "type",
+        "title",
         "repository",
-        "description"
+        "status",
+        "order",
+        "description",
+        "acceptance_criteria",
+        "labels",
+        "assignees",
+        "milestone",
+        "provider_metadata"
       ],
       "properties": {
         "id": {
           "$ref": "#/$defs/stableId"
         },
-        "name": {
+        "type": {
+          "type": "string",
+          "const": "issue"
+        },
+        "title": {
           "$ref": "#/$defs/nonEmptyString"
         },
-        "state": {
-          "$ref": "#/$defs/canonicalState"
+        "repository": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
         },
         "description": {
           "type": "string"
         },
-        "acceptanceCriteria": {
+        "acceptance_criteria": {
           "$ref": "#/$defs/acceptanceCriteria"
         },
         "labels": {
@@ -163,13 +194,10 @@
           "$ref": "#/$defs/stringList"
         },
         "milestone": {
-          "type": "string",
-          "default": ""
+          "$ref": "#/$defs/nullableString"
         },
-        "repository": {
-          "description": "Repository where this work item should be projected.",
-          "type": "string",
-          "minLength": 1
+        "provider_metadata": {
+          "$ref": "#/$defs/providerMetadata"
         }
       }
     }
