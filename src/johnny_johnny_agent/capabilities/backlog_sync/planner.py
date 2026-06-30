@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Union
 
 from johnny_johnny_agent.domain.backlog import Backlog, Epic, Issue
 
@@ -26,12 +26,20 @@ class AttachIssueToEpicOperation:
     parent_epic: Epic
 
 
-BacklogOperation = (
-        CreateEpicOperation
-        | CreateIssueOperation
-        | AddIssueToProjectOperation
-        | AttachIssueToEpicOperation
-)
+@dataclass
+class UpdateIssueStatusOperation:
+    issue: Issue
+    current_status: str | None
+    desired_status: str
+
+
+BacklogOperation = Union[
+    CreateEpicOperation,
+    CreateIssueOperation,
+    AddIssueToProjectOperation,
+    AttachIssueToEpicOperation,
+    UpdateIssueStatusOperation,
+]
 
 
 @dataclass
@@ -63,6 +71,18 @@ def plan_reconcile_backlog(
                     AttachIssueToEpicOperation(
                         issue=issue,
                         parent_epic=epic,
+                    )
+                )
+                continue
+
+            current_status = live_issue.get("project_status")
+
+            if current_status != issue.status:
+                operations.append(
+                    UpdateIssueStatusOperation(
+                        issue=issue,
+                        current_status=current_status,
+                        desired_status=issue.status,
                     )
                 )
 

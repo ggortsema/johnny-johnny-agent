@@ -4,6 +4,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     CreateEpicOperation,
     CreateIssueOperation,
     ExecutionPlan,
+    UpdateIssueStatusOperation,
 )
 from johnny_johnny_agent.capabilities.github.client import (
     add_issue_to_project,
@@ -11,6 +12,7 @@ from johnny_johnny_agent.capabilities.github.client import (
     create_issue,
     get_repository,
     get_viewer_project_by_title,
+    update_project_item_status,
 )
 from johnny_johnny_agent.capabilities.github.renderer import (
     render_epic_body,
@@ -110,6 +112,39 @@ def execute_reconciliation_plan(
 
             print("Attached to epic.")
             print()
+
+        elif isinstance(operation, UpdateIssueStatusOperation):
+            issue_model = operation.issue
+            project_item_id = _get_project_item_id(issue_model)
+
+            print(
+                f"Updating issue status: {issue_model.title} "
+                f"{operation.current_status} -> {operation.desired_status}"
+            )
+
+            update_project_item_status(
+                project_id=project_id,
+                project_item_id=project_item_id,
+                status=operation.desired_status,
+            )
+
+            print("Status updated.")
+            print()
+
+
+def _get_project_item_id(issue_model) -> str:
+    project_item_id = (
+        issue_model.provider_metadata
+        .get("github", {})
+        .get("project_item_id")
+    )
+
+    if not project_item_id:
+        raise RuntimeError(
+            f"Cannot update issue status because project_item_id is missing: {issue_model.id}"
+        )
+
+    return project_item_id
 
 
 def _get_created_epic(

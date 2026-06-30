@@ -86,6 +86,7 @@
         "title",
         "repository",
         "status",
+        "issue_state",
         "order",
         "description",
         "acceptance_criteria",
@@ -110,7 +111,10 @@
           "$ref": "#/$defs/nonEmptyString"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "issue_state": {
+          "$ref": "#/$defs/nonEmptyString"
         },
         "order": {
           "type": "integer",
@@ -152,6 +156,7 @@
         "title",
         "repository",
         "status",
+        "issue_state",
         "order",
         "description",
         "acceptance_criteria",
@@ -175,7 +180,10 @@
           "$ref": "#/$defs/nonEmptyString"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "issue_state": {
+          "$ref": "#/$defs/nonEmptyString"
         },
         "order": {
           "type": "integer",

@@ -86,7 +86,8 @@ def github_pull_to_backlog_dict(data: dict[str, Any]) -> dict[str, Any]:
                 "type": "epic",
                 "title": f"[Missing Epic] {parent_id}",
                 "repository": row.get("repository", ""),
-                "status": _status(row),
+                "status": _project_status(row),
+                "issue_state": _issue_state(row),
                 "order": epic_order,
                 "description": "Generated placeholder because this issue referenced a parent epic not found in the pull.",
                 "acceptance_criteria": [],
@@ -144,7 +145,8 @@ def _work_item_from_row(
         "type": item_type,
         "title": row["title"],
         "repository": row.get("repository", ""),
-        "status": _status(row),
+        "status": _project_status(row),
+        "issue_state": _issue_state(row),
         "order": order,
         "description": _clean_description(
             _strip_johnny_metadata(row.get("body", "")).strip()
@@ -163,6 +165,18 @@ def _work_item_from_row(
             }
         },
     }
+
+
+def _project_status(row: dict[str, Any]) -> str:
+    return (
+            row.get("project_status")
+            or row.get("status")
+            or "Backlog"
+    )
+
+
+def _issue_state(row: dict[str, Any]) -> str:
+    return row.get("state") or "OPEN"
 
 
 def _extract_johnny_metadata(body: str) -> dict[str, str]:
@@ -204,15 +218,6 @@ def _clean_description(description: str) -> str:
 
 def _clean_epic_title(title: str) -> str:
     return title.removeprefix("[Epic] ").strip()
-
-
-def _status(row: dict[str, Any]) -> str:
-    return (
-            row.get("status")
-            or row.get("project_status")
-            or row.get("state")
-            or ""
-    )
 
 
 def _names(values: list[Any]) -> list[str]:

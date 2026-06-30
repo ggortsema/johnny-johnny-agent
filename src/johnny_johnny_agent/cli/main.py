@@ -18,6 +18,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     AttachIssueToEpicOperation,
     CreateEpicOperation,
     CreateIssueOperation,
+    UpdateIssueStatusOperation,
     plan_reconcile_backlog,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.executor import (
@@ -32,6 +33,18 @@ from johnny_johnny_agent.capabilities.backlog_sync.purge import (
 )
 from johnny_johnny_agent.capabilities.github.backlog_exporter import (
     generate_backlog_yaml_from_github_project,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
+    update_issue_status,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
+    save_backlog_yaml,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
+    update_issue_status,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
+    save_backlog_yaml,
 )
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
@@ -242,6 +255,100 @@ def pull_backlog(
         )
     )
 
+@backlog_app.command("update-issue")
+def update_issue(
+        issue_id: Annotated[
+            str,
+            typer.Argument(help="Stable Johnny-Johnny issue id."),
+        ],
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        status: Annotated[
+            str | None,
+            typer.Option("--status", help="New project planning status."),
+        ] = None,
+        dry_run: Annotated[
+            bool,
+            typer.Option("--dry-run", help="Preview reconciliation."),
+        ] = False,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Save and reconcile."),
+        ] = False,
+) -> None:
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
+
+    if status is None:
+        typer.echo("Nothing to update.")
+        raise typer.Exit(code=1)
+
+    backlog = load_backlog_yaml(file)
+
+    issue = update_issue_status(
+        backlog=backlog,
+        issue_id=issue_id,
+        status=status,
+    )
+
+    typer.echo(f"Updated: {issue.title}")
+    typer.echo(f"Status: {issue.status}")
+
+    if dry_run:
+        plan = _plan_reconcile(backlog)
+        _print_reconciliation_plan(plan)
+        return
+
+    save_backlog_yaml(
+        backlog=backlog,
+        backlog_path=file,
+    )
+
+    typer.echo(f"Saved: {file}")
+
+    if confirm:
+        plan = _plan_reconcile(backlog)
+
+        _print_reconciliation_plan(plan)
+
+        if plan.operations:
+            execute_reconciliation_plan(
+                plan=plan,
+                project_title=backlog.project.title,
+            )
+
+@backlog_app.command("purge")
+def purge_backlog_projection(
+        project: Annotated[
+            str,
+            typer.Option("--project", "-p", help="GitHub ProjectV2 title."),
+        ] = DEFAULT_GITHUB_PROJECT_TITLE,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Delete Johnny-managed GitHub issues."),
+        ] = False,
+) -> None:
+    """Delete Johnny-managed issues from a GitHub ProjectV2 projection."""
+    purge_johnny_managed_issues(
+        project_title=project,
+        confirm=confirm,
+    )
+
+def _plan_reconcile(backlog):
+    github_project = get_viewer_project_by_title(backlog.project.title)
+
+    current_project_issues = list_project_issues(
+        github_project["id"],
+    )
+
+    return plan_reconcile_backlog(
+        backlog=backlog,
+        current_project_issues=current_project_issues,
+    )
+
 def _print_reconciliation_plan(plan) -> None:
     typer.echo("Execution Plan")
     typer.echo()
@@ -271,22 +378,13 @@ def _print_reconciliation_plan(plan) -> None:
                 f"-> {operation.parent_epic.title}"
             )
 
+        elif isinstance(operation, UpdateIssueStatusOperation):
+            typer.echo(
+                f"+ Update issue status: "
+                f"{operation.issue.title} "
+                f"{operation.current_status} -> {operation.desired_status}"
+        )
+
     typer.echo()
     typer.echo(f"Operations: {len(plan.operations)}")
 
-@backlog_app.command("purge")
-def purge_backlog_projection(
-        project: Annotated[
-            str,
-            typer.Option("--project", "-p", help="GitHub ProjectV2 title."),
-        ] = DEFAULT_GITHUB_PROJECT_TITLE,
-        confirm: Annotated[
-            bool,
-            typer.Option("--confirm", help="Delete Johnny-managed GitHub issues."),
-        ] = False,
-) -> None:
-    """Delete Johnny-managed issues from a GitHub ProjectV2 projection."""
-    purge_johnny_managed_issues(
-        project_title=project,
-        confirm=confirm,
-    )

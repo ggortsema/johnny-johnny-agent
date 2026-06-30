@@ -12,7 +12,8 @@ epics:
   type: epic
   title: GKE Workflow
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 1000
   description: Implement Google Kubernetes Engine (GKE) as a first-class deployment target within StyxCD. The workflow should
     support provisioning, deployment, validation, rollback, and future promotion strategies while remaining consistent with
@@ -23,17 +24,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAE5ng
-      database_id: 4764809630
-      number: 405
-      url: https://github.com/ggortsema/styxcd-docs/issues/405
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaPc
+      issue_id: I_kwDOR_b51c8AAAABHIVbdg
+      database_id: 4773469046
+      number: 773
+      url: https://github.com/ggortsema/styxcd-docs/issues/773
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1dQ
   issues:
   - id: implement-gke-deployment-stage
     type: issue
     title: Implement GKE deployment stage
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: Replace the current hello-world GKE stage with a real implementation that executes gcloud and kubectl commands.
       The stage should deploy an application to a target GKE cluster using workflow configuration provided by the orchestrator.
@@ -43,16 +45,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE5xw
-        database_id: 4764809671
-        number: 406
-        url: https://github.com/ggortsema/styxcd-docs/issues/406
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaPk
+        issue_id: I_kwDOR_b51c8AAAABHIVbqw
+        database_id: 4773469099
+        number: 774
+        url: https://github.com/ggortsema/styxcd-docs/issues/774
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1dw
   - id: define-gke-authentication-strategy
     type: issue
     title: Define GKE Authentication Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: Determine how StyxCD authenticates to GKE clusters. Evaluate service accounts, workload identity, and credential
       management approaches.
@@ -62,16 +65,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE6PA
-        database_id: 4764809788
-        number: 407
-        url: https://github.com/ggortsema/styxcd-docs/issues/407
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaPo
+        issue_id: I_kwDOR_b51c8AAAABHIVb6g
+        database_id: 4773469162
+        number: 775
+        url: https://github.com/ggortsema/styxcd-docs/issues/775
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1eU
   - id: deploy-sample-application-to-gke
     type: issue
     title: Deploy Sample Application to GKE
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: Deploy a sample application to GKE using StyxCD to validate the complete workflow from YAML submission through
       deployment execution.
@@ -81,16 +85,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE6bg
-        database_id: 4764809838
-        number: 408
-        url: https://github.com/ggortsema/styxcd-docs/issues/408
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaQA
+        issue_id: I_kwDOR_b51c8AAAABHIVcuA
+        database_id: 4773469368
+        number: 776
+        url: https://github.com/ggortsema/styxcd-docs/issues/776
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1e0
   - id: add-gke-rollback-support
     type: issue
     title: Add GKE Rollback Support
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: Design and implement rollback capabilities for GKE deployments.
     acceptance_criteria: []
@@ -99,16 +104,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE6sQ
-        database_id: 4764809905
-        number: 409
-        url: https://github.com/ggortsema/styxcd-docs/issues/409
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaQM
+        issue_id: I_kwDOR_b51c8AAAABHIVdig
+        database_id: 4773469578
+        number: 777
+        url: https://github.com/ggortsema/styxcd-docs/issues/777
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1fA
   - id: add-gke-deployment-validation
     type: issue
     title: Add GKE Deployment Validation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: Implement deployment validation after application rollout.
     acceptance_criteria: []
@@ -117,16 +123,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE68g
-        database_id: 4764809970
-        number: 410
-        url: https://github.com/ggortsema/styxcd-docs/issues/410
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaQg
+        issue_id: I_kwDOR_b51c8AAAABHIVdxA
+        database_id: 4773469636
+        number: 778
+        url: https://github.com/ggortsema/styxcd-docs/issues/778
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1fU
   - id: define-gke-deployment-model
     type: issue
     title: Define GKE Deployment Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: Define how GKE deployments are represented within the StyxCD workflow DSL.
     acceptance_criteria: []
@@ -135,16 +142,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE7JA
-        database_id: 4764810020
-        number: 411
-        url: https://github.com/ggortsema/styxcd-docs/issues/411
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaQo
+        issue_id: I_kwDOR_b51c8AAAABHIVeEw
+        database_id: 4773469715
+        number: 779
+        url: https://github.com/ggortsema/styxcd-docs/issues/779
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1gA
   - id: implement-gke-sandbox-environment-support
     type: issue
     title: Implement GKE Sandbox Environment Support
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Provide a repeatable sandbox environment for developing and testing GKE workflows.
     acceptance_criteria: []
@@ -153,16 +161,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE7WQ
-        database_id: 4764810073
-        number: 412
-        url: https://github.com/ggortsema/styxcd-docs/issues/412
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaQ4
+        issue_id: I_kwDOR_b51c8AAAABHIVeTQ
+        database_id: 4773469773
+        number: 780
+        url: https://github.com/ggortsema/styxcd-docs/issues/780
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1gU
 - id: platform-security
   type: epic
   title: Platform Security
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 2000
   description: Implement the security foundation for StyxCD. Define how users, services, execution engines, and external systems
     authenticate and authorize actions within the platform. The design should support both a single-user deployment model
@@ -173,17 +182,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAE7qg
-      database_id: 4764810154
-      number: 413
-      url: https://github.com/ggortsema/styxcd-docs/issues/413
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaRc
+      issue_id: I_kwDOR_b51c8AAAABHIVehw
+      database_id: 4773469831
+      number: 781
+      url: https://github.com/ggortsema/styxcd-docs/issues/781
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1go
   issues:
   - id: evaluate-control-plane-authentication-strategy
     type: issue
     title: Evaluate Control Plane Authentication Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: Determine how users authenticate to the StyxCD control plane. Evaluate API keys, OAuth2, OIDC, and other
       approaches that support both personal and enterprise deployments.
@@ -193,16 +203,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE72A
-        database_id: 4764810200
-        number: 414
-        url: https://github.com/ggortsema/styxcd-docs/issues/414
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaR8
+        issue_id: I_kwDOR_b51c8AAAABHIVetw
+        database_id: 4773469879
+        number: 782
+        url: https://github.com/ggortsema/styxcd-docs/issues/782
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1hA
   - id: implement-control-plane-authentication
     type: issue
     title: Implement Control Plane Authentication
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: Implement authentication for StyxCD APIs and UI access based on the selected authentication strategy. The
       solution should support both personal deployments and future enterprise deployments.
@@ -212,16 +223,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE8Hg
-        database_id: 4764810270
-        number: 415
-        url: https://github.com/ggortsema/styxcd-docs/issues/415
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaSI
+        issue_id: I_kwDOR_b51c8AAAABHIVe_w
+        database_id: 4773469951
+        number: 783
+        url: https://github.com/ggortsema/styxcd-docs/issues/783
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1hQ
   - id: define-service-to-service-authentication-model
     type: issue
     title: Define Service-to-Service Authentication Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: Define how StyxCD services authenticate with one another, including orchestrator, Jenkins, future execution
       engines, agents, and external integrations.
@@ -231,16 +243,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE8YA
-        database_id: 4764810336
-        number: 416
-        url: https://github.com/ggortsema/styxcd-docs/issues/416
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaSY
+        issue_id: I_kwDOR_b51c8AAAABHIVfWA
+        database_id: 4773470040
+        number: 784
+        url: https://github.com/ggortsema/styxcd-docs/issues/784
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1hs
   - id: secure-jenkins-callback-endpoints
     type: issue
     title: Secure Jenkins Callback Endpoints
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: Protect orchestrator callback endpoints so only trusted execution engines can submit workflow status updates.
     acceptance_criteria: []
@@ -249,16 +262,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE8og
-        database_id: 4764810402
-        number: 417
-        url: https://github.com/ggortsema/styxcd-docs/issues/417
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaSo
+        issue_id: I_kwDOR_b51c8AAAABHIVfnQ
+        database_id: 4773470109
+        number: 785
+        url: https://github.com/ggortsema/styxcd-docs/issues/785
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1h8
   - id: implement-secrets-management-strategy
     type: issue
     title: Implement Secrets Management Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: Define and implement how StyxCD stores, retrieves, and manages sensitive credentials such as cloud provider
       credentials, API keys, deployment tokens, and future provider integrations.
@@ -268,16 +282,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE9JQ
-        database_id: 4764810533
-        number: 418
-        url: https://github.com/ggortsema/styxcd-docs/issues/418
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaS8
+        issue_id: I_kwDOR_b51c8AAAABHIVf1g
+        database_id: 4773470166
+        number: 786
+        url: https://github.com/ggortsema/styxcd-docs/issues/786
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1iQ
   - id: define-authorization-and-rbac-model
     type: issue
     title: Define Authorization and RBAC Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: Define how permissions are granted within StyxCD and establish a role-based access control model that can
       evolve with future multi-user and enterprise requirements.
@@ -287,16 +302,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE9uw
-        database_id: 4764810683
-        number: 419
-        url: https://github.com/ggortsema/styxcd-docs/issues/419
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaTM
+        issue_id: I_kwDOR_b51c8AAAABHIVggg
+        database_id: 4773470338
+        number: 787
+        url: https://github.com/ggortsema/styxcd-docs/issues/787
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ik
   - id: secure-workflow-credential-usage
     type: issue
     title: Secure Workflow Credential Usage
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Define how workflows reference credentials without exposing sensitive information. Workflows should consume
       credentials through secure references rather than embedded values.
@@ -306,16 +322,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE9-w
-        database_id: 4764810747
-        number: 420
-        url: https://github.com/ggortsema/styxcd-docs/issues/420
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaTU
+        issue_id: I_kwDOR_b51c8AAAABHIVgvQ
+        database_id: 4773470397
+        number: 788
+        url: https://github.com/ggortsema/styxcd-docs/issues/788
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1i0
   - id: audit-security-sensitive-actions
     type: issue
     title: Audit Security-Sensitive Actions
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: Capture and retain security-relevant events such as authentication activity, authorization failures, credential
       access, workflow execution actions, and administrative changes.
@@ -325,16 +342,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE-Kg
-        database_id: 4764810794
-        number: 421
-        url: https://github.com/ggortsema/styxcd-docs/issues/421
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaTc
+        issue_id: I_kwDOR_b51c8AAAABHIVg_g
+        database_id: 4773470462
+        number: 789
+        url: https://github.com/ggortsema/styxcd-docs/issues/789
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1jI
   - id: define-multi-tenant-security-requirements
     type: issue
     title: Define Multi-Tenant Security Requirements
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: Document future requirements for supporting multiple teams, organizations, tenants, and delegated administration
       within StyxCD.
@@ -344,16 +362,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE-Zg
-        database_id: 4764810854
-        number: 422
-        url: https://github.com/ggortsema/styxcd-docs/issues/422
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaTk
+        issue_id: I_kwDOR_b51c8AAAABHIVhyg
+        database_id: 4773470666
+        number: 790
+        url: https://github.com/ggortsema/styxcd-docs/issues/790
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1jk
   - id: create-security-architecture-documentation
     type: issue
     title: Create Security Architecture Documentation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: Document the overall security architecture of StyxCD including authentication, authorization, secrets management,
       trust boundaries, audit logging, and future enterprise considerations.
@@ -363,16 +382,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE-tQ
-        database_id: 4764810933
-        number: 423
-        url: https://github.com/ggortsema/styxcd-docs/issues/423
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaT4
+        issue_id: I_kwDOR_b51c8AAAABHIViEg
+        database_id: 4773470738
+        number: 791
+        url: https://github.com/ggortsema/styxcd-docs/issues/791
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1j4
   - id: implement-session-based-control-plane-auth
     type: issue
     title: Implement Session-Based Control Plane Auth
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 11000
     description: Implement initial control-plane authentication using Spring Security and server-side sessions before introducing
       more complex OIDC/JWT patterns.
@@ -382,16 +402,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE-_A
-        database_id: 4764811004
-        number: 424
-        url: https://github.com/ggortsema/styxcd-docs/issues/424
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaUQ
+        issue_id: I_kwDOR_b51c8AAAABHIViUw
+        database_id: 4773470803
+        number: 792
+        url: https://github.com/ggortsema/styxcd-docs/issues/792
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1kA
 - id: workflow-templates-effective-yaml
   type: epic
   title: Workflow Templates & Effective YAML
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 3000
   description: Implement reusable workflow templates and an Effective YAML capability. Templates should allow platform teams
     to define standard workflow structures while application teams provide only the values that vary. StyxCD should render
@@ -402,17 +423,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAE_Lg
-      database_id: 4764811054
-      number: 425
-      url: https://github.com/ggortsema/styxcd-docs/issues/425
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaUc
+      issue_id: I_kwDOR_b51c8AAAABHIViqQ
+      database_id: 4773470889
+      number: 793
+      url: https://github.com/ggortsema/styxcd-docs/issues/793
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1kw
   issues:
   - id: design-workflow-template-model
     type: issue
     title: Design Workflow Template Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: Define the template architecture for StyxCD. Determine how templates, values, defaults, and overrides interact
       within workflow definitions.
@@ -422,16 +444,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE_UQ
-        database_id: 4764811089
-        number: 426
-        url: https://github.com/ggortsema/styxcd-docs/issues/426
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaUw
+        issue_id: I_kwDOR_b51c8AAAABHIVi6Q
+        database_id: 4773470953
+        number: 794
+        url: https://github.com/ggortsema/styxcd-docs/issues/794
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1k8
   - id: implement-template-resolution-engine
     type: issue
     title: Implement Template Resolution Engine
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: Implement the backend logic that resolves templates and values into a final workflow definition suitable
       for planning and execution.
@@ -441,16 +464,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE_nQ
-        database_id: 4764811165
-        number: 427
-        url: https://github.com/ggortsema/styxcd-docs/issues/427
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaU8
+        issue_id: I_kwDOR_b51c8AAAABHIVjLA
+        database_id: 4773471020
+        number: 795
+        url: https://github.com/ggortsema/styxcd-docs/issues/795
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1lI
   - id: implement-effective-yaml-generation
     type: issue
     title: Implement Effective YAML Generation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: Generate a fully resolved workflow definition after template processing and before execution. The generated
       YAML should represent the exact workflow that will be executed.
@@ -460,16 +484,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAE_3A
-        database_id: 4764811228
-        number: 428
-        url: https://github.com/ggortsema/styxcd-docs/issues/428
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaVE
+        issue_id: I_kwDOR_b51c8AAAABHIVjcQ
+        database_id: 4773471089
+        number: 796
+        url: https://github.com/ggortsema/styxcd-docs/issues/796
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1lg
   - id: display-effective-yaml-in-ui
     type: issue
     title: Display Effective YAML in UI
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: Provide a user interface for viewing the resolved workflow before execution and during execution review.
     acceptance_criteria: []
@@ -478,16 +503,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFAKA
-        database_id: 4764811304
-        number: 429
-        url: https://github.com/ggortsema/styxcd-docs/issues/429
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaVQ
+        issue_id: I_kwDOR_b51c8AAAABHIVjtw
+        database_id: 4773471159
+        number: 797
+        url: https://github.com/ggortsema/styxcd-docs/issues/797
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1mM
   - id: implement-workflow-validation-against-effective-yaml
     type: issue
     title: Implement Workflow Validation Against Effective YAML
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: Validate the final resolved workflow rather than only validating the original template inputs.
     acceptance_criteria: []
@@ -496,16 +522,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFAbA
-        database_id: 4764811372
-        number: 430
-        url: https://github.com/ggortsema/styxcd-docs/issues/430
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaVY
+        issue_id: I_kwDOR_b51c8AAAABHIVkAg
+        database_id: 4773471234
+        number: 798
+        url: https://github.com/ggortsema/styxcd-docs/issues/798
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ms
   - id: create-platform-workflow-templates
     type: issue
     title: Create Platform Workflow Templates
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: Create reusable platform-managed templates for common deployment patterns such as ECS, EKS, GKE, and future
       cloud targets.
@@ -515,16 +542,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFArQ
-        database_id: 4764811437
-        number: 431
-        url: https://github.com/ggortsema/styxcd-docs/issues/431
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaVk
+        issue_id: I_kwDOR_b51c8AAAABHIVkRA
+        database_id: 4773471300
+        number: 799
+        url: https://github.com/ggortsema/styxcd-docs/issues/799
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1nE
   - id: support-template-versioning
     type: issue
     title: Support Template Versioning
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Allow templates to evolve over time while maintaining compatibility with existing workflows.
     acceptance_criteria: []
@@ -533,16 +561,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFA3g
-        database_id: 4764811486
-        number: 432
-        url: https://github.com/ggortsema/styxcd-docs/issues/432
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaV8
+        issue_id: I_kwDOR_b51c8AAAABHIVkhw
+        database_id: 4773471367
+        number: 800
+        url: https://github.com/ggortsema/styxcd-docs/issues/800
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1nY
   - id: create-template-catalog-ui
     type: issue
     title: Create Template Catalog UI
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: Provide a catalog of available templates so users can discover and select approved workflow patterns.
     acceptance_criteria: []
@@ -551,16 +580,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFBGw
-        database_id: 4764811547
-        number: 433
-        url: https://github.com/ggortsema/styxcd-docs/issues/433
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaWM
+        issue_id: I_kwDOR_b51c8AAAABHIVkxA
+        database_id: 4773471428
+        number: 801
+        url: https://github.com/ggortsema/styxcd-docs/issues/801
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ns
   - id: add-template-resolution-testing-strategy
     type: issue
     title: Add Template Resolution Testing Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: Create automated tests that validate template inheritance, substitution, and effective YAML generation.
     acceptance_criteria: []
@@ -569,16 +599,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFBaQ
-        database_id: 4764811625
-        number: 434
-        url: https://github.com/ggortsema/styxcd-docs/issues/434
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaWk
+        issue_id: I_kwDOR_b51c8AAAABHIVlEg
+        database_id: 4773471506
+        number: 802
+        url: https://github.com/ggortsema/styxcd-docs/issues/802
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1oU
   - id: design-effective-yaml-help-experience
     type: issue
     title: Design Effective YAML Help Experience
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: Define how users should understand resolved YAML, template expansion, and final execution inputs before a
       workflow runs.
@@ -588,16 +619,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFCOQ
-        database_id: 4764811833
-        number: 435
-        url: https://github.com/ggortsema/styxcd-docs/issues/435
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaW4
+        issue_id: I_kwDOR_b51c8AAAABHIVlYw
+        database_id: 4773471587
+        number: 803
+        url: https://github.com/ggortsema/styxcd-docs/issues/803
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1og
 - id: testing-strategy
   type: epic
   title: Testing Strategy
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 4000
   description: Establish a comprehensive testing strategy for StyxCD covering workflow parsing, planning, execution, validation,
     API behavior, and future end-to-end workflow verification. The goal is to provide confidence that workflows are interpreted
@@ -608,17 +640,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFClw
-      database_id: 4764811927
-      number: 436
-      url: https://github.com/ggortsema/styxcd-docs/issues/436
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaXM
+      issue_id: I_kwDOR_b51c8AAAABHIVlrw
+      database_id: 4773471663
+      number: 804
+      url: https://github.com/ggortsema/styxcd-docs/issues/804
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1o4
   issues:
   - id: add-execution-plan-generation-tests
     type: issue
     title: Add Execution Plan Generation Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: Verify that workflow definitions produce the expected execution plans and stage maps.
     acceptance_criteria: []
@@ -627,16 +660,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFCww
-        database_id: 4764811971
-        number: 437
-        url: https://github.com/ggortsema/styxcd-docs/issues/437
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaXU
+        issue_id: I_kwDOR_b51c8AAAABHIVl6w
+        database_id: 4773471723
+        number: 805
+        url: https://github.com/ggortsema/styxcd-docs/issues/805
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1pE
   - id: add-workflow-planner-tests
     type: issue
     title: Add Workflow Planner Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: Create unit tests for workflow planners and stage planners.
     acceptance_criteria: []
@@ -645,16 +679,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFDEw
-        database_id: 4764812051
-        number: 438
-        url: https://github.com/ggortsema/styxcd-docs/issues/438
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaXs
+        issue_id: I_kwDOR_b51c8AAAABHIVmMA
+        database_id: 4773471792
+        number: 806
+        url: https://github.com/ggortsema/styxcd-docs/issues/806
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1pk
   - id: add-stage-inclusion-logic-tests
     type: issue
     title: Add Stage Inclusion Logic Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: Verify that workflow flags and configuration options correctly influence stage selection.
     acceptance_criteria: []
@@ -663,16 +698,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFDYg
-        database_id: 4764812130
-        number: 439
-        url: https://github.com/ggortsema/styxcd-docs/issues/439
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaYA
+        issue_id: I_kwDOR_b51c8AAAABHIVmZA
+        database_id: 4773471844
+        number: 807
+        url: https://github.com/ggortsema/styxcd-docs/issues/807
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1p4
   - id: add-callback-processing-tests
     type: issue
     title: Add Callback Processing Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: Verify orchestrator handling of workflow callbacks and status transitions.
     acceptance_criteria: []
@@ -681,16 +717,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFDnw
-        database_id: 4764812191
-        number: 440
-        url: https://github.com/ggortsema/styxcd-docs/issues/440
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaYE
+        issue_id: I_kwDOR_b51c8AAAABHIVmnw
+        database_id: 4773471903
+        number: 808
+        url: https://github.com/ggortsema/styxcd-docs/issues/808
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1qY
   - id: add-api-controller-tests
     type: issue
     title: Add API Controller Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: Create automated tests for StyxCD REST APIs.
     acceptance_criteria: []
@@ -699,16 +736,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFD2Q
-        database_id: 4764812249
-        number: 441
-        url: https://github.com/ggortsema/styxcd-docs/issues/441
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaYg
+        issue_id: I_kwDOR_b51c8AAAABHIVm7A
+        database_id: 4773471980
+        number: 809
+        url: https://github.com/ggortsema/styxcd-docs/issues/809
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1q4
   - id: create-end-to-end-workflow-test-framework
     type: issue
     title: Create End-to-End Workflow Test Framework
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: Design a framework that executes sample workflows and validates expected execution behavior.
     acceptance_criteria: []
@@ -717,16 +755,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFEHg
-        database_id: 4764812318
-        number: 442
-        url: https://github.com/ggortsema/styxcd-docs/issues/442
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaY4
+        issue_id: I_kwDOR_b51c8AAAABHIVnLg
+        database_id: 4773472046
+        number: 810
+        url: https://github.com/ggortsema/styxcd-docs/issues/810
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1rA
   - id: create-local-development-testing-environment
     type: issue
     title: Create Local Development Testing Environment
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Provide a repeatable local testing environment that allows rapid development and validation of StyxCD functionality.
     acceptance_criteria: []
@@ -735,16 +774,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFEXg
-        database_id: 4764812382
-        number: 443
-        url: https://github.com/ggortsema/styxcd-docs/issues/443
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaZI
+        issue_id: I_kwDOR_b51c8AAAABHIVnaA
+        database_id: 4773472104
+        number: 811
+        url: https://github.com/ggortsema/styxcd-docs/issues/811
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1rg
   - id: create-docker-compose-development-environment
     type: issue
     title: Create Docker Compose Development Environment
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: Provide a Docker Compose environment for local development and testing of StyxCD components.
     acceptance_criteria: []
@@ -753,16 +793,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFEmg
-        database_id: 4764812442
-        number: 444
-        url: https://github.com/ggortsema/styxcd-docs/issues/444
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaZY
+        issue_id: I_kwDOR_b51c8AAAABHIVnpQ
+        database_id: 4773472165
+        number: 812
+        url: https://github.com/ggortsema/styxcd-docs/issues/812
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1sQ
   - id: define-behavior-testing-strategy
     type: issue
     title: Define Behavior Testing Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: Document a long-term testing approach that validates complete workflow behavior rather than only individual
       components.
@@ -772,16 +813,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFE3g
-        database_id: 4764812510
-        number: 445
-        url: https://github.com/ggortsema/styxcd-docs/issues/445
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaZ0
+        issue_id: I_kwDOR_b51c8AAAABHIVn4Q
+        database_id: 4773472225
+        number: 813
+        url: https://github.com/ggortsema/styxcd-docs/issues/813
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ss
   - id: add-yaml-parsing-tests
     type: issue
     title: Add YAML Parsing Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: 'TODO: Define scope and acceptance criteria for Add YAML Parsing Tests.'
     acceptance_criteria: []
@@ -790,16 +832,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFFIA
-        database_id: 4764812576
-        number: 446
-        url: https://github.com/ggortsema/styxcd-docs/issues/446
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaaA
+        issue_id: I_kwDOR_b51c8AAAABHIVoHw
+        database_id: 4773472287
+        number: 814
+        url: https://github.com/ggortsema/styxcd-docs/issues/814
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1tA
   - id: add-stage-inclusion-tests
     type: issue
     title: Add Stage Inclusion Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 11000
     description: 'TODO: Define scope and acceptance criteria for Add Stage Inclusion Tests.'
     acceptance_criteria: []
@@ -808,16 +851,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFFXg
-        database_id: 4764812638
-        number: 447
-        url: https://github.com/ggortsema/styxcd-docs/issues/447
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaaM
+        issue_id: I_kwDOR_b51c8AAAABHIVoVQ
+        database_id: 4773472341
+        number: 815
+        url: https://github.com/ggortsema/styxcd-docs/issues/815
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1tY
   - id: add-controller-api-tests
     type: issue
     title: Add Controller/API Tests
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 12000
     description: 'TODO: Define scope and acceptance criteria for Add Controller/API Tests.'
     acceptance_criteria: []
@@ -826,16 +870,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFFmg
-        database_id: 4764812698
-        number: 448
-        url: https://github.com/ggortsema/styxcd-docs/issues/448
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaac
+        issue_id: I_kwDOR_b51c8AAAABHIVomA
+        database_id: 4773472408
+        number: 816
+        url: https://github.com/ggortsema/styxcd-docs/issues/816
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1t4
   - id: create-behavior-testing-framework
     type: issue
     title: Create Behavior Testing Framework
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 13000
     description: 'TODO: Define scope and acceptance criteria for Create Behavior Testing Framework.'
     acceptance_criteria: []
@@ -844,16 +889,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFF1g
-        database_id: 4764812758
-        number: 449
-        url: https://github.com/ggortsema/styxcd-docs/issues/449
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaa0
+        issue_id: I_kwDOR_b51c8AAAABHIVo0w
+        database_id: 4773472467
+        number: 817
+        url: https://github.com/ggortsema/styxcd-docs/issues/817
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ug
   - id: create-end-to-end-workflow-test-suite
     type: issue
     title: Create End-to-End Workflow Test Suite
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 14000
     description: 'TODO: Define scope and acceptance criteria for Create End-to-End Workflow Test Suite.'
     acceptance_criteria: []
@@ -862,16 +908,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFGfA
-        database_id: 4764812924
-        number: 450
-        url: https://github.com/ggortsema/styxcd-docs/issues/450
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGabI
+        issue_id: I_kwDOR_b51c8AAAABHIVpDw
+        database_id: 4773472527
+        number: 818
+        url: https://github.com/ggortsema/styxcd-docs/issues/818
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1vM
   - id: add-local-testing-harness
     type: issue
     title: Add Local Testing Harness
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 15000
     description: 'TODO: Define scope and acceptance criteria for Add Local Testing Harness.'
     acceptance_criteria: []
@@ -880,16 +927,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFG8A
-        database_id: 4764813040
-        number: 451
-        url: https://github.com/ggortsema/styxcd-docs/issues/451
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGabY
+        issue_id: I_kwDOR_b51c8AAAABHIVpVQ
+        database_id: 4773472597
+        number: 819
+        url: https://github.com/ggortsema/styxcd-docs/issues/819
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1vc
   - id: add-docker-compose-development-environment
     type: issue
     title: Add Docker Compose Development Environment
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 16000
     description: 'TODO: Define scope and acceptance criteria for Add Docker Compose Development Environment.'
     acceptance_criteria: []
@@ -898,16 +946,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFHLg
-        database_id: 4764813102
-        number: 452
-        url: https://github.com/ggortsema/styxcd-docs/issues/452
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGabk
+        issue_id: I_kwDOR_b51c8AAAABHIVpkA
+        database_id: 4773472656
+        number: 820
+        url: https://github.com/ggortsema/styxcd-docs/issues/820
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1vs
 - id: kharon-v1-ai-knowledge-assistant
   type: epic
   title: Kharon V1 - AI Knowledge Assistant
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 5000
   description: "## Goal\n\nBuild the first production-quality version of **Kharon**, the AI knowledge assistant for StyxCD.\n\
     \nKharon is an independent Python service responsible for retrieval, reasoning,\nknowledge ingestion, and AI interactions.\
@@ -921,17 +970,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFHaQ
-      database_id: 4764813161
-      number: 453
-      url: https://github.com/ggortsema/styxcd-docs/issues/453
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGabs
+      issue_id: I_kwDOR_b51c8AAAABHIVp1g
+      database_id: 4773472726
+      number: 821
+      url: https://github.com/ggortsema/styxcd-docs/issues/821
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1wA
   issues:
   - id: kharon-001-create-python-project
     type: issue
     title: KHARON-001 Create Python Project
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: '**Description**
 
@@ -943,16 +993,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFHlQ
-        database_id: 4764813205
-        number: 454
-        url: https://github.com/ggortsema/styxcd-docs/issues/454
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGab4
+        issue_id: I_kwDOR_b51c8AAAABHIVp-Q
+        database_id: 4773472761
+        number: 822
+        url: https://github.com/ggortsema/styxcd-docs/issues/822
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1wQ
   - id: kharon-002-create-chat-api
     type: issue
     title: KHARON-002 Create Chat API
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: '**Description**
 
@@ -964,16 +1015,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFH0w
-        database_id: 4764813267
-        number: 455
-        url: https://github.com/ggortsema/styxcd-docs/issues/455
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGacE
+        issue_id: I_kwDOR_b51c8AAAABHIVqNw
+        database_id: 4773472823
+        number: 823
+        url: https://github.com/ggortsema/styxcd-docs/issues/823
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ww
   - id: kharon-003-configure-postgresql-and-pgvector
     type: issue
     title: KHARON-003 Configure PostgreSQL and pgvector
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: '**Description**
 
@@ -985,16 +1037,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFIHg
-        database_id: 4764813342
-        number: 456
-        url: https://github.com/ggortsema/styxcd-docs/issues/456
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGacc
+        issue_id: I_kwDOR_b51c8AAAABHIVqdQ
+        database_id: 4773472885
+        number: 824
+        url: https://github.com/ggortsema/styxcd-docs/issues/824
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1w8
   - id: kharon-004-design-knowledge-schema
     type: issue
     title: KHARON-004 Design Knowledge Schema
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: '**Description**
 
@@ -1006,16 +1059,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFIWw
-        database_id: 4764813403
-        number: 457
-        url: https://github.com/ggortsema/styxcd-docs/issues/457
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGacs
+        issue_id: I_kwDOR_b51c8AAAABHIVqtQ
+        database_id: 4773472949
+        number: 825
+        url: https://github.com/ggortsema/styxcd-docs/issues/825
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1xc
   - id: kharon-005-implement-document-ingestion
     type: issue
     title: KHARON-005 Implement Document Ingestion
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: '**Description**
 
@@ -1027,16 +1081,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFIoA
-        database_id: 4764813472
-        number: 458
-        url: https://github.com/ggortsema/styxcd-docs/issues/458
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGac8
+        issue_id: I_kwDOR_b51c8AAAABHIVq7Q
+        database_id: 4773473005
+        number: 826
+        url: https://github.com/ggortsema/styxcd-docs/issues/826
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1x4
   - id: kharon-006-implement-chunking
     type: issue
     title: KHARON-006 Implement Chunking
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: '**Description**
 
@@ -1048,16 +1103,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFI9A
-        database_id: 4764813556
-        number: 459
-        url: https://github.com/ggortsema/styxcd-docs/issues/459
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGadM
+        issue_id: I_kwDOR_b51c8AAAABHIVrIA
+        database_id: 4773473056
+        number: 827
+        url: https://github.com/ggortsema/styxcd-docs/issues/827
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1yY
   - id: kharon-007-generate-embeddings
     type: issue
     title: KHARON-007 Generate Embeddings
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: '**Description**
 
@@ -1069,16 +1125,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFJVQ
-        database_id: 4764813653
-        number: 460
-        url: https://github.com/ggortsema/styxcd-docs/issues/460
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGadk
+        issue_id: I_kwDOR_b51c8AAAABHIVraA
+        database_id: 4773473128
+        number: 828
+        url: https://github.com/ggortsema/styxcd-docs/issues/828
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1y0
   - id: kharon-008-implement-retrieval
     type: issue
     title: KHARON-008 Implement Retrieval
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: '**Description**
 
@@ -1090,16 +1147,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFJnA
-        database_id: 4764813724
-        number: 461
-        url: https://github.com/ggortsema/styxcd-docs/issues/461
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaeA
+        issue_id: I_kwDOR_b51c8AAAABHIVrsQ
+        database_id: 4773473201
+        number: 829
+        url: https://github.com/ggortsema/styxcd-docs/issues/829
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1zw
   - id: kharon-009-integrate-langchain
     type: issue
     title: KHARON-009 Integrate LangChain
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: '**Description**
 
@@ -1111,16 +1169,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFJ2g
-        database_id: 4764813786
-        number: 462
-        url: https://github.com/ggortsema/styxcd-docs/issues/462
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaeE
+        issue_id: I_kwDOR_b51c8AAAABHIVr9A
+        database_id: 4773473268
+        number: 830
+        url: https://github.com/ggortsema/styxcd-docs/issues/830
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO10Y
   - id: kharon-010-integrate-langgraph
     type: issue
     title: KHARON-010 Integrate LangGraph
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: '**Description**
 
@@ -1132,16 +1191,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFKFQ
-        database_id: 4764813845
-        number: 463
-        url: https://github.com/ggortsema/styxcd-docs/issues/463
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaeM
+        issue_id: I_kwDOR_b51c8AAAABHIVsLA
+        database_id: 4773473324
+        number: 831
+        url: https://github.com/ggortsema/styxcd-docs/issues/831
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO11E
   - id: kharon-011-complete-rag-pipeline
     type: issue
     title: KHARON-011 Complete RAG Pipeline
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 11000
     description: '**Description**
 
@@ -1153,16 +1213,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFKVA
-        database_id: 4764813908
-        number: 464
-        url: https://github.com/ggortsema/styxcd-docs/issues/464
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaeY
+        issue_id: I_kwDOR_b51c8AAAABHIVscg
+        database_id: 4773473394
+        number: 832
+        url: https://github.com/ggortsema/styxcd-docs/issues/832
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO11c
   - id: kharon-012-generate-styxcd-yaml
     type: issue
     title: KHARON-012 Generate StyxCD YAML
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 12000
     description: '**Description**
 
@@ -1174,16 +1235,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFKjA
-        database_id: 4764813964
-        number: 465
-        url: https://github.com/ggortsema/styxcd-docs/issues/465
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaek
+        issue_id: I_kwDOR_b51c8AAAABHIVsqA
+        database_id: 4773473448
+        number: 833
+        url: https://github.com/ggortsema/styxcd-docs/issues/833
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO114
   - id: kharon-013-prepare-service-boundary
     type: issue
     title: KHARON-013 Prepare Service Boundary
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 13000
     description: '**Description**
 
@@ -1195,16 +1257,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFLfw
-        database_id: 4764814207
-        number: 466
-        url: https://github.com/ggortsema/styxcd-docs/issues/466
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGafA
+        issue_id: I_kwDOR_b51c8AAAABHIVs5Q
+        database_id: 4773473509
+        number: 834
+        url: https://github.com/ggortsema/styxcd-docs/issues/834
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO12M
 - id: project-management-workflow-provider
   type: epic
   title: Project Management Workflow Provider
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 6000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -1213,17 +1276,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFL0Q
-      database_id: 4764814289
-      number: 467
-      url: https://github.com/ggortsema/styxcd-docs/issues/467
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGafE
+      issue_id: I_kwDOR_b51c8AAAABHIVtHQ
+      database_id: 4773473565
+      number: 835
+      url: https://github.com/ggortsema/styxcd-docs/issues/835
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO12k
   issues:
   - id: define-pm-workflow-dsl
     type: issue
     title: Define PM Workflow DSL
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: Define the YAML structure for project-management workflows, including provider configuration, epics, issues,
       labels, assignees, milestones, acceptance criteria, and provider metadata.
@@ -1233,16 +1297,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFL_Q
-        database_id: 4764814333
-        number: 468
-        url: https://github.com/ggortsema/styxcd-docs/issues/468
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGafU
+        issue_id: I_kwDOR_b51c8AAAABHIVtXg
+        database_id: 4773473630
+        number: 836
+        url: https://github.com/ggortsema/styxcd-docs/issues/836
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO120
   - id: implement-github-issues-provider
     type: issue
     title: Implement GitHub Issues Provider
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: Implement the first PM workflow provider using the GitHub API to create roadmap issues in the configured
       repository.
@@ -1252,16 +1317,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFMSw
-        database_id: 4764814411
-        number: 469
-        url: https://github.com/ggortsema/styxcd-docs/issues/469
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGafg
+        issue_id: I_kwDOR_b51c8AAAABHIVtmA
+        database_id: 4773473688
+        number: 837
+        url: https://github.com/ggortsema/styxcd-docs/issues/837
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO13E
   - id: support-epic-and-sub-issue-creation
     type: issue
     title: Support Epic and Sub-Issue Creation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship
       model.
@@ -1271,16 +1337,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFMog
-        database_id: 4764814498
-        number: 470
-        url: https://github.com/ggortsema/styxcd-docs/issues/470
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGafw
+        issue_id: I_kwDOR_b51c8AAAABHIVuCg
+        database_id: 4773473802
+        number: 838
+        url: https://github.com/ggortsema/styxcd-docs/issues/838
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO13g
   - id: support-github-project-assignment
     type: issue
     title: Support GitHub Project Assignment
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: Add created or updated issues to the configured GitHub Project board.
     acceptance_criteria: []
@@ -1289,16 +1356,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFM6w
-        database_id: 4764814571
-        number: 471
-        url: https://github.com/ggortsema/styxcd-docs/issues/471
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGagA
+        issue_id: I_kwDOR_b51c8AAAABHIVuSQ
+        database_id: 4773473865
+        number: 839
+        url: https://github.com/ggortsema/styxcd-docs/issues/839
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO134
   - id: add-pm-workflow-dry-run-mode
     type: issue
     title: Add PM Workflow Dry-Run Mode
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider.
     acceptance_criteria: []
@@ -1307,16 +1375,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFNQA
-        database_id: 4764814656
-        number: 472
-        url: https://github.com/ggortsema/styxcd-docs/issues/472
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGag8
+        issue_id: I_kwDOR_b51c8AAAABHIVunA
+        database_id: 4773473948
+        number: 840
+        url: https://github.com/ggortsema/styxcd-docs/issues/840
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO14Q
   - id: support-pm-workflow-idempotency
     type: issue
     title: Support PM Workflow Idempotency
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist.
     acceptance_criteria: []
@@ -1325,16 +1394,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFNoQ
-        database_id: 4764814753
-        number: 473
-        url: https://github.com/ggortsema/styxcd-docs/issues/473
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaiU
+        issue_id: I_kwDOR_b51c8AAAABHIVveQ
+        database_id: 4773474169
+        number: 841
+        url: https://github.com/ggortsema/styxcd-docs/issues/841
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO14g
   - id: synchronize-pm-workflow-yaml-from-provider
     type: issue
     title: Synchronize PM Workflow YAML From Provider
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Read existing epics and issues from a project-management provider and update local PM workflow YAML with
       provider identifiers, links, and status metadata.
@@ -1344,16 +1414,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFN5Q
-        database_id: 4764814821
-        number: 474
-        url: https://github.com/ggortsema/styxcd-docs/issues/474
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaio
+        issue_id: I_kwDOR_b51c8AAAABHIVvxA
+        database_id: 4773474244
+        number: 842
+        url: https://github.com/ggortsema/styxcd-docs/issues/842
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO14w
   - id: support-provider-metadata-in-pm-workflow-yaml
     type: issue
     title: Support Provider Metadata in PM Workflow YAML
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp,
       Jira, or future providers.
@@ -1363,16 +1434,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFOKw
-        database_id: 4764814891
-        number: 475
-        url: https://github.com/ggortsema/styxcd-docs/issues/475
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGai8
+        issue_id: I_kwDOR_b51c8AAAABHIVv_g
+        database_id: 4773474302
+        number: 843
+        url: https://github.com/ggortsema/styxcd-docs/issues/843
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO15I
   - id: support-provider-migration-for-pm-workflows
     type: issue
     title: Support Provider Migration for PM Workflows
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: Allow the same roadmap YAML to be projected into a different project-management provider.
     acceptance_criteria: []
@@ -1381,16 +1453,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFOcw
-        database_id: 4764814963
-        number: 476
-        url: https://github.com/ggortsema/styxcd-docs/issues/476
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGajI
+        issue_id: I_kwDOR_b51c8AAAABHIVwRg
+        database_id: 4773474374
+        number: 844
+        url: https://github.com/ggortsema/styxcd-docs/issues/844
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO15Y
   - id: generate-pm-workflow-yaml-from-conversation
     type: issue
     title: Generate PM Workflow YAML From Conversation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: Use an AI-assisted step to transform roadmap discussion or session notes into PM workflow YAML.
     acceptance_criteria: []
@@ -1399,16 +1472,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFOuA
-        database_id: 4764815032
-        number: 477
-        url: https://github.com/ggortsema/styxcd-docs/issues/477
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGajc
+        issue_id: I_kwDOR_b51c8AAAABHIVwgQ
+        database_id: 4773474433
+        number: 845
+        url: https://github.com/ggortsema/styxcd-docs/issues/845
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO15k
   - id: demonstrate-backlog-as-code-workflow
     type: issue
     title: Demonstrate Backlog-as-Code Workflow
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 11000
     description: Use StyxCD to create or update a real project-management backlog from committed PM workflow YAML.
     acceptance_criteria: []
@@ -1417,16 +1491,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFPFQ
-        database_id: 4764815125
-        number: 478
-        url: https://github.com/ggortsema/styxcd-docs/issues/478
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGajo
+        issue_id: I_kwDOR_b51c8AAAABHIVwxw
+        database_id: 4773474503
+        number: 846
+        url: https://github.com/ggortsema/styxcd-docs/issues/846
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO154
 - id: dogfooding-styxcd
   type: epic
   title: Dogfooding StyxCD
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 7000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -1435,17 +1510,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFPbg
-      database_id: 4764815214
-      number: 479
-      url: https://github.com/ggortsema/styxcd-docs/issues/479
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaj0
+      issue_id: I_kwDOR_b51c8AAAABHIVxBg
+      database_id: 4773474566
+      number: 847
+      url: https://github.com/ggortsema/styxcd-docs/issues/847
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO16E
   issues:
   - id: deploy-styxcd-using-styxcd
     type: issue
     title: Deploy StyxCD Using StyxCD
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Deploy StyxCD Using StyxCD.'
     acceptance_criteria: []
@@ -1454,16 +1530,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFPng
-        database_id: 4764815262
-        number: 480
-        url: https://github.com/ggortsema/styxcd-docs/issues/480
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaks
+        issue_id: I_kwDOR_b51c8AAAABHIVxWg
+        database_id: 4773474650
+        number: 848
+        url: https://github.com/ggortsema/styxcd-docs/issues/848
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO16I
   - id: create-styxcd-release-workflow
     type: issue
     title: Create StyxCD Release Workflow
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Create StyxCD Release Workflow.'
     acceptance_criteria: []
@@ -1472,16 +1549,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFQeQ
-        database_id: 4764815481
-        number: 481
-        url: https://github.com/ggortsema/styxcd-docs/issues/481
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGamE
+        issue_id: I_kwDOR_b51c8AAAABHIVyBA
+        database_id: 4773474820
+        number: 849
+        url: https://github.com/ggortsema/styxcd-docs/issues/849
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO16s
   - id: create-styxcd-promotion-workflow
     type: issue
     title: Create StyxCD Promotion Workflow
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Create StyxCD Promotion Workflow.'
     acceptance_criteria: []
@@ -1490,16 +1568,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFQtg
-        database_id: 4764815542
-        number: 482
-        url: https://github.com/ggortsema/styxcd-docs/issues/482
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGamQ
+        issue_id: I_kwDOR_b51c8AAAABHIVyUw
+        database_id: 4773474899
+        number: 850
+        url: https://github.com/ggortsema/styxcd-docs/issues/850
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO164
   - id: implement-styxcd-self-update-workflow
     type: issue
     title: Implement StyxCD Self-Update Workflow
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Implement StyxCD Self-Update Workflow.'
     acceptance_criteria: []
@@ -1508,16 +1587,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFQ_w
-        database_id: 4764815615
-        number: 483
-        url: https://github.com/ggortsema/styxcd-docs/issues/483
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGamc
+        issue_id: I_kwDOR_b51c8AAAABHIVykw
+        database_id: 4773474963
+        number: 851
+        url: https://github.com/ggortsema/styxcd-docs/issues/851
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO17Y
   - id: validate-upgrade-scenarios
     type: issue
     title: Validate Upgrade Scenarios
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Validate Upgrade Scenarios.'
     acceptance_criteria: []
@@ -1526,16 +1606,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFRPg
-        database_id: 4764815678
-        number: 484
-        url: https://github.com/ggortsema/styxcd-docs/issues/484
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGamk
+        issue_id: I_kwDOR_b51c8AAAABHIVy3w
+        database_id: 4773475039
+        number: 852
+        url: https://github.com/ggortsema/styxcd-docs/issues/852
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO174
   - id: document-internal-release-process
     type: issue
     title: Document Internal Release Process
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Document Internal Release Process.'
     acceptance_criteria: []
@@ -1544,16 +1625,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFRog
-        database_id: 4764815778
-        number: 485
-        url: https://github.com/ggortsema/styxcd-docs/issues/485
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGam0
+        issue_id: I_kwDOR_b51c8AAAABHIVzKw
+        database_id: 4773475115
+        number: 853
+        url: https://github.com/ggortsema/styxcd-docs/issues/853
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO18w
 - id: release-management
   type: epic
   title: Release Management
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 8000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -1562,17 +1644,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFR1Q
-      database_id: 4764815829
-      number: 486
-      url: https://github.com/ggortsema/styxcd-docs/issues/486
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGanQ
+      issue_id: I_kwDOR_b51c8AAAABHIVzYg
+      database_id: 4773475170
+      number: 854
+      url: https://github.com/ggortsema/styxcd-docs/issues/854
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO19M
   issues:
   - id: define-stable-environment-strategy
     type: issue
     title: Define Stable Environment Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Stable Environment Strategy.'
     acceptance_criteria: []
@@ -1581,16 +1664,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFSCw
-        database_id: 4764815883
-        number: 487
-        url: https://github.com/ggortsema/styxcd-docs/issues/487
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGanY
+        issue_id: I_kwDOR_b51c8AAAABHIVziw
+        database_id: 4773475211
+        number: 855
+        url: https://github.com/ggortsema/styxcd-docs/issues/855
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO19g
   - id: define-development-environment-strategy
     type: issue
     title: Define Development Environment Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Define Development Environment Strategy.'
     acceptance_criteria: []
@@ -1599,16 +1683,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFSUQ
-        database_id: 4764815953
-        number: 488
-        url: https://github.com/ggortsema/styxcd-docs/issues/488
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGano
+        issue_id: I_kwDOR_b51c8AAAABHIVzyw
+        database_id: 4773475275
+        number: 856
+        url: https://github.com/ggortsema/styxcd-docs/issues/856
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO198
   - id: implement-promotion-workflow
     type: issue
     title: Implement Promotion Workflow
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Implement Promotion Workflow.'
     acceptance_criteria: []
@@ -1617,16 +1702,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFSow
-        database_id: 4764816035
-        number: 489
-        url: https://github.com/ggortsema/styxcd-docs/issues/489
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGan4
+        issue_id: I_kwDOR_b51c8AAAABHIV0Cg
+        database_id: 4773475338
+        number: 857
+        url: https://github.com/ggortsema/styxcd-docs/issues/857
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1-o
   - id: implement-version-management-strategy
     type: issue
     title: Implement Version Management Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Implement Version Management Strategy.'
     acceptance_criteria: []
@@ -1635,16 +1721,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFS6Q
-        database_id: 4764816105
-        number: 490
-        url: https://github.com/ggortsema/styxcd-docs/issues/490
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaoQ
+        issue_id: I_kwDOR_b51c8AAAABHIV0Rg
+        database_id: 4773475398
+        number: 858
+        url: https://github.com/ggortsema/styxcd-docs/issues/858
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_A
   - id: document-release-process
     type: issue
     title: Document Release Process
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Document Release Process.'
     acceptance_criteria: []
@@ -1653,16 +1740,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFTNg
-        database_id: 4764816182
-        number: 491
-        url: https://github.com/ggortsema/styxcd-docs/issues/491
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaog
+        issue_id: I_kwDOR_b51c8AAAABHIV0fA
+        database_id: 4773475452
+        number: 859
+        url: https://github.com/ggortsema/styxcd-docs/issues/859
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_U
   - id: add-release-validation-checks
     type: issue
     title: Add Release Validation Checks
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Release Validation Checks.'
     acceptance_criteria: []
@@ -1671,16 +1759,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFThA
-        database_id: 4764816260
-        number: 492
-        url: https://github.com/ggortsema/styxcd-docs/issues/492
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGapI
+        issue_id: I_kwDOR_b51c8AAAABHIV0yA
+        database_id: 4773475528
+        number: 860
+        url: https://github.com/ggortsema/styxcd-docs/issues/860
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_s
   - id: define-terraform-and-deployment-boundary
     type: issue
     title: Define Terraform and Deployment Boundary
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Document how StyxCD should separate infrastructure lifecycle from deployment lifecycle when Terraform or
       external infrastructure tools are involved.
@@ -1690,16 +1779,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFTww
-        database_id: 4764816323
-        number: 493
-        url: https://github.com/ggortsema/styxcd-docs/issues/493
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaqc
+        issue_id: I_kwDOR_b51c8AAAABHIV1DA
+        database_id: 4773475596
+        number: 861
+        url: https://github.com/ggortsema/styxcd-docs/issues/861
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_8
 - id: multi-cloud-support
   type: epic
   title: Multi-Cloud Support
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 9000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -1708,17 +1798,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFUAg
-      database_id: 4764816386
-      number: 494
-      url: https://github.com/ggortsema/styxcd-docs/issues/494
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaqk
+      issue_id: I_kwDOR_b51c8AAAABHIV1TQ
+      database_id: 4773475661
+      number: 862
+      url: https://github.com/ggortsema/styxcd-docs/issues/862
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2AY
   issues:
   - id: complete-gke-vertical-slice
     type: issue
     title: Complete GKE Vertical Slice
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice.'
     acceptance_criteria: []
@@ -1727,16 +1818,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFUKw
-        database_id: 4764816427
-        number: 495
-        url: https://github.com/ggortsema/styxcd-docs/issues/495
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaqw
+        issue_id: I_kwDOR_b51c8AAAABHIV1dA
+        database_id: 4773475700
+        number: 863
+        url: https://github.com/ggortsema/styxcd-docs/issues/863
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2As
   - id: expand-ecs-deployment-support
     type: issue
     title: Expand ECS Deployment Support
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Expand ECS Deployment Support.'
     acceptance_criteria: []
@@ -1745,16 +1837,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFUcg
-        database_id: 4764816498
-        number: 496
-        url: https://github.com/ggortsema/styxcd-docs/issues/496
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaq4
+        issue_id: I_kwDOR_b51c8AAAABHIV10A
+        database_id: 4773475792
+        number: 864
+        url: https://github.com/ggortsema/styxcd-docs/issues/864
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2BA
   - id: expand-eks-deployment-support
     type: issue
     title: Expand EKS Deployment Support
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Expand EKS Deployment Support.'
     acceptance_criteria: []
@@ -1763,16 +1856,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFVMg
-        database_id: 4764816690
-        number: 497
-        url: https://github.com/ggortsema/styxcd-docs/issues/497
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGarI
+        issue_id: I_kwDOR_b51c8AAAABHIV2xw
+        database_id: 4773476039
+        number: 865
+        url: https://github.com/ggortsema/styxcd-docs/issues/865
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2BU
   - id: evaluate-aks-support
     type: issue
     title: Evaluate AKS Support
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Evaluate AKS Support.'
     acceptance_criteria: []
@@ -1781,16 +1875,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFVfw
-        database_id: 4764816767
-        number: 498
-        url: https://github.com/ggortsema/styxcd-docs/issues/498
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGarU
+        issue_id: I_kwDOR_b51c8AAAABHIV3FQ
+        database_id: 4773476117
+        number: 866
+        url: https://github.com/ggortsema/styxcd-docs/issues/866
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Bw
   - id: define-multi-cloud-abstraction-strategy
     type: issue
     title: Define Multi-Cloud Abstraction Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Define Multi-Cloud Abstraction Strategy.'
     acceptance_criteria: []
@@ -1799,16 +1894,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFVvA
-        database_id: 4764816828
-        number: 499
-        url: https://github.com/ggortsema/styxcd-docs/issues/499
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGarw
+        issue_id: I_kwDOR_b51c8AAAABHIV3Zg
+        database_id: 4773476198
+        number: 867
+        url: https://github.com/ggortsema/styxcd-docs/issues/867
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2B8
   - id: create-cloud-capability-matrix
     type: issue
     title: Create Cloud Capability Matrix
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Create Cloud Capability Matrix.'
     acceptance_criteria: []
@@ -1817,16 +1913,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFV9Q
-        database_id: 4764816885
-        number: 500
-        url: https://github.com/ggortsema/styxcd-docs/issues/500
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGasE
+        issue_id: I_kwDOR_b51c8AAAABHIV3xw
+        database_id: 4773476295
+        number: 868
+        url: https://github.com/ggortsema/styxcd-docs/issues/868
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2CQ
   - id: implement-eks-execution-plan-shape
     type: issue
     title: Implement EKS Execution Plan Shape
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Add EKS as a first-class StyxCD cloud workflow branch using the same conceptual deployment lifecycle proven
       by GKE, plus an EKS-specific load balancer controller preparation stage.
@@ -1836,16 +1933,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFWKw
-        database_id: 4764816939
-        number: 501
-        url: https://github.com/ggortsema/styxcd-docs/issues/501
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGasU
+        issue_id: I_kwDOR_b51c8AAAABHIV4Bg
+        database_id: 4773476358
+        number: 869
+        url: https://github.com/ggortsema/styxcd-docs/issues/869
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Cw
   - id: implement-eks-stage-logic-from-sandbox-code
     type: issue
     title: Implement EKS Stage Logic From Sandbox Code
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: Move the existing working EKS sandbox deployment logic into discrete StyxCD stages matching the new EKS execution
       plan.
@@ -1855,16 +1953,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFWaw
-        database_id: 4764817003
-        number: 502
-        url: https://github.com/ggortsema/styxcd-docs/issues/502
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGasg
+        issue_id: I_kwDOR_b51c8AAAABHIV4RQ
+        database_id: 4773476421
+        number: 870
+        url: https://github.com/ggortsema/styxcd-docs/issues/870
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2DU
   - id: create-formal-eks-yaml-specification
     type: issue
     title: Create Formal EKS YAML Specification
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: Define the first formal EKS YAML model after the hello-world execution plan is validated.
     acceptance_criteria: []
@@ -1873,16 +1972,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFWsw
-        database_id: 4764817075
-        number: 503
-        url: https://github.com/ggortsema/styxcd-docs/issues/503
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGasw
+        issue_id: I_kwDOR_b51c8AAAABHIV4rg
+        database_id: 4773476526
+        number: 871
+        url: https://github.com/ggortsema/styxcd-docs/issues/871
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2D4
   - id: document-gke-and-eks-stage-parity
     type: issue
     title: Document GKE and EKS Stage Parity
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: Capture the architectural mapping between GKE and EKS stages, including where the workflows align conceptually
       and where EKS requires provider-specific setup.
@@ -1892,16 +1992,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFW7Q
-        database_id: 4764817133
-        number: 504
-        url: https://github.com/ggortsema/styxcd-docs/issues/504
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGatE
+        issue_id: I_kwDOR_b51c8AAAABHIV5AQ
+        database_id: 4773476609
+        number: 872
+        url: https://github.com/ggortsema/styxcd-docs/issues/872
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2EY
   - id: evaluate-aks-stage-mapping
     type: issue
     title: Evaluate AKS Stage Mapping
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 11000
     description: Use the GKE and EKS stage model as the reference point for evaluating how AKS maps into the StyxCD execution
       lifecycle.
@@ -1911,16 +2012,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFXNg
-        database_id: 4764817206
-        number: 505
-        url: https://github.com/ggortsema/styxcd-docs/issues/505
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGatM
+        issue_id: I_kwDOR_b51c8AAAABHIV5Yg
+        database_id: 4773476706
+        number: 873
+        url: https://github.com/ggortsema/styxcd-docs/issues/873
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2FM
   - id: map-ecs-native-deployment-lifecycle
     type: issue
     title: Map ECS Native Deployment Lifecycle
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 12000
     description: Revisit ECS without Terraform first to discover the native ECS deployment lifecycle and compare it to Kubernetes
       platform workflows.
@@ -1930,16 +2032,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFXdA
-        database_id: 4764817268
-        number: 506
-        url: https://github.com/ggortsema/styxcd-docs/issues/506
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGatc
+        issue_id: I_kwDOR_b51c8AAAABHIV5vQ
+        database_id: 4773476797
+        number: 874
+        url: https://github.com/ggortsema/styxcd-docs/issues/874
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2GA
   - id: implement-aws-load-balancer-controller-irsa-integration
     type: issue
     title: Implement AWS Load Balancer Controller IRSA Integration
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 13000
     description: 'Parent Epic: Epic: Multi-Cloud Support'
     acceptance_criteria: []
@@ -1948,16 +2051,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFXwA
-        database_id: 4764817344
-        number: 507
-        url: https://github.com/ggortsema/styxcd-docs/issues/507
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGato
+        issue_id: I_kwDOR_b51c8AAAABHIV6DA
+        database_id: 4773476876
+        number: 875
+        url: https://github.com/ggortsema/styxcd-docs/issues/875
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2GQ
 - id: validation-deployment-verification
   type: epic
   title: Validation & Deployment Verification
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 10000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -1966,17 +2070,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFYDA
-      database_id: 4764817420
-      number: 508
-      url: https://github.com/ggortsema/styxcd-docs/issues/508
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGat0
+      issue_id: I_kwDOR_b51c8AAAABHIV6RA
+      database_id: 4773476932
+      number: 876
+      url: https://github.com/ggortsema/styxcd-docs/issues/876
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Gs
   issues:
   - id: define-validation-contract
     type: issue
     title: Define Validation Contract
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Validation Contract.'
     acceptance_criteria: []
@@ -1985,16 +2090,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFYOQ
-        database_id: 4764817465
-        number: 509
-        url: https://github.com/ggortsema/styxcd-docs/issues/509
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGauE
+        issue_id: I_kwDOR_b51c8AAAABHIV6iQ
+        database_id: 4773477001
+        number: 877
+        url: https://github.com/ggortsema/styxcd-docs/issues/877
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2G4
   - id: implement-validation-framework
     type: issue
     title: Implement Validation Framework
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Implement Validation Framework.'
     acceptance_criteria: []
@@ -2003,16 +2109,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFYjw
-        database_id: 4764817551
-        number: 510
-        url: https://github.com/ggortsema/styxcd-docs/issues/510
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGauQ
+        issue_id: I_kwDOR_b51c8AAAABHIV6xg
+        database_id: 4773477062
+        number: 878
+        url: https://github.com/ggortsema/styxcd-docs/issues/878
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2HM
   - id: add-health-check-validation
     type: issue
     title: Add Health Check Validation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Add Health Check Validation.'
     acceptance_criteria: []
@@ -2021,16 +2128,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFYwg
-        database_id: 4764817602
-        number: 511
-        url: https://github.com/ggortsema/styxcd-docs/issues/511
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGauc
+        issue_id: I_kwDOR_b51c8AAAABHIV6-Q
+        database_id: 4773477113
+        number: 879
+        url: https://github.com/ggortsema/styxcd-docs/issues/879
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Hg
   - id: add-smoke-test-validation
     type: issue
     title: Add Smoke Test Validation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Add Smoke Test Validation.'
     acceptance_criteria: []
@@ -2039,16 +2147,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFZBg
-        database_id: 4764817670
-        number: 512
-        url: https://github.com/ggortsema/styxcd-docs/issues/512
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaus
+        issue_id: I_kwDOR_b51c8AAAABHIV7Ow
+        database_id: 4773477179
+        number: 880
+        url: https://github.com/ggortsema/styxcd-docs/issues/880
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ho
   - id: add-deployment-verification-reporting
     type: issue
     title: Add Deployment Verification Reporting
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Add Deployment Verification Reporting.'
     acceptance_criteria: []
@@ -2057,16 +2166,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFZtw
-        database_id: 4764817847
-        number: 513
-        url: https://github.com/ggortsema/styxcd-docs/issues/513
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGavE
+        issue_id: I_kwDOR_b51c8AAAABHIV7dA
+        database_id: 4773477236
+        number: 881
+        url: https://github.com/ggortsema/styxcd-docs/issues/881
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2H0
   - id: add-validation-dashboard-support
     type: issue
     title: Add Validation Dashboard Support
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Validation Dashboard Support.'
     acceptance_criteria: []
@@ -2075,16 +2185,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFaBQ
-        database_id: 4764817925
-        number: 514
-        url: https://github.com/ggortsema/styxcd-docs/issues/514
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGavU
+        issue_id: I_kwDOR_b51c8AAAABHIV7tQ
+        database_id: 4773477301
+        number: 882
+        url: https://github.com/ggortsema/styxcd-docs/issues/882
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2IA
 - id: slo-aware-promotion
   type: epic
   title: SLO-Aware Promotion
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 11000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -2093,17 +2204,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFaUQ
-      database_id: 4764818001
-      number: 515
-      url: https://github.com/ggortsema/styxcd-docs/issues/515
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGavg
+      issue_id: I_kwDOR_b51c8AAAABHIV8Eg
+      database_id: 4773477394
+      number: 883
+      url: https://github.com/ggortsema/styxcd-docs/issues/883
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2IQ
   issues:
   - id: define-measurement-contract
     type: issue
     title: Define Measurement Contract
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Measurement Contract.'
     acceptance_criteria: []
@@ -2112,16 +2224,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFaew
-        database_id: 4764818043
-        number: 516
-        url: https://github.com/ggortsema/styxcd-docs/issues/516
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGavo
+        issue_id: I_kwDOR_b51c8AAAABHIV8Rg
+        database_id: 4773477446
+        number: 884
+        url: https://github.com/ggortsema/styxcd-docs/issues/884
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Io
   - id: capture-validation-metrics
     type: issue
     title: Capture Validation Metrics
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Capture Validation Metrics.'
     acceptance_criteria: []
@@ -2130,16 +2243,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFaww
-        database_id: 4764818115
-        number: 517
-        url: https://github.com/ggortsema/styxcd-docs/issues/517
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGavw
+        issue_id: I_kwDOR_b51c8AAAABHIV8kw
+        database_id: 4773477523
+        number: 885
+        url: https://github.com/ggortsema/styxcd-docs/issues/885
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2JU
   - id: store-validation-results
     type: issue
     title: Store Validation Results
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Store Validation Results.'
     acceptance_criteria: []
@@ -2148,16 +2262,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFbAg
-        database_id: 4764818178
-        number: 518
-        url: https://github.com/ggortsema/styxcd-docs/issues/518
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGav4
+        issue_id: I_kwDOR_b51c8AAAABHIV83g
+        database_id: 4773477598
+        number: 886
+        url: https://github.com/ggortsema/styxcd-docs/issues/886
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2KI
   - id: evaluate-slo-thresholds
     type: issue
     title: Evaluate SLO Thresholds
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Evaluate SLO Thresholds.'
     acceptance_criteria: []
@@ -2166,16 +2281,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFbOQ
-        database_id: 4764818233
-        number: 519
-        url: https://github.com/ggortsema/styxcd-docs/issues/519
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGawE
+        issue_id: I_kwDOR_b51c8AAAABHIV9OA
+        database_id: 4773477688
+        number: 887
+        url: https://github.com/ggortsema/styxcd-docs/issues/887
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Kg
   - id: support-promotion-gates
     type: issue
     title: Support Promotion Gates
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Support Promotion Gates.'
     acceptance_criteria: []
@@ -2184,16 +2300,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFbhA
-        database_id: 4764818308
-        number: 520
-        url: https://github.com/ggortsema/styxcd-docs/issues/520
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGawU
+        issue_id: I_kwDOR_b51c8AAAABHIV9bg
+        database_id: 4773477742
+        number: 888
+        url: https://github.com/ggortsema/styxcd-docs/issues/888
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2K4
   - id: document-slo-promotion-model
     type: issue
     title: Document SLO Promotion Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Document SLO Promotion Model.'
     acceptance_criteria: []
@@ -2202,16 +2319,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFbyA
-        database_id: 4764818376
-        number: 521
-        url: https://github.com/ggortsema/styxcd-docs/issues/521
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGawg
+        issue_id: I_kwDOR_b51c8AAAABHIV9rA
+        database_id: 4773477804
+        number: 889
+        url: https://github.com/ggortsema/styxcd-docs/issues/889
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Lc
 - id: artifact-management
   type: epic
   title: Artifact Management
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 12000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -2220,17 +2338,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFcFw
-      database_id: 4764818455
-      number: 522
-      url: https://github.com/ggortsema/styxcd-docs/issues/522
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaw0
+      issue_id: I_kwDOR_b51c8AAAABHIV99Q
+      database_id: 4773477877
+      number: 890
+      url: https://github.com/ggortsema/styxcd-docs/issues/890
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2MM
   issues:
   - id: define-artifact-metadata-model
     type: issue
     title: Define Artifact Metadata Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Artifact Metadata Model.'
     acceptance_criteria: []
@@ -2239,16 +2358,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFcPw
-        database_id: 4764818495
-        number: 523
-        url: https://github.com/ggortsema/styxcd-docs/issues/523
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaxE
+        issue_id: I_kwDOR_b51c8AAAABHIV-Hw
+        database_id: 4773477919
+        number: 891
+        url: https://github.com/ggortsema/styxcd-docs/issues/891
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Mw
   - id: track-digest-based-deployments
     type: issue
     title: Track Digest-Based Deployments
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Track Digest-Based Deployments.'
     acceptance_criteria: []
@@ -2257,16 +2377,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFcpg
-        database_id: 4764818598
-        number: 524
-        url: https://github.com/ggortsema/styxcd-docs/issues/524
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaxM
+        issue_id: I_kwDOR_b51c8AAAABHIV-aA
+        database_id: 4773477992
+        number: 892
+        url: https://github.com/ggortsema/styxcd-docs/issues/892
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2NA
   - id: support-registry-replication
     type: issue
     title: Support Registry Replication
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Support Registry Replication.'
     acceptance_criteria: []
@@ -2275,16 +2396,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFc4g
-        database_id: 4764818658
-        number: 525
-        url: https://github.com/ggortsema/styxcd-docs/issues/525
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaxU
+        issue_id: I_kwDOR_b51c8AAAABHIV-pg
+        database_id: 4773478054
+        number: 893
+        url: https://github.com/ggortsema/styxcd-docs/issues/893
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2NQ
   - id: store-promotion-history
     type: issue
     title: Store Promotion History
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Store Promotion History.'
     acceptance_criteria: []
@@ -2293,16 +2415,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFdMw
-        database_id: 4764818739
-        number: 526
-        url: https://github.com/ggortsema/styxcd-docs/issues/526
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaxk
+        issue_id: I_kwDOR_b51c8AAAABHIV-7Q
+        database_id: 4773478125
+        number: 894
+        url: https://github.com/ggortsema/styxcd-docs/issues/894
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2NY
   - id: implement-artifact-audit-trail
     type: issue
     title: Implement Artifact Audit Trail
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Implement Artifact Audit Trail.'
     acceptance_criteria: []
@@ -2311,16 +2434,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFdbQ
-        database_id: 4764818797
-        number: 527
-        url: https://github.com/ggortsema/styxcd-docs/issues/527
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaxw
+        issue_id: I_kwDOR_b51c8AAAABHIV_Lw
+        database_id: 4773478191
+        number: 895
+        url: https://github.com/ggortsema/styxcd-docs/issues/895
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Nk
   - id: document-enterprise-artifact-strategy
     type: issue
     title: Document Enterprise Artifact Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Document Enterprise Artifact Strategy.'
     acceptance_criteria: []
@@ -2329,16 +2453,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFdrw
-        database_id: 4764818863
-        number: 528
-        url: https://github.com/ggortsema/styxcd-docs/issues/528
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGax0
+        issue_id: I_kwDOR_b51c8AAAABHIV_fw
+        database_id: 4773478271
+        number: 896
+        url: https://github.com/ggortsema/styxcd-docs/issues/896
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2OA
   - id: evaluate-build-once-promote-everywhere-pattern
     type: issue
     title: Evaluate Build Once Promote Everywhere Pattern
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Explore an enterprise artifact-management model where images are built once, tracked by digest, and promoted
       or replicated across cloud-native registries.
@@ -2348,16 +2473,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFeag
-        database_id: 4764819050
-        number: 529
-        url: https://github.com/ggortsema/styxcd-docs/issues/529
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGax8
+        issue_id: I_kwDOR_b51c8AAAABHIV_0Q
+        database_id: 4773478353
+        number: 897
+        url: https://github.com/ggortsema/styxcd-docs/issues/897
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2OQ
 - id: observability
   type: epic
   title: Observability
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 13000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -2366,17 +2492,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFetQ
-      database_id: 4764819125
-      number: 530
-      url: https://github.com/ggortsema/styxcd-docs/issues/530
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGayU
+      issue_id: I_kwDOR_b51c8AAAABHIWAFA
+      database_id: 4773478420
+      number: 898
+      url: https://github.com/ggortsema/styxcd-docs/issues/898
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2OY
   issues:
   - id: add-prometheus-metrics
     type: issue
     title: Add Prometheus Metrics
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Add Prometheus Metrics.'
     acceptance_criteria: []
@@ -2385,16 +2512,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFe5Q
-        database_id: 4764819173
-        number: 531
-        url: https://github.com/ggortsema/styxcd-docs/issues/531
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGayY
+        issue_id: I_kwDOR_b51c8AAAABHIWAPw
+        database_id: 4773478463
+        number: 899
+        url: https://github.com/ggortsema/styxcd-docs/issues/899
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ok
   - id: add-grafana-dashboards
     type: issue
     title: Add Grafana Dashboards
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Add Grafana Dashboards.'
     acceptance_criteria: []
@@ -2403,16 +2531,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFfJQ
-        database_id: 4764819237
-        number: 532
-        url: https://github.com/ggortsema/styxcd-docs/issues/532
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGayk
+        issue_id: I_kwDOR_b51c8AAAABHIWAcQ
+        database_id: 4773478513
+        number: 900
+        url: https://github.com/ggortsema/styxcd-docs/issues/900
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2O8
   - id: expand-structured-logging
     type: issue
     title: Expand Structured Logging
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Expand Structured Logging.'
     acceptance_criteria: []
@@ -2421,16 +2550,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFfYw
-        database_id: 4764819299
-        number: 533
-        url: https://github.com/ggortsema/styxcd-docs/issues/533
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGays
+        issue_id: I_kwDOR_b51c8AAAABHIWAtw
+        database_id: 4773478583
+        number: 901
+        url: https://github.com/ggortsema/styxcd-docs/issues/901
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Pk
   - id: track-workflow-metrics
     type: issue
     title: Track Workflow Metrics
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Track Workflow Metrics.'
     acceptance_criteria: []
@@ -2439,16 +2569,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFfng
-        database_id: 4764819358
-        number: 534
-        url: https://github.com/ggortsema/styxcd-docs/issues/534
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGay8
+        issue_id: I_kwDOR_b51c8AAAABHIWA_g
+        database_id: 4773478654
+        number: 902
+        url: https://github.com/ggortsema/styxcd-docs/issues/902
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2QM
   - id: track-stage-metrics
     type: issue
     title: Track Stage Metrics
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Track Stage Metrics.'
     acceptance_criteria: []
@@ -2457,16 +2588,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFf1w
-        database_id: 4764819415
-        number: 535
-        url: https://github.com/ggortsema/styxcd-docs/issues/535
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGazE
+        issue_id: I_kwDOR_b51c8AAAABHIWBUg
+        database_id: 4773478738
+        number: 903
+        url: https://github.com/ggortsema/styxcd-docs/issues/903
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Qo
   - id: add-deployment-analytics
     type: issue
     title: Add Deployment Analytics
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Deployment Analytics.'
     acceptance_criteria: []
@@ -2475,16 +2607,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFgCw
-        database_id: 4764819467
-        number: 536
-        url: https://github.com/ggortsema/styxcd-docs/issues/536
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGazY
+        issue_id: I_kwDOR_b51c8AAAABHIWBng
+        database_id: 4773478814
+        number: 904
+        url: https://github.com/ggortsema/styxcd-docs/issues/904
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2RU
   - id: design-environment-agnostic-log-collection
     type: issue
     title: Design Environment-Agnostic Log Collection
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Design a log collection architecture that works across EC2, ECS, GKE, EKS, and future runtimes while preserving
       consistent structured application logging.
@@ -2494,16 +2627,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFgTA
-        database_id: 4764819532
-        number: 537
-        url: https://github.com/ggortsema/styxcd-docs/issues/537
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGazk
+        issue_id: I_kwDOR_b51c8AAAABHIWB3g
+        database_id: 4773478878
+        number: 905
+        url: https://github.com/ggortsema/styxcd-docs/issues/905
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Rw
 - id: documentation-knowledge-base
   type: epic
   title: Documentation & Knowledge Base
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 14000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -2512,17 +2646,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFgow
-      database_id: 4764819619
-      number: 538
-      url: https://github.com/ggortsema/styxcd-docs/issues/538
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGazo
+      issue_id: I_kwDOR_b51c8AAAABHIWCGA
+      database_id: 4773478936
+      number: 906
+      url: https://github.com/ggortsema/styxcd-docs/issues/906
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2SI
   issues:
   - id: create-architecture-documentation
     type: issue
     title: Create Architecture Documentation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Create Architecture Documentation.'
     acceptance_criteria: []
@@ -2531,16 +2666,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFgzA
-        database_id: 4764819660
-        number: 539
-        url: https://github.com/ggortsema/styxcd-docs/issues/539
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGazs
+        issue_id: I_kwDOR_b51c8AAAABHIWCOg
+        database_id: 4773478970
+        number: 907
+        url: https://github.com/ggortsema/styxcd-docs/issues/907
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Sc
   - id: create-workflow-authoring-guide
     type: issue
     title: Create Workflow Authoring Guide
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Create Workflow Authoring Guide.'
     acceptance_criteria: []
@@ -2549,16 +2685,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFg9g
-        database_id: 4764819702
-        number: 540
-        url: https://github.com/ggortsema/styxcd-docs/issues/540
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGaz4
+        issue_id: I_kwDOR_b51c8AAAABHIWCgA
+        database_id: 4773479040
+        number: 908
+        url: https://github.com/ggortsema/styxcd-docs/issues/908
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2S0
   - id: create-platform-guides
     type: issue
     title: Create Platform Guides
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Create Platform Guides.'
     acceptance_criteria: []
@@ -2567,16 +2704,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFhPg
-        database_id: 4764819774
-        number: 541
-        url: https://github.com/ggortsema/styxcd-docs/issues/541
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa0A
+        issue_id: I_kwDOR_b51c8AAAABHIWCug
+        database_id: 4773479098
+        number: 909
+        url: https://github.com/ggortsema/styxcd-docs/issues/909
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2S8
   - id: create-troubleshooting-guide
     type: issue
     title: Create Troubleshooting Guide
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Create Troubleshooting Guide.'
     acceptance_criteria: []
@@ -2585,16 +2723,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFheQ
-        database_id: 4764819833
-        number: 542
-        url: https://github.com/ggortsema/styxcd-docs/issues/542
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa0Q
+        issue_id: I_kwDOR_b51c8AAAABHIWDCQ
+        database_id: 4773479177
+        number: 910
+        url: https://github.com/ggortsema/styxcd-docs/issues/910
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2TQ
   - id: create-knowledge-base-structure
     type: issue
     title: Create Knowledge Base Structure
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Create Knowledge Base Structure.'
     acceptance_criteria: []
@@ -2603,16 +2742,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFhww
-        database_id: 4764819907
-        number: 543
-        url: https://github.com/ggortsema/styxcd-docs/issues/543
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa0k
+        issue_id: I_kwDOR_b51c8AAAABHIWDRw
+        database_id: 4773479239
+        number: 911
+        url: https://github.com/ggortsema/styxcd-docs/issues/911
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ts
   - id: create-example-workflow-library
     type: issue
     title: Create Example Workflow Library
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Create Example Workflow Library.'
     acceptance_criteria: []
@@ -2621,16 +2761,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFiCQ
-        database_id: 4764819977
-        number: 544
-        url: https://github.com/ggortsema/styxcd-docs/issues/544
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa0s
+        issue_id: I_kwDOR_b51c8AAAABHIWDiQ
+        database_id: 4773479305
+        number: 912
+        url: https://github.com/ggortsema/styxcd-docs/issues/912
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2UU
   - id: define-human-and-rag-documentation-strategy
     type: issue
     title: Define Human and RAG Documentation Strategy
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: Decide how StyxCD documentation should serve both human readers today and future retrieval-augmented generation
       use cases.
@@ -2640,16 +2781,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFiyg
-        database_id: 4764820170
-        number: 545
-        url: https://github.com/ggortsema/styxcd-docs/issues/545
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa00
+        issue_id: I_kwDOR_b51c8AAAABHIWD2w
+        database_id: 4773479387
+        number: 913
+        url: https://github.com/ggortsema/styxcd-docs/issues/913
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Us
   - id: formalize-yaml-specification-documentation
     type: issue
     title: Formalize YAML Specification Documentation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: Create a formal documentation model for StyxCD YAML specs, including cloud workflow specs, PM workflow specs,
       examples, and help files.
@@ -2659,16 +2801,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFjGw
-        database_id: 4764820251
-        number: 546
-        url: https://github.com/ggortsema/styxcd-docs/issues/546
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa1Q
+        issue_id: I_kwDOR_b51c8AAAABHIWEGQ
+        database_id: 4773479449
+        number: 914
+        url: https://github.com/ggortsema/styxcd-docs/issues/914
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2VQ
   - id: clean-up-documentation-structure
     type: issue
     title: Clean Up Documentation Structure
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: Organize existing and future StyxCD docs into a clean structure that supports product documentation, architecture
       history, implementation notes, and AI retrieval.
@@ -2678,16 +2821,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFjVw
-        database_id: 4764820311
-        number: 547
-        url: https://github.com/ggortsema/styxcd-docs/issues/547
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa1c
+        issue_id: I_kwDOR_b51c8AAAABHIWEWw
+        database_id: 4773479515
+        number: 915
+        url: https://github.com/ggortsema/styxcd-docs/issues/915
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2V0
   - id: create-architecture-decision-records
     type: issue
     title: Create Architecture Decision Records
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: Introduce lightweight ADRs for major StyxCD design decisions such as execution-plan stages, platform abstraction
       boundaries, Terraform boundaries, and documentation strategy.
@@ -2697,16 +2841,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFjqw
-        database_id: 4764820395
-        number: 548
-        url: https://github.com/ggortsema/styxcd-docs/issues/548
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa1w
+        issue_id: I_kwDOR_b51c8AAAABHIWElQ
+        database_id: 4773479573
+        number: 916
+        url: https://github.com/ggortsema/styxcd-docs/issues/916
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2WQ
 - id: local-development-experience
   type: epic
   title: Local Development Experience
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 15000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -2715,17 +2860,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFkLA
-      database_id: 4764820524
-      number: 549
-      url: https://github.com/ggortsema/styxcd-docs/issues/549
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa14
+      issue_id: I_kwDOR_b51c8AAAABHIWEzA
+      database_id: 4773479628
+      number: 917
+      url: https://github.com/ggortsema/styxcd-docs/issues/917
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ww
   issues:
   - id: add-in-memory-database-mode
     type: issue
     title: Add In-Memory Database Mode
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Add In-Memory Database Mode.'
     acceptance_criteria: []
@@ -2734,16 +2880,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFkSA
-        database_id: 4764820552
-        number: 550
-        url: https://github.com/ggortsema/styxcd-docs/issues/550
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa2A
+        issue_id: I_kwDOR_b51c8AAAABHIWE-A
+        database_id: 4773479672
+        number: 918
+        url: https://github.com/ggortsema/styxcd-docs/issues/918
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2XA
   - id: create-docker-compose-environment
     type: issue
     title: Create Docker Compose Environment
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Create Docker Compose Environment.'
     acceptance_criteria: []
@@ -2752,16 +2899,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFkgQ
-        database_id: 4764820609
-        number: 551
-        url: https://github.com/ggortsema/styxcd-docs/issues/551
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa2U
+        issue_id: I_kwDOR_b51c8AAAABHIWFLQ
+        database_id: 4773479725
+        number: 919
+        url: https://github.com/ggortsema/styxcd-docs/issues/919
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Xo
   - id: support-local-workflow-execution
     type: issue
     title: Support Local Workflow Execution
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Support Local Workflow Execution.'
     acceptance_criteria: []
@@ -2770,16 +2918,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFkzQ
-        database_id: 4764820685
-        number: 552
-        url: https://github.com/ggortsema/styxcd-docs/issues/552
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa2k
+        issue_id: I_kwDOR_b51c8AAAABHIWFWw
+        database_id: 4773479771
+        number: 920
+        url: https://github.com/ggortsema/styxcd-docs/issues/920
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2YI
   - id: improve-developer-setup-documentation
     type: issue
     title: Improve Developer Setup Documentation
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Improve Developer Setup Documentation.'
     acceptance_criteria: []
@@ -2788,16 +2937,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFlBg
-        database_id: 4764820742
-        number: 553
-        url: https://github.com/ggortsema/styxcd-docs/issues/553
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa2s
+        issue_id: I_kwDOR_b51c8AAAABHIWFmA
+        database_id: 4773479832
+        number: 921
+        url: https://github.com/ggortsema/styxcd-docs/issues/921
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Y4
   - id: create-local-demo-environment
     type: issue
     title: Create Local Demo Environment
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Create Local Demo Environment.'
     acceptance_criteria: []
@@ -2806,16 +2956,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFlQg
-        database_id: 4764820802
-        number: 554
-        url: https://github.com/ggortsema/styxcd-docs/issues/554
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa28
+        issue_id: I_kwDOR_b51c8AAAABHIWF5g
+        database_id: 4773479910
+        number: 922
+        url: https://github.com/ggortsema/styxcd-docs/issues/922
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2ZA
 - id: ui-enhancements
   type: epic
   title: UI Enhancements
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 16000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -2824,17 +2975,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFlew
-      database_id: 4764820859
-      number: 555
-      url: https://github.com/ggortsema/styxcd-docs/issues/555
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa3M
+      issue_id: I_kwDOR_b51c8AAAABHIWGKQ
+      database_id: 4773479977
+      number: 923
+      url: https://github.com/ggortsema/styxcd-docs/issues/923
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2ZI
   issues:
   - id: load-yaml-from-file
     type: issue
     title: Load YAML From File
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Load YAML From File.'
     acceptance_criteria: []
@@ -2843,16 +2995,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFlnA
-        database_id: 4764820892
-        number: 556
-        url: https://github.com/ggortsema/styxcd-docs/issues/556
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa3Y
+        issue_id: I_kwDOR_b51c8AAAABHIWGTA
+        database_id: 4773480012
+        number: 924
+        url: https://github.com/ggortsema/styxcd-docs/issues/924
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Zg
   - id: load-yaml-from-url
     type: issue
     title: Load YAML From URL
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Load YAML From URL.'
     acceptance_criteria: []
@@ -2861,16 +3014,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFl4Q
-        database_id: 4764820961
-        number: 557
-        url: https://github.com/ggortsema/styxcd-docs/issues/557
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa3o
+        issue_id: I_kwDOR_b51c8AAAABHIWGfw
+        database_id: 4773480063
+        number: 925
+        url: https://github.com/ggortsema/styxcd-docs/issues/925
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Zs
   - id: create-workflow-templates-ui
     type: issue
     title: Create Workflow Templates UI
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Create Workflow Templates UI.'
     acceptance_criteria: []
@@ -2879,16 +3033,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFmFg
-        database_id: 4764821014
-        number: 558
-        url: https://github.com/ggortsema/styxcd-docs/issues/558
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa30
+        issue_id: I_kwDOR_b51c8AAAABHIWGxQ
+        database_id: 4773480133
+        number: 926
+        url: https://github.com/ggortsema/styxcd-docs/issues/926
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2aA
   - id: display-effective-yaml
     type: issue
     title: Display Effective YAML
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Display Effective YAML.'
     acceptance_criteria: []
@@ -2897,16 +3052,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFmXg
-        database_id: 4764821086
-        number: 559
-        url: https://github.com/ggortsema/styxcd-docs/issues/559
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa4A
+        issue_id: I_kwDOR_b51c8AAAABHIWHCg
+        database_id: 4773480202
+        number: 927
+        url: https://github.com/ggortsema/styxcd-docs/issues/927
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2aU
   - id: improve-mobile-experience
     type: issue
     title: Improve Mobile Experience
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Improve Mobile Experience.'
     acceptance_criteria: []
@@ -2915,16 +3071,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFnLg
-        database_id: 4764821294
-        number: 560
-        url: https://github.com/ggortsema/styxcd-docs/issues/560
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa4M
+        issue_id: I_kwDOR_b51c8AAAABHIWHQw
+        database_id: 4773480259
+        number: 928
+        url: https://github.com/ggortsema/styxcd-docs/issues/928
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2ak
   - id: add-execution-filtering
     type: issue
     title: Add Execution Filtering
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Execution Filtering.'
     acceptance_criteria: []
@@ -2933,16 +3090,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFneg
-        database_id: 4764821370
-        number: 561
-        url: https://github.com/ggortsema/styxcd-docs/issues/561
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa4g
+        issue_id: I_kwDOR_b51c8AAAABHIWHhA
+        database_id: 4773480324
+        number: 929
+        url: https://github.com/ggortsema/styxcd-docs/issues/929
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2aw
   - id: add-execution-comparison-view
     type: issue
     title: Add Execution Comparison View
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: 'TODO: Define scope and acceptance criteria for Add Execution Comparison View.'
     acceptance_criteria: []
@@ -2951,16 +3109,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFnqA
-        database_id: 4764821416
-        number: 562
-        url: https://github.com/ggortsema/styxcd-docs/issues/562
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa4w
+        issue_id: I_kwDOR_b51c8AAAABHIWHxA
+        database_id: 4773480388
+        number: 930
+        url: https://github.com/ggortsema/styxcd-docs/issues/930
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2bA
   - id: add-template-catalog-ui
     type: issue
     title: Add Template Catalog UI
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 8000
     description: 'TODO: Define scope and acceptance criteria for Add Template Catalog UI.'
     acceptance_criteria: []
@@ -2969,16 +3128,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFn4w
-        database_id: 4764821475
-        number: 563
-        url: https://github.com/ggortsema/styxcd-docs/issues/563
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa40
+        issue_id: I_kwDOR_b51c8AAAABHIWIJg
+        database_id: 4773480486
+        number: 931
+        url: https://github.com/ggortsema/styxcd-docs/issues/931
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2bk
   - id: remember-yaml-editor-state
     type: issue
     title: Remember YAML Editor State
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: Improve the StyxCD UI by remembering the user's last submitted YAML and editor/layout state.
     acceptance_criteria: []
@@ -2987,16 +3147,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFoJg
-        database_id: 4764821542
-        number: 564
-        url: https://github.com/ggortsema/styxcd-docs/issues/564
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa5E
+        issue_id: I_kwDOR_b51c8AAAABHIWIeQ
+        database_id: 4773480569
+        number: 932
+        url: https://github.com/ggortsema/styxcd-docs/issues/932
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2cM
 - id: planning-decision-engine
   type: epic
   title: Planning & Decision Engine
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 17000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -3005,17 +3166,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFoZQ
-      database_id: 4764821605
-      number: 565
-      url: https://github.com/ggortsema/styxcd-docs/issues/565
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa5c
+      issue_id: I_kwDOR_b51c8AAAABHIWIug
+      database_id: 4773480634
+      number: 933
+      url: https://github.com/ggortsema/styxcd-docs/issues/933
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2dk
   issues:
   - id: define-planningdecision-model
     type: issue
     title: Define PlanningDecision Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define PlanningDecision Model.'
     acceptance_criteria: []
@@ -3024,16 +3186,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFofA
-        database_id: 4764821628
-        number: 566
-        url: https://github.com/ggortsema/styxcd-docs/issues/566
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa5g
+        issue_id: I_kwDOR_b51c8AAAABHIWI6Q
+        database_id: 4773480681
+        number: 934
+        url: https://github.com/ggortsema/styxcd-docs/issues/934
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2eo
   - id: integrate-drools-decision-engine
     type: issue
     title: Integrate Drools Decision Engine
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Integrate Drools Decision Engine.'
     acceptance_criteria: []
@@ -3042,16 +3205,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFoug
-        database_id: 4764821690
-        number: 567
-        url: https://github.com/ggortsema/styxcd-docs/issues/567
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa54
+        issue_id: I_kwDOR_b51c8AAAABHIWJKA
+        database_id: 4773480744
+        number: 935
+        url: https://github.com/ggortsema/styxcd-docs/issues/935
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2fE
   - id: separate-planning-from-execution
     type: issue
     title: Separate Planning From Execution
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Separate Planning From Execution.'
     acceptance_criteria: []
@@ -3060,16 +3224,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFo8w
-        database_id: 4764821747
-        number: 568
-        url: https://github.com/ggortsema/styxcd-docs/issues/568
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa6M
+        issue_id: I_kwDOR_b51c8AAAABHIWJZA
+        database_id: 4773480804
+        number: 936
+        url: https://github.com/ggortsema/styxcd-docs/issues/936
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2fk
   - id: implement-decision-rules-framework
     type: issue
     title: Implement Decision Rules Framework
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Implement Decision Rules Framework.'
     acceptance_criteria: []
@@ -3078,16 +3243,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFpMg
-        database_id: 4764821810
-        number: 569
-        url: https://github.com/ggortsema/styxcd-docs/issues/569
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa6c
+        issue_id: I_kwDOR_b51c8AAAABHIWJow
+        database_id: 4773480867
+        number: 937
+        url: https://github.com/ggortsema/styxcd-docs/issues/937
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2gE
   - id: document-planning-architecture
     type: issue
     title: Document Planning Architecture
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Document Planning Architecture.'
     acceptance_criteria: []
@@ -3096,16 +3262,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFpdg
-        database_id: 4764821878
-        number: 570
-        url: https://github.com/ggortsema/styxcd-docs/issues/570
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa6s
+        issue_id: I_kwDOR_b51c8AAAABHIWJ1g
+        database_id: 4773480918
+        number: 938
+        url: https://github.com/ggortsema/styxcd-docs/issues/938
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2gg
   - id: rename-validation-map-concepts
     type: issue
     title: Rename Validation Map Concepts
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: Revisit naming around VALIDATE_MAP, paramMap, and stageSpecificMap to better reflect execution planning,
       workflow context, and stage telemetry.
@@ -3115,16 +3282,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFptQ
-        database_id: 4764821941
-        number: 571
-        url: https://github.com/ggortsema/styxcd-docs/issues/571
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa60
+        issue_id: I_kwDOR_b51c8AAAABHIWKHg
+        database_id: 4773480990
+        number: 939
+        url: https://github.com/ggortsema/styxcd-docs/issues/939
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hE
 - id: kharon-assistant
   type: epic
   title: Kharon Assistant
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 18000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -3133,17 +3301,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFp9w
-      database_id: 4764822007
-      number: 572
-      url: https://github.com/ggortsema/styxcd-docs/issues/572
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa7E
+      issue_id: I_kwDOR_b51c8AAAABHIWKUA
+      database_id: 4773481040
+      number: 940
+      url: https://github.com/ggortsema/styxcd-docs/issues/940
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hI
   issues:
   - id: create-rag-context-retrieval-layer
     type: issue
     title: Create RAG Context Retrieval Layer
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: Create a retrieval layer that can index StyxCD documentation, specs, architecture decisions, backlog YAML,
       and session handoffs so Kharon can recover project context accurately.
@@ -3153,16 +3322,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFqHA
-        database_id: 4764822044
-        number: 573
-        url: https://github.com/ggortsema/styxcd-docs/issues/573
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa7M
+        issue_id: I_kwDOR_b51c8AAAABHIWKgQ
+        database_id: 4773481089
+        number: 941
+        url: https://github.com/ggortsema/styxcd-docs/issues/941
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hQ
   - id: define-kharon-project-memory-sources
     type: issue
     title: Define Kharon Project Memory Sources
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: Define which repositories, documents, and generated artifacts should become trusted sources for Kharon contextual
       answers.
@@ -3172,16 +3342,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFqXw
-        database_id: 4764822111
-        number: 574
-        url: https://github.com/ggortsema/styxcd-docs/issues/574
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa7c
+        issue_id: I_kwDOR_b51c8AAAABHIWKwg
+        database_id: 4773481154
+        number: 942
+        url: https://github.com/ggortsema/styxcd-docs/issues/942
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hg
 - id: styxcd-command-line-tool
   type: epic
   title: StyxCD Command Line Tool
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 19000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
@@ -3190,17 +3361,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFrHQ
-      database_id: 4764822301
-      number: 575
-      url: https://github.com/ggortsema/styxcd-docs/issues/575
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa7g
+      issue_id: I_kwDOR_b51c8AAAABHIWLAQ
+      database_id: 4773481217
+      number: 943
+      url: https://github.com/ggortsema/styxcd-docs/issues/943
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2h4
   issues:
   - id: implement-ui-parity-command-using-ferry-verb
     type: issue
     title: Implement UI Parity Command Using Ferry Verb
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: Create the initial StyxCD CLI command that provides parity with the current Next.js operations UI. The command
       should submit workflow YAML to the orchestrator and return execution metadata including execution ID, status, Jenkins
@@ -3211,16 +3383,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFrSQ
-        database_id: 4764822345
-        number: 576
-        url: https://github.com/ggortsema/styxcd-docs/issues/576
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa70
+        issue_id: I_kwDOR_b51c8AAAABHIWLIQ
+        database_id: 4773481249
+        number: 944
+        url: https://github.com/ggortsema/styxcd-docs/issues/944
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iE
 - id: backlog-as-code-synchronization
   type: epic
   title: Backlog-as-Code Synchronization
   repository: ggortsema/styxcd-docs
-  status: OPEN
+  status: Backlog
+  issue_state: OPEN
   order: 20000
   description: 'Create a portable project-management synchronization engine that treats
 
@@ -3247,17 +3420,18 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHAFriA
-      database_id: 4764822408
-      number: 577
-      url: https://github.com/ggortsema/styxcd-docs/issues/577
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa8I
+      issue_id: I_kwDOR_b51c8AAAABHIWLag
+      database_id: 4773481322
+      number: 945
+      url: https://github.com/ggortsema/styxcd-docs/issues/945
+      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iM
   issues:
   - id: design-canonical-backlog-model
     type: issue
     title: Design Canonical Backlog Model
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 1000
     description: '-   Define portable backlog.yml schema.
 
@@ -3269,16 +3443,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFrqg
-        database_id: 4764822442
-        number: 578
-        url: https://github.com/ggortsema/styxcd-docs/issues/578
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa8Q
+        issue_id: I_kwDOR_b51c8AAAABHIWLkQ
+        database_id: 4773481361
+        number: 946
+        url: https://github.com/ggortsema/styxcd-docs/issues/946
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iU
   - id: implement-github-project-export
     type: issue
     title: Implement GitHub Project Export
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 2000
     description: '-   Read GitHub Projects, Issues, labels, milestones, priorities,
 
@@ -3290,16 +3465,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFr3Q
-        database_id: 4764822493
-        number: 579
-        url: https://github.com/ggortsema/styxcd-docs/issues/579
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa8c
+        issue_id: I_kwDOR_b51c8AAAABHIWL2Q
+        database_id: 4773481433
+        number: 947
+        url: https://github.com/ggortsema/styxcd-docs/issues/947
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iw
   - id: generate-canonical-backlog-yml
     type: issue
     title: Generate Canonical `backlog.yml`
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 3000
     description: '-   Stable deterministic output.
 
@@ -3314,16 +3490,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFsIA
-        database_id: 4764822560
-        number: 580
-        url: https://github.com/ggortsema/styxcd-docs/issues/580
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa8s
+        issue_id: I_kwDOR_b51c8AAAABHIWMJA
+        database_id: 4773481508
+        number: 948
+        url: https://github.com/ggortsema/styxcd-docs/issues/948
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2jI
   - id: generate-human-readable-backlog-md
     type: issue
     title: Generate Human-Readable `backlog.md`
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 4000
     description: '-   Organized by epic.
 
@@ -3338,16 +3515,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFsUA
-        database_id: 4764822608
-        number: 581
-        url: https://github.com/ggortsema/styxcd-docs/issues/581
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa88
+        issue_id: I_kwDOR_b51c8AAAABHIWMbw
+        database_id: 4773481583
+        number: 949
+        url: https://github.com/ggortsema/styxcd-docs/issues/949
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2j0
   - id: detect-backlog-changes
     type: issue
     title: Detect Backlog Changes
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 5000
     description: '-   Detect additions, deletions, renames, status changes, priority
 
@@ -3359,16 +3537,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFslQ
-        database_id: 4764822677
-        number: 582
-        url: https://github.com/ggortsema/styxcd-docs/issues/582
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa9I
+        issue_id: I_kwDOR_b51c8AAAABHIWMuQ
+        database_id: 4773481657
+        number: 950
+        url: https://github.com/ggortsema/styxcd-docs/issues/950
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2kk
   - id: generate-synchronization-report
     type: issue
     title: Generate Synchronization Report
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 6000
     description: '-   Added, updated, removed, duplicate, warning, and error
 
@@ -3380,16 +3559,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFszA
-        database_id: 4764822732
-        number: 583
-        url: https://github.com/ggortsema/styxcd-docs/issues/583
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa9g
+        issue_id: I_kwDOR_b51c8AAAABHIWNBQ
+        database_id: 4773481733
+        number: 951
+        url: https://github.com/ggortsema/styxcd-docs/issues/951
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2lM
   - id: regenerate-github-from-ssot
     type: issue
     title: Regenerate GitHub From SSOT
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 7000
     description: '-   Create/update issues.
 
@@ -3404,16 +3584,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFtBw
-        database_id: 4764822791
-        number: 584
-        url: https://github.com/ggortsema/styxcd-docs/issues/584
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa9s
+        issue_id: I_kwDOR_b51c8AAAABHIWNSg
+        database_id: 4773481802
+        number: 952
+        url: https://github.com/ggortsema/styxcd-docs/issues/952
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2lk
   - id: implement-idempotent-synchronization
     type: issue
     title: Implement Idempotent Synchronization
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Done
+    issue_state: CLOSED
     order: 8000
     description: '-   Safe repeated execution.
 
@@ -3425,16 +3606,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFtRw
-        database_id: 4764822855
-        number: 585
-        url: https://github.com/ggortsema/styxcd-docs/issues/585
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa-E
+        issue_id: I_kwDOR_b51c8AAAABHIWNiQ
+        database_id: 4773481865
+        number: 953
+        url: https://github.com/ggortsema/styxcd-docs/issues/953
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2mA
   - id: implement-dry-run-mode
     type: issue
     title: Implement Dry-Run Mode
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 9000
     description: '-   Preview create/update/delete/no-op actions.'
     acceptance_criteria: []
@@ -3443,16 +3625,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFtiA
-        database_id: 4764822920
-        number: 586
-        url: https://github.com/ggortsema/styxcd-docs/issues/586
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa-M
+        issue_id: I_kwDOR_b51c8AAAABHIWNxg
+        database_id: 4773481926
+        number: 954
+        url: https://github.com/ggortsema/styxcd-docs/issues/954
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2mU
   - id: support-provider-adapters
     type: issue
     title: Support Provider Adapters
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 10000
     description: '-   GitHub first.
 
@@ -3464,16 +3647,17 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFtug
-        database_id: 4764822970
-        number: 587
-        url: https://github.com/ggortsema/styxcd-docs/issues/587
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa-c
+        issue_id: I_kwDOR_b51c8AAAABHIWOAg
+        database_id: 4773481986
+        number: 955
+        url: https://github.com/ggortsema/styxcd-docs/issues/955
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2mk
   - id: dogfood-backlog-as-code-synchronization
     type: issue
     title: Dogfood Backlog-as-Code Synchronization
     repository: ggortsema/styxcd-docs
-    status: OPEN
+    status: Backlog
+    issue_state: OPEN
     order: 11000
     description: '-   Export StyxCD roadmap.
 
@@ -3494,8 +3678,8 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHAFt8g
-        database_id: 4764823026
-        number: 588
-        url: https://github.com/ggortsema/styxcd-docs/issues/588
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxGa-w
+        issue_id: I_kwDOR_b51c8AAAABHIWOWA
+        database_id: 4773482072
+        number: 956
+        url: https://github.com/ggortsema/styxcd-docs/issues/956
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2m0

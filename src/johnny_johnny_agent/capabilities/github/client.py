@@ -1,7 +1,8 @@
 import json
 import os
-import urllib.request
 import urllib.error
+import urllib.request
+from typing import Any
 
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
@@ -60,6 +61,7 @@ def list_viewer_projects() -> list[dict]:
 
     return data["viewer"]["projectsV2"]["nodes"]
 
+
 def get_viewer_project_by_title(project_title: str) -> dict:
     projects = list_viewer_projects()
 
@@ -68,6 +70,7 @@ def get_viewer_project_by_title(project_title: str) -> dict:
             return project
 
     raise RuntimeError(f"GitHub project not found: {project_title}")
+
 
 def get_repository(owner: str, name: str) -> dict:
     query = """
@@ -95,6 +98,7 @@ def get_repository(owner: str, name: str) -> dict:
         raise RuntimeError(f"GitHub repository not found: {owner}/{name}")
 
     return repository
+
 
 def list_project_issue_titles(project_id: str) -> set[str]:
     query = """
@@ -183,6 +187,107 @@ def add_issue_to_project(project_id: str, issue_id: str) -> dict:
 
     return data["addProjectV2ItemById"]["item"]
 
+
+def get_project_status_field(project_id: str) -> dict:
+    query = """
+    query GetProjectStatusField($projectId: ID!) {
+      node(id: $projectId) {
+        ... on ProjectV2 {
+          fields(first: 50) {
+            nodes {
+              ... on ProjectV2SingleSelectField {
+                id
+                name
+                options {
+                  id
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    """
+
+    data = execute_graphql(query, {"projectId": project_id})
+    fields = data["node"]["fields"]["nodes"]
+
+    for field in fields:
+        if not field:
+            continue
+
+        if field.get("name") == "Status":
+            return field
+
+    raise RuntimeError("GitHub Project Status field not found.")
+
+
+def update_project_item_status(
+        project_id: str,
+        project_item_id: str,
+        status: str,
+) -> dict:
+    status_field = get_project_status_field(project_id)
+    option = _find_single_select_option(
+        field=status_field,
+        option_name=status,
+    )
+
+    mutation = """
+    mutation UpdateProjectItemStatus(
+      $projectId: ID!
+      $itemId: ID!
+      $fieldId: ID!
+      $optionId: String!
+    ) {
+      updateProjectV2ItemFieldValue(input: {
+        projectId: $projectId
+        itemId: $itemId
+        fieldId: $fieldId
+        value: {
+          singleSelectOptionId: $optionId
+        }
+      }) {
+        projectV2Item {
+          id
+        }
+      }
+    }
+    """
+
+    data = execute_graphql(
+        mutation,
+        {
+            "projectId": project_id,
+            "itemId": project_item_id,
+            "fieldId": status_field["id"],
+            "optionId": option["id"],
+        },
+    )
+
+    return data["updateProjectV2ItemFieldValue"]["projectV2Item"]
+
+
+def _find_single_select_option(
+        field: dict[str, Any],
+        option_name: str,
+) -> dict[str, Any]:
+    for option in field.get("options", []):
+        if option["name"] == option_name:
+            return option
+
+    valid_options = [
+        option["name"]
+        for option in field.get("options", [])
+    ]
+
+    raise RuntimeError(
+        f"Invalid Status value: {option_name}. "
+        f"Valid values: {', '.join(valid_options)}"
+    )
+
+
 def execute_rest(
         method: str,
         path: str,
@@ -239,6 +344,7 @@ def add_sub_issue(
         },
     )
 
+
 def list_project_issues(project_id: str) -> list[dict]:
     query = """
 query ListProjectIssues($projectId: ID!, $after: String) {
@@ -251,6 +357,19 @@ query ListProjectIssues($projectId: ID!, $after: String) {
         }
         nodes {
           id
+          fieldValues(first: 50) {
+            nodes {
+              ... on ProjectV2ItemFieldSingleSelectValue {
+                name
+                optionId
+                field {
+                  ... on ProjectV2SingleSelectField {
+                    name
+                  }
+                }
+              }
+            }
+          }
           content {
             ... on Issue {
               id
@@ -311,9 +430,12 @@ query ListProjectIssues($projectId: ID!, $after: String) {
             if not content.get("title"):
                 continue
 
+            project_status = _project_status_from_item(item)
+
             issues.append(
                 {
                     "project_item_id": item["id"],
+                    "project_status": project_status,
                     "id": content["id"],
                     "database_id": content["databaseId"],
                     "number": content["number"],
@@ -348,6 +470,22 @@ query ListProjectIssues($projectId: ID!, $after: String) {
         after = page_info["endCursor"]
 
     return issues
+
+
+def _project_status_from_item(item: dict[str, Any]) -> str | None:
+    field_values = item.get("fieldValues", {}).get("nodes", [])
+
+    for field_value in field_values:
+        if not field_value:
+            continue
+
+        field = field_value.get("field") or {}
+
+        if field.get("name") == "Status":
+            return field_value.get("name")
+
+    return None
+
 
 def delete_issue(issue_id: str) -> None:
     mutation = """

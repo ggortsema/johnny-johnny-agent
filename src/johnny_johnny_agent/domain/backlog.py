@@ -12,6 +12,7 @@ class Issue:
     title: str
     repository: str
     status: str
+    issue_state: str
     order: int
     description: str = ""
     acceptance_criteria: list[str] = field(default_factory=list)
@@ -28,6 +29,7 @@ class Epic:
     title: str
     repository: str
     status: str
+    issue_state: str
     order: int
     description: str = ""
     acceptance_criteria: list[str] = field(default_factory=list)
