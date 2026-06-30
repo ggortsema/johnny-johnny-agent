@@ -218,6 +218,16 @@ Creates a canonical issue and immediately reconciles GitHub on confirmation.
 
 ---
 
+### Create Epic
+
+```bash
+jj backlog create-epic
+```
+
+Creates a canonical epic and immediately reconciles GitHub on confirmation.
+
+---
+
 ### Update Issue
 
 ```bash
@@ -316,6 +326,7 @@ Completed:
 - Create Issue
 - Update Issue (status)
 - List Epics
+- Create Epic
 - Maintenance Delete Issue
 - Maintenance Purge
 - Dogfooded Backlog-as-Code on Johnny-Johnny itself
@@ -328,7 +339,6 @@ The Backlog-as-Code capability has moved beyond import/export tooling into a com
 
 Complete the backlog capability:
 
-- Create Epic
 - Update Epic
 - Expand Update Issue
 - List Issues
