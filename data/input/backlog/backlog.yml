@@ -34,7 +34,7 @@ epics:
     type: issue
     title: Implement GKE deployment stage
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 1000
     description: Replace the current hello-world GKE stage with a real implementation that executes gcloud and kubectl commands.
@@ -54,7 +54,7 @@ epics:
     type: issue
     title: Define GKE Authentication Strategy
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 2000
     description: Determine how StyxCD authenticates to GKE clusters. Evaluate service accounts, workload identity, and credential
@@ -74,7 +74,7 @@ epics:
     type: issue
     title: Deploy Sample Application to GKE
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 3000
     description: Deploy a sample application to GKE using StyxCD to validate the complete workflow from YAML submission through
@@ -113,7 +113,7 @@ epics:
     type: issue
     title: Add GKE Deployment Validation
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 5000
     description: Implement deployment validation after application rollout.
@@ -132,7 +132,7 @@ epics:
     type: issue
     title: Define GKE Deployment Model
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 6000
     description: Define how GKE deployments are represented within the StyxCD workflow DSL.
@@ -151,7 +151,7 @@ epics:
     type: issue
     title: Implement GKE Sandbox Environment Support
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 7000
     description: Provide a repeatable sandbox environment for developing and testing GKE workflows.
@@ -1326,7 +1326,7 @@ epics:
     type: issue
     title: Support Epic and Sub-Issue Creation
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 3000
     description: Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship
@@ -1346,7 +1346,7 @@ epics:
     type: issue
     title: Support GitHub Project Assignment
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 4000
     description: Add created or updated issues to the configured GitHub Project board.
@@ -1365,7 +1365,7 @@ epics:
     type: issue
     title: Add PM Workflow Dry-Run Mode
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 5000
     description: Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider.
@@ -1384,7 +1384,7 @@ epics:
     type: issue
     title: Support PM Workflow Idempotency
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 6000
     description: Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist.
@@ -1423,7 +1423,7 @@ epics:
     type: issue
     title: Support Provider Metadata in PM Workflow YAML
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 8000
     description: Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp,
@@ -1808,7 +1808,7 @@ epics:
     type: issue
     title: Complete GKE Vertical Slice
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice.'
@@ -1981,7 +1981,7 @@ epics:
     type: issue
     title: Document GKE and EKS Stage Parity
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 10000
     description: Capture the architectural mapping between GKE and EKS stages, including where the workflows align conceptually
@@ -2885,25 +2885,6 @@ epics:
         number: 918
         url: https://github.com/ggortsema/styxcd-docs/issues/918
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2XA
-  - id: create-docker-compose-environment
-    type: issue
-    title: Create Docker Compose Environment
-    repository: ggortsema/styxcd-docs
-    status: Backlog
-    issue_state: OPEN
-    order: 2000
-    description: 'TODO: Define scope and acceptance criteria for Create Docker Compose Environment.'
-    acceptance_criteria: []
-    labels: []
-    assignees: []
-    milestone: null
-    provider_metadata:
-      github:
-        issue_id: I_kwDOR_b51c8AAAABHIWFLQ
-        database_id: 4773479725
-        number: 919
-        url: https://github.com/ggortsema/styxcd-docs/issues/919
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Xo
   - id: support-local-workflow-execution
     type: issue
     title: Support Local Workflow Execution
@@ -3430,7 +3411,7 @@ epics:
     type: issue
     title: Design Canonical Backlog Model
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 1000
     description: '-   Define portable backlog.yml schema.
@@ -3452,7 +3433,7 @@ epics:
     type: issue
     title: Implement GitHub Project Export
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 2000
     description: '-   Read GitHub Projects, Issues, labels, milestones, priorities,
@@ -3474,7 +3455,7 @@ epics:
     type: issue
     title: Generate Canonical `backlog.yml`
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 3000
     description: '-   Stable deterministic output.
@@ -3499,7 +3480,7 @@ epics:
     type: issue
     title: Generate Human-Readable `backlog.md`
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Ready
     issue_state: OPEN
     order: 4000
     description: '-   Organized by epic.
@@ -3524,7 +3505,7 @@ epics:
     type: issue
     title: Detect Backlog Changes
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Ready
     issue_state: OPEN
     order: 5000
     description: '-   Detect additions, deletions, renames, status changes, priority
@@ -3546,7 +3527,7 @@ epics:
     type: issue
     title: Generate Synchronization Report
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Ready
     issue_state: OPEN
     order: 6000
     description: '-   Added, updated, removed, duplicate, warning, and error
@@ -3568,7 +3549,7 @@ epics:
     type: issue
     title: Regenerate GitHub From SSOT
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 7000
     description: '-   Create/update issues.
@@ -3656,7 +3637,7 @@ epics:
     type: issue
     title: Dogfood Backlog-as-Code Synchronization
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Done
     issue_state: OPEN
     order: 11000
     description: '-   Export StyxCD roadmap.
@@ -3683,3 +3664,185 @@ epics:
         number: 956
         url: https://github.com/ggortsema/styxcd-docs/issues/956
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2m0
+  - id: create-issue-command
+    type: issue
+    title: Create Issue Command
+    repository: ggortsema/styxcd-docs
+    status: Done
+    issue_state: OPEN
+    order: 12000
+    description: ''
+    acceptance_criteria: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: create-epic-command
+    type: issue
+    title: Create Epic Command
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 13000
+    description: Add a create-epic command that creates a canonical epic and reconciles it to GitHub.
+    acceptance_criteria:
+    - Create a canonical epic.
+    - Dry-run previews reconciliation.
+    - Confirm creates the GitHub epic.
+    - Regenerate backlog preserves provider metadata.
+    - 'Reconcile dry-run reports Operations: 0.'
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: expand-update-issue-command
+    type: issue
+    title: Expand Update Issue Command
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 14000
+    description: Extend update-issue to modify additional canonical issue properties beyond status.
+    acceptance_criteria:
+    - Update issue title.
+    - Update description.
+    - Update acceptance criteria.
+    - Update repository.
+    - Immediate reconciliation after confirmation.
+    - 'Reconcile dry-run reports Operations: 0.'
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: list-issues-command
+    type: issue
+    title: List Issues Command
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 15000
+    description: Add a list-issues command that displays canonical issues with their identifiers, status, and parent epic.
+    acceptance_criteria:
+    - List every canonical issue.
+    - Display issue id.
+    - Display title.
+    - Display status.
+    - Display parent epic.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: update-epic-command
+    type: issue
+    title: Update Epic Command
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 16000
+    description: Add an update-epic command that modifies canonical epic properties and reconciles them to GitHub. V1 updates
+      only the epic itself and does not cascade changes to child issues.
+    acceptance_criteria:
+    - Update epic status.
+    - Update epic title.
+    - Update epic description.
+    - Dry-run previews reconciliation.
+    - Confirm updates the GitHub epic.
+    - Child issues are not modified.
+    - 'Reconcile dry-run reports Operations: 0.'
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: find-issue-command
+    type: issue
+    title: Find Issue Command
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 17000
+    description: Add a fuzzy find-issue command that searches canonical backlog issues by id, title, description, status,
+      and parent epic so users can quickly find issue IDs for follow-up commands.
+    acceptance_criteria:
+    - Search is case-insensitive.
+    - Search matches issue id.
+    - Search matches issue title.
+    - Search matches description.
+    - Search matches parent epic title or id.
+    - Display issue id.
+    - Display issue title.
+    - Display parent epic.
+    - Display status.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: execute-commands-command
+    type: issue
+    title: Execute Commands Command
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 18000
+    description: Add an execute commands command that reads a plain text file containing Johnny-Johnny CLI commands and executes
+      them sequentially. V1 supports simple command replay for batch operations such as backlog grooming.
+    acceptance_criteria:
+    - Accept a text file containing one Johnny-Johnny command per line.
+    - Ignore blank lines.
+    - Ignore comment lines beginning with '#'.
+    - Echo each command before execution.
+    - Stop execution on the first error.
+    - Return a summary of successful and failed commands.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: execute-playbook-command
+    type: issue
+    title: Execute Playbook Command
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 19000
+    description: Add an execute playbook command that interprets a declarative Johnny-Johnny playbook describing engineering
+      intents rather than raw CLI commands. Playbooks become the foundation for reusable engineering automation across all
+      Johnny-Johnny capabilities.
+    acceptance_criteria:
+    - Load a declarative YAML playbook.
+    - Support sequential execution of engineering steps.
+    - Validate the playbook before execution.
+    - Support dry-run execution.
+    - Produce an execution summary.
+    - Serve as the foundation for future variables, conditions, loops, and reusable engineering automation.
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}
+  - id: move-issue-command
+    type: issue
+    title: Move Issue Command
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 20000
+    description: Add a move-issue command that reparents an existing canonical issue to a different epic and reconciles the
+      relationship to GitHub. This allows backlog reorganization without manually editing GitHub or the canonical backlog.
+    acceptance_criteria:
+    - Move an issue to another epic.
+    - Update the canonical backlog.
+    - Reconcile the new parent relationship to GitHub.
+    - Dry-run previews the move.
+    - Confirm applies the move.
+    - 'Reconcile dry-run reports Operations: 0.'
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github: {}

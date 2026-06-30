@@ -1,303 +1,407 @@
 # Johnny-Johnny Agent
 
-Johnny-Johnny Agent is the Python runtime for **Johnny-Johnny**, a
-personal engineering assistant designed to help automate software
-engineering work.
+Johnny-Johnny Agent is the Python runtime for **Johnny-Johnny**, a personal engineering assistant designed to help software engineers build, understand, maintain, and automate software projects.
 
-Johnny-Johnny is **not** a chatbot. Conversations are simply one
-interface to a growing collection of reusable engineering capabilities.
+Johnny-Johnny is project-agnostic. It is not tied to any specific product or codebase. It helps engineers organize work, reason about architecture, automate repetitive tasks, and build software through deterministic workflows backed by reusable capabilities.
 
-Its long-term purpose is to become an engineering companion capable of
-helping with project management, documentation, GitHub, email,
-scheduling, job searches, knowledge management, and future AI-assisted
-workflows.
+Conversations are simply one interface to those capabilities.
 
-------------------------------------------------------------------------
+---
 
 # Vision
 
 Johnny-Johnny is built around a few core principles:
 
--   Build reusable capabilities before user interfaces.
--   Treat the CLI as the primary public interface.
--   Keep business logic independent from presentation layers.
--   Prefer deterministic workflows whenever possible.
--   Use AI where reasoning adds value.
--   Make every capability reusable from:
-    -   CLI
-    -   FastAPI
-    -   Future chat interfaces
-    -   LangGraph
-    -   Future desktop/web applications
+- Build reusable capabilities before user interfaces.
+- Treat the CLI as the primary public interface.
+- Keep business logic independent from presentation layers.
+- Prefer deterministic workflows whenever possible.
+- Use AI where reasoning and intent resolution add value.
+- Make every capability reusable from:
+  - CLI
+  - FastAPI
+  - Future chat interfaces
+  - LangGraph
+  - Future desktop/web applications
 
-------------------------------------------------------------------------
+Johnny-Johnny is intended to become a personal engineering operating system rather than a collection of unrelated tools.
 
-# Current Capability
+---
+
+# Design Principles
+
+## Canonical First
+
+The canonical domain model is the Source of Truth.
+
+External systems such as GitHub are provider projections.
+
+Users manipulate the canonical engineering model.
+
+Johnny-Johnny reconciles provider state.
+
+---
+
+## Intent-Based Commands
+
+Commands describe the user's intent rather than implementation details.
+
+Examples:
+
+- create-issue
+- update-issue
+- create-epic
+- move-issue
+
+rather than low-level mutation commands.
+
+---
+
+## Immediate Reconciliation
+
+Confirmed commands mutate the canonical model and immediately reconcile provider state.
+
+Johnny-Johnny intentionally avoids hidden state whenever practical.
+
+After a successful `--confirm`, the canonical model and provider projection should agree.
+
+---
+
+## Provider Independence
+
+Users interact with engineering concepts.
+
+Johnny-Johnny understands provider-specific behavior.
+
+Provider implementations should not dictate the public command surface.
+
+---
+
+## Grow Johnny-Johnny Instead of Workarounds
+
+When normal engineering work requires leaving Johnny-Johnny, prefer adding a new capability rather than teaching users provider-specific workflows.
+
+---
+
+# Current Major Capability
 
 ## Backlog-as-Code
 
-The first capability is a complete **Backlog-as-Code** engine.
+The first complete Johnny-Johnny capability is **Backlog-as-Code**.
 
 The canonical Source of Truth (SSOT) is:
 
-    backlog.yml
+```
+backlog.yml
+```
 
-GitHub Projects are treated as a **projection** of the canonical
-backlog.
+GitHub Projects are treated as a projection of that canonical backlog.
 
-    backlog.yml
-          │
-          ▼
-    Validate
-          ▼
-    Canonical Domain Model
-          ▼
-    Planner
-          ▼
-    Execution Plan
-          ▼
-    GitHub Projection
+```
+CLI Command
+        ↓
+Load Canonical Model
+        ↓
+Mutate Domain
+        ↓
+Validate
+        ↓
+Planner
+        ↓
+Execution Plan
+        ↓
+Provider Adapter
+        ↓
+GitHub
+```
 
-GitHub is **never** the authoritative data source.
+The reconciliation engine is deterministic and idempotent.
 
-------------------------------------------------------------------------
+Verified workflow:
+
+1. Generate canonical backlog from GitHub.
+2. Validate the YAML.
+3. Create canonical issues.
+4. Update canonical issues.
+5. Delete canonical issues (maintenance).
+6. Reconcile provider state.
+7. Regenerate canonical backlog.
+8. Dry-run reconciliation returns zero operations.
+
+---
+
+# Canonical Model
+
+The canonical backlog separates:
+
+- Stable semantic identity
+- Planning state
+- Provider lifecycle state
+- Provider metadata
+
+Example:
+
+```yaml
+id: create-issue-command
+type: issue
+title: Create Issue Command
+status: Done
+issue_state: OPEN
+
+provider_metadata:
+  github:
+    issue_id: ...
+    project_item_id: ...
+```
+
+Planning state and provider lifecycle are intentionally independent.
+
+Provider metadata is advisory.
+
+Live provider state is authoritative during reconciliation.
+
+---
 
 # Current CLI
 
 ## API
 
-``` bash
+```bash
 jj serve
 ```
 
-Starts the FastAPI server.
+---
 
-------------------------------------------------------------------------
+## Backlog
 
-## Validate
+### Generate
 
-``` bash
-jj backlog validate \
-  --file data/input/backlog/backlog-v1-from-github.yml
+```bash
+jj backlog generate
 ```
 
-Validates the canonical backlog against the JSON schema.
+Generate canonical backlog from GitHub.
 
-------------------------------------------------------------------------
+---
 
-## Inspect
+### Validate
 
-``` bash
-jj backlog inspect \
-  --file data/input/backlog/backlog-v1-from-github.yml
+```bash
+jj backlog validate
 ```
 
-Loads the canonical backlog and displays a summary.
+---
 
-------------------------------------------------------------------------
+### Inspect
 
-## Pull
-
-``` bash
-jj backlog pull \
-  --project "MycroftAI Engineering Roadmap"
+```bash
+jj backlog inspect
 ```
 
-Exports the current GitHub Project projection as JSON.
+---
 
-Information includes:
+### List Epics
 
--   Project metadata
--   Issue metadata
--   Issue body
--   Johnny metadata
--   Labels
--   Assignees
--   Milestones
--   Repository
--   Timestamps
-
-------------------------------------------------------------------------
-
-## Reconcile
-
-Preview:
-
-``` bash
-jj backlog reconcile \
-  --file data/input/backlog/backlog-v1-from-github.yml \
-  --dry-run
+```bash
+jj backlog list-epics
 ```
 
-Execute:
+---
 
-``` bash
-jj backlog reconcile \
-  --file data/input/backlog/backlog-v1-from-github.yml \
-  --confirm
+### Create Issue
+
+```bash
+jj backlog create-issue
 ```
 
-The reconciliation planner currently performs:
+Creates a canonical issue and immediately reconciles GitHub on confirmation.
 
--   Create epics
--   Create issues
--   Attach sub-issues
--   Populate GitHub Project
+---
 
-------------------------------------------------------------------------
+### Update Issue
 
-## Purge
-
-Preview:
-
-``` bash
-jj backlog purge \
-  --project "MycroftAI Engineering Roadmap"
+```bash
+jj backlog update-issue
 ```
 
-Execute:
+Updates canonical planning state and reconciles GitHub.
 
-``` bash
-jj backlog purge \
-  --project "MycroftAI Engineering Roadmap" \
-  --confirm
+---
+
+### Reconcile
+
+```bash
+jj backlog reconcile
 ```
 
-Only Johnny-managed issues containing the hidden metadata block are
-removed.
+Produces a reconciliation plan or executes it.
 
-------------------------------------------------------------------------
+---
 
-# Current Architecture
+## Maintenance
 
-    src/
-        johnny_johnny_agent/
-            api/
-            cli/
-            domain/
-            capabilities/
-                backlog_sync/
-                github/
+### Purge
 
-Current backlog synchronization consists of:
+```bash
+jj maintenance purge
+```
 
--   Canonical domain model
--   YAML loader
--   JSON Schema validation
--   Planner
--   GitHub renderer
--   GitHub executor
--   Pull/export
--   Purge
+Delete Johnny-managed GitHub issues.
 
-------------------------------------------------------------------------
+---
 
-# Planned Capabilities
+### Delete Issue
 
-Johnny-Johnny will continue to grow through independent capabilities.
+```bash
+jj maintenance delete-issue
+```
 
-Current roadmap includes:
+Developer-oriented command used for testing and backlog cleanup.
 
--   Backlog-as-Code
--   GitHub automation
--   Gmail integration
--   Calendar integration
--   Documentation generation
--   Resume management
--   Job search helpers
--   Knowledge management
--   Retrieval-Augmented Generation (RAG)
--   Long-term memory
--   Engineering workflow automation
+---
 
-------------------------------------------------------------------------
+# Architecture
 
-# Relationship to the Ecosystem
+```
+CLI
+    ↓
+Capability
+    ↓
+Domain Mutation
+    ↓
+Validation
+    ↓
+Planner
+    ↓
+Execution Plan
+    ↓
+Provider Adapter
+```
 
-    MycroftAI
-    │
-    ├── StyxCD
-    │      └── Kharon
-    │
-    └── Johnny-Johnny
+The planner computes the difference between:
 
-## MycroftAI
+```
+Desired Canonical State
 
-The company.
+and
 
-Owns products and internal engineering tools.
+Live Provider State
+```
 
-## StyxCD
+The executor applies the resulting execution plan.
 
-A deterministic software delivery platform focused on workflow planning,
-deployment orchestration, and operational visibility.
+Provider adapters contain provider-specific implementation.
 
-## Kharon
+Business logic remains provider independent.
 
-The AI assistant for StyxCD.
-
-Kharon understands StyxCD workflows, documentation, deployment
-architecture, and operational concepts.
-
-## Johnny-Johnny
-
-A personal engineering assistant.
-
-Johnny helps engineers---not just StyxCD.
-
-Examples:
-
--   Manage backlogs
--   Synchronize GitHub
--   Read and summarize Gmail
--   Update resumes
--   Search for jobs
--   Organize engineering knowledge
--   Automate repetitive workflows
-
-Johnny serves the engineer.
-
-Kharon serves StyxCD.
-
-------------------------------------------------------------------------
-
-# Development Philosophy
-
-The project intentionally grows through small, validated vertical
-slices.
-
-Every capability follows the same pattern:
-
-    CLI
-        ↓
-    Application Service
-        ↓
-    Domain Model
-        ↓
-    Provider Adapter
-
-Provider-specific implementation details remain behind adapters while
-the public interface remains stable.
-
-------------------------------------------------------------------------
+---
 
 # Current Status
 
-Johnny-Johnny has successfully completed its first major milestone:
+Completed:
 
--   Canonical backlog model
--   GitHub projection
--   Full reconciliation workflow
--   Provider export
--   Safe purge
--   FastAPI interface
--   Typer CLI
+- Canonical backlog domain model
+- Canonical YAML specification
+- JSON Schema validation
+- GitHub exporter
+- GitHub renderer
+- Deterministic YAML generation
+- Planner
+- Executor
+- Live-state reconciliation
+- Idempotent synchronization
+- Dry-run planning
+- GitHub Project synchronization
+- GitHub Epic/Sub-Issue synchronization
+- Create Issue
+- Update Issue (status)
+- List Epics
+- Maintenance Delete Issue
+- Maintenance Purge
+- Dogfooded Backlog-as-Code on Johnny-Johnny itself
 
-The next milestone is **safe mutation of the canonical backlog**,
-allowing engineers to add, update, and reorganize work by editing the
-SSOT and reconciling the provider projection.
+The Backlog-as-Code capability has moved beyond import/export tooling into a complete canonical engineering workflow.
 
-------------------------------------------------------------------------
+---
+
+# Next Milestone
+
+Complete the backlog capability:
+
+- Create Epic
+- Update Epic
+- Expand Update Issue
+- List Issues
+- Find Issue
+- Move Issue
+
+Then expand Johnny-Johnny into additional engineering domains:
+
+- GitHub
+- Gmail
+- Google Calendar
+- Documentation
+- Engineering Playbooks
+- AI-assisted engineering workflows
+
+---
+
+# Development Philosophy
+
+Every capability grows through small validated vertical slices.
+
+```
+Define Domain
+        ↓
+Implement Domain Mutation
+        ↓
+Validate
+        ↓
+Add Planning Rule
+        ↓
+Add Provider Execution
+        ↓
+Dogfood Through CLI
+        ↓
+Expose Through AI
+```
+
+Whenever possible, Johnny-Johnny should automate provider workflows so users remain focused on engineering intent rather than provider mechanics.
+
+---
+
+# Long-Term Direction
+
+Backlog management is the first complete Johnny-Johnny capability.
+
+The architecture established by Backlog-as-Code is intended to become the foundation for future capabilities including:
+
+- GitHub
+- Gmail
+- Calendar
+- Documentation
+- Knowledge Management
+- Project Planning
+- Engineering Automation
+- Playbook Execution
+
+Each capability should follow the same execution model:
+
+```
+Intent
+    ↓
+Canonical Model
+    ↓
+Planner
+    ↓
+Execution Plan
+    ↓
+Provider
+```
+
+This consistent architecture allows Johnny-Johnny to grow organically while preserving deterministic behavior and reusable engineering capabilities.
+
+---
 
 # License
 

@@ -3,6 +3,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     AttachIssueToEpicOperation,
     CreateEpicOperation,
     CreateIssueOperation,
+    DeleteIssueOperation,
     ExecutionPlan,
     UpdateIssueStatusOperation,
 )
@@ -10,6 +11,7 @@ from johnny_johnny_agent.capabilities.github.client import (
     add_issue_to_project,
     add_sub_issue,
     create_issue,
+    delete_issue as delete_github_issue,
     get_repository,
     get_viewer_project_by_title,
     update_project_item_status,
@@ -96,7 +98,10 @@ def execute_reconciliation_plan(
             epic = operation.parent_epic
             issue_model = operation.issue
 
-            parent_issue = _get_created_epic(epic.id, created_epics)
+            parent_issue = _get_epic_issue(
+                epic=epic,
+                created_epics=created_epics,
+            )
             child_issue = _get_created_issue(issue_model.id, created_issues)
 
             owner, repo = issue_model.repository.split("/", maxsplit=1)
@@ -131,6 +136,17 @@ def execute_reconciliation_plan(
             print("Status updated.")
             print()
 
+        elif isinstance(operation, DeleteIssueOperation):
+            issue_model = operation.issue
+            issue_id = _get_issue_id(issue_model)
+
+            print(f"Deleting issue: {issue_model.title} [{issue_model.id}]")
+
+            delete_github_issue(issue_id)
+
+            print("Deleted.")
+            print()
+
 
 def _get_project_item_id(issue_model) -> str:
     project_item_id = (
@@ -147,16 +163,39 @@ def _get_project_item_id(issue_model) -> str:
     return project_item_id
 
 
-def _get_created_epic(
-        epic_id: str,
-        created_epics: dict[str, dict],
-) -> dict:
-    if epic_id not in created_epics:
+def _get_issue_id(issue_model) -> str:
+    issue_id = (
+        issue_model.provider_metadata
+        .get("github", {})
+        .get("issue_id")
+    )
+
+    if not issue_id:
         raise RuntimeError(
-            f"Cannot attach issue to epic because epic was not created in this execution: {epic_id}"
+            f"Cannot delete issue because issue_id is missing: {issue_model.id}"
         )
 
-    return created_epics[epic_id]
+    return issue_id
+
+
+def _get_epic_issue(
+        epic,
+        created_epics: dict[str, dict],
+) -> dict:
+    if epic.id in created_epics:
+        return created_epics[epic.id]
+
+    github_metadata = epic.provider_metadata.get("github", {})
+
+    number = github_metadata.get("number")
+    if not number:
+        raise RuntimeError(
+            f"Cannot attach issue to epic because epic issue number is missing: {epic.id}"
+        )
+
+    return {
+        "number": number,
+    }
 
 
 def _get_created_issue(

@@ -1,8 +1,8 @@
 from typing import Annotated
 
+import json
 import typer
 import uvicorn
-import json
 
 from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
     publish_backlog_from_markdown,
@@ -20,6 +20,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     CreateIssueOperation,
     UpdateIssueStatusOperation,
     plan_reconcile_backlog,
+    DeleteIssueOperation,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.executor import (
     execute_reconciliation_plan,
@@ -35,12 +36,8 @@ from johnny_johnny_agent.capabilities.github.backlog_exporter import (
     generate_backlog_yaml_from_github_project,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
-    update_issue_status,
-)
-from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
-    save_backlog_yaml,
-)
-from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
+    create_issue,
+    delete_issue,
     update_issue_status,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
@@ -62,6 +59,13 @@ backlog_app = typer.Typer(
     help="Backlog commands",
     no_args_is_help=True,
 )
+
+maintenance_app = typer.Typer(
+    help="Maintenance and development commands",
+    no_args_is_help=True,
+)
+
+app.add_typer(maintenance_app, name="maintenance")
 
 app.add_typer(backlog_app, name="backlog")
 
@@ -89,6 +93,7 @@ def serve(
         reload=reload,
     )
 
+
 @backlog_app.command("generate")
 def generate_backlog_yaml(
         project: Annotated[
@@ -107,6 +112,7 @@ def generate_backlog_yaml(
     )
 
     typer.echo(f"Wrote canonical backlog YAML: {output}")
+
 
 @backlog_app.command("publish")
 def publish_backlog(
@@ -138,6 +144,7 @@ def publish_backlog(
         project_title=project,
     )
 
+
 @backlog_app.command("validate")
 def validate_backlog(
         file: Annotated[
@@ -155,6 +162,7 @@ def validate_backlog(
         schema_path=schema,
     )
 
+
 @backlog_app.command("inspect")
 def inspect_backlog(
         file: Annotated[
@@ -171,6 +179,7 @@ def inspect_backlog(
     typer.echo(f"Provider: {backlog.project.provider}")
     typer.echo(f"Epics: {len(backlog.epics)}")
     typer.echo(f"Issues: {issue_count}")
+
 
 @backlog_app.command("preview-epic-body")
 def preview_epic_body(
@@ -192,6 +201,7 @@ def preview_epic_body(
             return
 
     raise RuntimeError(f"Epic not found: {epic_id}")
+
 
 @backlog_app.command("reconcile")
 def reconcile_backlog(
@@ -225,14 +235,16 @@ def reconcile_backlog(
         backlog=backlog,
         current_project_issues=current_project_issues,
     )
+
     if dry_run:
         _print_reconciliation_plan(plan)
         return
 
     execute_reconciliation_plan(
         plan=plan,
-        project_title=backlog.project.name,
+        project_title=backlog.project.title,
     )
+
 
 @backlog_app.command("pull")
 def pull_backlog(
@@ -254,6 +266,93 @@ def pull_backlog(
             indent=2,
         )
     )
+
+
+@backlog_app.command("create-issue")
+def create_backlog_issue(
+        epic: Annotated[
+            str,
+            typer.Option("--epic", help="Parent epic id."),
+        ],
+        title: Annotated[
+            str,
+            typer.Option("--title", "-t", help="Issue title."),
+        ],
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        issue_id: Annotated[
+            str | None,
+            typer.Option("--id", help="Stable Johnny-Johnny issue id. Defaults to a slugified title."),
+        ] = None,
+        description: Annotated[
+            str,
+            typer.Option("--description", "-d", help="Issue description."),
+        ] = "",
+        repository: Annotated[
+            str | None,
+            typer.Option("--repository", "-r", help="Repository name with owner. Defaults to parent epic repository."),
+        ] = None,
+        acceptance: Annotated[
+            list[str] | None,
+            typer.Option("--acceptance", help="Acceptance criterion. Can be repeated."),
+        ] = None,
+        dry_run: Annotated[
+            bool,
+            typer.Option("--dry-run", help="Preview reconciliation without saving."),
+        ] = False,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Save and reconcile."),
+        ] = False,
+) -> None:
+    """Create a new canonical backlog issue."""
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
+
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        raise typer.Exit(code=1)
+
+    backlog = load_backlog_yaml(file)
+
+    issue = create_issue(
+        backlog=backlog,
+        title=title,
+        epic_id=epic,
+        issue_id=issue_id,
+        description=description,
+        repository=repository,
+        acceptance_criteria=acceptance or [],
+    )
+
+    typer.echo(f"Created canonical issue: {issue.title}")
+    typer.echo(f"ID: {issue.id}")
+    typer.echo(f"Epic: {epic}")
+    typer.echo(f"Status: {issue.status}")
+    typer.echo(f"Repository: {issue.repository}")
+
+    plan = _plan_reconcile(backlog)
+    _print_reconciliation_plan(plan)
+
+    if dry_run:
+        return
+
+    save_backlog_yaml(
+        backlog=backlog,
+        backlog_path=file,
+    )
+
+    typer.echo(f"Saved: {file}")
+
+    if plan.operations:
+        execute_reconciliation_plan(
+            plan=plan,
+            project_title=backlog.project.title,
+        )
+
 
 @backlog_app.command("update-issue")
 def update_issue(
@@ -320,7 +419,70 @@ def update_issue(
                 project_title=backlog.project.title,
             )
 
-@backlog_app.command("purge")
+@backlog_app.command("list-epics")
+def list_epics(
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+) -> None:
+    """List canonical epics."""
+    backlog = load_backlog_yaml(file)
+
+    if not backlog.epics:
+        typer.echo("No epics found.")
+        return
+
+    for epic in sorted(backlog.epics, key=lambda item: item.order):
+        typer.echo(f"{epic.title} [{epic.id}]")
+
+@maintenance_app.command("delete-issue")
+def delete_backlog_issue(
+        issue_id: Annotated[
+            str,
+            typer.Argument(help="Stable Johnny-Johnny issue id."),
+        ],
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Delete the canonical issue and reconcile deletion to GitHub."),
+        ] = False,
+) -> None:
+    """Maintenance command: delete a Johnny-managed issue for testing."""
+    if not confirm:
+        typer.echo("This is destructive. Use --confirm to delete the issue.")
+        raise typer.Exit(code=1)
+
+    backlog = load_backlog_yaml(file)
+
+    issue = delete_issue(
+        backlog=backlog,
+        issue_id=issue_id,
+    )
+
+    typer.echo(f"Deleted canonical issue: {issue.title}")
+    typer.echo(f"ID: {issue.id}")
+
+    save_backlog_yaml(
+        backlog=backlog,
+        backlog_path=file,
+    )
+
+    typer.echo(f"Saved: {file}")
+
+    plan = _plan_reconcile(backlog)
+    _print_reconciliation_plan(plan)
+
+    if plan.operations:
+        execute_reconciliation_plan(
+            plan=plan,
+            project_title=backlog.project.title,
+        )
+
+@maintenance_app.command("purge")
 def purge_backlog_projection(
         project: Annotated[
             str,
@@ -337,6 +499,7 @@ def purge_backlog_projection(
         confirm=confirm,
     )
 
+
 def _plan_reconcile(backlog):
     github_project = get_viewer_project_by_title(backlog.project.title)
 
@@ -348,6 +511,7 @@ def _plan_reconcile(backlog):
         backlog=backlog,
         current_project_issues=current_project_issues,
     )
+
 
 def _print_reconciliation_plan(plan) -> None:
     typer.echo("Execution Plan")
@@ -383,8 +547,11 @@ def _print_reconciliation_plan(plan) -> None:
                 f"+ Update issue status: "
                 f"{operation.issue.title} "
                 f"{operation.current_status} -> {operation.desired_status}"
-        )
+            )
+        elif isinstance(operation, DeleteIssueOperation):
+            typer.echo(
+                f"- Delete issue: {operation.issue.title} [{operation.issue.id}]"
+    )
 
     typer.echo()
     typer.echo(f"Operations: {len(plan.operations)}")
-

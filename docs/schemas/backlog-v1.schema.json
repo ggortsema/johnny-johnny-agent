@@ -2,10 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://mycroftai.org/schemas/johnny-johnny/backlog-v1.schema.json",
   "title": "Johnny-Johnny Backlog YAML v1",
-  "description": "Machine-owned canonical backlog schema for Johnny-Johnny. Semantic identity is provider-neutral; provider-specific IDs are isolated under provider_metadata.",
+  "description": "Machine-owned canonical backlog schema for Johnny-Johnny.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "project", "epics"],
+  "required": [
+    "version",
+    "project",
+    "epics"
+  ],
   "properties": {
     "version": {
       "type": "integer",
@@ -40,7 +44,27 @@
       "default": []
     },
     "nullableString": {
-      "type": ["string", "null"]
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "planningStatus": {
+      "type": "string",
+      "enum": [
+        "Backlog",
+        "Ready",
+        "In Progress",
+        "In Review",
+        "Done"
+      ]
+    },
+    "issueState": {
+      "type": "string",
+      "enum": [
+        "OPEN",
+        "CLOSED"
+      ]
     },
     "providerMetadata": {
       "type": "object",
@@ -57,7 +81,11 @@
     "project": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["provider", "title", "provider_metadata"],
+      "required": [
+        "provider",
+        "title",
+        "provider_metadata"
+      ],
       "properties": {
         "provider": {
           "type": "string",
@@ -67,9 +95,74 @@
           "$ref": "#/$defs/nonEmptyString"
         },
         "number": {
-          "type": ["integer", "null"]
+          "type": [
+            "integer",
+            "null"
+          ]
         },
         "url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "provider_metadata": {
+          "$ref": "#/$defs/providerMetadata"
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "title",
+        "repository",
+        "status",
+        "issue_state",
+        "order",
+        "description",
+        "acceptance_criteria",
+        "labels",
+        "assignees",
+        "milestone",
+        "provider_metadata"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "type": {
+          "type": "string",
+          "const": "issue"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "repository": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "$ref": "#/$defs/planningStatus"
+        },
+        "issue_state": {
+          "$ref": "#/$defs/issueState"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": {
+          "type": "string"
+        },
+        "acceptance_criteria": {
+          "$ref": "#/$defs/acceptanceCriteria"
+        },
+        "labels": {
+          "$ref": "#/$defs/stringList"
+        },
+        "assignees": {
+          "$ref": "#/$defs/stringList"
+        },
+        "milestone": {
           "$ref": "#/$defs/nullableString"
         },
         "provider_metadata": {
@@ -111,10 +204,10 @@
           "$ref": "#/$defs/nonEmptyString"
         },
         "status": {
-          "$ref": "#/$defs/nonEmptyString"
+          "$ref": "#/$defs/planningStatus"
         },
         "issue_state": {
-          "$ref": "#/$defs/nonEmptyString"
+          "$ref": "#/$defs/issueState"
         },
         "order": {
           "type": "integer",
@@ -144,68 +237,6 @@
             "$ref": "#/$defs/issue"
           },
           "default": []
-        }
-      }
-    },
-    "issue": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "type",
-        "title",
-        "repository",
-        "status",
-        "issue_state",
-        "order",
-        "description",
-        "acceptance_criteria",
-        "labels",
-        "assignees",
-        "milestone",
-        "provider_metadata"
-      ],
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/stableId"
-        },
-        "type": {
-          "type": "string",
-          "const": "issue"
-        },
-        "title": {
-          "$ref": "#/$defs/nonEmptyString"
-        },
-        "repository": {
-          "$ref": "#/$defs/nonEmptyString"
-        },
-        "status": {
-          "$ref": "#/$defs/nonEmptyString"
-        },
-        "issue_state": {
-          "$ref": "#/$defs/nonEmptyString"
-        },
-        "order": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "description": {
-          "type": "string"
-        },
-        "acceptance_criteria": {
-          "$ref": "#/$defs/acceptanceCriteria"
-        },
-        "labels": {
-          "$ref": "#/$defs/stringList"
-        },
-        "assignees": {
-          "$ref": "#/$defs/stringList"
-        },
-        "milestone": {
-          "$ref": "#/$defs/nullableString"
-        },
-        "provider_metadata": {
-          "$ref": "#/$defs/providerMetadata"
         }
       }
     }

@@ -2,11 +2,11 @@
 
 ## Purpose
 
-The Johnny-Johnny Backlog YAML format is the canonical source of truth (SSOT) for project-management backlog data.
+The Johnny-Johnny Backlog YAML format is the canonical Source of Truth (SSOT) for project-management backlog data.
 
-The YAML is machine-owned. Johnny-Johnny loads the canonical model, performs mutations, validates the result, and deterministically serializes it back to YAML.
+The YAML is machine-owned. Johnny-Johnny loads the canonical model, performs domain mutations, validates the result, and deterministically serializes it back to YAML.
 
-GitHub and future project-management providers are projections of this model rather than the source of truth.
+GitHub Projects and future project-management providers are projections of this model rather than the source of truth.
 
 ## Design Principles
 
@@ -17,6 +17,7 @@ GitHub and future project-management providers are projections of this model rat
 - Presentation order is independent of identity.
 - Serialization is deterministic.
 - Provider metadata is useful for reconciliation and diagnostics, but live provider state is authoritative during reconciliation.
+- Commands should mutate the canonical model and reconcile providers rather than requiring users to work directly in provider UIs.
 
 ## Version
 
@@ -25,6 +26,10 @@ Every backlog document must include:
 ```yaml
 version: 1
 ```
+
+The current schema version remains `1`.
+
+The v1 model is intentionally minimal. New commands should not require schema changes unless the canonical engineering domain itself gains a new concept.
 
 ## Top-Level Structure
 
@@ -108,13 +113,13 @@ An epic represents a top-level backlog item.
 
 | Field | Type | Required | Description |
 |---|---:|---:|---|
-| `id` | string | yes | Stable Johnny-Johnny ID. |
+| `id` | string | yes | Stable Johnny-Johnny ID. Must be lowercase kebab-case. |
 | `type` | string | yes | Must be `epic`. |
 | `title` | string | yes | Human-readable title. |
 | `repository` | string | yes | Repository where this item is projected. |
-| `status` | string | yes | Project planning status, for example `Backlog`, `Ready`, `In Progress`, `In Review`, or `Done`. |
-| `issue_state` | string | yes | Provider issue lifecycle state, for example `OPEN` or `CLOSED`. |
-| `order` | integer | yes | Provider-neutral presentation order. |
+| `status` | enum | yes | Project planning status. Must be one of `Backlog`, `Ready`, `In Progress`, `In Review`, or `Done`. |
+| `issue_state` | enum | yes | Provider issue lifecycle state. Must be `OPEN` or `CLOSED`. |
+| `order` | integer | yes | Provider-neutral presentation order. Must be `0` or greater. |
 | `description` | string | yes | Item description. May be empty. |
 | `acceptance_criteria` | array of strings | yes | Human-readable acceptance criteria. May be empty. |
 | `labels` | array of strings | yes | Labels. May be empty. |
@@ -129,13 +134,13 @@ An issue represents a child backlog item under an epic.
 
 | Field | Type | Required | Description |
 |---|---:|---:|---|
-| `id` | string | yes | Stable Johnny-Johnny ID. |
+| `id` | string | yes | Stable Johnny-Johnny ID. Must be lowercase kebab-case. |
 | `type` | string | yes | Must be `issue`. |
 | `title` | string | yes | Human-readable title. |
 | `repository` | string | yes | Repository where this item is projected. |
-| `status` | string | yes | Project planning status. |
-| `issue_state` | string | yes | Provider issue lifecycle state. |
-| `order` | integer | yes | Provider-neutral presentation order. |
+| `status` | enum | yes | Project planning status. Must be one of `Backlog`, `Ready`, `In Progress`, `In Review`, or `Done`. |
+| `issue_state` | enum | yes | Provider issue lifecycle state. Must be `OPEN` or `CLOSED`. |
+| `order` | integer | yes | Provider-neutral presentation order. Must be `0` or greater. |
 | `description` | string | yes | Item description. May be empty. |
 | `acceptance_criteria` | array of strings | yes | Human-readable acceptance criteria. May be empty. |
 | `labels` | array of strings | yes | Labels. May be empty. |
@@ -149,12 +154,18 @@ The `id` field is a provider-neutral Johnny-Johnny identifier.
 
 It is not a GitHub issue number, GitHub node ID, Jira key, Linear ID, or provider-specific project item ID.
 
-Stable IDs are used to match backlog items across imports, exports, synchronization, mutation commands, and provider migrations.
+Stable IDs are used to match backlog items across imports, exports, synchronization, mutation commands, provider migrations, and provider recovery.
 
 IDs must use lowercase kebab-case:
 
 ```text
 define-canonical-backlog-model
+```
+
+The schema pattern is:
+
+```text
+^[a-z0-9]+(?:-[a-z0-9]+)*$
 ```
 
 ## Status vs Issue State
@@ -165,7 +176,7 @@ define-canonical-backlog-model
 
 `status` is the project planning state.
 
-Examples:
+Allowed values:
 
 ```yaml
 status: Backlog
@@ -178,21 +189,23 @@ status: Done
 This is the state changed by commands like:
 
 ```bash
-jj backlog update-issue implement-idempotent-synchronization --status Done
+jj backlog update-issue create-issue-command --status Done --confirm
 ```
+
+Epic status is also modeled as planning state. Updating an epic status should update the epic itself. Child issue status should not cascade unless an explicit future command option requests that behavior.
 
 ### `issue_state`
 
 `issue_state` is the provider issue lifecycle state.
 
-For GitHub, common values are:
+Allowed values:
 
 ```yaml
 issue_state: OPEN
 issue_state: CLOSED
 ```
 
-Closing a GitHub issue is separate from moving the issue to a project status such as `Done`.
+Closing a provider issue is separate from moving the item to a project status such as `Done`.
 
 ## Ordering
 
@@ -234,9 +247,13 @@ provider_metadata:
 
 Provider metadata is advisory. During reconciliation, Johnny-Johnny compares the desired canonical model with live provider state.
 
+The schema intentionally leaves `provider_metadata` open-ended so each provider can store its own projection-specific values.
+
 ## Hidden GitHub Metadata
 
-When publishing to GitHub, Johnny-Johnny embeds a hidden metadata block in issue bodies:
+When publishing to GitHub, Johnny-Johnny embeds a hidden metadata block in issue bodies.
+
+For issues:
 
 ```text
 <!-- johnny-johnny
@@ -259,10 +276,11 @@ This allows Johnny-Johnny to recover stable semantic identity and parent relatio
 
 ## Reconciliation Concepts
 
-Johnny-Johnny reconciles desired state against live provider state.
+Johnny-Johnny reconciles desired canonical state against live provider state.
 
 Important relationships and properties include:
 
+- Epic existence
 - Issue existence
 - Project membership
 - Epic parentage
@@ -280,13 +298,65 @@ Current operation vocabulary includes:
 - `CreateIssueOperation`
 - `AddIssueToProjectOperation`
 - `AttachIssueToEpicOperation`
-
-Future operations may include:
-
 - `UpdateIssueStatusOperation`
+- `DeleteIssueOperation`
+
+Expected future operations may include:
+
+- `UpdateEpicStatusOperation`
+- `UpdateEpicTitleOperation`
+- `UpdateEpicBodyOperation`
 - `UpdateIssueStateOperation`
 - `UpdateIssueTitleOperation`
 - `UpdateIssueBodyOperation`
+- `MoveIssueOperation`
+
+## Command Model
+
+Backlog commands operate against the canonical model.
+
+Confirmed commands should generally follow this flow:
+
+```text
+Load canonical backlog
+    ↓
+Mutate domain model
+    ↓
+Validate
+    ↓
+Save canonical YAML
+    ↓
+Plan reconciliation
+    ↓
+Execute provider operations
+```
+
+The intent is that successful confirmed commands leave the canonical model and provider projection in agreement.
+
+Examples of current and planned commands:
+
+```bash
+jj backlog create-issue --epic backlog-as-code-synchronization --title "Create Issue Command" --confirm
+jj backlog update-issue create-issue-command --status Done --confirm
+jj backlog list-epics
+jj backlog reconcile --file data/input/backlog/backlog.yml --dry-run
+jj maintenance delete-issue delete-me-test-issue --confirm
+```
+
+## Maintenance Commands
+
+Maintenance commands are not normal user backlog workflow commands.
+
+They are used for development, repair, cleanup, or testing.
+
+Examples:
+
+```bash
+jj maintenance purge --project "MycroftAI Engineering Roadmap" --confirm
+jj maintenance delete-issue delete-me-test-issue --confirm
+```
+
+Maintenance commands may perform destructive provider operations and should require explicit confirmation.
 
 ## Round Trip
 
@@ -312,6 +382,16 @@ A generated `backlog.yml` should validate immediately after generation.
 
 A reconciled project should generate a canonical YAML that produces zero operations on the next dry run when there is no drift.
 
+Expected clean-state result:
+
+```text
+Execution Plan
+
+No operations.
+
+Operations: 0
+```
+
 ## Compatibility
 
 Earlier v1 drafts used:
@@ -328,3 +408,17 @@ The frozen v1 model uses:
 - provider lifecycle `issue_state`
 - `acceptance_criteria`
 - isolated `provider_metadata`
+
+## Schema Parity Notes
+
+This specification is intended to match `backlog-v1.schema.json`.
+
+The schema currently enforces:
+
+- `version` must be `1`.
+- `id` must be lowercase kebab-case.
+- `status` must be one of `Backlog`, `Ready`, `In Progress`, `In Review`, or `Done`.
+- `issue_state` must be one of `OPEN` or `CLOSED`.
+- `type` must be `epic` for epics and `issue` for issues.
+- `order` must be an integer greater than or equal to `0`.
+- `provider_metadata` remains open-ended.

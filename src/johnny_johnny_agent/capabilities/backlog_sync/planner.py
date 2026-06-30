@@ -5,6 +5,11 @@ from johnny_johnny_agent.domain.backlog import Backlog, Epic, Issue
 
 
 @dataclass
+class DeleteIssueOperation:
+    issue: Issue
+
+
+@dataclass
 class CreateEpicOperation:
     epic: Epic
 
@@ -39,6 +44,7 @@ BacklogOperation = Union[
     AddIssueToProjectOperation,
     AttachIssueToEpicOperation,
     UpdateIssueStatusOperation,
+    DeleteIssueOperation,
 ]
 
 
@@ -54,6 +60,7 @@ def plan_reconcile_backlog(
     operations: list[BacklogOperation] = []
 
     live_by_jj_id = _index_live_items_by_jj_id(current_project_issues)
+    canonical_issue_ids = _canonical_issue_ids(backlog)
 
     for epic in backlog.epics:
         live_epic = live_by_jj_id.get(epic.id)
@@ -80,13 +87,68 @@ def plan_reconcile_backlog(
             if current_status != issue.status:
                 operations.append(
                     UpdateIssueStatusOperation(
-                        issue=issue,
+                        issue=_issue_with_live_github_metadata(issue, live_issue),
                         current_status=current_status,
                         desired_status=issue.status,
-                    )
-                )
+            )
+    )
+
+    for jj_id, live_issue in live_by_jj_id.items():
+        if not _is_live_johnny_issue(live_issue):
+            continue
+
+        if jj_id in canonical_issue_ids:
+            continue
+
+        operations.append(
+            DeleteIssueOperation(
+                issue=_live_issue_to_model(jj_id, live_issue),
+            )
+        )
 
     return ExecutionPlan(operations=operations)
+
+
+def _canonical_issue_ids(backlog: Backlog) -> set[str]:
+    return {
+        issue.id
+        for epic in backlog.epics
+        for issue in epic.issues
+    }
+
+
+def _is_live_johnny_issue(live_issue: dict[str, Any]) -> bool:
+    metadata = _extract_johnny_metadata(live_issue.get("body", ""))
+    return metadata.get("type") == "issue"
+
+
+def _live_issue_to_model(
+        jj_id: str,
+        live_issue: dict[str, Any],
+) -> Issue:
+    return Issue(
+        id=jj_id,
+        type="issue",
+        title=live_issue.get("title", jj_id),
+        repository=live_issue.get("repository", ""),
+        status=live_issue.get("project_status") or "Backlog",
+        issue_state=live_issue.get("state") or "OPEN",
+        order=0,
+        description=live_issue.get("body", ""),
+        acceptance_criteria=[],
+        labels=[],
+        assignees=[],
+        milestone=None,
+        provider_metadata={
+            "github": {
+                "issue_id": live_issue.get("id") or live_issue.get("issue_id"),
+                "database_id": live_issue.get("databaseId") or live_issue.get("database_id"),
+                "number": live_issue.get("number"),
+                "url": live_issue.get("url"),
+                "project_item_id": live_issue.get("project_item_id"),
+            }
+        },
+    )
 
 
 def _index_live_items_by_jj_id(
@@ -133,3 +195,18 @@ def _extract_johnny_metadata(body: str) -> dict[str, str]:
         result[key.strip()] = value.strip()
 
     return result
+
+def _issue_with_live_github_metadata(
+        issue: Issue,
+        live_issue: dict[str, Any],
+) -> Issue:
+    issue.provider_metadata["github"] = {
+        **issue.provider_metadata.get("github", {}),
+        "issue_id": live_issue.get("id") or live_issue.get("issue_id"),
+        "database_id": live_issue.get("databaseId") or live_issue.get("database_id"),
+        "number": live_issue.get("number"),
+        "url": live_issue.get("url"),
+        "project_item_id": live_issue.get("project_item_id"),
+    }
+
+    return issue
