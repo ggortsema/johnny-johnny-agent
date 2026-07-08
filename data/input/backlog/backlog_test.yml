@@ -3942,33 +3942,6 @@ epics:
         number: 980
         url: https://github.com/ggortsema/styxcd-docs/issues/980
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQQHE
-  - id: implement-centralized-configuration-management
-    type: issue
-    title: Implement Centralized Configuration Management
-    repository: ggortsema/styxcd-docs
-    status: Backlog
-    issue_state: OPEN
-    order: 26000
-    description: Add local environment configuration support so Johnny-Johnny can load required secrets such as GITHUB_TOKEN
-      from a non-committed .env file while keeping committed examples safe.
-    acceptance_criteria:
-    - Add .env to .gitignore.
-    - Add a committed .env.example with required configuration keys.
-    - Load local environment variables from .env during CLI startup.
-    - Centralize configuration access behind a Johnny-Johnny settings module.
-    - 'Ensure secrets are not committed.
-
-      '
-    labels: []
-    assignees: []
-    milestone: null
-    provider_metadata:
-      github:
-        issue_id: I_kwDOR_b51c8AAAABII3mzQ
-        database_id: 4841137869
-        number: 983
-        url: https://github.com/ggortsema/styxcd-docs/issues/983
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMMsE
 - id: johnny-johnny-core-cli
   type: epic
   title: Johnny-Johnny Core CLI

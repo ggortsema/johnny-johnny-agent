@@ -4,6 +4,9 @@ import json
 import typer
 import uvicorn
 
+import johnny_johnny_agent.config
+
+
 from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
     publish_backlog_from_markdown,
 )
