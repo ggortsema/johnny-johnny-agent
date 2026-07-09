@@ -15,6 +15,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest",
+    "pytest-html>=4.2.0",
 ]
 
 [build-system]
@@ -28,3 +29,18 @@ module-root = "src"
 [project.scripts]
 jj = "johnny_johnny_agent.cli.main:app"
 johnny-johnny = "johnny_johnny_agent.cli.main:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = """
+-v
+-s
+--junitxml=build/test-results/pytest.xml
+--html=build/reports/pytest.html
+--self-contained-html
+"""
+
+markers = [
+    "github: tests requiring a GitHub provider.",
+]

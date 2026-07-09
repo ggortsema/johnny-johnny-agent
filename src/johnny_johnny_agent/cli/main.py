@@ -16,6 +16,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
     delete_issue,
     find_backlog_item,
     find_epic_issues,
+    move_issue,
     update_issue,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.planner import (
@@ -539,6 +540,81 @@ def update_backlog_item(
 
         typer.echo(f"Saved hydrated metadata: {file}")
 
+@backlog_app.command("move")
+def move_backlog_issue(
+        issue_id: Annotated[
+            str,
+            typer.Argument(help="Stable Johnny-Johnny issue id."),
+        ],
+        to_epic: Annotated[
+            str,
+            typer.Option("--to-epic", help="Target parent epic id."),
+        ],
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        dry_run: Annotated[
+            bool,
+            typer.Option("--dry-run", help="Preview reconciliation without saving."),
+        ] = False,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Save and reconcile."),
+        ] = False,
+) -> None:
+    """Move a canonical backlog issue to a different parent epic."""
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
+
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        raise typer.Exit(code=1)
+
+    backlog = load_backlog_yaml(file)
+
+    try:
+        issue = move_issue(
+            backlog=backlog,
+            issue_id=issue_id,
+            target_epic_id=to_epic,
+        )
+
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    typer.echo(f"Moved canonical issue: {issue.title}")
+    typer.echo(f"ID: {issue.id}")
+    typer.echo(f"Epic: {to_epic}")
+    typer.echo(f"Repository: {issue.repository}")
+
+    plan = _plan_reconcile(backlog)
+    _print_reconciliation_plan(plan)
+
+    if dry_run:
+        return
+
+    save_backlog_yaml(
+        backlog=backlog,
+        backlog_path=file,
+    )
+
+    typer.echo(f"Saved: {file}")
+
+    if plan.operations:
+        execute_reconciliation_plan(
+            plan=plan,
+            project_title=backlog.project.title,
+        )
+
+        save_backlog_yaml(
+            backlog=backlog,
+            backlog_path=file,
+        )
+
+        typer.echo(f"Saved hydrated metadata: {file}")
 
 @backlog_create_app.command("epic")
 def create_backlog_epic(

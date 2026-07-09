@@ -3544,7 +3544,7 @@ epics:
   type: epic
   title: Backlog-as-Code Synchronization
   repository: ggortsema/styxcd-docs
-  status: Backlog
+  status: In Progress
   issue_state: OPEN
   order: 20000
   description: 'Create a portable project-management synchronization engine that treats
@@ -3567,7 +3567,14 @@ epics:
 
     DevOps, or Linear.'
   acceptance_criteria: []
-  comments: []
+  comments:
+  - id: comment-1b4cfea2116c4e3e82cce7682c5172e9
+    body: Moved Backlog as Code Synchronization into active work after completing the canonical CLI grammar and move command
+      workflow.
+    source: johnny-johnny
+    created_at: '2026-07-09T15:34:06.914048+00:00'
+    provider_metadata:
+      github: {}
   labels: []
   assignees: []
   milestone: null
@@ -3648,14 +3655,21 @@ epics:
     type: issue
     title: Design Canonical Backlog Persistence
     repository: ggortsema/styxcd-docs
-    status: Ready
+    status: In Progress
     issue_state: OPEN
     order: 4000
     description: Design the next evolution of backlog persistence so Johnny-Johnny can store canonical backlog domain records
       in PostgreSQL while preserving backlog.yml as a portable import/export format. This design should support future webhooks,
       chat workflows, audit history, synchronization events, and multiple provider projections.
     acceptance_criteria: []
-    comments: []
+    comments:
+    - id: comment-9f755d24d8eb49d191bdba97daa58d1d
+      body: Started as the follow-up story after behavior coverage, preparing the transition from YAML-backed backlog state
+        toward durable canonical persistence.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:45:53.409422+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4047,13 +4061,20 @@ epics:
     type: issue
     title: Move Issue Command
     repository: ggortsema/styxcd-docs
-    status: In Progress
+    status: Done
     issue_state: OPEN
     order: 20000
     description: Add a move-issue command that reparents an existing canonical issue to a different epic and reconciles the
       relationship to GitHub. This allows backlog reorganization without manually editing GitHub or the canonical backlog.
     acceptance_criteria: []
-    comments: []
+    comments:
+    - id: comment-1eacd267edb74ba3b1d96335063b9658
+      body: Completed canonical move command for backlog issues. Move is intentionally separate from update because it changes
+        the epic/issue relationship rather than only changing issue fields.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:33:48.849751+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4120,14 +4141,20 @@ epics:
     type: issue
     title: Execute Playbook Command
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Ready
     issue_state: OPEN
     order: 24000
     description: Add an execute playbook command that interprets a declarative Johnny-Johnny playbook describing engineering
       intents rather than raw CLI commands. Playbooks become the foundation for reusable engineering automation across all
       Johnny-Johnny capabilities.
     acceptance_criteria: []
-    comments: []
+    comments:
+    - id: comment-13b3d7ab010e4e64905bcc72044276db
+      body: Moved to Ready as a likely next CLI workflow capability after completing the canonical backlog move command.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:38:58.976132+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4164,7 +4191,7 @@ epics:
     type: issue
     title: Implement Centralized Configuration Management
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Ready
     issue_state: OPEN
     order: 26000
     description: Externalize Johnny-Johnny project-specific configuration so project defaults are no longer hardcoded. Configuration
@@ -4181,6 +4208,13 @@ epics:
       created_at: '2026-07-09T01:19:53.593505+00:00'
       provider_metadata:
         github: {}
+    - id: comment-2e7680ac181d49b085fc18be3ce4fd4a
+      body: Moved to Ready because centralized configuration is becoming important as behavior tests, provider access, and
+        command workflows mature.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:39:08.198822+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4195,7 +4229,7 @@ epics:
     type: issue
     title: Record Provider Reconciliation State
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Ready
     issue_state: OPEN
     order: 27000
     description: After backlog persistence moves to PostgreSQL, record provider reconciliation attempts separately from canonical
@@ -4206,7 +4240,14 @@ epics:
     - Failed provider synchronization does not roll back canonical backlog changes.
     - CLI clearly reports when canonical changes were saved but provider reconciliation failed.
     - A later reconcile command can retry pending provider operations.
-    comments: []
+    comments:
+    - id: comment-eb8e5e380837408c8e0a91519823d566
+      body: Moved to Ready because reconciliation state is needed to make provider operations more observable, repeatable,
+        and trustworthy.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:39:16.276399+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4407,7 +4448,7 @@ epics:
     type: issue
     title: Separate Canonical Change Reporting from Provider Operations
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: Ready
     issue_state: OPEN
     order: 33000
     description: Update mutation command output so canonical changes are reported separately from provider reconciliation
@@ -4419,7 +4460,14 @@ epics:
     - 'A command that changes only canonical fields no longer appears as ''Operations: 0'' without also showing the canonical
       changes that were saved.'
     - The output makes it clear whether provider synchronization was required.
-    comments: []
+    comments:
+    - id: comment-23d90e791e9c45da93c3db36e3e11b46
+      body: Moved to Ready because canonical change reporting should be distinct from provider-side operations as reconciliation
+        behavior becomes more explicit.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:39:26.655160+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4466,7 +4514,7 @@ epics:
     type: issue
     title: Add End-to-End CLI Behavior Tests
     repository: ggortsema/styxcd-docs
-    status: Backlog
+    status: In Progress
     issue_state: OPEN
     order: 35000
     description: Expand the CLI behavior test suite to exercise complete user workflows against a temporary canonical backlog.
@@ -4478,7 +4526,20 @@ epics:
     - Behavior tests validate that updates preserve unrelated fields such as acceptance criteria.
     - Behavior tests validate move operations once implemented.
     - Behavior tests delete temporary backlog items and leave the temporary backlog in a clean state.
-    comments: []
+    comments:
+    - id: comment-5de9a8fd3d454bd1806d896969bd61cb
+      body: Moved to Ready because CLI behavior tests are now a core part of protecting the public command contract.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:39:47.416782+00:00'
+      provider_metadata:
+        github: {}
+    - id: comment-a60337925b87459299674dc0028be370
+      body: Started as the next Backlog as Code story to protect canonical CLI workflows and mutation behavior with executable
+        behavior tests before changing persistence.
+      source: johnny-johnny
+      created_at: '2026-07-09T15:45:36.071727+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null

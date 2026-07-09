@@ -60,6 +60,14 @@ def test_update_help_uses_generic_backlog_item_language():
     assert "--comment" in result.output
     assert "--acceptance" in result.output
 
+def test_move_help_is_available():
+    result = runner.invoke(app, ["backlog", "move", "--help"])
+
+    assert result.exit_code == 0
+    assert "issue" in result.output.lower()
+    assert "--to-epic" in result.output
+    assert "--dry-run" in result.output
+    assert "--confirm" in result.output
 
 def test_legacy_create_issue_command_is_removed():
     result = runner.invoke(app, ["backlog", "create-issue", "--help"])

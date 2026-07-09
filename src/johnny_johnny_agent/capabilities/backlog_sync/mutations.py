@@ -142,6 +142,33 @@ def find_parent_epic(
 
     raise RuntimeError(f"Parent epic not found for issue: {issue_id}")
 
+def move_issue(
+        backlog: Backlog,
+        issue_id: str,
+        target_epic_id: str,
+) -> Issue:
+    source_epic = find_parent_epic(backlog, issue_id)
+    target_epic = find_epic(backlog, target_epic_id)
+
+    if source_epic.id == target_epic.id:
+        return find_issue(backlog, issue_id)
+
+    issue = find_issue(backlog, issue_id)
+
+    source_epic.issues = [
+        existing_issue
+        for existing_issue in source_epic.issues
+        if existing_issue.id != issue_id
+    ]
+
+    issue.repository = target_epic.repository
+    issue.milestone = target_epic.milestone
+    issue.order = _next_issue_order(target_epic)
+
+    target_epic.issues.append(issue)
+
+    return issue
+
 def find_epic_issues(
         backlog: Backlog,
         epic_id: str,
