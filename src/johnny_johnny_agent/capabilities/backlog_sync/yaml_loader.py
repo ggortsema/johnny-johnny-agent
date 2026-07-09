@@ -3,7 +3,7 @@ from typing import Any
 
 import yaml
 
-from johnny_johnny_agent.domain.backlog import Backlog, Epic, Issue, Project
+from johnny_johnny_agent.domain.backlog import Backlog, Comment, Epic, Issue, Project
 
 
 def load_backlog_yaml(backlog_path: str) -> Backlog:
@@ -34,6 +34,7 @@ def load_backlog_yaml(backlog_path: str) -> Backlog:
                 order=epic_data["order"],
                 description=epic_data.get("description", ""),
                 acceptance_criteria=_list(epic_data, "acceptance_criteria"),
+                comments=_load_comments(epic_data),
                 labels=_list(epic_data, "labels"),
                 assignees=_list(epic_data, "assignees"),
                 milestone=epic_data.get("milestone"),
@@ -65,11 +66,25 @@ def _load_issue(issue_data: dict[str, Any]) -> Issue:
         order=issue_data["order"],
         description=issue_data.get("description", ""),
         acceptance_criteria=_list(issue_data, "acceptance_criteria"),
+        comments=_load_comments(issue_data),
         labels=_list(issue_data, "labels"),
         assignees=_list(issue_data, "assignees"),
         milestone=issue_data.get("milestone"),
         provider_metadata=issue_data.get("provider_metadata", {}),
     )
+
+
+def _load_comments(data: dict[str, Any]) -> list[Comment]:
+    return [
+        Comment(
+            id=comment_data["id"],
+            body=comment_data["body"],
+            source=comment_data.get("source", "johnny-johnny"),
+            created_at=comment_data.get("created_at"),
+            provider_metadata=comment_data.get("provider_metadata", {}),
+        )
+        for comment_data in data.get("comments", []) or []
+    ]
 
 
 def _list(data: dict[str, Any], key: str) -> list[str]:

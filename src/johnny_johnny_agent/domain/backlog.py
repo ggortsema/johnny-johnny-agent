@@ -6,6 +6,15 @@ ProviderMetadata = dict[str, Any]
 
 
 @dataclass
+class Comment:
+    id: str
+    body: str
+    source: str = "johnny-johnny"
+    created_at: str | None = None
+    provider_metadata: ProviderMetadata = field(default_factory=dict)
+
+
+@dataclass
 class Issue:
     id: str
     type: str
@@ -16,6 +25,7 @@ class Issue:
     order: int
     description: str = ""
     acceptance_criteria: list[str] = field(default_factory=list)
+    comments: list[Comment] = field(default_factory=list)
     labels: list[str] = field(default_factory=list)
     assignees: list[str] = field(default_factory=list)
     milestone: str | None = None
@@ -33,6 +43,7 @@ class Epic:
     order: int
     description: str = ""
     acceptance_criteria: list[str] = field(default_factory=list)
+    comments: list[Comment] = field(default_factory=list)
     labels: list[str] = field(default_factory=list)
     assignees: list[str] = field(default_factory=list)
     milestone: str | None = None

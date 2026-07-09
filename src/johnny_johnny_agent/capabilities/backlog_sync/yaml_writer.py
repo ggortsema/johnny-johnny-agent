@@ -3,7 +3,7 @@ from typing import Any
 
 import yaml
 
-from johnny_johnny_agent.domain.backlog import Backlog, Epic, Issue
+from johnny_johnny_agent.domain.backlog import Backlog, Comment, Epic, Issue
 
 
 def save_backlog_yaml(
@@ -52,6 +52,7 @@ def _epic_to_dict(epic: Epic) -> dict[str, Any]:
         "order": epic.order,
         "description": epic.description,
         "acceptance_criteria": epic.acceptance_criteria,
+        "comments": _comments_to_dict(epic.comments),
         "labels": epic.labels,
         "assignees": epic.assignees,
         "milestone": epic.milestone,
@@ -74,8 +75,22 @@ def _issue_to_dict(issue: Issue) -> dict[str, Any]:
         "order": issue.order,
         "description": issue.description,
         "acceptance_criteria": issue.acceptance_criteria,
+        "comments": _comments_to_dict(issue.comments),
         "labels": issue.labels,
         "assignees": issue.assignees,
         "milestone": issue.milestone,
         "provider_metadata": issue.provider_metadata,
     }
+
+
+def _comments_to_dict(comments: list[Comment]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": comment.id,
+            "body": comment.body,
+            "source": comment.source,
+            "created_at": comment.created_at,
+            "provider_metadata": comment.provider_metadata,
+        }
+        for comment in comments
+    ]

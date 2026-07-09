@@ -91,6 +91,7 @@ def github_pull_to_backlog_dict(data: dict[str, Any]) -> dict[str, Any]:
                 "order": epic_order,
                 "description": "Generated placeholder because this issue referenced a parent epic not found in the pull.",
                 "acceptance_criteria": [],
+                "comments": [],
                 "labels": [],
                 "assignees": [],
                 "milestone": None,
@@ -152,6 +153,7 @@ def _work_item_from_row(
             _strip_johnny_metadata(row.get("body", "")).strip()
         ),
         "acceptance_criteria": [],
+        "comments": [],
         "labels": _names(row.get("labels", [])),
         "assignees": _names(row.get("assignees", [])),
         "milestone": _milestone(row.get("milestone")),

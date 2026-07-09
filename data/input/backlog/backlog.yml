@@ -19,6 +19,7 @@ epics:
     support provisioning, deployment, validation, rollback, and future promotion strategies while remaining consistent with
     the existing execution-plan architecture.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -40,6 +41,7 @@ epics:
     description: Replace the current hello-world GKE stage with a real implementation that executes gcloud and kubectl commands.
       The stage should deploy an application to a target GKE cluster using workflow configuration provided by the orchestrator.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -60,6 +62,7 @@ epics:
     description: Determine how StyxCD authenticates to GKE clusters. Evaluate service accounts, workload identity, and credential
       management approaches.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -80,6 +83,7 @@ epics:
     description: Deploy a sample application to GKE using StyxCD to validate the complete workflow from YAML submission through
       deployment execution.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -99,6 +103,7 @@ epics:
     order: 4000
     description: Design and implement rollback capabilities for GKE deployments.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -118,6 +123,7 @@ epics:
     order: 5000
     description: Implement deployment validation after application rollout.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -137,6 +143,7 @@ epics:
     order: 6000
     description: Define how GKE deployments are represented within the StyxCD workflow DSL.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -156,6 +163,7 @@ epics:
     order: 7000
     description: Provide a repeatable sandbox environment for developing and testing GKE workflows.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -177,6 +185,7 @@ epics:
     authenticate and authorize actions within the platform. The design should support both a single-user deployment model
     and future multi-user enterprise deployments.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -198,6 +207,7 @@ epics:
     description: Determine how users authenticate to the StyxCD control plane. Evaluate API keys, OAuth2, OIDC, and other
       approaches that support both personal and enterprise deployments.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -218,6 +228,7 @@ epics:
     description: Implement authentication for StyxCD APIs and UI access based on the selected authentication strategy. The
       solution should support both personal deployments and future enterprise deployments.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -238,6 +249,7 @@ epics:
     description: Define how StyxCD services authenticate with one another, including orchestrator, Jenkins, future execution
       engines, agents, and external integrations.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -257,6 +269,7 @@ epics:
     order: 4000
     description: Protect orchestrator callback endpoints so only trusted execution engines can submit workflow status updates.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -277,6 +290,7 @@ epics:
     description: Define and implement how StyxCD stores, retrieves, and manages sensitive credentials such as cloud provider
       credentials, API keys, deployment tokens, and future provider integrations.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -297,6 +311,7 @@ epics:
     description: Define how permissions are granted within StyxCD and establish a role-based access control model that can
       evolve with future multi-user and enterprise requirements.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -317,6 +332,7 @@ epics:
     description: Define how workflows reference credentials without exposing sensitive information. Workflows should consume
       credentials through secure references rather than embedded values.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -337,6 +353,7 @@ epics:
     description: Capture and retain security-relevant events such as authentication activity, authorization failures, credential
       access, workflow execution actions, and administrative changes.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -357,6 +374,7 @@ epics:
     description: Document future requirements for supporting multiple teams, organizations, tenants, and delegated administration
       within StyxCD.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -377,6 +395,7 @@ epics:
     description: Document the overall security architecture of StyxCD including authentication, authorization, secrets management,
       trust boundaries, audit logging, and future enterprise considerations.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -397,6 +416,7 @@ epics:
     description: Implement initial control-plane authentication using Spring Security and server-side sessions before introducing
       more complex OIDC/JWT patterns.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -418,6 +438,7 @@ epics:
     to define standard workflow structures while application teams provide only the values that vary. StyxCD should render
     and display the fully resolved workflow before execution.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -439,6 +460,7 @@ epics:
     description: Define the template architecture for StyxCD. Determine how templates, values, defaults, and overrides interact
       within workflow definitions.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -459,6 +481,7 @@ epics:
     description: Implement the backend logic that resolves templates and values into a final workflow definition suitable
       for planning and execution.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -479,6 +502,7 @@ epics:
     description: Generate a fully resolved workflow definition after template processing and before execution. The generated
       YAML should represent the exact workflow that will be executed.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -498,6 +522,7 @@ epics:
     order: 4000
     description: Provide a user interface for viewing the resolved workflow before execution and during execution review.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -517,6 +542,7 @@ epics:
     order: 5000
     description: Validate the final resolved workflow rather than only validating the original template inputs.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -537,6 +563,7 @@ epics:
     description: Create reusable platform-managed templates for common deployment patterns such as ECS, EKS, GKE, and future
       cloud targets.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -556,6 +583,7 @@ epics:
     order: 7000
     description: Allow templates to evolve over time while maintaining compatibility with existing workflows.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -575,6 +603,7 @@ epics:
     order: 8000
     description: Provide a catalog of available templates so users can discover and select approved workflow patterns.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -594,6 +623,7 @@ epics:
     order: 9000
     description: Create automated tests that validate template inheritance, substitution, and effective YAML generation.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -614,6 +644,7 @@ epics:
     description: Define how users should understand resolved YAML, template expansion, and final execution inputs before a
       workflow runs.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -635,6 +666,7 @@ epics:
     API behavior, and future end-to-end workflow verification. The goal is to provide confidence that workflows are interpreted
     and executed correctly while supporting future platform growth.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -655,6 +687,7 @@ epics:
     order: 1000
     description: Verify that workflow definitions produce the expected execution plans and stage maps.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -674,6 +707,7 @@ epics:
     order: 2000
     description: Create unit tests for workflow planners and stage planners.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -693,6 +727,7 @@ epics:
     order: 3000
     description: Verify that workflow flags and configuration options correctly influence stage selection.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -712,6 +747,7 @@ epics:
     order: 4000
     description: Verify orchestrator handling of workflow callbacks and status transitions.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -731,6 +767,7 @@ epics:
     order: 5000
     description: Create automated tests for StyxCD REST APIs.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -750,6 +787,7 @@ epics:
     order: 6000
     description: Design a framework that executes sample workflows and validates expected execution behavior.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -769,6 +807,7 @@ epics:
     order: 7000
     description: Provide a repeatable local testing environment that allows rapid development and validation of StyxCD functionality.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -788,6 +827,7 @@ epics:
     order: 8000
     description: Provide a Docker Compose environment for local development and testing of StyxCD components.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -808,6 +848,7 @@ epics:
     description: Document a long-term testing approach that validates complete workflow behavior rather than only individual
       components.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -827,6 +868,7 @@ epics:
     order: 10000
     description: 'TODO: Define scope and acceptance criteria for Add YAML Parsing Tests.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -846,6 +888,7 @@ epics:
     order: 11000
     description: 'TODO: Define scope and acceptance criteria for Add Stage Inclusion Tests.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -865,6 +908,7 @@ epics:
     order: 12000
     description: 'TODO: Define scope and acceptance criteria for Add Controller/API Tests.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -884,6 +928,7 @@ epics:
     order: 13000
     description: 'TODO: Define scope and acceptance criteria for Create Behavior Testing Framework.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -903,6 +948,7 @@ epics:
     order: 14000
     description: 'TODO: Define scope and acceptance criteria for Create End-to-End Workflow Test Suite.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -922,6 +968,7 @@ epics:
     order: 15000
     description: 'TODO: Define scope and acceptance criteria for Add Local Testing Harness.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -941,6 +988,7 @@ epics:
     order: 16000
     description: 'TODO: Define scope and acceptance criteria for Add Docker Compose Development Environment.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -965,6 +1013,7 @@ epics:
     \ operational\n- RAG implemented using StyxCD documentation\n- PostgreSQL + pgvector knowledge store\n- LangChain and\
     \ LangGraph integrated\n- Able to answer StyxCD-specific questions using retrieved documentation\n\n---"
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -988,6 +1037,7 @@ epics:
 
       Create the initial Python project.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1010,6 +1060,7 @@ epics:
 
       Implement the initial REST endpoint.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1032,6 +1083,7 @@ epics:
 
       Prepare the knowledge database.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1054,6 +1106,7 @@ epics:
 
       Create the initial knowledge model.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1076,6 +1129,7 @@ epics:
 
       Load StyxCD documentation into the knowledge store.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1098,6 +1152,7 @@ epics:
 
       Create the initial chunking strategy.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1120,6 +1175,7 @@ epics:
 
       Generate embeddings for document chunks.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1142,6 +1198,7 @@ epics:
 
       Retrieve relevant document chunks.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1164,6 +1221,7 @@ epics:
 
       Use LangChain abstractions for embeddings, retrieval and model interaction.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1186,6 +1244,7 @@ epics:
 
       Build the initial chat workflow using LangGraph.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1208,6 +1267,7 @@ epics:
 
       Connect retrieval with LLM prompting.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1230,6 +1290,7 @@ epics:
 
       Generate valid StyxCD YAML from natural language.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1252,6 +1313,7 @@ epics:
 
       Define the service contract for future StyxCD integration.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1271,6 +1333,7 @@ epics:
   order: 6000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -1292,6 +1355,7 @@ epics:
     description: Define the YAML structure for project-management workflows, including provider configuration, epics, issues,
       labels, assignees, milestones, acceptance criteria, and provider metadata.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1312,6 +1376,7 @@ epics:
     description: Implement the first PM workflow provider using the GitHub API to create roadmap issues in the configured
       repository.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1332,6 +1397,7 @@ epics:
     description: Create parent epic issues and attach child issues using GitHub's issue hierarchy or supported relationship
       model.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1351,6 +1417,7 @@ epics:
     order: 4000
     description: Add created or updated issues to the configured GitHub Project board.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1370,6 +1437,7 @@ epics:
     order: 5000
     description: Provide a dry-run mode that previews create, update, no-op, and error actions without modifying the provider.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1389,6 +1457,7 @@ epics:
     order: 6000
     description: Ensure rerunning a PM workflow does not create duplicate epics or issues when matching items already exist.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1409,6 +1478,7 @@ epics:
     description: Read existing epics and issues from a project-management provider and update local PM workflow YAML with
       provider identifiers, links, and status metadata.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1429,6 +1499,7 @@ epics:
     description: Store provider-specific identifiers separately so the YAML remains portable across GitHub, Linear, ClickUp,
       Jira, or future providers.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1448,6 +1519,7 @@ epics:
     order: 9000
     description: Allow the same roadmap YAML to be projected into a different project-management provider.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1467,6 +1539,7 @@ epics:
     order: 10000
     description: Use an AI-assisted step to transform roadmap discussion or session notes into PM workflow YAML.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1486,6 +1559,7 @@ epics:
     order: 11000
     description: Use StyxCD to create or update a real project-management backlog from committed PM workflow YAML.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1505,6 +1579,7 @@ epics:
   order: 7000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -1525,6 +1600,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Deploy StyxCD Using StyxCD.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1544,6 +1620,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Create StyxCD Release Workflow.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1563,6 +1640,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Create StyxCD Promotion Workflow.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1582,6 +1660,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Implement StyxCD Self-Update Workflow.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1601,6 +1680,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Validate Upgrade Scenarios.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1620,6 +1700,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Document Internal Release Process.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1639,6 +1720,7 @@ epics:
   order: 8000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -1659,6 +1741,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Stable Environment Strategy.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1678,6 +1761,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Define Development Environment Strategy.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1697,6 +1781,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Implement Promotion Workflow.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1716,6 +1801,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Implement Version Management Strategy.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1735,6 +1821,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Document Release Process.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1754,6 +1841,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Release Validation Checks.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1774,6 +1862,7 @@ epics:
     description: Document how StyxCD should separate infrastructure lifecycle from deployment lifecycle when Terraform or
       external infrastructure tools are involved.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1793,6 +1882,7 @@ epics:
   order: 9000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -1813,6 +1903,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Complete GKE Vertical Slice.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1832,6 +1923,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Expand ECS Deployment Support.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1851,6 +1943,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Expand EKS Deployment Support.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1870,6 +1963,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Evaluate AKS Support.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1889,6 +1983,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Define Multi-Cloud Abstraction Strategy.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1908,6 +2003,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Create Cloud Capability Matrix.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1928,6 +2024,7 @@ epics:
     description: Add EKS as a first-class StyxCD cloud workflow branch using the same conceptual deployment lifecycle proven
       by GKE, plus an EKS-specific load balancer controller preparation stage.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1948,6 +2045,7 @@ epics:
     description: Move the existing working EKS sandbox deployment logic into discrete StyxCD stages matching the new EKS execution
       plan.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1967,6 +2065,7 @@ epics:
     order: 9000
     description: Define the first formal EKS YAML model after the hello-world execution plan is validated.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -1987,6 +2086,7 @@ epics:
     description: Capture the architectural mapping between GKE and EKS stages, including where the workflows align conceptually
       and where EKS requires provider-specific setup.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2007,6 +2107,7 @@ epics:
     description: Use the GKE and EKS stage model as the reference point for evaluating how AKS maps into the StyxCD execution
       lifecycle.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2027,6 +2128,7 @@ epics:
     description: Revisit ECS without Terraform first to discover the native ECS deployment lifecycle and compare it to Kubernetes
       platform workflows.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2046,6 +2148,7 @@ epics:
     order: 13000
     description: 'Parent Epic: Epic: Multi-Cloud Support'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2065,6 +2168,7 @@ epics:
   order: 10000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -2085,6 +2189,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Validation Contract.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2104,6 +2209,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Implement Validation Framework.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2123,6 +2229,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Add Health Check Validation.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2142,6 +2249,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Add Smoke Test Validation.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2161,6 +2269,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Add Deployment Verification Reporting.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2180,6 +2289,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Validation Dashboard Support.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2199,6 +2309,7 @@ epics:
   order: 11000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -2219,6 +2330,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Measurement Contract.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2238,6 +2350,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Capture Validation Metrics.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2257,6 +2370,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Store Validation Results.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2276,6 +2390,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Evaluate SLO Thresholds.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2295,6 +2410,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Support Promotion Gates.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2314,6 +2430,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Document SLO Promotion Model.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2333,6 +2450,7 @@ epics:
   order: 12000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -2353,6 +2471,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define Artifact Metadata Model.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2372,6 +2491,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Track Digest-Based Deployments.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2391,6 +2511,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Support Registry Replication.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2410,6 +2531,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Store Promotion History.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2429,6 +2551,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Implement Artifact Audit Trail.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2448,6 +2571,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Document Enterprise Artifact Strategy.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2468,6 +2592,7 @@ epics:
     description: Explore an enterprise artifact-management model where images are built once, tracked by digest, and promoted
       or replicated across cloud-native registries.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2487,6 +2612,7 @@ epics:
   order: 13000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -2507,6 +2633,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Add Prometheus Metrics.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2526,6 +2653,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Add Grafana Dashboards.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2545,6 +2673,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Expand Structured Logging.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2564,6 +2693,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Track Workflow Metrics.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2583,6 +2713,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Track Stage Metrics.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2602,6 +2733,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Deployment Analytics.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2622,6 +2754,7 @@ epics:
     description: Design a log collection architecture that works across EC2, ECS, GKE, EKS, and future runtimes while preserving
       consistent structured application logging.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2641,6 +2774,7 @@ epics:
   order: 14000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -2661,6 +2795,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Create Architecture Documentation.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2680,6 +2815,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Create Workflow Authoring Guide.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2699,6 +2835,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Create Platform Guides.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2718,6 +2855,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Create Troubleshooting Guide.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2737,6 +2875,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Create Knowledge Base Structure.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2756,6 +2895,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Create Example Workflow Library.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2776,6 +2916,7 @@ epics:
     description: Decide how StyxCD documentation should serve both human readers today and future retrieval-augmented generation
       use cases.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2796,6 +2937,7 @@ epics:
     description: Create a formal documentation model for StyxCD YAML specs, including cloud workflow specs, PM workflow specs,
       examples, and help files.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2816,6 +2958,7 @@ epics:
     description: Organize existing and future StyxCD docs into a clean structure that supports product documentation, architecture
       history, implementation notes, and AI retrieval.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2836,6 +2979,7 @@ epics:
     description: Introduce lightweight ADRs for major StyxCD design decisions such as execution-plan stages, platform abstraction
       boundaries, Terraform boundaries, and documentation strategy.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2855,6 +2999,7 @@ epics:
   order: 15000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -2875,6 +3020,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Add In-Memory Database Mode.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2894,6 +3040,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Support Local Workflow Execution.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2913,6 +3060,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Improve Developer Setup Documentation.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2932,6 +3080,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Create Local Demo Environment.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2951,6 +3100,7 @@ epics:
   order: 16000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -2971,6 +3121,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Load YAML From File.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -2990,6 +3141,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Load YAML From URL.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3009,6 +3161,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Create Workflow Templates UI.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3028,6 +3181,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Display Effective YAML.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3047,6 +3201,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Improve Mobile Experience.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3066,6 +3221,7 @@ epics:
     order: 6000
     description: 'TODO: Define scope and acceptance criteria for Add Execution Filtering.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3085,6 +3241,7 @@ epics:
     order: 7000
     description: 'TODO: Define scope and acceptance criteria for Add Execution Comparison View.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3104,6 +3261,7 @@ epics:
     order: 8000
     description: 'TODO: Define scope and acceptance criteria for Add Template Catalog UI.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3123,6 +3281,7 @@ epics:
     order: 9000
     description: Improve the StyxCD UI by remembering the user's last submitted YAML and editor/layout state.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3142,6 +3301,7 @@ epics:
   order: 17000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -3162,6 +3322,7 @@ epics:
     order: 1000
     description: 'TODO: Define scope and acceptance criteria for Define PlanningDecision Model.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3181,6 +3342,7 @@ epics:
     order: 2000
     description: 'TODO: Define scope and acceptance criteria for Integrate Drools Decision Engine.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3200,6 +3362,7 @@ epics:
     order: 3000
     description: 'TODO: Define scope and acceptance criteria for Separate Planning From Execution.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3219,6 +3382,7 @@ epics:
     order: 4000
     description: 'TODO: Define scope and acceptance criteria for Implement Decision Rules Framework.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3238,6 +3402,7 @@ epics:
     order: 5000
     description: 'TODO: Define scope and acceptance criteria for Document Planning Architecture.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3258,6 +3423,7 @@ epics:
     description: Revisit naming around VALIDATE_MAP, paramMap, and stageSpecificMap to better reflect execution planning,
       workflow context, and stage telemetry.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3277,6 +3443,7 @@ epics:
   order: 18000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -3298,6 +3465,7 @@ epics:
     description: Create a retrieval layer that can index StyxCD documentation, specs, architecture decisions, backlog YAML,
       and session handoffs so Kharon can recover project context accurately.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3318,6 +3486,7 @@ epics:
     description: Define which repositories, documents, and generated artifacts should become trusted sources for Kharon contextual
       answers.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3337,6 +3506,7 @@ epics:
   order: 19000
   description: Imported from MycroftAI / StyxCD Remaining Backlog SSOT.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -3359,6 +3529,7 @@ epics:
       should submit workflow YAML to the orchestrator and return execution metadata including execution ID, status, Jenkins
       links, Grafana links, and future execution details.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3396,6 +3567,7 @@ epics:
 
     DevOps, or Linear.'
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -3418,6 +3590,7 @@ epics:
       without overwriting the original issue specification. This allows Johnny-Johnny and engineers to maintain a running
       implementation log while preserving the canonical problem statement and acceptance criteria.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3439,6 +3612,7 @@ epics:
       YAML structure, produce documentation that summarizes project progress, epics, remaining work, completed work, and implementation
       status for engineers and stakeholders.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3459,6 +3633,7 @@ epics:
     description: Add an execute commands command that reads a plain text file containing Johnny-Johnny CLI commands and executes
       them sequentially. V1 supports simple command replay for batch operations such as backlog grooming.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3480,6 +3655,7 @@ epics:
       in PostgreSQL while preserving backlog.yml as a portable import/export format. This design should support future webhooks,
       chat workflows, audit history, synchronization events, and multiple provider projections.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3502,6 +3678,7 @@ epics:
 
       -   Support epics, stories, acceptance criteria, provider metadata.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3524,6 +3701,7 @@ epics:
 
       estimates, relationships.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3549,6 +3727,7 @@ epics:
 
       -   Provider metadata isolated.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3571,6 +3750,7 @@ epics:
 
       changes, moved stories.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3593,6 +3773,7 @@ epics:
 
       reporting.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3618,6 +3799,7 @@ epics:
 
       -   Preserve relationships.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3640,6 +3822,7 @@ epics:
 
       -   Matching by provider ID then title.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3659,6 +3842,7 @@ epics:
     order: 12000
     description: '-   Preview create/update/delete/no-op actions.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3690,6 +3874,7 @@ epics:
 
       -   Document the demonstration.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3709,6 +3894,7 @@ epics:
     order: 14000
     description: ''
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3728,6 +3914,7 @@ epics:
     order: 15000
     description: Add a create-epic command that creates a canonical epic and reconciles it to GitHub.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3742,11 +3929,27 @@ epics:
     type: issue
     title: Expand Update Issue Command
     repository: ggortsema/styxcd-docs
-    status: In progress
+    status: Done
     issue_state: OPEN
     order: 16000
     description: Extend update-issue to modify additional canonical issue properties beyond status.
     acceptance_criteria: []
+    comments:
+    - id: comment-791c9100b7f546db94590f1711fe35c0
+      body: Expanded update-issue so it can update epics and child issues by stable id, replace editable fields, append canonical
+        comments, and preserve provider-specific status translation at the GitHub boundary.
+      source: johnny-johnny
+      created_at: '2026-07-08T22:08:22.451361+00:00'
+      provider_metadata:
+        github: {}
+    - id: comment-20cf582497cf4898bdc04f1ba8303fa1
+      body: Expanded the update command to support both epics and issues using stable backlog item IDs. Added append-only
+        implementation comments while preserving the canonical specification and integrated support for the new CLI command
+        structure.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:53:41.417264+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -3761,11 +3964,19 @@ epics:
     type: issue
     title: List Issues Command
     repository: ggortsema/styxcd-docs
-    status: In progress
+    status: Done
     issue_state: OPEN
     order: 17000
     description: Add a list-issues command that displays canonical issues with their identifiers, status, and parent epic.
     acceptance_criteria: []
+    comments:
+    - id: comment-fceb37f62cd143c0bf185563e96a27c7
+      body: Implemented generic 'jj backlog list items' command with status filtering, exclusion filtering, human table output,
+        and YAML/JSON summary projections. Legacy 'list-issues' retained as a compatibility alias.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:31:47.597703+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -3780,12 +3991,20 @@ epics:
     type: issue
     title: Update Epic Command
     repository: ggortsema/styxcd-docs
-    status: In progress
+    status: Done
     issue_state: OPEN
     order: 18000
     description: Add an update-epic command that modifies canonical epic properties and reconciles them to GitHub. V1 updates
       only the epic itself and does not cascade changes to child issues.
     acceptance_criteria: []
+    comments:
+    - id: comment-09c99433566c48d986d4b8e70f1026ab
+      body: Expanded backlog update capability to support both epics and issues through a unified backlog item update command
+        using stable IDs.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:31:56.415290+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -3800,12 +4019,20 @@ epics:
     type: issue
     title: Find Issue Command
     repository: ggortsema/styxcd-docs
-    status: In progress
+    status: Done
     issue_state: OPEN
     order: 19000
     description: Add a fuzzy find-issue command that searches canonical backlog issues by id, title, description, status,
       and parent epic so users can quickly find issue IDs for follow-up commands.
     acceptance_criteria: []
+    comments:
+    - id: comment-5dced6065ba141a9b5c2ca620f372e6d
+      body: Replaced issue-specific lookup with generic backlog item lookup supporting both epics and issues by stable ID.
+        Added parent epic lookup for rendering.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:32:08.684015+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -3820,12 +4047,13 @@ epics:
     type: issue
     title: Move Issue Command
     repository: ggortsema/styxcd-docs
-    status: In progress
+    status: In Progress
     issue_state: OPEN
     order: 20000
     description: Add a move-issue command that reparents an existing canonical issue to a different epic and reconciles the
       relationship to GitHub. This allows backlog reorganization without manually editing GitHub or the canonical backlog.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3840,13 +4068,21 @@ epics:
     type: issue
     title: Add Backlog Describe Command
     repository: ggortsema/styxcd-docs
-    status: In progress
+    status: Done
     issue_state: OPEN
     order: 21000
     description: Add a Kubernetes-style describe command for the backlog capability that can render the full canonical backlog
       or selected portions such as a single epic or issue. The command should support human-readable output as well as YAML
       and JSON representations for tooling, debugging, and future agent workflows.
     acceptance_criteria: []
+    comments:
+    - id: comment-a8cc59ff3ca345bbbef2acee470f6a01
+      body: Implemented 'jj backlog describe <id>' supporting both epics and issues. Added output renderers with human-readable
+        output by default and canonical YAML/JSON output via '-o'.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:31:38.288610+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -3857,27 +4093,6 @@ epics:
         number: 982
         url: https://github.com/ggortsema/styxcd-docs/issues/982
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQTew
-  - id: support-project-defined-workflow-status-mapping
-    type: issue
-    title: Support Project-Defined Workflow Status Mapping
-    repository: ggortsema/styxcd-docs
-    status: Backlog
-    issue_state: OPEN
-    order: 22000
-    description: Allow Johnny-Johnny to own the project's workflow while allowing each provider to either use the project's
-      workflow statuses directly or provide an explicit mapping to provider-specific workflow values. This preserves provider-specific
-      capabilities without requiring universal workflow normalization.
-    acceptance_criteria: []
-    labels: []
-    assignees: []
-    milestone: null
-    provider_metadata:
-      github:
-        issue_id: I_kwDOR_b51c8AAAABHJto5w
-        database_id: 4774914279
-        number: 979
-        url: https://github.com/ggortsema/styxcd-docs/issues/979
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQOCU
   - id: support-provider-adapters
     type: issue
     title: Support Provider Adapters
@@ -3890,6 +4105,7 @@ epics:
 
       -   Architecture supports Jira, Azure DevOps, Bitbucket, Linear.'
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3911,6 +4127,7 @@ epics:
       intents rather than raw CLI commands. Playbooks become the foundation for reusable engineering automation across all
       Johnny-Johnny capabilities.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3932,6 +4149,7 @@ epics:
       and metadata updates back into the canonical backlog model. This enables users to work in provider UIs while preserving
       the canonical backlog as the source of truth.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3951,14 +4169,8 @@ epics:
     order: 26000
     description: Add local environment configuration support so Johnny-Johnny can load required secrets such as GITHUB_TOKEN
       from a non-committed .env file while keeping committed examples safe.
-    acceptance_criteria:
-    - Add .env to .gitignore.
-    - Add a committed .env.example with required configuration keys.
-    - Load local environment variables from .env during CLI startup.
-    - Centralize configuration access behind a Johnny-Johnny settings module.
-    - 'Ensure secrets are not committed.
-
-      '
+    acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -3969,6 +4181,201 @@ epics:
         number: 983
         url: https://github.com/ggortsema/styxcd-docs/issues/983
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMMsE
+  - id: record-provider-reconciliation-state
+    type: issue
+    title: Record Provider Reconciliation State
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 27000
+    description: After backlog persistence moves to PostgreSQL, record provider reconciliation attempts separately from canonical
+      backlog commits so provider failures do not roll back source-of-truth changes.
+    acceptance_criteria:
+    - Canonical backlog updates commit independently of provider synchronization.
+    - Provider reconciliation attempts are recorded with provider, operation type, status, error message, and retry metadata.
+    - Failed provider synchronization does not roll back canonical backlog changes.
+    - CLI clearly reports when canonical changes were saved but provider reconciliation failed.
+    - A later reconcile command can retry pending provider operations.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIJN0Iw
+        database_id: 4841501731
+        number: 984
+        url: https://github.com/ggortsema/styxcd-docs/issues/984
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMdZA
+  - id: preserve-canonical-stable-ids
+    type: issue
+    title: Preserve Canonical Stable IDs During GitHub Synchronization
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 28000
+    description: Ensure that canonical Johnny-Johnny stable ids are preserved across GitHub generate, pull, reconcile, and
+      publish operations. The generator must never derive a new stable id from a title when an existing canonical id is available
+      through Johnny-Johnny metadata.
+    acceptance_criteria:
+    - Canonical stable ids never change after they are first assigned.
+    - GitHub generate preserves existing Johnny-Johnny ids from metadata instead of regenerating ids from titles.
+    - Renaming an epic or issue does not change its canonical stable id.
+    - Reconciliation uses canonical stable ids as the primary identity for matching backlog items.
+    - Only items with no existing Johnny-Johnny metadata receive a newly generated stable id.
+    - Regression tests verify that repeated generate/reconcile cycles do not modify canonical ids.
+    comments:
+    - id: comment-6f08ee348a8d49a1a565c4c36f430011
+      body: Promoted to Ready following the introduction of stable backlog item IDs as a first-class concept in the canonical
+        model.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:53:58.113240+00:00'
+      provider_metadata:
+        github: {}
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIJN_vQ
+        database_id: 4841504701
+        number: 985
+        url: https://github.com/ggortsema/styxcd-docs/issues/985
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMdgM
+  - id: cli-generic-list-command
+    type: issue
+    title: Introduce Generic List Command Hierarchy
+    repository: ggortsema/styxcd-docs
+    status: Done
+    issue_state: OPEN
+    order: 29000
+    description: Refactor the backlog CLI to replace command-specific list operations with a reusable noun-based command hierarchy.
+      Replace 'list-epics' and 'list-issues' with a generic 'list' command that supports subcommands such as 'epics' and 'issues'.
+      Preserve existing behavior, filtering, output formatting, and shared table rendering while improving CLI consistency
+      and scalability.
+    acceptance_criteria:
+    - Implement 'jj backlog list epics' as the replacement for 'jj backlog list-epics'.
+    - Implement 'jj backlog list issues --epic <epic-id>' as the replacement for 'jj backlog list-issues --epic <epic-id>'.
+    - Preserve existing filtering semantics, including '--status' and '--exclude-status'.
+    - Preserve the shared table output format for all list commands.
+    - Do not rename create, update, delete, describe, reconcile, validate, generate, or pull commands in this story.
+    - Remove the legacy 'list-epics' and 'list-issues' commands as part of the refactor.
+    comments:
+    - id: comment-fb22937862654855a42846fdb8872f74
+      body: Introduced noun-based 'jj backlog list' command hierarchy while retaining legacy commands as compatibility aliases.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:32:18.041341+00:00'
+      provider_metadata:
+        github: {}
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIJiIuA
+        database_id: 4841834680
+        number: 987
+        url: https://github.com/ggortsema/styxcd-docs/issues/987
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMx-4
+  - id: stabilize-canonical-backlog-item-identity
+    type: issue
+    title: Stabilize Canonical Backlog Item Identity
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 30000
+    description: Ensure every canonical backlog item has a permanent, immutable Stable ID that remains unchanged for the lifetime
+      of the item regardless of title changes. Expose the Stable ID consistently throughout Johnny-Johnny, including CLI output,
+      generated documentation, and canonical story templates.
+    acceptance_criteria:
+    - Stable IDs are immutable once assigned.
+    - Renaming a backlog item does not change its Stable ID.
+    - Generated story templates include the Stable ID.
+    - CLI describe output displays 'Stable ID' instead of 'ID'.
+    - Provider-specific identifiers remain provider metadata and are not treated as canonical identifiers.
+    comments:
+    - id: comment-7cfef1d7a2ce4a1e918fe4b2884def36
+      body: Promoted to Ready. This story will formalize immutable Stable IDs, expose them consistently throughout the CLI
+        and generated documentation, and ensure provider identifiers remain provider metadata.
+      source: johnny-johnny
+      created_at: '2026-07-09T00:54:07.573352+00:00'
+      provider_metadata:
+        github: {}
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIJ3SGQ
+        database_id: 4842181145
+        number: 988
+        url: https://github.com/ggortsema/styxcd-docs/issues/988
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNGl4
+  - id: complete-canonical-cli-grammar
+    type: issue
+    title: Complete Canonical CLI Grammar
+    repository: ggortsema/styxcd-docs
+    status: In Progress
+    issue_state: OPEN
+    order: 31000
+    description: Finish the public Johnny-Johnny backlog CLI grammar so mutation commands follow the same noun-oriented structure
+      as the new query commands. Replace issue-specific command names with canonical backlog item language while preserving
+      existing behavior.
+    acceptance_criteria:
+    - 'Create commands use noun-based grouping: ''jj backlog create epic'' and ''jj backlog create issue''.'
+    - 'Update uses a generic backlog item command: ''jj backlog update <backlog-item-id>''.'
+    - The public CLI no longer requires users to know whether an existing item is an epic or issue when updating it.
+    - Existing create and update behavior remains functionally equivalent.
+    - Legacy commands may remain temporarily as aliases until the cleanup story removes them.
+    comments:
+    - id: comment-68119d768a124ec89ef6a14ada03d99b
+      body: Starting implementation of the canonical backlog CLI grammar for create and update commands.
+      source: johnny-johnny
+      created_at: '2026-07-09T01:03:07.260819+00:00'
+      provider_metadata:
+        github: {}
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIJ7DYg
+        database_id: 4842242914
+        number: 989
+        url: https://github.com/ggortsema/styxcd-docs/issues/989
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNKPc
+  - id: clean-up-legacy-cli-commands
+    type: issue
+    title: Clean Up Legacy CLI Commands
+    repository: ggortsema/styxcd-docs
+    status: In Progress
+    issue_state: OPEN
+    order: 32000
+    description: Remove deprecated backlog CLI aliases and obsolete code after the canonical CLI grammar is implemented. This
+      is a cleanup-only story intended to leave the CLI codebase consistent with the new public command language.
+    acceptance_criteria:
+    - Remove legacy 'list-epics' and 'list-issues' commands.
+    - Remove legacy 'create-epic' and 'create-issue' commands after grouped create commands exist.
+    - Remove legacy 'update-issue' command after generic update exists.
+    - Remove unused imports, dead helper functions, and obsolete compatibility wrappers from the CLI.
+    - All remaining backlog CLI commands follow the canonical command grammar.
+    comments:
+    - id: comment-21975fcd58154a0b86de680e64e88650
+      body: Starting cleanup of deprecated CLI aliases and obsolete command code after canonical grammar implementation.
+      source: johnny-johnny
+      created_at: '2026-07-09T01:03:14.888706+00:00'
+      provider_metadata:
+        github: {}
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIJ7I8Q
+        database_id: 4842244337
+        number: 990
+        url: https://github.com/ggortsema/styxcd-docs/issues/990
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNKTE
 - id: johnny-johnny-core-cli
   type: epic
   title: Johnny-Johnny Core CLI
@@ -3980,6 +4387,7 @@ epics:
     invoking engineering capabilities, managing project artifacts, and serving as the execution layer that future AI agents
     and orchestration systems will call.
   acceptance_criteria: []
+  comments: []
   labels: []
   assignees: []
   milestone: null
@@ -4002,6 +4410,7 @@ epics:
       adapter becomes the bridge between AI reasoning and the existing Johnny-Johnny command architecture while preserving
       deterministic execution.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -4022,6 +4431,7 @@ epics:
     description: Set up pgvector support in the existing Johnny-Johnny PostgreSQL database so project documents, ADRs, backlog
       files, and session context can be embedded and retrieved for RAG workflows.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -4042,6 +4452,7 @@ epics:
     description: Create a document ingestion pipeline that loads Johnny-Johnny project context into the vector store, including
       README files, ADRs, specifications, backlog YAML, schemas, and session handoffs.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -4062,6 +4473,7 @@ epics:
     description: Add a minimal command that queries the project vector store and returns relevant Johnny-Johnny context for
       a natural-language request.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -4082,6 +4494,7 @@ epics:
     description: Centralize configuration for AI-related features including model names, embedding provider, vector database
       settings, ingestion paths, and mutating-command confirmation policy.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -4103,6 +4516,7 @@ epics:
       a provider-specific or backlog-specific chatbot. The design should define how RAG, LangGraph, capability discovery,
       intent classification, confirmation, and deterministic command execution work together.
     acceptance_criteria: []
+    comments: []
     labels: []
     assignees: []
     milestone: null
@@ -4113,3 +4527,28 @@ epics:
         number: 975
         url: https://github.com/ggortsema/styxcd-docs/issues/975
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQA5Y
+  - id: list-issues-by-epic
+    type: issue
+    title: List Issues By Epic
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 7000
+    description: Add a CLI command that lists child issues for a selected epic by stable id so users can discover issue ids
+      before running update, delete, or move commands.
+    acceptance_criteria:
+    - CLI supports jj backlog list-issues --epic <epic-id>.
+    - The command prints child issue title, stable id, and status.
+    - The command returns a clear error when the epic id does not exist.
+    - The command supports the standard --file option.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIJO-sQ
+        database_id: 4841520817
+        number: 986
+        url: https://github.com/ggortsema/styxcd-docs/issues/986
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMeZk

@@ -78,6 +78,41 @@
       },
       "default": []
     },
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/comment"
+      },
+      "default": []
+    },
+    "comment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "body",
+        "source",
+        "provider_metadata"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "created_at": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "provider_metadata": {
+          "$ref": "#/$defs/providerMetadata"
+        }
+      }
+    },
     "project": {
       "type": "object",
       "additionalProperties": false,
@@ -121,6 +156,7 @@
         "order",
         "description",
         "acceptance_criteria",
+        "comments",
         "labels",
         "assignees",
         "milestone",
@@ -156,6 +192,9 @@
         "acceptance_criteria": {
           "$ref": "#/$defs/acceptanceCriteria"
         },
+        "comments": {
+          "$ref": "#/$defs/comments"
+        },
         "labels": {
           "$ref": "#/$defs/stringList"
         },
@@ -183,6 +222,7 @@
         "order",
         "description",
         "acceptance_criteria",
+        "comments",
         "labels",
         "assignees",
         "milestone",
@@ -218,6 +258,9 @@
         },
         "acceptance_criteria": {
           "$ref": "#/$defs/acceptanceCriteria"
+        },
+        "comments": {
+          "$ref": "#/$defs/comments"
         },
         "labels": {
           "$ref": "#/$defs/stringList"

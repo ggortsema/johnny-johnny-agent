@@ -10,7 +10,6 @@ import johnny_johnny_agent.config
 from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
     publish_backlog_from_markdown,
 )
-from johnny_johnny_agent.capabilities.github.project_reader import print_project_issues
 from johnny_johnny_agent.capabilities.backlog_sync.validator import (
     validate_backlog_yaml,
 )
@@ -42,10 +41,16 @@ from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
     create_epic,
     create_issue,
     delete_issue,
-    update_issue_status,
+    find_backlog_item,
+    find_epic,
+    find_epic_issues,
+    update_issue,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
     save_backlog_yaml,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.renderers import (
+    get_backlog_resource_renderer,
 )
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
@@ -64,6 +69,11 @@ backlog_app = typer.Typer(
     no_args_is_help=True,
 )
 
+backlog_list_app = typer.Typer(
+    help="List backlog objects",
+    no_args_is_help=True,
+)
+
 maintenance_app = typer.Typer(
     help="Maintenance and development commands",
     no_args_is_help=True,
@@ -71,6 +81,7 @@ maintenance_app = typer.Typer(
 
 app.add_typer(maintenance_app, name="maintenance")
 app.add_typer(backlog_app, name="backlog")
+backlog_app.add_typer(backlog_list_app, name="list")
 
 
 @app.command()
@@ -183,6 +194,33 @@ def inspect_backlog(
     typer.echo(f"Epics: {len(backlog.epics)}")
     typer.echo(f"Issues: {issue_count}")
 
+
+@backlog_app.command("describe")
+def describe_backlog_item(
+        item_id: Annotated[
+            str,
+            typer.Argument(help="Stable Johnny-Johnny backlog item id."),
+        ],
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        output: Annotated[
+            str,
+            typer.Option("--output", "-o", help="Output format: human, yaml, json."),
+        ] = "human",
+) -> None:
+    """Describe a canonical backlog item by stable id."""
+    backlog = load_backlog_yaml(file)
+
+    try:
+        item = find_backlog_item(backlog, item_id)
+        renderer = get_backlog_resource_renderer(output)
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    typer.echo(renderer(backlog, item))
 
 @backlog_app.command("preview-epic-body")
 def preview_epic_body(
@@ -372,50 +410,108 @@ def create_backlog_issue(
 
 
 @backlog_app.command("update-issue")
-def update_issue(
+def update_backlog_issue(
         issue_id: Annotated[
             str,
-            typer.Argument(help="Stable Johnny-Johnny issue id."),
+            typer.Argument(help="Stable Johnny-Johnny issue or epic id."),
         ],
         file: Annotated[
             str,
             typer.Option("--file", "-f", help="Path to the backlog YAML file."),
         ] = "data/input/backlog/backlog.yml",
+        title: Annotated[
+            str | None,
+            typer.Option("--title", "-t", help="New title. Replaces the current title."),
+        ] = None,
+        description: Annotated[
+            str | None,
+            typer.Option("--description", "-d", help="New description prose. Replaces the current description."),
+        ] = None,
         status: Annotated[
             str | None,
             typer.Option("--status", help="New project planning status."),
         ] = None,
+        acceptance: Annotated[
+            list[str] | None,
+            typer.Option(
+                "--acceptance",
+                help="Acceptance criterion. Can be repeated. Replaces the full acceptance criteria list.",
+            ),
+        ] = None,
+        comment: Annotated[
+            str | None,
+            typer.Option("--comment", help="Comment to append to the canonical backlog item."),
+        ] = None,
         dry_run: Annotated[
             bool,
-            typer.Option("--dry-run", help="Preview reconciliation."),
+            typer.Option("--dry-run", help="Preview reconciliation without saving."),
         ] = False,
         confirm: Annotated[
             bool,
             typer.Option("--confirm", help="Save and reconcile."),
         ] = False,
 ) -> None:
+    """Update a canonical backlog issue-like item by stable id.
+
+    This command can update both epics and child issues. Title, description,
+    status, and acceptance criteria are replaced when supplied. Comments are
+    appended. Parent-child relationships are intentionally not changed here.
+    """
     if dry_run and confirm:
         typer.echo("Use either --dry-run or --confirm, not both.")
         raise typer.Exit(code=1)
 
-    if status is None:
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        raise typer.Exit(code=1)
+
+    has_update = any(
+        value is not None
+        for value in [
+            title,
+            description,
+            status,
+            acceptance,
+            comment,
+        ]
+    )
+
+    if not has_update:
         typer.echo("Nothing to update.")
         raise typer.Exit(code=1)
 
     backlog = load_backlog_yaml(file)
 
-    issue = update_issue_status(
+    item = update_issue(
         backlog=backlog,
         issue_id=issue_id,
+        title=title,
+        description=description,
         status=status,
+        acceptance_criteria=acceptance,
+        comment=comment,
     )
 
-    typer.echo(f"Updated: {issue.title}")
-    typer.echo(f"Status: {issue.status}")
+    typer.echo(f"Updated canonical {item.type}: {item.title}")
+    typer.echo(f"ID: {item.id}")
+    typer.echo(f"Status: {item.status}")
+
+    if title is not None:
+        typer.echo("Title: updated")
+
+    if description is not None:
+        typer.echo("Description: updated")
+
+    if acceptance is not None:
+        typer.echo(f"Acceptance criteria: replaced with {len(item.acceptance_criteria)} item(s)")
+
+    if comment is not None:
+        typer.echo(f"Comments: {len(item.comments)}")
+
+    plan = _plan_reconcile(backlog)
+    _print_reconciliation_plan(plan)
 
     if dry_run:
-        plan = _plan_reconcile(backlog)
-        _print_reconciliation_plan(plan)
         return
 
     save_backlog_yaml(
@@ -425,23 +521,18 @@ def update_issue(
 
     typer.echo(f"Saved: {file}")
 
-    if confirm:
-        plan = _plan_reconcile(backlog)
+    if plan.operations:
+        execute_reconciliation_plan(
+            plan=plan,
+            project_title=backlog.project.title,
+        )
 
-        _print_reconciliation_plan(plan)
+        save_backlog_yaml(
+            backlog=backlog,
+            backlog_path=file,
+        )
 
-        if plan.operations:
-            execute_reconciliation_plan(
-                plan=plan,
-                project_title=backlog.project.title,
-            )
-
-            save_backlog_yaml(
-                backlog=backlog,
-                backlog_path=file,
-            )
-
-            typer.echo(f"Saved hydrated metadata: {file}")
+        typer.echo(f"Saved hydrated metadata: {file}")
 
 
 @backlog_app.command("list-epics")
@@ -450,16 +541,48 @@ def list_epics(
             str,
             typer.Option("--file", "-f", help="Path to the backlog YAML file."),
         ] = "data/input/backlog/backlog.yml",
+        output: Annotated[
+            str,
+            typer.Option("--output", "-o", help="Output format: human, yaml, json."),
+        ] = "human",
 ) -> None:
     """List canonical epics."""
-    backlog = load_backlog_yaml(file)
+    _list_backlog_epics(
+        file=file,
+        output=output,
+    )
 
-    if not backlog.epics:
-        typer.echo("No epics found.")
-        return
-
-    for epic in sorted(backlog.epics, key=lambda item: item.order):
-        typer.echo(f"{epic.title} [{epic.id}]")
+@backlog_app.command("list-issues")
+def list_issues(
+        epic_id: Annotated[
+            str,
+            typer.Option("--epic", help="Parent epic id."),
+        ],
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        status: Annotated[
+            list[str] | None,
+            typer.Option("--status", help="Status to include. Can be repeated."),
+        ] = None,
+        exclude_status: Annotated[
+            list[str] | None,
+            typer.Option("--exclude-status", help="Status to exclude. Can be repeated."),
+        ] = None,
+        output: Annotated[
+            str,
+            typer.Option("--output", "-o", help="Output format: human, yaml, json."),
+        ] = "human",
+) -> None:
+    """List canonical child issues for an epic."""
+    _list_backlog_items(
+        file=file,
+        epic_id=epic_id,
+        status=status,
+        exclude_status=exclude_status,
+        output=output,
+    )
 
 
 @backlog_app.command("create-epic")
@@ -548,6 +671,55 @@ def create_backlog_epic(
 
         typer.echo(f"Saved hydrated metadata: {file}")
 
+@backlog_list_app.command("epics")
+def list_backlog_epics(
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        output: Annotated[
+            str,
+            typer.Option("--output", "-o", help="Output format: human, yaml, json."),
+        ] = "human",
+) -> None:
+    """List canonical epics."""
+    _list_backlog_epics(
+        file=file,
+        output=output,
+    )
+
+
+@backlog_list_app.command("items")
+def list_backlog_items(
+        epic_id: Annotated[
+            str | None,
+            typer.Option("--epic", help="Parent epic id."),
+        ] = None,
+        file: Annotated[
+            str,
+            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+        ] = "data/input/backlog/backlog.yml",
+        status: Annotated[
+            list[str] | None,
+            typer.Option("--status", help="Status to include. Can be repeated."),
+        ] = None,
+        exclude_status: Annotated[
+            list[str] | None,
+            typer.Option("--exclude-status", help="Status to exclude. Can be repeated."),
+        ] = None,
+        output: Annotated[
+            str,
+            typer.Option("--output", "-o", help="Output format: human, yaml, json."),
+        ] = "human",
+) -> None:
+    """List canonical backlog items."""
+    _list_backlog_items(
+        file=file,
+        epic_id=epic_id,
+        status=status,
+        exclude_status=exclude_status,
+        output=output,
+    )
 
 @maintenance_app.command("delete-issue")
 def delete_backlog_issue(
@@ -677,3 +849,84 @@ def _print_reconciliation_plan(plan) -> None:
 
     typer.echo()
     typer.echo(f"Operations: {len(plan.operations)}")
+
+def _print_backlog_items_table(items) -> None:
+    typer.echo(f"{'STATUS':<14} {'ID':<40} TITLE")
+    typer.echo(f"{'-' * 14} {'-' * 40} {'-' * 40}")
+
+    for item in items:
+        typer.echo(
+            f"{item.status:<14} "
+            f"{item.id:<40} "
+            f"{item.title}"
+        )
+
+def _list_backlog_epics(
+        *,
+        file: str,
+        output: str,
+) -> None:
+    backlog = load_backlog_yaml(file)
+    renderer = get_backlog_resource_renderer(output)
+
+    epics = sorted(backlog.epics, key=lambda item: item.order)
+    summaries = _to_backlog_item_summaries(epics)
+
+    typer.echo(renderer(backlog, summaries))
+
+
+def _list_backlog_items(
+        *,
+        file: str,
+        epic_id: str | None,
+        status: list[str] | None,
+        exclude_status: list[str] | None,
+        output: str,
+) -> None:
+    if status and exclude_status:
+        typer.echo("Use either --status or --exclude-status, not both.")
+        raise typer.Exit(code=1)
+
+    backlog = load_backlog_yaml(file)
+
+    try:
+        if epic_id is not None:
+            issues = find_epic_issues(
+                backlog=backlog,
+                epic_id=epic_id,
+                statuses=status,
+                excluded_statuses=exclude_status,
+            )
+
+        else:
+            issues = []
+
+            for epic in sorted(backlog.epics, key=lambda item: item.order):
+                issues.extend(
+                    find_epic_issues(
+                        backlog=backlog,
+                        epic_id=epic.id,
+                        statuses=status,
+                        excluded_statuses=exclude_status,
+                    )
+                )
+
+        renderer = get_backlog_resource_renderer(output)
+
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    summaries = _to_backlog_item_summaries(issues)
+
+    typer.echo(renderer(backlog, summaries))
+
+def _to_backlog_item_summaries(items) -> list[dict[str, str]]:
+    return [
+        {
+            "status": item.status,
+            "id": item.id,
+            "title": item.title,
+        }
+        for item in items
+    ]

@@ -231,7 +231,7 @@ def update_project_item_status(
     status_field = get_project_status_field(project_id)
     option = _find_single_select_option(
         field=status_field,
-        option_name=status,
+        option_name=_canonical_status_to_github(status),
     )
 
     mutation = """
@@ -267,6 +267,33 @@ def update_project_item_status(
     )
 
     return data["updateProjectV2ItemFieldValue"]["projectV2Item"]
+
+
+def _canonical_status_to_github(status: str) -> str:
+    status_by_canonical = {
+        "Backlog": "Backlog",
+        "Ready": "Ready",
+        "In Progress": "In progress",
+        "In Review": "In review",
+        "Done": "Done",
+    }
+
+    return status_by_canonical.get(status, status)
+
+
+def _github_status_to_canonical(status: str | None) -> str | None:
+    if status is None:
+        return None
+
+    status_by_github = {
+        "Backlog": "Backlog",
+        "Ready": "Ready",
+        "In progress": "In Progress",
+        "In review": "In Review",
+        "Done": "Done",
+    }
+
+    return status_by_github.get(status, status)
 
 
 def _find_single_select_option(
@@ -482,7 +509,7 @@ def _project_status_from_item(item: dict[str, Any]) -> str | None:
         field = field_value.get("field") or {}
 
         if field.get("name") == "Status":
-            return field_value.get("name")
+            return _github_status_to_canonical(field_value.get("name"))
 
     return None
 
