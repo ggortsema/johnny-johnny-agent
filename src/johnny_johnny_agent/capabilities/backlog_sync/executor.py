@@ -1,6 +1,7 @@
 from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     AddIssueToProjectOperation,
     AttachIssueToEpicOperation,
+    CreateCommentOperation,
     CreateEpicOperation,
     CreateIssueOperation,
     DeleteIssueOperation,
@@ -11,12 +12,14 @@ from johnny_johnny_agent.capabilities.github.client import (
     add_issue_to_project,
     add_sub_issue,
     create_issue,
+    create_issue_comment,
     delete_issue as delete_github_issue,
     get_repository,
     get_viewer_project_by_title,
     update_project_item_status,
 )
 from johnny_johnny_agent.capabilities.github.renderer import (
+    render_comment_body,
     render_epic_body,
     render_issue_body,
 )
@@ -154,6 +157,36 @@ def execute_reconciliation_plan(
             print("Status updated.")
             print()
 
+        elif isinstance(operation, CreateCommentOperation):
+            item = operation.item
+            comment_model = operation.comment
+
+            github_issue = _get_github_issue_for_item(
+                item=item,
+                created_epics=created_epics,
+                created_issues=created_issues,
+            )
+
+            print(f"Creating comment on {item.type}: {item.title}")
+            print(f"Comment: {comment_model.id}")
+
+            github_comment = create_issue_comment(
+                issue_id=github_issue["id"],
+                body=render_comment_body(
+                    item=item,
+                    comment=comment_model,
+                ),
+            )
+
+            _hydrate_github_comment_metadata(
+                comment=comment_model,
+                github_comment=github_comment,
+            )
+
+            print("Comment created.")
+            print(f"URL: {github_comment['url']}")
+            print()
+
         elif isinstance(operation, DeleteIssueOperation):
             issue_model = operation.issue
             issue_id = _get_issue_id(issue_model)
@@ -191,6 +224,54 @@ def _hydrate_github_metadata(
         key: value
         for key, value in github_metadata.items()
         if value is not None
+    }
+
+
+def _hydrate_github_comment_metadata(
+        comment,
+        github_comment: dict,
+) -> None:
+    current_github_metadata = comment.provider_metadata.get("github", {})
+
+    github_metadata = {
+        **current_github_metadata,
+        "comment_id": github_comment.get("id") or github_comment.get("comment_id"),
+        "database_id": github_comment.get("databaseId") or github_comment.get("database_id"),
+        "url": github_comment.get("url"),
+        "created_at": github_comment.get("createdAt") or github_comment.get("created_at"),
+        "updated_at": github_comment.get("updatedAt") or github_comment.get("updated_at"),
+    }
+
+    comment.provider_metadata["github"] = {
+        key: value
+        for key, value in github_metadata.items()
+        if value is not None
+    }
+
+
+def _get_github_issue_for_item(
+        item,
+        created_epics: dict[str, dict],
+        created_issues: dict[str, dict],
+) -> dict:
+    if item.type == "epic" and item.id in created_epics:
+        return created_epics[item.id]
+
+    if item.type == "issue" and item.id in created_issues:
+        return created_issues[item.id]
+
+    github_metadata = item.provider_metadata.get("github", {})
+    issue_id = github_metadata.get("issue_id")
+
+    if not issue_id:
+        raise RuntimeError(
+            f"Cannot create comment because issue_id is missing: {item.id}"
+        )
+
+    return {
+        "id": issue_id,
+        "number": github_metadata.get("number"),
+        "url": github_metadata.get("url"),
     }
 
 

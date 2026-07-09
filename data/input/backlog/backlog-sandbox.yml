@@ -1,7 +1,7 @@
 version: 1
 project:
   provider: github
-  title: MycroftAI Engineering Roadmap
+  title: Johnny-Johnny Backlog Persistence Sandbox
   number: 1
   url: https://github.com/users/ggortsema/projects/1
   provider_metadata:
@@ -25,11 +25,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIVbdg
-      database_id: 4773469046
-      number: 773
-      url: https://github.com/ggortsema/styxcd-docs/issues/773
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1dQ
+      issue_id: I_kwDOR_b51c8AAAABIRvvOw
+      database_id: 4850446139
+      number: 1436
+      url: https://github.com/ggortsema/styxcd-docs/issues/1436
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKG8
   issues:
   - id: implement-gke-deployment-stage
     type: issue
@@ -47,11 +47,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVbqw
-        database_id: 4773469099
-        number: 774
-        url: https://github.com/ggortsema/styxcd-docs/issues/774
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1dw
+        issue_id: I_kwDOR_b51c8AAAABIRvvrw
+        database_id: 4850446255
+        number: 1437
+        url: https://github.com/ggortsema/styxcd-docs/issues/1437
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKHI
   - id: define-gke-authentication-strategy
     type: issue
     title: Define GKE Authentication Strategy
@@ -68,11 +68,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVb6g
-        database_id: 4773469162
-        number: 775
-        url: https://github.com/ggortsema/styxcd-docs/issues/775
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1eU
+        issue_id: I_kwDOR_b51c8AAAABIRvwOg
+        database_id: 4850446394
+        number: 1438
+        url: https://github.com/ggortsema/styxcd-docs/issues/1438
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKHc
   - id: deploy-sample-application-to-gke
     type: issue
     title: Deploy Sample Application to GKE
@@ -89,11 +89,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVcuA
-        database_id: 4773469368
-        number: 776
-        url: https://github.com/ggortsema/styxcd-docs/issues/776
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1e0
+        issue_id: I_kwDOR_b51c8AAAABIRvwqw
+        database_id: 4850446507
+        number: 1439
+        url: https://github.com/ggortsema/styxcd-docs/issues/1439
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKH8
   - id: add-gke-rollback-support
     type: issue
     title: Add GKE Rollback Support
@@ -109,11 +109,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVdig
-        database_id: 4773469578
-        number: 777
-        url: https://github.com/ggortsema/styxcd-docs/issues/777
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1fA
+        issue_id: I_kwDOR_b51c8AAAABIRvxNg
+        database_id: 4850446646
+        number: 1440
+        url: https://github.com/ggortsema/styxcd-docs/issues/1440
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKIM
   - id: add-gke-deployment-validation
     type: issue
     title: Add GKE Deployment Validation
@@ -129,11 +129,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVdxA
-        database_id: 4773469636
-        number: 778
-        url: https://github.com/ggortsema/styxcd-docs/issues/778
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1fU
+        issue_id: I_kwDOR_b51c8AAAABIRvxwg
+        database_id: 4850446786
+        number: 1441
+        url: https://github.com/ggortsema/styxcd-docs/issues/1441
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKIc
   - id: define-gke-deployment-model
     type: issue
     title: Define GKE Deployment Model
@@ -149,11 +149,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVeEw
-        database_id: 4773469715
-        number: 779
-        url: https://github.com/ggortsema/styxcd-docs/issues/779
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1gA
+        issue_id: I_kwDOR_b51c8AAAABIRvyZw
+        database_id: 4850446951
+        number: 1442
+        url: https://github.com/ggortsema/styxcd-docs/issues/1442
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKJI
   - id: implement-gke-sandbox-environment-support
     type: issue
     title: Implement GKE Sandbox Environment Support
@@ -169,11 +169,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVeTQ
-        database_id: 4773469773
-        number: 780
-        url: https://github.com/ggortsema/styxcd-docs/issues/780
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1gU
+        issue_id: I_kwDOR_b51c8AAAABIRvzFQ
+        database_id: 4850447125
+        number: 1443
+        url: https://github.com/ggortsema/styxcd-docs/issues/1443
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKJg
 - id: platform-security
   type: epic
   title: Platform Security
@@ -191,11 +191,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIVehw
-      database_id: 4773469831
-      number: 781
-      url: https://github.com/ggortsema/styxcd-docs/issues/781
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1go
+      issue_id: I_kwDOR_b51c8AAAABIRvzmQ
+      database_id: 4850447257
+      number: 1444
+      url: https://github.com/ggortsema/styxcd-docs/issues/1444
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKKE
   issues:
   - id: evaluate-control-plane-authentication-strategy
     type: issue
@@ -213,11 +213,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVetw
-        database_id: 4773469879
-        number: 782
-        url: https://github.com/ggortsema/styxcd-docs/issues/782
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1hA
+        issue_id: I_kwDOR_b51c8AAAABIRv0Hg
+        database_id: 4850447390
+        number: 1445
+        url: https://github.com/ggortsema/styxcd-docs/issues/1445
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKKY
   - id: implement-control-plane-authentication
     type: issue
     title: Implement Control Plane Authentication
@@ -234,11 +234,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVe_w
-        database_id: 4773469951
-        number: 783
-        url: https://github.com/ggortsema/styxcd-docs/issues/783
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1hQ
+        issue_id: I_kwDOR_b51c8AAAABIRv0lA
+        database_id: 4850447508
+        number: 1446
+        url: https://github.com/ggortsema/styxcd-docs/issues/1446
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKK4
   - id: define-service-to-service-authentication-model
     type: issue
     title: Define Service-to-Service Authentication Model
@@ -255,11 +255,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVfWA
-        database_id: 4773470040
-        number: 784
-        url: https://github.com/ggortsema/styxcd-docs/issues/784
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1hs
+        issue_id: I_kwDOR_b51c8AAAABIRv1EQ
+        database_id: 4850447633
+        number: 1447
+        url: https://github.com/ggortsema/styxcd-docs/issues/1447
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKLs
   - id: secure-jenkins-callback-endpoints
     type: issue
     title: Secure Jenkins Callback Endpoints
@@ -275,11 +275,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVfnQ
-        database_id: 4773470109
-        number: 785
-        url: https://github.com/ggortsema/styxcd-docs/issues/785
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1h8
+        issue_id: I_kwDOR_b51c8AAAABIRv1tg
+        database_id: 4850447798
+        number: 1448
+        url: https://github.com/ggortsema/styxcd-docs/issues/1448
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKMI
   - id: implement-secrets-management-strategy
     type: issue
     title: Implement Secrets Management Strategy
@@ -296,11 +296,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVf1g
-        database_id: 4773470166
-        number: 786
-        url: https://github.com/ggortsema/styxcd-docs/issues/786
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1iQ
+        issue_id: I_kwDOR_b51c8AAAABIRv2WQ
+        database_id: 4850447961
+        number: 1449
+        url: https://github.com/ggortsema/styxcd-docs/issues/1449
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKMw
   - id: define-authorization-and-rbac-model
     type: issue
     title: Define Authorization and RBAC Model
@@ -317,11 +317,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVggg
-        database_id: 4773470338
-        number: 787
-        url: https://github.com/ggortsema/styxcd-docs/issues/787
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ik
+        issue_id: I_kwDOR_b51c8AAAABIRv21g
+        database_id: 4850448086
+        number: 1450
+        url: https://github.com/ggortsema/styxcd-docs/issues/1450
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKNo
   - id: secure-workflow-credential-usage
     type: issue
     title: Secure Workflow Credential Usage
@@ -338,11 +338,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVgvQ
-        database_id: 4773470397
-        number: 788
-        url: https://github.com/ggortsema/styxcd-docs/issues/788
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1i0
+        issue_id: I_kwDOR_b51c8AAAABIRv3dQ
+        database_id: 4850448245
+        number: 1451
+        url: https://github.com/ggortsema/styxcd-docs/issues/1451
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKOM
   - id: audit-security-sensitive-actions
     type: issue
     title: Audit Security-Sensitive Actions
@@ -359,11 +359,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVg_g
-        database_id: 4773470462
-        number: 789
-        url: https://github.com/ggortsema/styxcd-docs/issues/789
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1jI
+        issue_id: I_kwDOR_b51c8AAAABIRv4Cg
+        database_id: 4850448394
+        number: 1452
+        url: https://github.com/ggortsema/styxcd-docs/issues/1452
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKOs
   - id: define-multi-tenant-security-requirements
     type: issue
     title: Define Multi-Tenant Security Requirements
@@ -380,11 +380,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVhyg
-        database_id: 4773470666
-        number: 790
-        url: https://github.com/ggortsema/styxcd-docs/issues/790
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1jk
+        issue_id: I_kwDOR_b51c8AAAABIRv4kg
+        database_id: 4850448530
+        number: 1453
+        url: https://github.com/ggortsema/styxcd-docs/issues/1453
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKPU
   - id: create-security-architecture-documentation
     type: issue
     title: Create Security Architecture Documentation
@@ -401,11 +401,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIViEg
-        database_id: 4773470738
-        number: 791
-        url: https://github.com/ggortsema/styxcd-docs/issues/791
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1j4
+        issue_id: I_kwDOR_b51c8AAAABIRv5Lg
+        database_id: 4850448686
+        number: 1454
+        url: https://github.com/ggortsema/styxcd-docs/issues/1454
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKP4
   - id: implement-session-based-control-plane-auth
     type: issue
     title: Implement Session-Based Control Plane Auth
@@ -422,11 +422,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIViUw
-        database_id: 4773470803
-        number: 792
-        url: https://github.com/ggortsema/styxcd-docs/issues/792
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1kA
+        issue_id: I_kwDOR_b51c8AAAABIRv5zw
+        database_id: 4850448847
+        number: 1455
+        url: https://github.com/ggortsema/styxcd-docs/issues/1455
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKQM
 - id: workflow-templates-effective-yaml
   type: epic
   title: Workflow Templates & Effective YAML
@@ -444,11 +444,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIViqQ
-      database_id: 4773470889
-      number: 793
-      url: https://github.com/ggortsema/styxcd-docs/issues/793
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1kw
+      issue_id: I_kwDOR_b51c8AAAABIRv6WQ
+      database_id: 4850448985
+      number: 1456
+      url: https://github.com/ggortsema/styxcd-docs/issues/1456
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKQY
   issues:
   - id: design-workflow-template-model
     type: issue
@@ -466,11 +466,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVi6Q
-        database_id: 4773470953
-        number: 794
-        url: https://github.com/ggortsema/styxcd-docs/issues/794
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1k8
+        issue_id: I_kwDOR_b51c8AAAABIRv6vQ
+        database_id: 4850449085
+        number: 1457
+        url: https://github.com/ggortsema/styxcd-docs/issues/1457
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKQs
   - id: implement-template-resolution-engine
     type: issue
     title: Implement Template Resolution Engine
@@ -487,11 +487,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVjLA
-        database_id: 4773471020
-        number: 795
-        url: https://github.com/ggortsema/styxcd-docs/issues/795
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1lI
+        issue_id: I_kwDOR_b51c8AAAABIRv7TA
+        database_id: 4850449228
+        number: 1458
+        url: https://github.com/ggortsema/styxcd-docs/issues/1458
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKRA
   - id: implement-effective-yaml-generation
     type: issue
     title: Implement Effective YAML Generation
@@ -508,11 +508,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVjcQ
-        database_id: 4773471089
-        number: 796
-        url: https://github.com/ggortsema/styxcd-docs/issues/796
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1lg
+        issue_id: I_kwDOR_b51c8AAAABIRv73A
+        database_id: 4850449372
+        number: 1459
+        url: https://github.com/ggortsema/styxcd-docs/issues/1459
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKRY
   - id: display-effective-yaml-in-ui
     type: issue
     title: Display Effective YAML in UI
@@ -528,11 +528,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVjtw
-        database_id: 4773471159
-        number: 797
-        url: https://github.com/ggortsema/styxcd-docs/issues/797
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1mM
+        issue_id: I_kwDOR_b51c8AAAABIRv8Uw
+        database_id: 4850449491
+        number: 1460
+        url: https://github.com/ggortsema/styxcd-docs/issues/1460
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKRw
   - id: implement-workflow-validation-against-effective-yaml
     type: issue
     title: Implement Workflow Validation Against Effective YAML
@@ -548,11 +548,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVkAg
-        database_id: 4773471234
-        number: 798
-        url: https://github.com/ggortsema/styxcd-docs/issues/798
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ms
+        issue_id: I_kwDOR_b51c8AAAABIRv87w
+        database_id: 4850449647
+        number: 1461
+        url: https://github.com/ggortsema/styxcd-docs/issues/1461
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKSc
   - id: create-platform-workflow-templates
     type: issue
     title: Create Platform Workflow Templates
@@ -569,11 +569,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVkRA
-        database_id: 4773471300
-        number: 799
-        url: https://github.com/ggortsema/styxcd-docs/issues/799
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1nE
+        issue_id: I_kwDOR_b51c8AAAABIRv9lw
+        database_id: 4850449815
+        number: 1462
+        url: https://github.com/ggortsema/styxcd-docs/issues/1462
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKTA
   - id: support-template-versioning
     type: issue
     title: Support Template Versioning
@@ -589,11 +589,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVkhw
-        database_id: 4773471367
-        number: 800
-        url: https://github.com/ggortsema/styxcd-docs/issues/800
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1nY
+        issue_id: I_kwDOR_b51c8AAAABIRv-Hg
+        database_id: 4850449950
+        number: 1463
+        url: https://github.com/ggortsema/styxcd-docs/issues/1463
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKTk
   - id: create-template-catalog-ui
     type: issue
     title: Create Template Catalog UI
@@ -609,11 +609,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVkxA
-        database_id: 4773471428
-        number: 801
-        url: https://github.com/ggortsema/styxcd-docs/issues/801
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ns
+        issue_id: I_kwDOR_b51c8AAAABIRv-pg
+        database_id: 4850450086
+        number: 1464
+        url: https://github.com/ggortsema/styxcd-docs/issues/1464
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKT8
   - id: add-template-resolution-testing-strategy
     type: issue
     title: Add Template Resolution Testing Strategy
@@ -629,11 +629,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVlEg
-        database_id: 4773471506
-        number: 802
-        url: https://github.com/ggortsema/styxcd-docs/issues/802
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1oU
+        issue_id: I_kwDOR_b51c8AAAABIRv_JQ
+        database_id: 4850450213
+        number: 1465
+        url: https://github.com/ggortsema/styxcd-docs/issues/1465
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKUY
   - id: design-effective-yaml-help-experience
     type: issue
     title: Design Effective YAML Help Experience
@@ -650,11 +650,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVlYw
-        database_id: 4773471587
-        number: 803
-        url: https://github.com/ggortsema/styxcd-docs/issues/803
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1og
+        issue_id: I_kwDOR_b51c8AAAABIRv_kQ
+        database_id: 4850450321
+        number: 1466
+        url: https://github.com/ggortsema/styxcd-docs/issues/1466
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKU4
 - id: testing-strategy
   type: epic
   title: Testing Strategy
@@ -672,11 +672,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIVlrw
-      database_id: 4773471663
-      number: 804
-      url: https://github.com/ggortsema/styxcd-docs/issues/804
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1o4
+      issue_id: I_kwDOR_b51c8AAAABIRwAEg
+      database_id: 4850450450
+      number: 1467
+      url: https://github.com/ggortsema/styxcd-docs/issues/1467
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKVM
   issues:
   - id: add-execution-plan-generation-tests
     type: issue
@@ -693,11 +693,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVl6w
-        database_id: 4773471723
-        number: 805
-        url: https://github.com/ggortsema/styxcd-docs/issues/805
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1pE
+        issue_id: I_kwDOR_b51c8AAAABIRwAhQ
+        database_id: 4850450565
+        number: 1468
+        url: https://github.com/ggortsema/styxcd-docs/issues/1468
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKVg
   - id: add-workflow-planner-tests
     type: issue
     title: Add Workflow Planner Tests
@@ -713,11 +713,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVmMA
-        database_id: 4773471792
-        number: 806
-        url: https://github.com/ggortsema/styxcd-docs/issues/806
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1pk
+        issue_id: I_kwDOR_b51c8AAAABIRwBEA
+        database_id: 4850450704
+        number: 1469
+        url: https://github.com/ggortsema/styxcd-docs/issues/1469
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKV8
   - id: add-stage-inclusion-logic-tests
     type: issue
     title: Add Stage Inclusion Logic Tests
@@ -733,11 +733,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVmZA
-        database_id: 4773471844
-        number: 807
-        url: https://github.com/ggortsema/styxcd-docs/issues/807
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1p4
+        issue_id: I_kwDOR_b51c8AAAABIRwBjg
+        database_id: 4850450830
+        number: 1470
+        url: https://github.com/ggortsema/styxcd-docs/issues/1470
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKWk
   - id: add-callback-processing-tests
     type: issue
     title: Add Callback Processing Tests
@@ -753,11 +753,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVmnw
-        database_id: 4773471903
-        number: 808
-        url: https://github.com/ggortsema/styxcd-docs/issues/808
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1qY
+        issue_id: I_kwDOR_b51c8AAAABIRwCBg
+        database_id: 4850450950
+        number: 1471
+        url: https://github.com/ggortsema/styxcd-docs/issues/1471
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKXE
   - id: add-api-controller-tests
     type: issue
     title: Add API Controller Tests
@@ -773,11 +773,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVm7A
-        database_id: 4773471980
-        number: 809
-        url: https://github.com/ggortsema/styxcd-docs/issues/809
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1q4
+        issue_id: I_kwDOR_b51c8AAAABIRwCgg
+        database_id: 4850451074
+        number: 1472
+        url: https://github.com/ggortsema/styxcd-docs/issues/1472
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKXg
   - id: create-end-to-end-workflow-test-framework
     type: issue
     title: Create End-to-End Workflow Test Framework
@@ -793,11 +793,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVnLg
-        database_id: 4773472046
-        number: 810
-        url: https://github.com/ggortsema/styxcd-docs/issues/810
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1rA
+        issue_id: I_kwDOR_b51c8AAAABIRwDIA
+        database_id: 4850451232
+        number: 1473
+        url: https://github.com/ggortsema/styxcd-docs/issues/1473
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKYQ
   - id: create-local-development-testing-environment
     type: issue
     title: Create Local Development Testing Environment
@@ -813,11 +813,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVnaA
-        database_id: 4773472104
-        number: 811
-        url: https://github.com/ggortsema/styxcd-docs/issues/811
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1rg
+        issue_id: I_kwDOR_b51c8AAAABIRwDkg
+        database_id: 4850451346
+        number: 1474
+        url: https://github.com/ggortsema/styxcd-docs/issues/1474
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKY4
   - id: create-docker-compose-development-environment
     type: issue
     title: Create Docker Compose Development Environment
@@ -833,11 +833,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVnpQ
-        database_id: 4773472165
-        number: 812
-        url: https://github.com/ggortsema/styxcd-docs/issues/812
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1sQ
+        issue_id: I_kwDOR_b51c8AAAABIRwEFA
+        database_id: 4850451476
+        number: 1475
+        url: https://github.com/ggortsema/styxcd-docs/issues/1475
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKZQ
   - id: define-behavior-testing-strategy
     type: issue
     title: Define Behavior Testing Strategy
@@ -854,11 +854,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVn4Q
-        database_id: 4773472225
-        number: 813
-        url: https://github.com/ggortsema/styxcd-docs/issues/813
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ss
+        issue_id: I_kwDOR_b51c8AAAABIRwEkg
+        database_id: 4850451602
+        number: 1476
+        url: https://github.com/ggortsema/styxcd-docs/issues/1476
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKZo
   - id: add-yaml-parsing-tests
     type: issue
     title: Add YAML Parsing Tests
@@ -874,11 +874,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVoHw
-        database_id: 4773472287
-        number: 814
-        url: https://github.com/ggortsema/styxcd-docs/issues/814
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1tA
+        issue_id: I_kwDOR_b51c8AAAABIRwFJg
+        database_id: 4850451750
+        number: 1477
+        url: https://github.com/ggortsema/styxcd-docs/issues/1477
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKaE
   - id: add-stage-inclusion-tests
     type: issue
     title: Add Stage Inclusion Tests
@@ -894,11 +894,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVoVQ
-        database_id: 4773472341
-        number: 815
-        url: https://github.com/ggortsema/styxcd-docs/issues/815
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1tY
+        issue_id: I_kwDOR_b51c8AAAABIRwFsA
+        database_id: 4850451888
+        number: 1478
+        url: https://github.com/ggortsema/styxcd-docs/issues/1478
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKbI
   - id: add-controller-api-tests
     type: issue
     title: Add Controller/API Tests
@@ -914,11 +914,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVomA
-        database_id: 4773472408
-        number: 816
-        url: https://github.com/ggortsema/styxcd-docs/issues/816
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1t4
+        issue_id: I_kwDOR_b51c8AAAABIRwGJA
+        database_id: 4850452004
+        number: 1479
+        url: https://github.com/ggortsema/styxcd-docs/issues/1479
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKbw
   - id: create-behavior-testing-framework
     type: issue
     title: Create Behavior Testing Framework
@@ -934,11 +934,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVo0w
-        database_id: 4773472467
-        number: 817
-        url: https://github.com/ggortsema/styxcd-docs/issues/817
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ug
+        issue_id: I_kwDOR_b51c8AAAABIRwGjw
+        database_id: 4850452111
+        number: 1480
+        url: https://github.com/ggortsema/styxcd-docs/issues/1480
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKcM
   - id: create-end-to-end-workflow-test-suite
     type: issue
     title: Create End-to-End Workflow Test Suite
@@ -954,11 +954,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVpDw
-        database_id: 4773472527
-        number: 818
-        url: https://github.com/ggortsema/styxcd-docs/issues/818
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1vM
+        issue_id: I_kwDOR_b51c8AAAABIRwHAg
+        database_id: 4850452226
+        number: 1481
+        url: https://github.com/ggortsema/styxcd-docs/issues/1481
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKcg
   - id: add-local-testing-harness
     type: issue
     title: Add Local Testing Harness
@@ -974,11 +974,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVpVQ
-        database_id: 4773472597
-        number: 819
-        url: https://github.com/ggortsema/styxcd-docs/issues/819
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1vc
+        issue_id: I_kwDOR_b51c8AAAABIRwHgg
+        database_id: 4850452354
+        number: 1482
+        url: https://github.com/ggortsema/styxcd-docs/issues/1482
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKdE
   - id: add-docker-compose-development-environment
     type: issue
     title: Add Docker Compose Development Environment
@@ -994,11 +994,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVpkA
-        database_id: 4773472656
-        number: 820
-        url: https://github.com/ggortsema/styxcd-docs/issues/820
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1vs
+        issue_id: I_kwDOR_b51c8AAAABIRwH9A
+        database_id: 4850452468
+        number: 1483
+        url: https://github.com/ggortsema/styxcd-docs/issues/1483
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKd4
 - id: kharon-v1-ai-knowledge-assistant
   type: epic
   title: Kharon V1 - AI Knowledge Assistant
@@ -1019,11 +1019,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIVp1g
-      database_id: 4773472726
-      number: 821
-      url: https://github.com/ggortsema/styxcd-docs/issues/821
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1wA
+      issue_id: I_kwDOR_b51c8AAAABIRwIYg
+      database_id: 4850452578
+      number: 1484
+      url: https://github.com/ggortsema/styxcd-docs/issues/1484
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKeo
   issues:
   - id: kharon-001-create-python-project
     type: issue
@@ -1043,11 +1043,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVp-Q
-        database_id: 4773472761
-        number: 822
-        url: https://github.com/ggortsema/styxcd-docs/issues/822
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1wQ
+        issue_id: I_kwDOR_b51c8AAAABIRwI0g
+        database_id: 4850452690
+        number: 1485
+        url: https://github.com/ggortsema/styxcd-docs/issues/1485
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKe8
   - id: kharon-002-create-chat-api
     type: issue
     title: KHARON-002 Create Chat API
@@ -1066,11 +1066,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVqNw
-        database_id: 4773472823
-        number: 823
-        url: https://github.com/ggortsema/styxcd-docs/issues/823
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1ww
+        issue_id: I_kwDOR_b51c8AAAABIRwJVw
+        database_id: 4850452823
+        number: 1486
+        url: https://github.com/ggortsema/styxcd-docs/issues/1486
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKfU
   - id: kharon-003-configure-postgresql-and-pgvector
     type: issue
     title: KHARON-003 Configure PostgreSQL and pgvector
@@ -1089,11 +1089,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVqdQ
-        database_id: 4773472885
-        number: 824
-        url: https://github.com/ggortsema/styxcd-docs/issues/824
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1w8
+        issue_id: I_kwDOR_b51c8AAAABIRwJ0w
+        database_id: 4850452947
+        number: 1487
+        url: https://github.com/ggortsema/styxcd-docs/issues/1487
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKgE
   - id: kharon-004-design-knowledge-schema
     type: issue
     title: KHARON-004 Design Knowledge Schema
@@ -1112,11 +1112,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVqtQ
-        database_id: 4773472949
-        number: 825
-        url: https://github.com/ggortsema/styxcd-docs/issues/825
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1xc
+        issue_id: I_kwDOR_b51c8AAAABIRwKUQ
+        database_id: 4850453073
+        number: 1488
+        url: https://github.com/ggortsema/styxcd-docs/issues/1488
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKhQ
   - id: kharon-005-implement-document-ingestion
     type: issue
     title: KHARON-005 Implement Document Ingestion
@@ -1135,11 +1135,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVq7Q
-        database_id: 4773473005
-        number: 826
-        url: https://github.com/ggortsema/styxcd-docs/issues/826
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1x4
+        issue_id: I_kwDOR_b51c8AAAABIRwKxA
+        database_id: 4850453188
+        number: 1489
+        url: https://github.com/ggortsema/styxcd-docs/issues/1489
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKi0
   - id: kharon-006-implement-chunking
     type: issue
     title: KHARON-006 Implement Chunking
@@ -1158,11 +1158,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVrIA
-        database_id: 4773473056
-        number: 827
-        url: https://github.com/ggortsema/styxcd-docs/issues/827
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1yY
+        issue_id: I_kwDOR_b51c8AAAABIRwLNg
+        database_id: 4850453302
+        number: 1490
+        url: https://github.com/ggortsema/styxcd-docs/issues/1490
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKjo
   - id: kharon-007-generate-embeddings
     type: issue
     title: KHARON-007 Generate Embeddings
@@ -1181,11 +1181,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVraA
-        database_id: 4773473128
-        number: 828
-        url: https://github.com/ggortsema/styxcd-docs/issues/828
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1y0
+        issue_id: I_kwDOR_b51c8AAAABIRwLpw
+        database_id: 4850453415
+        number: 1491
+        url: https://github.com/ggortsema/styxcd-docs/issues/1491
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKkE
   - id: kharon-008-implement-retrieval
     type: issue
     title: KHARON-008 Implement Retrieval
@@ -1204,11 +1204,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVrsQ
-        database_id: 4773473201
-        number: 829
-        url: https://github.com/ggortsema/styxcd-docs/issues/829
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1zw
+        issue_id: I_kwDOR_b51c8AAAABIRwMCw
+        database_id: 4850453515
+        number: 1492
+        url: https://github.com/ggortsema/styxcd-docs/issues/1492
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKkY
   - id: kharon-009-integrate-langchain
     type: issue
     title: KHARON-009 Integrate LangChain
@@ -1227,11 +1227,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVr9A
-        database_id: 4773473268
-        number: 830
-        url: https://github.com/ggortsema/styxcd-docs/issues/830
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO10Y
+        issue_id: I_kwDOR_b51c8AAAABIRwMgw
+        database_id: 4850453635
+        number: 1493
+        url: https://github.com/ggortsema/styxcd-docs/issues/1493
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKkk
   - id: kharon-010-integrate-langgraph
     type: issue
     title: KHARON-010 Integrate LangGraph
@@ -1250,11 +1250,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVsLA
-        database_id: 4773473324
-        number: 831
-        url: https://github.com/ggortsema/styxcd-docs/issues/831
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO11E
+        issue_id: I_kwDOR_b51c8AAAABIRwM6A
+        database_id: 4850453736
+        number: 1494
+        url: https://github.com/ggortsema/styxcd-docs/issues/1494
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKlE
   - id: kharon-011-complete-rag-pipeline
     type: issue
     title: KHARON-011 Complete RAG Pipeline
@@ -1273,11 +1273,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVscg
-        database_id: 4773473394
-        number: 832
-        url: https://github.com/ggortsema/styxcd-docs/issues/832
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO11c
+        issue_id: I_kwDOR_b51c8AAAABIRwNcA
+        database_id: 4850453872
+        number: 1495
+        url: https://github.com/ggortsema/styxcd-docs/issues/1495
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKlY
   - id: kharon-012-generate-styxcd-yaml
     type: issue
     title: KHARON-012 Generate StyxCD YAML
@@ -1296,11 +1296,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVsqA
-        database_id: 4773473448
-        number: 833
-        url: https://github.com/ggortsema/styxcd-docs/issues/833
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO114
+        issue_id: I_kwDOR_b51c8AAAABIRwN2g
+        database_id: 4850453978
+        number: 1496
+        url: https://github.com/ggortsema/styxcd-docs/issues/1496
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKmE
   - id: kharon-013-prepare-service-boundary
     type: issue
     title: KHARON-013 Prepare Service Boundary
@@ -1319,11 +1319,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVs5Q
-        database_id: 4773473509
-        number: 834
-        url: https://github.com/ggortsema/styxcd-docs/issues/834
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO12M
+        issue_id: I_kwDOR_b51c8AAAABIRwOVg
+        database_id: 4850454102
+        number: 1497
+        url: https://github.com/ggortsema/styxcd-docs/issues/1497
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKmU
 - id: project-management-workflow-provider
   type: epic
   title: Project Management Workflow Provider
@@ -1339,11 +1339,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIVtHQ
-      database_id: 4773473565
-      number: 835
-      url: https://github.com/ggortsema/styxcd-docs/issues/835
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO12k
+      issue_id: I_kwDOR_b51c8AAAABIRwOug
+      database_id: 4850454202
+      number: 1498
+      url: https://github.com/ggortsema/styxcd-docs/issues/1498
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKm4
   issues:
   - id: define-pm-workflow-dsl
     type: issue
@@ -1361,11 +1361,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVtXg
-        database_id: 4773473630
-        number: 836
-        url: https://github.com/ggortsema/styxcd-docs/issues/836
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO120
+        issue_id: I_kwDOR_b51c8AAAABIRwPHQ
+        database_id: 4850454301
+        number: 1499
+        url: https://github.com/ggortsema/styxcd-docs/issues/1499
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKnQ
   - id: implement-github-issues-provider
     type: issue
     title: Implement GitHub Issues Provider
@@ -1382,11 +1382,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVtmA
-        database_id: 4773473688
-        number: 837
-        url: https://github.com/ggortsema/styxcd-docs/issues/837
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO13E
+        issue_id: I_kwDOR_b51c8AAAABIRwPng
+        database_id: 4850454430
+        number: 1500
+        url: https://github.com/ggortsema/styxcd-docs/issues/1500
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKns
   - id: support-epic-and-sub-issue-creation
     type: issue
     title: Support Epic and Sub-Issue Creation
@@ -1403,11 +1403,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVuCg
-        database_id: 4773473802
-        number: 838
-        url: https://github.com/ggortsema/styxcd-docs/issues/838
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO13g
+        issue_id: I_kwDOR_b51c8AAAABIRwQBg
+        database_id: 4850454534
+        number: 1501
+        url: https://github.com/ggortsema/styxcd-docs/issues/1501
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKoA
   - id: support-github-project-assignment
     type: issue
     title: Support GitHub Project Assignment
@@ -1423,11 +1423,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVuSQ
-        database_id: 4773473865
-        number: 839
-        url: https://github.com/ggortsema/styxcd-docs/issues/839
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO134
+        issue_id: I_kwDOR_b51c8AAAABIRwQeQ
+        database_id: 4850454649
+        number: 1502
+        url: https://github.com/ggortsema/styxcd-docs/issues/1502
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKog
   - id: add-pm-workflow-dry-run-mode
     type: issue
     title: Add PM Workflow Dry-Run Mode
@@ -1443,11 +1443,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVunA
-        database_id: 4773473948
-        number: 840
-        url: https://github.com/ggortsema/styxcd-docs/issues/840
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO14Q
+        issue_id: I_kwDOR_b51c8AAAABIRwQ7A
+        database_id: 4850454764
+        number: 1503
+        url: https://github.com/ggortsema/styxcd-docs/issues/1503
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKow
   - id: support-pm-workflow-idempotency
     type: issue
     title: Support PM Workflow Idempotency
@@ -1463,11 +1463,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVveQ
-        database_id: 4773474169
-        number: 841
-        url: https://github.com/ggortsema/styxcd-docs/issues/841
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO14g
+        issue_id: I_kwDOR_b51c8AAAABIRwRaw
+        database_id: 4850454891
+        number: 1504
+        url: https://github.com/ggortsema/styxcd-docs/issues/1504
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKpM
   - id: synchronize-pm-workflow-yaml-from-provider
     type: issue
     title: Synchronize PM Workflow YAML From Provider
@@ -1484,11 +1484,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVvxA
-        database_id: 4773474244
-        number: 842
-        url: https://github.com/ggortsema/styxcd-docs/issues/842
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO14w
+        issue_id: I_kwDOR_b51c8AAAABIRwR5A
+        database_id: 4850455012
+        number: 1505
+        url: https://github.com/ggortsema/styxcd-docs/issues/1505
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKpk
   - id: support-provider-metadata-in-pm-workflow-yaml
     type: issue
     title: Support Provider Metadata in PM Workflow YAML
@@ -1505,11 +1505,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVv_g
-        database_id: 4773474302
-        number: 843
-        url: https://github.com/ggortsema/styxcd-docs/issues/843
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO15I
+        issue_id: I_kwDOR_b51c8AAAABIRwSYg
+        database_id: 4850455138
+        number: 1506
+        url: https://github.com/ggortsema/styxcd-docs/issues/1506
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKqE
   - id: support-provider-migration-for-pm-workflows
     type: issue
     title: Support Provider Migration for PM Workflows
@@ -1525,11 +1525,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVwRg
-        database_id: 4773474374
-        number: 844
-        url: https://github.com/ggortsema/styxcd-docs/issues/844
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO15Y
+        issue_id: I_kwDOR_b51c8AAAABIRwS0w
+        database_id: 4850455251
+        number: 1507
+        url: https://github.com/ggortsema/styxcd-docs/issues/1507
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKqo
   - id: generate-pm-workflow-yaml-from-conversation
     type: issue
     title: Generate PM Workflow YAML From Conversation
@@ -1545,11 +1545,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVwgQ
-        database_id: 4773474433
-        number: 845
-        url: https://github.com/ggortsema/styxcd-docs/issues/845
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO15k
+        issue_id: I_kwDOR_b51c8AAAABIRwTfg
+        database_id: 4850455422
+        number: 1508
+        url: https://github.com/ggortsema/styxcd-docs/issues/1508
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKrI
   - id: demonstrate-backlog-as-code-workflow
     type: issue
     title: Demonstrate Backlog-as-Code Workflow
@@ -1565,11 +1565,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVwxw
-        database_id: 4773474503
-        number: 846
-        url: https://github.com/ggortsema/styxcd-docs/issues/846
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO154
+        issue_id: I_kwDOR_b51c8AAAABIRwT7w
+        database_id: 4850455535
+        number: 1509
+        url: https://github.com/ggortsema/styxcd-docs/issues/1509
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKr4
 - id: dogfooding-styxcd
   type: epic
   title: Dogfooding StyxCD
@@ -1585,11 +1585,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIVxBg
-      database_id: 4773474566
-      number: 847
-      url: https://github.com/ggortsema/styxcd-docs/issues/847
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO16E
+      issue_id: I_kwDOR_b51c8AAAABIRwUeg
+      database_id: 4850455674
+      number: 1510
+      url: https://github.com/ggortsema/styxcd-docs/issues/1510
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKsQ
   issues:
   - id: deploy-styxcd-using-styxcd
     type: issue
@@ -1606,11 +1606,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVxWg
-        database_id: 4773474650
-        number: 848
-        url: https://github.com/ggortsema/styxcd-docs/issues/848
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO16I
+        issue_id: I_kwDOR_b51c8AAAABIRwUwQ
+        database_id: 4850455745
+        number: 1511
+        url: https://github.com/ggortsema/styxcd-docs/issues/1511
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKso
   - id: create-styxcd-release-workflow
     type: issue
     title: Create StyxCD Release Workflow
@@ -1626,11 +1626,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVyBA
-        database_id: 4773474820
-        number: 849
-        url: https://github.com/ggortsema/styxcd-docs/issues/849
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO16s
+        issue_id: I_kwDOR_b51c8AAAABIRwVSg
+        database_id: 4850455882
+        number: 1512
+        url: https://github.com/ggortsema/styxcd-docs/issues/1512
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKs4
   - id: create-styxcd-promotion-workflow
     type: issue
     title: Create StyxCD Promotion Workflow
@@ -1646,11 +1646,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVyUw
-        database_id: 4773474899
-        number: 850
-        url: https://github.com/ggortsema/styxcd-docs/issues/850
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO164
+        issue_id: I_kwDOR_b51c8AAAABIRwVsg
+        database_id: 4850455986
+        number: 1513
+        url: https://github.com/ggortsema/styxcd-docs/issues/1513
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKtU
   - id: implement-styxcd-self-update-workflow
     type: issue
     title: Implement StyxCD Self-Update Workflow
@@ -1666,11 +1666,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVykw
-        database_id: 4773474963
-        number: 851
-        url: https://github.com/ggortsema/styxcd-docs/issues/851
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO17Y
+        issue_id: I_kwDOR_b51c8AAAABIRwWCw
+        database_id: 4850456075
+        number: 1514
+        url: https://github.com/ggortsema/styxcd-docs/issues/1514
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKts
   - id: validate-upgrade-scenarios
     type: issue
     title: Validate Upgrade Scenarios
@@ -1686,11 +1686,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVy3w
-        database_id: 4773475039
-        number: 852
-        url: https://github.com/ggortsema/styxcd-docs/issues/852
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO174
+        issue_id: I_kwDOR_b51c8AAAABIRwWfQ
+        database_id: 4850456189
+        number: 1515
+        url: https://github.com/ggortsema/styxcd-docs/issues/1515
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKuI
   - id: document-internal-release-process
     type: issue
     title: Document Internal Release Process
@@ -1706,11 +1706,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVzKw
-        database_id: 4773475115
-        number: 853
-        url: https://github.com/ggortsema/styxcd-docs/issues/853
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO18w
+        issue_id: I_kwDOR_b51c8AAAABIRwW7w
+        database_id: 4850456303
+        number: 1516
+        url: https://github.com/ggortsema/styxcd-docs/issues/1516
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKuY
 - id: release-management
   type: epic
   title: Release Management
@@ -1726,11 +1726,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIVzYg
-      database_id: 4773475170
-      number: 854
-      url: https://github.com/ggortsema/styxcd-docs/issues/854
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO19M
+      issue_id: I_kwDOR_b51c8AAAABIRwXfA
+      database_id: 4850456444
+      number: 1517
+      url: https://github.com/ggortsema/styxcd-docs/issues/1517
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKug
   issues:
   - id: define-stable-environment-strategy
     type: issue
@@ -1747,11 +1747,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVziw
-        database_id: 4773475211
-        number: 855
-        url: https://github.com/ggortsema/styxcd-docs/issues/855
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO19g
+        issue_id: I_kwDOR_b51c8AAAABIRwXwg
+        database_id: 4850456514
+        number: 1518
+        url: https://github.com/ggortsema/styxcd-docs/issues/1518
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKvQ
   - id: define-development-environment-strategy
     type: issue
     title: Define Development Environment Strategy
@@ -1767,11 +1767,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIVzyw
-        database_id: 4773475275
-        number: 856
-        url: https://github.com/ggortsema/styxcd-docs/issues/856
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO198
+        issue_id: I_kwDOR_b51c8AAAABIRwYKg
+        database_id: 4850456618
+        number: 1519
+        url: https://github.com/ggortsema/styxcd-docs/issues/1519
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKvk
   - id: implement-promotion-workflow
     type: issue
     title: Implement Promotion Workflow
@@ -1787,11 +1787,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV0Cg
-        database_id: 4773475338
-        number: 857
-        url: https://github.com/ggortsema/styxcd-docs/issues/857
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1-o
+        issue_id: I_kwDOR_b51c8AAAABIRwYlA
+        database_id: 4850456724
+        number: 1520
+        url: https://github.com/ggortsema/styxcd-docs/issues/1520
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKv0
   - id: implement-version-management-strategy
     type: issue
     title: Implement Version Management Strategy
@@ -1807,11 +1807,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV0Rg
-        database_id: 4773475398
-        number: 858
-        url: https://github.com/ggortsema/styxcd-docs/issues/858
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_A
+        issue_id: I_kwDOR_b51c8AAAABIRwY_w
+        database_id: 4850456831
+        number: 1521
+        url: https://github.com/ggortsema/styxcd-docs/issues/1521
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKwM
   - id: document-release-process
     type: issue
     title: Document Release Process
@@ -1827,11 +1827,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV0fA
-        database_id: 4773475452
-        number: 859
-        url: https://github.com/ggortsema/styxcd-docs/issues/859
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_U
+        issue_id: I_kwDOR_b51c8AAAABIRwZgQ
+        database_id: 4850456961
+        number: 1522
+        url: https://github.com/ggortsema/styxcd-docs/issues/1522
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKwo
   - id: add-release-validation-checks
     type: issue
     title: Add Release Validation Checks
@@ -1847,11 +1847,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV0yA
-        database_id: 4773475528
-        number: 860
-        url: https://github.com/ggortsema/styxcd-docs/issues/860
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_s
+        issue_id: I_kwDOR_b51c8AAAABIRwZ-Q
+        database_id: 4850457081
+        number: 1523
+        url: https://github.com/ggortsema/styxcd-docs/issues/1523
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKxI
   - id: define-terraform-and-deployment-boundary
     type: issue
     title: Define Terraform and Deployment Boundary
@@ -1868,11 +1868,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV1DA
-        database_id: 4773475596
-        number: 861
-        url: https://github.com/ggortsema/styxcd-docs/issues/861
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO1_8
+        issue_id: I_kwDOR_b51c8AAAABIRwavg
+        database_id: 4850457278
+        number: 1524
+        url: https://github.com/ggortsema/styxcd-docs/issues/1524
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVKy4
 - id: multi-cloud-support
   type: epic
   title: Multi-Cloud Support
@@ -1888,11 +1888,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIV1TQ
-      database_id: 4773475661
-      number: 862
-      url: https://github.com/ggortsema/styxcd-docs/issues/862
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2AY
+      issue_id: I_kwDOR_b51c8AAAABIRwbRg
+      database_id: 4850457414
+      number: 1525
+      url: https://github.com/ggortsema/styxcd-docs/issues/1525
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK0M
   issues:
   - id: complete-gke-vertical-slice
     type: issue
@@ -1909,11 +1909,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV1dA
-        database_id: 4773475700
-        number: 863
-        url: https://github.com/ggortsema/styxcd-docs/issues/863
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2As
+        issue_id: I_kwDOR_b51c8AAAABIRwblQ
+        database_id: 4850457493
+        number: 1526
+        url: https://github.com/ggortsema/styxcd-docs/issues/1526
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK0g
   - id: expand-ecs-deployment-support
     type: issue
     title: Expand ECS Deployment Support
@@ -1929,11 +1929,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV10A
-        database_id: 4773475792
-        number: 864
-        url: https://github.com/ggortsema/styxcd-docs/issues/864
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2BA
+        issue_id: I_kwDOR_b51c8AAAABIRwb-Q
+        database_id: 4850457593
+        number: 1527
+        url: https://github.com/ggortsema/styxcd-docs/issues/1527
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK1c
   - id: expand-eks-deployment-support
     type: issue
     title: Expand EKS Deployment Support
@@ -1949,11 +1949,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV2xw
-        database_id: 4773476039
-        number: 865
-        url: https://github.com/ggortsema/styxcd-docs/issues/865
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2BU
+        issue_id: I_kwDOR_b51c8AAAABIRwcYw
+        database_id: 4850457699
+        number: 1528
+        url: https://github.com/ggortsema/styxcd-docs/issues/1528
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK10
   - id: evaluate-aks-support
     type: issue
     title: Evaluate AKS Support
@@ -1969,11 +1969,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV3FQ
-        database_id: 4773476117
-        number: 866
-        url: https://github.com/ggortsema/styxcd-docs/issues/866
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Bw
+        issue_id: I_kwDOR_b51c8AAAABIRwc7g
+        database_id: 4850457838
+        number: 1529
+        url: https://github.com/ggortsema/styxcd-docs/issues/1529
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK2M
   - id: define-multi-cloud-abstraction-strategy
     type: issue
     title: Define Multi-Cloud Abstraction Strategy
@@ -1989,11 +1989,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV3Zg
-        database_id: 4773476198
-        number: 867
-        url: https://github.com/ggortsema/styxcd-docs/issues/867
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2B8
+        issue_id: I_kwDOR_b51c8AAAABIRwdjw
+        database_id: 4850457999
+        number: 1530
+        url: https://github.com/ggortsema/styxcd-docs/issues/1530
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK2o
   - id: create-cloud-capability-matrix
     type: issue
     title: Create Cloud Capability Matrix
@@ -2009,11 +2009,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV3xw
-        database_id: 4773476295
-        number: 868
-        url: https://github.com/ggortsema/styxcd-docs/issues/868
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2CQ
+        issue_id: I_kwDOR_b51c8AAAABIRweAA
+        database_id: 4850458112
+        number: 1531
+        url: https://github.com/ggortsema/styxcd-docs/issues/1531
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK3I
   - id: implement-eks-execution-plan-shape
     type: issue
     title: Implement EKS Execution Plan Shape
@@ -2030,11 +2030,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV4Bg
-        database_id: 4773476358
-        number: 869
-        url: https://github.com/ggortsema/styxcd-docs/issues/869
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Cw
+        issue_id: I_kwDOR_b51c8AAAABIRweXw
+        database_id: 4850458207
+        number: 1532
+        url: https://github.com/ggortsema/styxcd-docs/issues/1532
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK3U
   - id: implement-eks-stage-logic-from-sandbox-code
     type: issue
     title: Implement EKS Stage Logic From Sandbox Code
@@ -2051,11 +2051,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV4RQ
-        database_id: 4773476421
-        number: 870
-        url: https://github.com/ggortsema/styxcd-docs/issues/870
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2DU
+        issue_id: I_kwDOR_b51c8AAAABIRwevg
+        database_id: 4850458302
+        number: 1533
+        url: https://github.com/ggortsema/styxcd-docs/issues/1533
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK3k
   - id: create-formal-eks-yaml-specification
     type: issue
     title: Create Formal EKS YAML Specification
@@ -2071,11 +2071,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV4rg
-        database_id: 4773476526
-        number: 871
-        url: https://github.com/ggortsema/styxcd-docs/issues/871
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2D4
+        issue_id: I_kwDOR_b51c8AAAABIRwfMg
+        database_id: 4850458418
+        number: 1534
+        url: https://github.com/ggortsema/styxcd-docs/issues/1534
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK4U
   - id: document-gke-and-eks-stage-parity
     type: issue
     title: Document GKE and EKS Stage Parity
@@ -2092,11 +2092,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV5AQ
-        database_id: 4773476609
-        number: 872
-        url: https://github.com/ggortsema/styxcd-docs/issues/872
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2EY
+        issue_id: I_kwDOR_b51c8AAAABIRwfkg
+        database_id: 4850458514
+        number: 1535
+        url: https://github.com/ggortsema/styxcd-docs/issues/1535
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK40
   - id: evaluate-aks-stage-mapping
     type: issue
     title: Evaluate AKS Stage Mapping
@@ -2113,11 +2113,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV5Yg
-        database_id: 4773476706
-        number: 873
-        url: https://github.com/ggortsema/styxcd-docs/issues/873
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2FM
+        issue_id: I_kwDOR_b51c8AAAABIRwf-g
+        database_id: 4850458618
+        number: 1536
+        url: https://github.com/ggortsema/styxcd-docs/issues/1536
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK5I
   - id: map-ecs-native-deployment-lifecycle
     type: issue
     title: Map ECS Native Deployment Lifecycle
@@ -2134,11 +2134,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV5vQ
-        database_id: 4773476797
-        number: 874
-        url: https://github.com/ggortsema/styxcd-docs/issues/874
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2GA
+        issue_id: I_kwDOR_b51c8AAAABIRwgXg
+        database_id: 4850458718
+        number: 1537
+        url: https://github.com/ggortsema/styxcd-docs/issues/1537
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK5o
   - id: implement-aws-load-balancer-controller-irsa-integration
     type: issue
     title: Implement AWS Load Balancer Controller IRSA Integration
@@ -2154,11 +2154,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV6DA
-        database_id: 4773476876
-        number: 875
-        url: https://github.com/ggortsema/styxcd-docs/issues/875
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2GQ
+        issue_id: I_kwDOR_b51c8AAAABIRwg3w
+        database_id: 4850458847
+        number: 1538
+        url: https://github.com/ggortsema/styxcd-docs/issues/1538
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK6A
 - id: validation-deployment-verification
   type: epic
   title: Validation & Deployment Verification
@@ -2174,11 +2174,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIV6RA
-      database_id: 4773476932
-      number: 876
-      url: https://github.com/ggortsema/styxcd-docs/issues/876
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Gs
+      issue_id: I_kwDOR_b51c8AAAABIRwhQQ
+      database_id: 4850458945
+      number: 1539
+      url: https://github.com/ggortsema/styxcd-docs/issues/1539
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK6U
   issues:
   - id: define-validation-contract
     type: issue
@@ -2195,11 +2195,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV6iQ
-        database_id: 4773477001
-        number: 877
-        url: https://github.com/ggortsema/styxcd-docs/issues/877
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2G4
+        issue_id: I_kwDOR_b51c8AAAABIRwhnw
+        database_id: 4850459039
+        number: 1540
+        url: https://github.com/ggortsema/styxcd-docs/issues/1540
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK6k
   - id: implement-validation-framework
     type: issue
     title: Implement Validation Framework
@@ -2215,11 +2215,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV6xg
-        database_id: 4773477062
-        number: 878
-        url: https://github.com/ggortsema/styxcd-docs/issues/878
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2HM
+        issue_id: I_kwDOR_b51c8AAAABIRwiCg
+        database_id: 4850459146
+        number: 1541
+        url: https://github.com/ggortsema/styxcd-docs/issues/1541
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK7I
   - id: add-health-check-validation
     type: issue
     title: Add Health Check Validation
@@ -2235,11 +2235,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV6-Q
-        database_id: 4773477113
-        number: 879
-        url: https://github.com/ggortsema/styxcd-docs/issues/879
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Hg
+        issue_id: I_kwDOR_b51c8AAAABIRwicA
+        database_id: 4850459248
+        number: 1542
+        url: https://github.com/ggortsema/styxcd-docs/issues/1542
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK7o
   - id: add-smoke-test-validation
     type: issue
     title: Add Smoke Test Validation
@@ -2255,11 +2255,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV7Ow
-        database_id: 4773477179
-        number: 880
-        url: https://github.com/ggortsema/styxcd-docs/issues/880
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ho
+        issue_id: I_kwDOR_b51c8AAAABIRwi2g
+        database_id: 4850459354
+        number: 1543
+        url: https://github.com/ggortsema/styxcd-docs/issues/1543
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK8I
   - id: add-deployment-verification-reporting
     type: issue
     title: Add Deployment Verification Reporting
@@ -2275,11 +2275,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV7dA
-        database_id: 4773477236
-        number: 881
-        url: https://github.com/ggortsema/styxcd-docs/issues/881
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2H0
+        issue_id: I_kwDOR_b51c8AAAABIRwjOw
+        database_id: 4850459451
+        number: 1544
+        url: https://github.com/ggortsema/styxcd-docs/issues/1544
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK8k
   - id: add-validation-dashboard-support
     type: issue
     title: Add Validation Dashboard Support
@@ -2295,11 +2295,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV7tQ
-        database_id: 4773477301
-        number: 882
-        url: https://github.com/ggortsema/styxcd-docs/issues/882
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2IA
+        issue_id: I_kwDOR_b51c8AAAABIRwjqw
+        database_id: 4850459563
+        number: 1545
+        url: https://github.com/ggortsema/styxcd-docs/issues/1545
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK80
 - id: slo-aware-promotion
   type: epic
   title: SLO-Aware Promotion
@@ -2315,11 +2315,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIV8Eg
-      database_id: 4773477394
-      number: 883
-      url: https://github.com/ggortsema/styxcd-docs/issues/883
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2IQ
+      issue_id: I_kwDOR_b51c8AAAABIRwkHw
+      database_id: 4850459679
+      number: 1546
+      url: https://github.com/ggortsema/styxcd-docs/issues/1546
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK9Q
   issues:
   - id: define-measurement-contract
     type: issue
@@ -2336,11 +2336,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV8Rg
-        database_id: 4773477446
-        number: 884
-        url: https://github.com/ggortsema/styxcd-docs/issues/884
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Io
+        issue_id: I_kwDOR_b51c8AAAABIRwkcg
+        database_id: 4850459762
+        number: 1547
+        url: https://github.com/ggortsema/styxcd-docs/issues/1547
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK9g
   - id: capture-validation-metrics
     type: issue
     title: Capture Validation Metrics
@@ -2356,11 +2356,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV8kw
-        database_id: 4773477523
-        number: 885
-        url: https://github.com/ggortsema/styxcd-docs/issues/885
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2JU
+        issue_id: I_kwDOR_b51c8AAAABIRwk_w
+        database_id: 4850459903
+        number: 1548
+        url: https://github.com/ggortsema/styxcd-docs/issues/1548
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK98
   - id: store-validation-results
     type: issue
     title: Store Validation Results
@@ -2376,11 +2376,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV83g
-        database_id: 4773477598
-        number: 886
-        url: https://github.com/ggortsema/styxcd-docs/issues/886
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2KI
+        issue_id: I_kwDOR_b51c8AAAABIRwlnA
+        database_id: 4850460060
+        number: 1549
+        url: https://github.com/ggortsema/styxcd-docs/issues/1549
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK-s
   - id: evaluate-slo-thresholds
     type: issue
     title: Evaluate SLO Thresholds
@@ -2396,11 +2396,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV9OA
-        database_id: 4773477688
-        number: 887
-        url: https://github.com/ggortsema/styxcd-docs/issues/887
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Kg
+        issue_id: I_kwDOR_b51c8AAAABIRwl9g
+        database_id: 4850460150
+        number: 1550
+        url: https://github.com/ggortsema/styxcd-docs/issues/1550
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK_Y
   - id: support-promotion-gates
     type: issue
     title: Support Promotion Gates
@@ -2416,11 +2416,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV9bg
-        database_id: 4773477742
-        number: 888
-        url: https://github.com/ggortsema/styxcd-docs/issues/888
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2K4
+        issue_id: I_kwDOR_b51c8AAAABIRwmbA
+        database_id: 4850460268
+        number: 1551
+        url: https://github.com/ggortsema/styxcd-docs/issues/1551
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVK_0
   - id: document-slo-promotion-model
     type: issue
     title: Document SLO Promotion Model
@@ -2436,11 +2436,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV9rA
-        database_id: 4773477804
-        number: 889
-        url: https://github.com/ggortsema/styxcd-docs/issues/889
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Lc
+        issue_id: I_kwDOR_b51c8AAAABIRwm7w
+        database_id: 4850460399
+        number: 1552
+        url: https://github.com/ggortsema/styxcd-docs/issues/1552
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLAY
 - id: artifact-management
   type: epic
   title: Artifact Management
@@ -2456,11 +2456,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIV99Q
-      database_id: 4773477877
-      number: 890
-      url: https://github.com/ggortsema/styxcd-docs/issues/890
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2MM
+      issue_id: I_kwDOR_b51c8AAAABIRwnfA
+      database_id: 4850460540
+      number: 1553
+      url: https://github.com/ggortsema/styxcd-docs/issues/1553
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLBU
   issues:
   - id: define-artifact-metadata-model
     type: issue
@@ -2477,11 +2477,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV-Hw
-        database_id: 4773477919
-        number: 891
-        url: https://github.com/ggortsema/styxcd-docs/issues/891
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Mw
+        issue_id: I_kwDOR_b51c8AAAABIRwn3Q
+        database_id: 4850460637
+        number: 1554
+        url: https://github.com/ggortsema/styxcd-docs/issues/1554
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLBw
   - id: track-digest-based-deployments
     type: issue
     title: Track Digest-Based Deployments
@@ -2497,11 +2497,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV-aA
-        database_id: 4773477992
-        number: 892
-        url: https://github.com/ggortsema/styxcd-docs/issues/892
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2NA
+        issue_id: I_kwDOR_b51c8AAAABIRwogA
+        database_id: 4850460800
+        number: 1555
+        url: https://github.com/ggortsema/styxcd-docs/issues/1555
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLCE
   - id: support-registry-replication
     type: issue
     title: Support Registry Replication
@@ -2517,11 +2517,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV-pg
-        database_id: 4773478054
-        number: 893
-        url: https://github.com/ggortsema/styxcd-docs/issues/893
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2NQ
+        issue_id: I_kwDOR_b51c8AAAABIRwo5g
+        database_id: 4850460902
+        number: 1556
+        url: https://github.com/ggortsema/styxcd-docs/issues/1556
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLCg
   - id: store-promotion-history
     type: issue
     title: Store Promotion History
@@ -2537,11 +2537,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV-7Q
-        database_id: 4773478125
-        number: 894
-        url: https://github.com/ggortsema/styxcd-docs/issues/894
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2NY
+        issue_id: I_kwDOR_b51c8AAAABIRwpTA
+        database_id: 4850461004
+        number: 1557
+        url: https://github.com/ggortsema/styxcd-docs/issues/1557
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLDQ
   - id: implement-artifact-audit-trail
     type: issue
     title: Implement Artifact Audit Trail
@@ -2557,11 +2557,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV_Lw
-        database_id: 4773478191
-        number: 895
-        url: https://github.com/ggortsema/styxcd-docs/issues/895
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Nk
+        issue_id: I_kwDOR_b51c8AAAABIRwptg
+        database_id: 4850461110
+        number: 1558
+        url: https://github.com/ggortsema/styxcd-docs/issues/1558
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLDo
   - id: document-enterprise-artifact-strategy
     type: issue
     title: Document Enterprise Artifact Strategy
@@ -2577,11 +2577,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV_fw
-        database_id: 4773478271
-        number: 896
-        url: https://github.com/ggortsema/styxcd-docs/issues/896
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2OA
+        issue_id: I_kwDOR_b51c8AAAABIRwqXw
+        database_id: 4850461279
+        number: 1559
+        url: https://github.com/ggortsema/styxcd-docs/issues/1559
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLEU
   - id: evaluate-build-once-promote-everywhere-pattern
     type: issue
     title: Evaluate Build Once Promote Everywhere Pattern
@@ -2598,11 +2598,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIV_0Q
-        database_id: 4773478353
-        number: 897
-        url: https://github.com/ggortsema/styxcd-docs/issues/897
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2OQ
+        issue_id: I_kwDOR_b51c8AAAABIRwqug
+        database_id: 4850461370
+        number: 1560
+        url: https://github.com/ggortsema/styxcd-docs/issues/1560
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLE0
 - id: observability
   type: epic
   title: Observability
@@ -2618,11 +2618,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWAFA
-      database_id: 4773478420
-      number: 898
-      url: https://github.com/ggortsema/styxcd-docs/issues/898
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2OY
+      issue_id: I_kwDOR_b51c8AAAABIRwr8g
+      database_id: 4850461682
+      number: 1561
+      url: https://github.com/ggortsema/styxcd-docs/issues/1561
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLGU
   issues:
   - id: add-prometheus-metrics
     type: issue
@@ -2639,11 +2639,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWAPw
-        database_id: 4773478463
-        number: 899
-        url: https://github.com/ggortsema/styxcd-docs/issues/899
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ok
+        issue_id: I_kwDOR_b51c8AAAABIRwsQw
+        database_id: 4850461763
+        number: 1562
+        url: https://github.com/ggortsema/styxcd-docs/issues/1562
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLG8
   - id: add-grafana-dashboards
     type: issue
     title: Add Grafana Dashboards
@@ -2659,11 +2659,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWAcQ
-        database_id: 4773478513
-        number: 900
-        url: https://github.com/ggortsema/styxcd-docs/issues/900
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2O8
+        issue_id: I_kwDOR_b51c8AAAABIRwsvA
+        database_id: 4850461884
+        number: 1563
+        url: https://github.com/ggortsema/styxcd-docs/issues/1563
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLHU
   - id: expand-structured-logging
     type: issue
     title: Expand Structured Logging
@@ -2679,11 +2679,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWAtw
-        database_id: 4773478583
-        number: 901
-        url: https://github.com/ggortsema/styxcd-docs/issues/901
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Pk
+        issue_id: I_kwDOR_b51c8AAAABIRwtRQ
+        database_id: 4850462021
+        number: 1564
+        url: https://github.com/ggortsema/styxcd-docs/issues/1564
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLIQ
   - id: track-workflow-metrics
     type: issue
     title: Track Workflow Metrics
@@ -2699,11 +2699,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWA_g
-        database_id: 4773478654
-        number: 902
-        url: https://github.com/ggortsema/styxcd-docs/issues/902
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2QM
+        issue_id: I_kwDOR_b51c8AAAABIRwtsg
+        database_id: 4850462130
+        number: 1565
+        url: https://github.com/ggortsema/styxcd-docs/issues/1565
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLI4
   - id: track-stage-metrics
     type: issue
     title: Track Stage Metrics
@@ -2719,11 +2719,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWBUg
-        database_id: 4773478738
-        number: 903
-        url: https://github.com/ggortsema/styxcd-docs/issues/903
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Qo
+        issue_id: I_kwDOR_b51c8AAAABIRwuqg
+        database_id: 4850462378
+        number: 1566
+        url: https://github.com/ggortsema/styxcd-docs/issues/1566
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLJs
   - id: add-deployment-analytics
     type: issue
     title: Add Deployment Analytics
@@ -2739,11 +2739,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWBng
-        database_id: 4773478814
-        number: 904
-        url: https://github.com/ggortsema/styxcd-docs/issues/904
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2RU
+        issue_id: I_kwDOR_b51c8AAAABIRwvSA
+        database_id: 4850462536
+        number: 1567
+        url: https://github.com/ggortsema/styxcd-docs/issues/1567
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLKY
   - id: design-environment-agnostic-log-collection
     type: issue
     title: Design Environment-Agnostic Log Collection
@@ -2760,11 +2760,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWB3g
-        database_id: 4773478878
-        number: 905
-        url: https://github.com/ggortsema/styxcd-docs/issues/905
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Rw
+        issue_id: I_kwDOR_b51c8AAAABIRwvvg
+        database_id: 4850462654
+        number: 1568
+        url: https://github.com/ggortsema/styxcd-docs/issues/1568
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLLU
 - id: documentation-knowledge-base
   type: epic
   title: Documentation & Knowledge Base
@@ -2780,11 +2780,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWCGA
-      database_id: 4773478936
-      number: 906
-      url: https://github.com/ggortsema/styxcd-docs/issues/906
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2SI
+      issue_id: I_kwDOR_b51c8AAAABIRwwOw
+      database_id: 4850462779
+      number: 1569
+      url: https://github.com/ggortsema/styxcd-docs/issues/1569
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLLo
   issues:
   - id: create-architecture-documentation
     type: issue
@@ -2801,11 +2801,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWCOg
-        database_id: 4773478970
-        number: 907
-        url: https://github.com/ggortsema/styxcd-docs/issues/907
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Sc
+        issue_id: I_kwDOR_b51c8AAAABIRwwkA
+        database_id: 4850462864
+        number: 1570
+        url: https://github.com/ggortsema/styxcd-docs/issues/1570
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLMU
   - id: create-workflow-authoring-guide
     type: issue
     title: Create Workflow Authoring Guide
@@ -2821,11 +2821,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWCgA
-        database_id: 4773479040
-        number: 908
-        url: https://github.com/ggortsema/styxcd-docs/issues/908
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2S0
+        issue_id: I_kwDOR_b51c8AAAABIRww-A
+        database_id: 4850462968
+        number: 1571
+        url: https://github.com/ggortsema/styxcd-docs/issues/1571
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLM4
   - id: create-platform-guides
     type: issue
     title: Create Platform Guides
@@ -2841,11 +2841,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWCug
-        database_id: 4773479098
-        number: 909
-        url: https://github.com/ggortsema/styxcd-docs/issues/909
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2S8
+        issue_id: I_kwDOR_b51c8AAAABIRwxUA
+        database_id: 4850463056
+        number: 1572
+        url: https://github.com/ggortsema/styxcd-docs/issues/1572
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLNU
   - id: create-troubleshooting-guide
     type: issue
     title: Create Troubleshooting Guide
@@ -2861,11 +2861,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWDCQ
-        database_id: 4773479177
-        number: 910
-        url: https://github.com/ggortsema/styxcd-docs/issues/910
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2TQ
+        issue_id: I_kwDOR_b51c8AAAABIRwx5Q
+        database_id: 4850463205
+        number: 1573
+        url: https://github.com/ggortsema/styxcd-docs/issues/1573
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLNw
   - id: create-knowledge-base-structure
     type: issue
     title: Create Knowledge Base Structure
@@ -2881,11 +2881,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWDRw
-        database_id: 4773479239
-        number: 911
-        url: https://github.com/ggortsema/styxcd-docs/issues/911
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ts
+        issue_id: I_kwDOR_b51c8AAAABIRwy1g
+        database_id: 4850463446
+        number: 1574
+        url: https://github.com/ggortsema/styxcd-docs/issues/1574
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLOc
   - id: create-example-workflow-library
     type: issue
     title: Create Example Workflow Library
@@ -2901,11 +2901,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWDiQ
-        database_id: 4773479305
-        number: 912
-        url: https://github.com/ggortsema/styxcd-docs/issues/912
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2UU
+        issue_id: I_kwDOR_b51c8AAAABIRwzOw
+        database_id: 4850463547
+        number: 1575
+        url: https://github.com/ggortsema/styxcd-docs/issues/1575
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLOw
   - id: define-human-and-rag-documentation-strategy
     type: issue
     title: Define Human and RAG Documentation Strategy
@@ -2922,11 +2922,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWD2w
-        database_id: 4773479387
-        number: 913
-        url: https://github.com/ggortsema/styxcd-docs/issues/913
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Us
+        issue_id: I_kwDOR_b51c8AAAABIRwzow
+        database_id: 4850463651
+        number: 1576
+        url: https://github.com/ggortsema/styxcd-docs/issues/1576
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLPE
   - id: formalize-yaml-specification-documentation
     type: issue
     title: Formalize YAML Specification Documentation
@@ -2943,11 +2943,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWEGQ
-        database_id: 4773479449
-        number: 914
-        url: https://github.com/ggortsema/styxcd-docs/issues/914
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2VQ
+        issue_id: I_kwDOR_b51c8AAAABIRw0Cg
+        database_id: 4850463754
+        number: 1577
+        url: https://github.com/ggortsema/styxcd-docs/issues/1577
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLP4
   - id: clean-up-documentation-structure
     type: issue
     title: Clean Up Documentation Structure
@@ -2964,11 +2964,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWEWw
-        database_id: 4773479515
-        number: 915
-        url: https://github.com/ggortsema/styxcd-docs/issues/915
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2V0
+        issue_id: I_kwDOR_b51c8AAAABIRw0kA
+        database_id: 4850463888
+        number: 1578
+        url: https://github.com/ggortsema/styxcd-docs/issues/1578
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLQY
   - id: create-architecture-decision-records
     type: issue
     title: Create Architecture Decision Records
@@ -2985,11 +2985,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWElQ
-        database_id: 4773479573
-        number: 916
-        url: https://github.com/ggortsema/styxcd-docs/issues/916
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2WQ
+        issue_id: I_kwDOR_b51c8AAAABIRw09w
+        database_id: 4850463991
+        number: 1579
+        url: https://github.com/ggortsema/styxcd-docs/issues/1579
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLRI
 - id: local-development-experience
   type: epic
   title: Local Development Experience
@@ -3005,11 +3005,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWEzA
-      database_id: 4773479628
-      number: 917
-      url: https://github.com/ggortsema/styxcd-docs/issues/917
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Ww
+      issue_id: I_kwDOR_b51c8AAAABIRw1fQ
+      database_id: 4850464125
+      number: 1580
+      url: https://github.com/ggortsema/styxcd-docs/issues/1580
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLRs
   issues:
   - id: add-in-memory-database-mode
     type: issue
@@ -3026,11 +3026,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWE-A
-        database_id: 4773479672
-        number: 918
-        url: https://github.com/ggortsema/styxcd-docs/issues/918
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2XA
+        issue_id: I_kwDOR_b51c8AAAABIRw11w
+        database_id: 4850464215
+        number: 1581
+        url: https://github.com/ggortsema/styxcd-docs/issues/1581
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLR0
   - id: support-local-workflow-execution
     type: issue
     title: Support Local Workflow Execution
@@ -3046,11 +3046,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWFWw
-        database_id: 4773479771
-        number: 920
-        url: https://github.com/ggortsema/styxcd-docs/issues/920
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2YI
+        issue_id: I_kwDOR_b51c8AAAABIRw24Q
+        database_id: 4850464481
+        number: 1582
+        url: https://github.com/ggortsema/styxcd-docs/issues/1582
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLSE
   - id: improve-developer-setup-documentation
     type: issue
     title: Improve Developer Setup Documentation
@@ -3066,11 +3066,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWFmA
-        database_id: 4773479832
-        number: 921
-        url: https://github.com/ggortsema/styxcd-docs/issues/921
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Y4
+        issue_id: I_kwDOR_b51c8AAAABIRw3fw
+        database_id: 4850464639
+        number: 1583
+        url: https://github.com/ggortsema/styxcd-docs/issues/1583
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLSs
   - id: create-local-demo-environment
     type: issue
     title: Create Local Demo Environment
@@ -3086,11 +3086,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWF5g
-        database_id: 4773479910
-        number: 922
-        url: https://github.com/ggortsema/styxcd-docs/issues/922
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2ZA
+        issue_id: I_kwDOR_b51c8AAAABIRw4Dg
+        database_id: 4850464782
+        number: 1584
+        url: https://github.com/ggortsema/styxcd-docs/issues/1584
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLTk
 - id: ui-enhancements
   type: epic
   title: UI Enhancements
@@ -3106,11 +3106,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWGKQ
-      database_id: 4773479977
-      number: 923
-      url: https://github.com/ggortsema/styxcd-docs/issues/923
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2ZI
+      issue_id: I_kwDOR_b51c8AAAABIRw4bA
+      database_id: 4850464876
+      number: 1585
+      url: https://github.com/ggortsema/styxcd-docs/issues/1585
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLUE
   issues:
   - id: load-yaml-from-file
     type: issue
@@ -3127,11 +3127,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWGTA
-        database_id: 4773480012
-        number: 924
-        url: https://github.com/ggortsema/styxcd-docs/issues/924
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Zg
+        issue_id: I_kwDOR_b51c8AAAABIRw4uA
+        database_id: 4850464952
+        number: 1586
+        url: https://github.com/ggortsema/styxcd-docs/issues/1586
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLUQ
   - id: load-yaml-from-url
     type: issue
     title: Load YAML From URL
@@ -3147,11 +3147,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWGfw
-        database_id: 4773480063
-        number: 925
-        url: https://github.com/ggortsema/styxcd-docs/issues/925
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2Zs
+        issue_id: I_kwDOR_b51c8AAAABIRw5cg
+        database_id: 4850465138
+        number: 1587
+        url: https://github.com/ggortsema/styxcd-docs/issues/1587
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLU8
   - id: create-workflow-templates-ui
     type: issue
     title: Create Workflow Templates UI
@@ -3167,11 +3167,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWGxQ
-        database_id: 4773480133
-        number: 926
-        url: https://github.com/ggortsema/styxcd-docs/issues/926
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2aA
+        issue_id: I_kwDOR_b51c8AAAABIRw53A
+        database_id: 4850465244
+        number: 1588
+        url: https://github.com/ggortsema/styxcd-docs/issues/1588
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLVY
   - id: display-effective-yaml
     type: issue
     title: Display Effective YAML
@@ -3187,11 +3187,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWHCg
-        database_id: 4773480202
-        number: 927
-        url: https://github.com/ggortsema/styxcd-docs/issues/927
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2aU
+        issue_id: I_kwDOR_b51c8AAAABIRw6RQ
+        database_id: 4850465349
+        number: 1589
+        url: https://github.com/ggortsema/styxcd-docs/issues/1589
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLVs
   - id: improve-mobile-experience
     type: issue
     title: Improve Mobile Experience
@@ -3207,11 +3207,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWHQw
-        database_id: 4773480259
-        number: 928
-        url: https://github.com/ggortsema/styxcd-docs/issues/928
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2ak
+        issue_id: I_kwDOR_b51c8AAAABIRw6rg
+        database_id: 4850465454
+        number: 1590
+        url: https://github.com/ggortsema/styxcd-docs/issues/1590
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLWM
   - id: add-execution-filtering
     type: issue
     title: Add Execution Filtering
@@ -3227,11 +3227,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWHhA
-        database_id: 4773480324
-        number: 929
-        url: https://github.com/ggortsema/styxcd-docs/issues/929
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2aw
+        issue_id: I_kwDOR_b51c8AAAABIRw7Ew
+        database_id: 4850465555
+        number: 1591
+        url: https://github.com/ggortsema/styxcd-docs/issues/1591
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLXE
   - id: add-execution-comparison-view
     type: issue
     title: Add Execution Comparison View
@@ -3247,11 +3247,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWHxA
-        database_id: 4773480388
-        number: 930
-        url: https://github.com/ggortsema/styxcd-docs/issues/930
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2bA
+        issue_id: I_kwDOR_b51c8AAAABIRw7eQ
+        database_id: 4850465657
+        number: 1592
+        url: https://github.com/ggortsema/styxcd-docs/issues/1592
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLXc
   - id: add-template-catalog-ui
     type: issue
     title: Add Template Catalog UI
@@ -3267,11 +3267,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWIJg
-        database_id: 4773480486
-        number: 931
-        url: https://github.com/ggortsema/styxcd-docs/issues/931
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2bk
+        issue_id: I_kwDOR_b51c8AAAABIRw7-w
+        database_id: 4850465787
+        number: 1593
+        url: https://github.com/ggortsema/styxcd-docs/issues/1593
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLYI
   - id: remember-yaml-editor-state
     type: issue
     title: Remember YAML Editor State
@@ -3287,11 +3287,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWIeQ
-        database_id: 4773480569
-        number: 932
-        url: https://github.com/ggortsema/styxcd-docs/issues/932
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2cM
+        issue_id: I_kwDOR_b51c8AAAABIRw8fw
+        database_id: 4850465919
+        number: 1594
+        url: https://github.com/ggortsema/styxcd-docs/issues/1594
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLYo
 - id: planning-decision-engine
   type: epic
   title: Planning & Decision Engine
@@ -3307,11 +3307,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWIug
-      database_id: 4773480634
-      number: 933
-      url: https://github.com/ggortsema/styxcd-docs/issues/933
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2dk
+      issue_id: I_kwDOR_b51c8AAAABIRw88w
+      database_id: 4850466035
+      number: 1595
+      url: https://github.com/ggortsema/styxcd-docs/issues/1595
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLZE
   issues:
   - id: define-planningdecision-model
     type: issue
@@ -3328,11 +3328,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWI6Q
-        database_id: 4773480681
-        number: 934
-        url: https://github.com/ggortsema/styxcd-docs/issues/934
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2eo
+        issue_id: I_kwDOR_b51c8AAAABIRw9Og
+        database_id: 4850466106
+        number: 1596
+        url: https://github.com/ggortsema/styxcd-docs/issues/1596
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLZY
   - id: integrate-drools-decision-engine
     type: issue
     title: Integrate Drools Decision Engine
@@ -3348,11 +3348,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWJKA
-        database_id: 4773480744
-        number: 935
-        url: https://github.com/ggortsema/styxcd-docs/issues/935
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2fE
+        issue_id: I_kwDOR_b51c8AAAABIRw9ng
+        database_id: 4850466206
+        number: 1597
+        url: https://github.com/ggortsema/styxcd-docs/issues/1597
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLZ4
   - id: separate-planning-from-execution
     type: issue
     title: Separate Planning From Execution
@@ -3368,11 +3368,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWJZA
-        database_id: 4773480804
-        number: 936
-        url: https://github.com/ggortsema/styxcd-docs/issues/936
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2fk
+        issue_id: I_kwDOR_b51c8AAAABIRw-EQ
+        database_id: 4850466321
+        number: 1598
+        url: https://github.com/ggortsema/styxcd-docs/issues/1598
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLao
   - id: implement-decision-rules-framework
     type: issue
     title: Implement Decision Rules Framework
@@ -3388,11 +3388,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWJow
-        database_id: 4773480867
-        number: 937
-        url: https://github.com/ggortsema/styxcd-docs/issues/937
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2gE
+        issue_id: I_kwDOR_b51c8AAAABIRw-iA
+        database_id: 4850466440
+        number: 1599
+        url: https://github.com/ggortsema/styxcd-docs/issues/1599
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLbU
   - id: document-planning-architecture
     type: issue
     title: Document Planning Architecture
@@ -3408,11 +3408,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWJ1g
-        database_id: 4773480918
-        number: 938
-        url: https://github.com/ggortsema/styxcd-docs/issues/938
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2gg
+        issue_id: I_kwDOR_b51c8AAAABIRw_Eg
+        database_id: 4850466578
+        number: 1600
+        url: https://github.com/ggortsema/styxcd-docs/issues/1600
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLbw
   - id: rename-validation-map-concepts
     type: issue
     title: Rename Validation Map Concepts
@@ -3429,11 +3429,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWKHg
-        database_id: 4773480990
-        number: 939
-        url: https://github.com/ggortsema/styxcd-docs/issues/939
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hE
+        issue_id: I_kwDOR_b51c8AAAABIRw_fQ
+        database_id: 4850466685
+        number: 1601
+        url: https://github.com/ggortsema/styxcd-docs/issues/1601
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLcQ
 - id: kharon-assistant
   type: epic
   title: Kharon Assistant
@@ -3449,11 +3449,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWKUA
-      database_id: 4773481040
-      number: 940
-      url: https://github.com/ggortsema/styxcd-docs/issues/940
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hI
+      issue_id: I_kwDOR_b51c8AAAABIRxAgA
+      database_id: 4850466944
+      number: 1602
+      url: https://github.com/ggortsema/styxcd-docs/issues/1602
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLcs
   issues:
   - id: create-rag-context-retrieval-layer
     type: issue
@@ -3471,11 +3471,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWKgQ
-        database_id: 4773481089
-        number: 941
-        url: https://github.com/ggortsema/styxcd-docs/issues/941
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hQ
+        issue_id: I_kwDOR_b51c8AAAABIRxA0Q
+        database_id: 4850467025
+        number: 1603
+        url: https://github.com/ggortsema/styxcd-docs/issues/1603
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLdM
   - id: define-kharon-project-memory-sources
     type: issue
     title: Define Kharon Project Memory Sources
@@ -3492,11 +3492,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWKwg
-        database_id: 4773481154
-        number: 942
-        url: https://github.com/ggortsema/styxcd-docs/issues/942
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2hg
+        issue_id: I_kwDOR_b51c8AAAABIRxBMA
+        database_id: 4850467120
+        number: 1604
+        url: https://github.com/ggortsema/styxcd-docs/issues/1604
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLdg
 - id: styxcd-command-line-tool
   type: epic
   title: StyxCD Command Line Tool
@@ -3512,11 +3512,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWLAQ
-      database_id: 4773481217
-      number: 943
-      url: https://github.com/ggortsema/styxcd-docs/issues/943
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2h4
+      issue_id: I_kwDOR_b51c8AAAABIRxBow
+      database_id: 4850467235
+      number: 1605
+      url: https://github.com/ggortsema/styxcd-docs/issues/1605
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLd0
   issues:
   - id: implement-ui-parity-command-using-ferry-verb
     type: issue
@@ -3535,11 +3535,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWLIQ
-        database_id: 4773481249
-        number: 944
-        url: https://github.com/ggortsema/styxcd-docs/issues/944
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iE
+        issue_id: I_kwDOR_b51c8AAAABIRxCAA
+        database_id: 4850467328
+        number: 1606
+        url: https://github.com/ggortsema/styxcd-docs/issues/1606
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLeU
 - id: backlog-as-code-synchronization
   type: epic
   title: Backlog-as-Code Synchronization
@@ -3574,17 +3574,22 @@ epics:
     source: johnny-johnny
     created_at: '2026-07-09T15:34:06.914048+00:00'
     provider_metadata:
-      github: {}
+      github:
+        comment_id: IC_kwDOR_b51c8AAAABJd1_9A
+        database_id: 4930240500
+        url: https://github.com/ggortsema/styxcd-docs/issues/1607#issuecomment-4930240500
+        created_at: '2026-07-09T22:48:43Z'
+        updated_at: '2026-07-09T22:48:43Z'
   labels: []
   assignees: []
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHIWLag
-      database_id: 4773481322
-      number: 945
-      url: https://github.com/ggortsema/styxcd-docs/issues/945
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iM
+      issue_id: I_kwDOR_b51c8AAAABIRxCgA
+      database_id: 4850467456
+      number: 1607
+      url: https://github.com/ggortsema/styxcd-docs/issues/1607
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLfA
   issues:
   - id: enhance-update-issue-command-for-progress-tracking
     type: issue
@@ -3603,11 +3608,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJjSSw
-        database_id: 4774744651
-        number: 976
-        url: https://github.com/ggortsema/styxcd-docs/issues/976
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQD7Y
+        issue_id: I_kwDOR_b51c8AAAABIRxC6Q
+        database_id: 4850467561
+        number: 1608
+        url: https://github.com/ggortsema/styxcd-docs/issues/1608
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLfk
   - id: generate-human-readable-project-documentation
     type: issue
     title: Generate Human-Readable Project Documentation
@@ -3625,11 +3630,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJqIbQ
-        database_id: 4774856813
-        number: 978
-        url: https://github.com/ggortsema/styxcd-docs/issues/978
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQKeU
+        issue_id: I_kwDOR_b51c8AAAABIRxDUQ
+        database_id: 4850467665
+        number: 1609
+        url: https://github.com/ggortsema/styxcd-docs/issues/1609
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLgQ
   - id: execute-commands-command
     type: issue
     title: Execute Commands Command
@@ -3646,11 +3651,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJKFKA
-        database_id: 4774331688
-        number: 964
-        url: https://github.com/ggortsema/styxcd-docs/issues/964
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPqk0
+        issue_id: I_kwDOR_b51c8AAAABIRxDtQ
+        database_id: 4850467765
+        number: 1610
+        url: https://github.com/ggortsema/styxcd-docs/issues/1610
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLgg
   - id: design-canonical-backlog-persistence
     type: issue
     title: Design Canonical Backlog Persistence
@@ -3669,17 +3674,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T15:45:53.409422+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2CPQ
+          database_id: 4930241085
+          url: https://github.com/ggortsema/styxcd-docs/issues/1611#issuecomment-4930241085
+          created_at: '2026-07-09T22:48:50Z'
+          updated_at: '2026-07-09T22:48:50Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJyMQw
-        database_id: 4774988867
-        number: 981
-        url: https://github.com/ggortsema/styxcd-docs/issues/981
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQSWE
+        issue_id: I_kwDOR_b51c8AAAABIRxEMw
+        database_id: 4850467891
+        number: 1611
+        url: https://github.com/ggortsema/styxcd-docs/issues/1611
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLhE
   - id: design-canonical-backlog-model
     type: issue
     title: Design Canonical Backlog Model
@@ -3698,11 +3708,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWLkQ
-        database_id: 4773481361
-        number: 946
-        url: https://github.com/ggortsema/styxcd-docs/issues/946
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iU
+        issue_id: I_kwDOR_b51c8AAAABIRxE1Q
+        database_id: 4850468053
+        number: 1612
+        url: https://github.com/ggortsema/styxcd-docs/issues/1612
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLh0
   - id: implement-github-project-export
     type: issue
     title: Implement GitHub Project Export
@@ -3721,11 +3731,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWL2Q
-        database_id: 4773481433
-        number: 947
-        url: https://github.com/ggortsema/styxcd-docs/issues/947
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2iw
+        issue_id: I_kwDOR_b51c8AAAABIRxFMA
+        database_id: 4850468144
+        number: 1613
+        url: https://github.com/ggortsema/styxcd-docs/issues/1613
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLiQ
   - id: generate-canonical-backlog-yml
     type: issue
     title: Generate Canonical `backlog.yml`
@@ -3747,11 +3757,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWMJA
-        database_id: 4773481508
-        number: 948
-        url: https://github.com/ggortsema/styxcd-docs/issues/948
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2jI
+        issue_id: I_kwDOR_b51c8AAAABIRxFkw
+        database_id: 4850468243
+        number: 1614
+        url: https://github.com/ggortsema/styxcd-docs/issues/1614
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLis
   - id: detect-backlog-changes
     type: issue
     title: Detect Backlog Changes
@@ -3770,11 +3780,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWMuQ
-        database_id: 4773481657
-        number: 950
-        url: https://github.com/ggortsema/styxcd-docs/issues/950
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2kk
+        issue_id: I_kwDOR_b51c8AAAABIRxF_w
+        database_id: 4850468351
+        number: 1615
+        url: https://github.com/ggortsema/styxcd-docs/issues/1615
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLi8
   - id: generate-synchronization-report
     type: issue
     title: Generate Synchronization Report
@@ -3793,11 +3803,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWNBQ
-        database_id: 4773481733
-        number: 951
-        url: https://github.com/ggortsema/styxcd-docs/issues/951
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2lM
+        issue_id: I_kwDOR_b51c8AAAABIRxGcQ
+        database_id: 4850468465
+        number: 1616
+        url: https://github.com/ggortsema/styxcd-docs/issues/1616
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLjI
   - id: regenerate-github-from-ssot
     type: issue
     title: Regenerate GitHub From SSOT
@@ -3819,11 +3829,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWNSg
-        database_id: 4773481802
-        number: 952
-        url: https://github.com/ggortsema/styxcd-docs/issues/952
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2lk
+        issue_id: I_kwDOR_b51c8AAAABIRxG0g
+        database_id: 4850468562
+        number: 1617
+        url: https://github.com/ggortsema/styxcd-docs/issues/1617
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLjY
   - id: implement-idempotent-synchronization
     type: issue
     title: Implement Idempotent Synchronization
@@ -3842,11 +3852,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWNiQ
-        database_id: 4773481865
-        number: 953
-        url: https://github.com/ggortsema/styxcd-docs/issues/953
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2mA
+        issue_id: I_kwDOR_b51c8AAAABIRxHTg
+        database_id: 4850468686
+        number: 1618
+        url: https://github.com/ggortsema/styxcd-docs/issues/1618
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLj8
   - id: implement-dry-run-mode
     type: issue
     title: Implement Dry-Run Mode
@@ -3862,11 +3872,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWNxg
-        database_id: 4773481926
-        number: 954
-        url: https://github.com/ggortsema/styxcd-docs/issues/954
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2mU
+        issue_id: I_kwDOR_b51c8AAAABIRxHxw
+        database_id: 4850468807
+        number: 1619
+        url: https://github.com/ggortsema/styxcd-docs/issues/1619
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLko
   - id: dogfood-backlog-as-code-synchronization
     type: issue
     title: Dogfood Backlog-as-Code Synchronization
@@ -3894,11 +3904,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWOWA
-        database_id: 4773482072
-        number: 956
-        url: https://github.com/ggortsema/styxcd-docs/issues/956
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2m0
+        issue_id: I_kwDOR_b51c8AAAABIRxIRg
+        database_id: 4850468934
+        number: 1620
+        url: https://github.com/ggortsema/styxcd-docs/issues/1620
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLlA
   - id: create-issue-command
     type: issue
     title: Create Issue Command
@@ -3914,11 +3924,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHI2J9Q
-        database_id: 4774005237
-        number: 957
-        url: https://github.com/ggortsema/styxcd-docs/issues/957
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPV-E
+        issue_id: I_kwDOR_b51c8AAAABIRxIww
+        database_id: 4850469059
+        number: 1621
+        url: https://github.com/ggortsema/styxcd-docs/issues/1621
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLlw
   - id: create-epic-command
     type: issue
     title: Create Epic Command
@@ -3934,11 +3944,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHI9epw
-        database_id: 4774125223
-        number: 959
-        url: https://github.com/ggortsema/styxcd-docs/issues/959
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPeyg
+        issue_id: I_kwDOR_b51c8AAAABIRxJJw
+        database_id: 4850469159
+        number: 1622
+        url: https://github.com/ggortsema/styxcd-docs/issues/1622
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLmU
   - id: expand-update-issue-command
     type: issue
     title: Expand Update Issue Command
@@ -3955,7 +3965,12 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-08T22:08:22.451361+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2JJg
+          database_id: 4930242854
+          url: https://github.com/ggortsema/styxcd-docs/issues/1623#issuecomment-4930242854
+          created_at: '2026-07-09T22:49:10Z'
+          updated_at: '2026-07-09T22:49:10Z'
     - id: comment-20cf582497cf4898bdc04f1ba8303fa1
       body: Expanded the update command to support both epics and issues using stable backlog item IDs. Added append-only
         implementation comments while preserving the canonical specification and integrated support for the new CLI command
@@ -3963,17 +3978,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:53:41.417264+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2JTQ
+          database_id: 4930242893
+          url: https://github.com/ggortsema/styxcd-docs/issues/1623#issuecomment-4930242893
+          created_at: '2026-07-09T22:49:11Z'
+          updated_at: '2026-07-09T22:49:11Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHI9hlw
-        database_id: 4774125975
-        number: 960
-        url: https://github.com/ggortsema/styxcd-docs/issues/960
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPe24
+        issue_id: I_kwDOR_b51c8AAAABIRxJuA
+        database_id: 4850469304
+        number: 1623
+        url: https://github.com/ggortsema/styxcd-docs/issues/1623
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLnA
   - id: list-issues-command
     type: issue
     title: List Issues Command
@@ -3990,17 +4010,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:31:47.597703+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2J8w
+          database_id: 4930243059
+          url: https://github.com/ggortsema/styxcd-docs/issues/1624#issuecomment-4930243059
+          created_at: '2026-07-09T22:49:13Z'
+          updated_at: '2026-07-09T22:49:13Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHI9lqg
-        database_id: 4774127018
-        number: 961
-        url: https://github.com/ggortsema/styxcd-docs/issues/961
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPe7Q
+        issue_id: I_kwDOR_b51c8AAAABIRxKhw
+        database_id: 4850469511
+        number: 1624
+        url: https://github.com/ggortsema/styxcd-docs/issues/1624
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLnk
   - id: update-epic-command
     type: issue
     title: Update Epic Command
@@ -4018,17 +4043,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:31:56.415290+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2Kng
+          database_id: 4930243230
+          url: https://github.com/ggortsema/styxcd-docs/issues/1625#issuecomment-4930243230
+          created_at: '2026-07-09T22:49:15Z'
+          updated_at: '2026-07-09T22:49:15Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJFgsw
-        database_id: 4774256819
-        number: 962
-        url: https://github.com/ggortsema/styxcd-docs/issues/962
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPmYw
+        issue_id: I_kwDOR_b51c8AAAABIRxLHg
+        database_id: 4850469662
+        number: 1625
+        url: https://github.com/ggortsema/styxcd-docs/issues/1625
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLok
   - id: find-issue-command
     type: issue
     title: Find Issue Command
@@ -4046,17 +4076,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:32:08.684015+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2LKw
+          database_id: 4930243371
+          url: https://github.com/ggortsema/styxcd-docs/issues/1626#issuecomment-4930243371
+          created_at: '2026-07-09T22:49:17Z'
+          updated_at: '2026-07-09T22:49:17Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJGnqQ
-        database_id: 4774274985
-        number: 963
-        url: https://github.com/ggortsema/styxcd-docs/issues/963
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPniw
+        issue_id: I_kwDOR_b51c8AAAABIRxLqw
+        database_id: 4850469803
+        number: 1626
+        url: https://github.com/ggortsema/styxcd-docs/issues/1626
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLpQ
   - id: move-issue-command
     type: issue
     title: Move Issue Command
@@ -4074,17 +4109,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T15:33:48.849751+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2MCQ
+          database_id: 4930243593
+          url: https://github.com/ggortsema/styxcd-docs/issues/1627#issuecomment-4930243593
+          created_at: '2026-07-09T22:49:19Z'
+          updated_at: '2026-07-09T22:49:19Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJKe1w
-        database_id: 4774338263
-        number: 966
-        url: https://github.com/ggortsema/styxcd-docs/issues/966
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPq7A
+        issue_id: I_kwDOR_b51c8AAAABIRxMQA
+        database_id: 4850469952
+        number: 1627
+        url: https://github.com/ggortsema/styxcd-docs/issues/1627
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLpo
   - id: add-backlog-describe-command
     type: issue
     title: Add Backlog Describe Command
@@ -4103,17 +4143,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:31:38.288610+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2NBg
+          database_id: 4930243846
+          url: https://github.com/ggortsema/styxcd-docs/issues/1628#issuecomment-4930243846
+          created_at: '2026-07-09T22:49:21Z'
+          updated_at: '2026-07-09T22:49:21Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJzWLw
-        database_id: 4775007791
-        number: 982
-        url: https://github.com/ggortsema/styxcd-docs/issues/982
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQTew
+        issue_id: I_kwDOR_b51c8AAAABIRxNag
+        database_id: 4850470250
+        number: 1628
+        url: https://github.com/ggortsema/styxcd-docs/issues/1628
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLqs
   - id: support-provider-adapters
     type: issue
     title: Support Provider Adapters
@@ -4132,11 +4177,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHIWOAg
-        database_id: 4773481986
-        number: 955
-        url: https://github.com/ggortsema/styxcd-docs/issues/955
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxO2mk
+        issue_id: I_kwDOR_b51c8AAAABIRxN-Q
+        database_id: 4850470393
+        number: 1629
+        url: https://github.com/ggortsema/styxcd-docs/issues/1629
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLrQ
   - id: execute-playbook-command
     type: issue
     title: Execute Playbook Command
@@ -4154,17 +4199,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T15:38:58.976132+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2Oxg
+          database_id: 4930244294
+          url: https://github.com/ggortsema/styxcd-docs/issues/1630#issuecomment-4930244294
+          created_at: '2026-07-09T22:49:25Z'
+          updated_at: '2026-07-09T22:49:25Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJKIbg
-        database_id: 4774332526
-        number: 965
-        url: https://github.com/ggortsema/styxcd-docs/issues/965
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxPqnE
+        issue_id: I_kwDOR_b51c8AAAABIRxPHg
+        database_id: 4850470686
+        number: 1630
+        url: https://github.com/ggortsema/styxcd-docs/issues/1630
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLsU
   - id: support-provider-to-canonical-synchronization
     type: issue
     title: Support Provider-to-Canonical Synchronization
@@ -4182,11 +4232,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJv8mw
-        database_id: 4774952091
-        number: 980
-        url: https://github.com/ggortsema/styxcd-docs/issues/980
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQQHE
+        issue_id: I_kwDOR_b51c8AAAABIRxP8A
+        database_id: 4850470896
+        number: 1631
+        url: https://github.com/ggortsema/styxcd-docs/issues/1631
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLtQ
   - id: implement-centralized-configuration-management
     type: issue
     title: Implement Centralized Configuration Management
@@ -4207,24 +4257,34 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T01:19:53.593505+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2QOA
+          database_id: 4930244664
+          url: https://github.com/ggortsema/styxcd-docs/issues/1632#issuecomment-4930244664
+          created_at: '2026-07-09T22:49:28Z'
+          updated_at: '2026-07-09T22:49:28Z'
     - id: comment-2e7680ac181d49b085fc18be3ce4fd4a
       body: Moved to Ready because centralized configuration is becoming important as behavior tests, provider access, and
         command workflows mature.
       source: johnny-johnny
       created_at: '2026-07-09T15:39:08.198822+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2Qag
+          database_id: 4930244714
+          url: https://github.com/ggortsema/styxcd-docs/issues/1632#issuecomment-4930244714
+          created_at: '2026-07-09T22:49:29Z'
+          updated_at: '2026-07-09T22:49:29Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABII3mzQ
-        database_id: 4841137869
-        number: 983
-        url: https://github.com/ggortsema/styxcd-docs/issues/983
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMMsE
+        issue_id: I_kwDOR_b51c8AAAABIRxQYg
+        database_id: 4850471010
+        number: 1632
+        url: https://github.com/ggortsema/styxcd-docs/issues/1632
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLtc
   - id: record-provider-reconciliation-state
     type: issue
     title: Record Provider Reconciliation State
@@ -4247,17 +4307,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T15:39:16.276399+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2RUg
+          database_id: 4930244946
+          url: https://github.com/ggortsema/styxcd-docs/issues/1633#issuecomment-4930244946
+          created_at: '2026-07-09T22:49:31Z'
+          updated_at: '2026-07-09T22:49:31Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIJN0Iw
-        database_id: 4841501731
-        number: 984
-        url: https://github.com/ggortsema/styxcd-docs/issues/984
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMdZA
+        issue_id: I_kwDOR_b51c8AAAABIRxRFg
+        database_id: 4850471190
+        number: 1633
+        url: https://github.com/ggortsema/styxcd-docs/issues/1633
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLuU
   - id: preserve-canonical-stable-ids
     type: issue
     title: Preserve Canonical Stable IDs During GitHub Synchronization
@@ -4282,17 +4347,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:53:58.113240+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2R-Q
+          database_id: 4930245113
+          url: https://github.com/ggortsema/styxcd-docs/issues/1634#issuecomment-4930245113
+          created_at: '2026-07-09T22:49:33Z'
+          updated_at: '2026-07-09T22:49:33Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIJN_vQ
-        database_id: 4841504701
-        number: 985
-        url: https://github.com/ggortsema/styxcd-docs/issues/985
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMdgM
+        issue_id: I_kwDOR_b51c8AAAABIRxR0Q
+        database_id: 4850471377
+        number: 1634
+        url: https://github.com/ggortsema/styxcd-docs/issues/1634
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLvU
   - id: cli-generic-list-command
     type: issue
     title: Introduce Generic List Command Hierarchy
@@ -4317,17 +4387,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:32:18.041341+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2Svw
+          database_id: 4930245311
+          url: https://github.com/ggortsema/styxcd-docs/issues/1635#issuecomment-4930245311
+          created_at: '2026-07-09T22:49:35Z'
+          updated_at: '2026-07-09T22:49:35Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIJiIuA
-        database_id: 4841834680
-        number: 987
-        url: https://github.com/ggortsema/styxcd-docs/issues/987
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMx-4
+        issue_id: I_kwDOR_b51c8AAAABIRxSVQ
+        database_id: 4850471509
+        number: 1635
+        url: https://github.com/ggortsema/styxcd-docs/issues/1635
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLvw
   - id: stabilize-canonical-backlog-item-identity
     type: issue
     title: Stabilize Canonical Backlog Item Identity
@@ -4351,17 +4426,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T00:54:07.573352+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2TnA
+          database_id: 4930245532
+          url: https://github.com/ggortsema/styxcd-docs/issues/1636#issuecomment-4930245532
+          created_at: '2026-07-09T22:49:37Z'
+          updated_at: '2026-07-09T22:49:37Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIJ3SGQ
-        database_id: 4842181145
-        number: 988
-        url: https://github.com/ggortsema/styxcd-docs/issues/988
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNGl4
+        issue_id: I_kwDOR_b51c8AAAABIRxS4A
+        database_id: 4850471648
+        number: 1636
+        url: https://github.com/ggortsema/styxcd-docs/issues/1636
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLwg
   - id: complete-canonical-cli-grammar
     type: issue
     title: Complete Canonical CLI Grammar
@@ -4384,7 +4464,12 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T01:03:07.260819+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2UMQ
+          database_id: 4930245681
+          url: https://github.com/ggortsema/styxcd-docs/issues/1637#issuecomment-4930245681
+          created_at: '2026-07-09T22:49:39Z'
+          updated_at: '2026-07-09T22:49:39Z'
     - id: comment-70685eba84b04a96b443b7a385133d9e
       body: 'Completed the canonical backlog CLI grammar. Introduced noun-oriented command groups: ''jj backlog create epic'',
         ''jj backlog create issue'', ''jj backlog list epics'', ''jj backlog list items'', ''jj backlog describe <id>'', and
@@ -4393,17 +4478,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T14:29:20.089174+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2UVw
+          database_id: 4930245719
+          url: https://github.com/ggortsema/styxcd-docs/issues/1637#issuecomment-4930245719
+          created_at: '2026-07-09T22:49:40Z'
+          updated_at: '2026-07-09T22:49:40Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIJ7DYg
-        database_id: 4842242914
-        number: 989
-        url: https://github.com/ggortsema/styxcd-docs/issues/989
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNKPc
+        issue_id: I_kwDOR_b51c8AAAABIRxTiw
+        database_id: 4850471819
+        number: 1637
+        url: https://github.com/ggortsema/styxcd-docs/issues/1637
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLxk
   - id: clean-up-legacy-cli-commands
     type: issue
     title: Clean Up Legacy CLI Commands
@@ -4425,7 +4515,12 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T01:03:14.888706+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2VJA
+          database_id: 4930245924
+          url: https://github.com/ggortsema/styxcd-docs/issues/1638#issuecomment-4930245924
+          created_at: '2026-07-09T22:49:42Z'
+          updated_at: '2026-07-09T22:49:42Z'
     - id: comment-b5a2c4d23aa7442a95d065716514d9d9
       body: 'Removed transitional CLI commands and compatibility aliases. Deleted legacy commands: create-epic, create-issue,
         list-epics, list-issues, and update-issue. Cleaned unused code and imports. Added behavior tests validating the canonical
@@ -4433,17 +4528,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T14:34:34.983125+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2VVg
+          database_id: 4930245974
+          url: https://github.com/ggortsema/styxcd-docs/issues/1638#issuecomment-4930245974
+          created_at: '2026-07-09T22:49:42Z'
+          updated_at: '2026-07-09T22:49:42Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIJ7I8Q
-        database_id: 4842244337
-        number: 990
-        url: https://github.com/ggortsema/styxcd-docs/issues/990
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNKTE
+        issue_id: I_kwDOR_b51c8AAAABIRxVIQ
+        database_id: 4850472225
+        number: 1638
+        url: https://github.com/ggortsema/styxcd-docs/issues/1638
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLyo
   - id: separate-canonical-change-reporting-from-provider-operations
     type: issue
     title: Separate Canonical Change Reporting from Provider Operations
@@ -4467,17 +4567,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T15:39:26.655160+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2WQw
+          database_id: 4930246211
+          url: https://github.com/ggortsema/styxcd-docs/issues/1639#issuecomment-4930246211
+          created_at: '2026-07-09T22:49:44Z'
+          updated_at: '2026-07-09T22:49:44Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIKALsQ
-        database_id: 4842326961
-        number: 991
-        url: https://github.com/ggortsema/styxcd-docs/issues/991
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNP8g
+        issue_id: I_kwDOR_b51c8AAAABIRxVvw
+        database_id: 4850472383
+        number: 1639
+        url: https://github.com/ggortsema/styxcd-docs/issues/1639
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVLzw
   - id: expand-cli-behavior-test-suite
     type: issue
     title: Expand CLI Behavior Test Suite
@@ -4499,17 +4604,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T14:33:06.004971+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2W6A
+          database_id: 4930246376
+          url: https://github.com/ggortsema/styxcd-docs/issues/1640#issuecomment-4930246376
+          created_at: '2026-07-09T22:49:46Z'
+          updated_at: '2026-07-09T22:49:46Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIOmaVw
-        database_id: 4847147607
-        number: 992
-        url: https://github.com/ggortsema/styxcd-docs/issues/992
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgySI1A
+        issue_id: I_kwDOR_b51c8AAAABIRxWWg
+        database_id: 4850472538
+        number: 1640
+        url: https://github.com/ggortsema/styxcd-docs/issues/1640
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL0o
   - id: add-end-to-end-cli-behavior-tests
     type: issue
     title: Add End-to-End CLI Behavior Tests
@@ -4532,14 +4642,24 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T15:39:47.416782+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2Xpw
+          database_id: 4930246567
+          url: https://github.com/ggortsema/styxcd-docs/issues/1641#issuecomment-4930246567
+          created_at: '2026-07-09T22:49:48Z'
+          updated_at: '2026-07-09T22:49:48Z'
     - id: comment-a60337925b87459299674dc0028be370
       body: Started as the next Backlog as Code story to protect canonical CLI workflows and mutation behavior with executable
         behavior tests before changing persistence.
       source: johnny-johnny
       created_at: '2026-07-09T15:45:36.071727+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2X1w
+          database_id: 4930246615
+          url: https://github.com/ggortsema/styxcd-docs/issues/1641#issuecomment-4930246615
+          created_at: '2026-07-09T22:49:48Z'
+          updated_at: '2026-07-09T22:49:48Z'
     - id: comment-80f2decc007a4245b2d654d09cb369ba
       body: 'Established the initial CLI behavior testing framework using Typer CliRunner with isolated canonical backlog
         workflow tests. During implementation this capability was refined into several follow-on stories: Add GitHub Provider
@@ -4549,17 +4669,22 @@ epics:
       source: johnny-johnny
       created_at: '2026-07-09T16:25:37.927121+00:00'
       provider_metadata:
-        github: {}
+        github:
+          comment_id: IC_kwDOR_b51c8AAAABJd2X_g
+          database_id: 4930246654
+          url: https://github.com/ggortsema/styxcd-docs/issues/1641#issuecomment-4930246654
+          created_at: '2026-07-09T22:49:49Z'
+          updated_at: '2026-07-09T22:49:49Z'
     labels: []
     assignees: []
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIOpElg
-        database_id: 4847191190
-        number: 993
-        url: https://github.com/ggortsema/styxcd-docs/issues/993
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgySMNo
+        issue_id: I_kwDOR_b51c8AAAABIRxW3w
+        database_id: 4850472671
+        number: 1641
+        url: https://github.com/ggortsema/styxcd-docs/issues/1641
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL1M
   - id: externalize-and-validate-behavior-test-backlog-fixtures
     type: issue
     title: Externalize and Validate Behavior Test Backlog Fixtures
@@ -4580,11 +4705,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIPa0Iw
-        database_id: 4848006179
-        number: 994
-        url: https://github.com/ggortsema/styxcd-docs/issues/994
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTBj4
+        issue_id: I_kwDOR_b51c8AAAABIRxXow
+        database_id: 4850472867
+        number: 1642
+        url: https://github.com/ggortsema/styxcd-docs/issues/1642
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL2A
   - id: add-github-provider-integration-tests
     type: issue
     title: Add GitHub Provider Integration Tests
@@ -4604,11 +4729,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIPbBmQ
-        database_id: 4848009625
-        number: 995
-        url: https://github.com/ggortsema/styxcd-docs/issues/995
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTBws
+        issue_id: I_kwDOR_b51c8AAAABIRxYFg
+        database_id: 4850472982
+        number: 1643
+        url: https://github.com/ggortsema/styxcd-docs/issues/1643
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL2k
   - id: add-backlog-round-trip-system-tests
     type: issue
     title: Add Backlog Round-Trip System Tests
@@ -4627,11 +4752,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIPbH_Q
-        database_id: 4848011261
-        number: 996
-        url: https://github.com/ggortsema/styxcd-docs/issues/996
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTB3M
+        issue_id: I_kwDOR_b51c8AAAABIRxYeQ
+        database_id: 4850473081
+        number: 1644
+        url: https://github.com/ggortsema/styxcd-docs/issues/1644
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL3A
   - id: add-provider-test-environment-controls
     type: issue
     title: Add Provider Test Environment Controls
@@ -4650,38 +4775,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIPbONw
-        database_id: 4848012855
-        number: 997
-        url: https://github.com/ggortsema/styxcd-docs/issues/997
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTB84
-  - id: synchronize-canonical-comments-to-provider-projection
-    type: issue
-    title: Synchronize Canonical Comments to Provider Projection
-    repository: ggortsema/styxcd-docs
-    status: Ready
-    issue_state: OPEN
-    order: 40000
-    description: Update canonical backlog reconciliation so comments stored in backlog.yml are written to the provider projection
-      and are not duplicated on repeated reconciles.
-    acceptance_criteria:
-    - Canonical backlog item comments are included in the reconciliation plan when missing from the provider projection.
-    - Canonical comments are written to GitHub as issue comments or another explicitly documented provider representation.
-    - Repeated reconcile runs do not duplicate comments that were already written.
-    - Hydrated provider metadata records enough information to identify provider-side comments on future reconciliations.
-    - A sandbox project reconcile from backlog-sandbox.yml creates comments for representative epics and issues.
-    - A second sandbox dry-run after reconcile reports no comment-related operations.
-    comments: []
-    labels: []
-    assignees: []
-    milestone: null
-    provider_metadata:
-      github:
-        issue_id: I_kwDOR_b51c8AAAABIROPAg
-        database_id: 4849897218
-        number: 1216
-        url: https://github.com/ggortsema/styxcd-docs/issues/1216
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyUrhU
+        issue_id: I_kwDOR_b51c8AAAABIRxZNg
+        database_id: 4850473270
+        number: 1645
+        url: https://github.com/ggortsema/styxcd-docs/issues/1645
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL3s
 - id: johnny-johnny-core-cli
   type: epic
   title: Johnny-Johnny Core CLI
@@ -4699,11 +4797,11 @@ epics:
   milestone: null
   provider_metadata:
     github:
-      issue_id: I_kwDOR_b51c8AAAABHJc6nw
-      database_id: 4774640287
-      number: 969
-      url: https://github.com/ggortsema/styxcd-docs/issues/969
-      project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP9SA
+      issue_id: I_kwDOR_b51c8AAAABIRxaxQ
+      database_id: 4850473669
+      number: 1646
+      url: https://github.com/ggortsema/styxcd-docs/issues/1646
+      project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL5E
   issues:
   - id: implement-langgraph-tool-adapter
     type: issue
@@ -4722,11 +4820,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJdHSg
-        database_id: 4774643530
-        number: 970
-        url: https://github.com/ggortsema/styxcd-docs/issues/970
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP9fk
+        issue_id: I_kwDOR_b51c8AAAABIRxbFA
+        database_id: 4850473748
+        number: 1647
+        url: https://github.com/ggortsema/styxcd-docs/issues/1647
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL5s
   - id: add-postgresql-vector-store-support
     type: issue
     title: Add PostgreSQL Vector Store Support
@@ -4743,11 +4841,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJeNNA
-        database_id: 4774661428
-        number: 971
-        url: https://github.com/ggortsema/styxcd-docs/issues/971
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-nc
+        issue_id: I_kwDOR_b51c8AAAABIRxbhg
+        database_id: 4850473862
+        number: 1648
+        url: https://github.com/ggortsema/styxcd-docs/issues/1648
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL6U
   - id: implement-project-document-ingestion
     type: issue
     title: Implement Project Document Ingestion
@@ -4764,11 +4862,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJeRbQ
-        database_id: 4774662509
-        number: 972
-        url: https://github.com/ggortsema/styxcd-docs/issues/972
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-rg
+        issue_id: I_kwDOR_b51c8AAAABIRxb7g
+        database_id: 4850473966
+        number: 1649
+        url: https://github.com/ggortsema/styxcd-docs/issues/1649
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL60
   - id: implement-rag-retrieval-command
     type: issue
     title: Implement RAG Retrieval Command
@@ -4785,11 +4883,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJeWgg
-        database_id: 4774663810
-        number: 973
-        url: https://github.com/ggortsema/styxcd-docs/issues/973
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-w0
+        issue_id: I_kwDOR_b51c8AAAABIRxcaQ
+        database_id: 4850474089
+        number: 1650
+        url: https://github.com/ggortsema/styxcd-docs/issues/1650
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL7k
   - id: add-ai-configuration-management
     type: issue
     title: Add AI Configuration Management
@@ -4806,11 +4904,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJedrg
-        database_id: 4774665646
-        number: 974
-        url: https://github.com/ggortsema/styxcd-docs/issues/974
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxP-3M
+        issue_id: I_kwDOR_b51c8AAAABIRxdGA
+        database_id: 4850474264
+        number: 1651
+        url: https://github.com/ggortsema/styxcd-docs/issues/1651
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL8c
   - id: design-capability-orchestrating-chat-interface
     type: issue
     title: Design Capability-Orchestrating Chat Interface
@@ -4828,11 +4926,11 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABHJgQwQ
-        database_id: 4774695105
-        number: 975
-        url: https://github.com/ggortsema/styxcd-docs/issues/975
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgxQA5Y
+        issue_id: I_kwDOR_b51c8AAAABIRxdoQ
+        database_id: 4850474401
+        number: 1652
+        url: https://github.com/ggortsema/styxcd-docs/issues/1652
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL9U
   - id: list-issues-by-epic
     type: issue
     title: List Issues By Epic
@@ -4853,8 +4951,8 @@ epics:
     milestone: null
     provider_metadata:
       github:
-        issue_id: I_kwDOR_b51c8AAAABIJO-sQ
-        database_id: 4841520817
-        number: 986
-        url: https://github.com/ggortsema/styxcd-docs/issues/986
-        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyMeZk
+        issue_id: I_kwDOR_b51c8AAAABIRxeFg
+        database_id: 4850474518
+        number: 1653
+        url: https://github.com/ggortsema/styxcd-docs/issues/1653
+        project_item_id: PVTI_lAHOA_XBWs4Bc90ozgyVL98

@@ -27,6 +27,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     DeleteIssueOperation,
     UpdateIssueStatusOperation,
     plan_reconcile_backlog,
+    CreateCommentOperation,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.purge import (
     purge_johnny_managed_issues,
@@ -871,6 +872,13 @@ def _print_reconciliation_plan(plan) -> None:
                 f"+ Update issue status: "
                 f"{operation.issue.title} "
                 f"{operation.current_status} -> {operation.desired_status}"
+            )
+
+        elif isinstance(operation, CreateCommentOperation):
+            typer.echo(
+                f"+ Create comment: "
+                f"{operation.item.title} "
+                f"[{operation.comment.id}]"
             )
 
         elif isinstance(operation, DeleteIssueOperation):

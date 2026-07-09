@@ -160,7 +160,20 @@ def create_issue(repository_id: str, title: str, body: str = "") -> dict:
         },
     )
 
-    return data["createIssue"]["issue"]
+    create_issue_result = data.get("createIssue")
+    if not create_issue_result:
+        raise RuntimeError(
+            f"GitHub createIssue returned no createIssue payload for title: {title}"
+        )
+
+    issue = create_issue_result.get("issue")
+    if not issue:
+        raise RuntimeError(
+            f"GitHub createIssue returned no issue payload for title: {title}. "
+            f"Response payload: {create_issue_result}"
+        )
+
+    return issue
 
 
 def add_issue_to_project(project_id: str, issue_id: str) -> dict:
@@ -408,6 +421,16 @@ query ListProjectIssues($projectId: ID!, $after: String) {
               state
               createdAt
               updatedAt
+              comments(first: 100) {
+                nodes {
+                  id
+                  databaseId
+                  body
+                  url
+                  createdAt
+                  updatedAt
+                }
+              }
               repository {
                 nameWithOwner
               }
@@ -472,6 +495,17 @@ query ListProjectIssues($projectId: ID!, $after: String) {
                     "state": content["state"],
                     "created_at": content["createdAt"],
                     "updated_at": content["updatedAt"],
+                    "comments": [
+                        {
+                            "id": comment["id"],
+                            "database_id": comment["databaseId"],
+                            "body": comment.get("body") or "",
+                            "url": comment["url"],
+                            "created_at": comment["createdAt"],
+                            "updated_at": comment["updatedAt"],
+                        }
+                        for comment in content["comments"]["nodes"]
+                    ],
                     "repository": content["repository"]["nameWithOwner"],
                     "labels": [
                         label["name"]
@@ -498,6 +532,39 @@ query ListProjectIssues($projectId: ID!, $after: String) {
 
     return issues
 
+def create_issue_comment(
+        issue_id: str,
+        body: str,
+) -> dict:
+    mutation = """
+    mutation CreateIssueComment($issueId: ID!, $body: String!) {
+      addComment(input: {
+        subjectId: $issueId
+        body: $body
+      }) {
+        commentEdge {
+          node {
+            id
+            databaseId
+            body
+            url
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+    """
+
+    data = execute_graphql(
+        mutation,
+        {
+            "issueId": issue_id,
+            "body": body,
+        },
+    )
+
+    return data["addComment"]["commentEdge"]["node"]
 
 def _project_status_from_item(item: dict[str, Any]) -> str | None:
     field_values = item.get("fieldValues", {}).get("nodes", [])
