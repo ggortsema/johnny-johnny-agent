@@ -4514,7 +4514,7 @@ epics:
     type: issue
     title: Add End-to-End CLI Behavior Tests
     repository: ggortsema/styxcd-docs
-    status: In Progress
+    status: Done
     issue_state: OPEN
     order: 35000
     description: Expand the CLI behavior test suite to exercise complete user workflows against a temporary canonical backlog.
@@ -4540,6 +4540,16 @@ epics:
       created_at: '2026-07-09T15:45:36.071727+00:00'
       provider_metadata:
         github: {}
+    - id: comment-80f2decc007a4245b2d654d09cb369ba
+      body: 'Established the initial CLI behavior testing framework using Typer CliRunner with isolated canonical backlog
+        workflow tests. During implementation this capability was refined into several follow-on stories: Add GitHub Provider
+        Integration Tests, Add Backlog Round-Trip System Tests, Add Provider Test Environment Controls, and Externalize and
+        Validate Behavior Test Backlog Fixtures. These stories capture the remaining provider-specific and system-level testing
+        capabilities while preserving the completed local CLI behavior testing foundation.'
+      source: johnny-johnny
+      created_at: '2026-07-09T16:25:37.927121+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4550,6 +4560,101 @@ epics:
         number: 993
         url: https://github.com/ggortsema/styxcd-docs/issues/993
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgySMNo
+  - id: externalize-and-validate-behavior-test-backlog-fixtures
+    type: issue
+    title: Externalize and Validate Behavior Test Backlog Fixtures
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 36000
+    description: Move embedded test backlog YAML into dedicated fixture files and validate those fixtures against the canonical
+      backlog schema during behavior tests.
+    acceptance_criteria:
+    - Behavior test backlog YAML is stored in dedicated fixture files.
+    - Behavior tests load fixture files instead of embedding YAML strings.
+    - Fixture YAML is validated against the canonical backlog schema before workflow assertions run.
+    - Schema drift causes behavior tests to fail clearly.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIPa0Iw
+        database_id: 4848006179
+        number: 994
+        url: https://github.com/ggortsema/styxcd-docs/issues/994
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTBj4
+  - id: add-github-provider-integration-tests
+    type: issue
+    title: Add GitHub Provider Integration Tests
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 37000
+    description: Add provider-level behavior tests that verify canonical backlog operations are correctly projected into GitHub.
+    acceptance_criteria:
+    - Tests verify epic creation in GitHub.
+    - Tests verify issue creation in GitHub.
+    - Tests verify issue attachment to epic/project.
+    - Tests are clearly marked and can be run separately from local behavior tests.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIPbBmQ
+        database_id: 4848009625
+        number: 995
+        url: https://github.com/ggortsema/styxcd-docs/issues/995
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTBws
+  - id: add-backlog-round-trip-system-tests
+    type: issue
+    title: Add Backlog Round-Trip System Tests
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 38000
+    description: Add end-to-end system tests that verify CLI-to-provider-to-canonical round-trip behavior.
+    acceptance_criteria:
+    - Tests can create canonical backlog data, publish it, pull it back, and compare the resulting model.
+    - Round-trip tests are opt-in and separate from fast local behavior tests.
+    - Tests document the full system contract.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIPbH_Q
+        database_id: 4848011261
+        number: 996
+        url: https://github.com/ggortsema/styxcd-docs/issues/996
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTB3M
+  - id: add-provider-test-environment-controls
+    type: issue
+    title: Add Provider Test Environment Controls
+    repository: ggortsema/styxcd-docs
+    status: Ready
+    issue_state: OPEN
+    order: 39000
+    description: Add test markers, configuration, and safeguards for tests that use real providers such as GitHub.
+    acceptance_criteria:
+    - Provider tests require explicit markers or flags.
+    - Provider tests fail clearly when required credentials are missing.
+    - Local behavior tests remain fast and offline.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIPbONw
+        database_id: 4848012855
+        number: 997
+        url: https://github.com/ggortsema/styxcd-docs/issues/997
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyTB84
 - id: johnny-johnny-core-cli
   type: epic
   title: Johnny-Johnny Core CLI
