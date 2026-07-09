@@ -4167,10 +4167,20 @@ epics:
     status: Backlog
     issue_state: OPEN
     order: 26000
-    description: Add local environment configuration support so Johnny-Johnny can load required secrets such as GITHUB_TOKEN
-      from a non-committed .env file while keeping committed examples safe.
+    description: Externalize Johnny-Johnny project-specific configuration so project defaults are no longer hardcoded. Configuration
+      should include the canonical backlog location, GitHub owner, repository, project title, provider configuration, and
+      future project-level settings. Secrets such as GitHub tokens should remain externalized through environment variables.
+      This establishes the centralized configuration model that future capabilities will build upon.
     acceptance_criteria: []
-    comments: []
+    comments:
+    - id: comment-c6da05eea4004cf5a5c027c5a1f03f9f
+      body: Refined the scope of this story during CLI modernization. The initial implementation will externalize project-specific
+        defaults (backlog path, GitHub owner, repository, project title, etc.) into a project configuration file while continuing
+        to source secrets from environment variables. Future provider and persistence configuration will build on this foundation.
+      source: johnny-johnny
+      created_at: '2026-07-09T01:19:53.593505+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4315,7 +4325,7 @@ epics:
     type: issue
     title: Complete Canonical CLI Grammar
     repository: ggortsema/styxcd-docs
-    status: In Progress
+    status: Done
     issue_state: OPEN
     order: 31000
     description: Finish the public Johnny-Johnny backlog CLI grammar so mutation commands follow the same noun-oriented structure
@@ -4334,6 +4344,15 @@ epics:
       created_at: '2026-07-09T01:03:07.260819+00:00'
       provider_metadata:
         github: {}
+    - id: comment-70685eba84b04a96b443b7a385133d9e
+      body: 'Completed the canonical backlog CLI grammar. Introduced noun-oriented command groups: ''jj backlog create epic'',
+        ''jj backlog create issue'', ''jj backlog list epics'', ''jj backlog list items'', ''jj backlog describe <id>'', and
+        ''jj backlog update <id>''. The CLI now operates on backlog items after creation using stable Johnny-Johnny IDs. Legacy
+        verb-specific command names were removed.'
+      source: johnny-johnny
+      created_at: '2026-07-09T14:29:20.089174+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4348,7 +4367,7 @@ epics:
     type: issue
     title: Clean Up Legacy CLI Commands
     repository: ggortsema/styxcd-docs
-    status: In Progress
+    status: Done
     issue_state: OPEN
     order: 32000
     description: Remove deprecated backlog CLI aliases and obsolete code after the canonical CLI grammar is implemented. This
@@ -4366,6 +4385,14 @@ epics:
       created_at: '2026-07-09T01:03:14.888706+00:00'
       provider_metadata:
         github: {}
+    - id: comment-b5a2c4d23aa7442a95d065716514d9d9
+      body: 'Removed transitional CLI commands and compatibility aliases. Deleted legacy commands: create-epic, create-issue,
+        list-epics, list-issues, and update-issue. Cleaned unused code and imports. Added behavior tests validating the canonical
+        CLI grammar and verifying that legacy commands are no longer available.'
+      source: johnny-johnny
+      created_at: '2026-07-09T14:34:34.983125+00:00'
+      provider_metadata:
+        github: {}
     labels: []
     assignees: []
     milestone: null
@@ -4376,6 +4403,92 @@ epics:
         number: 990
         url: https://github.com/ggortsema/styxcd-docs/issues/990
         project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNKTE
+  - id: separate-canonical-change-reporting-from-provider-operations
+    type: issue
+    title: Separate Canonical Change Reporting from Provider Operations
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 33000
+    description: Update mutation command output so canonical changes are reported separately from provider reconciliation
+      operations. Commands that modify the canonical backlog should clearly report what changed in the canonical model even
+      when no provider synchronization operations are required.
+    acceptance_criteria:
+    - Update commands report canonical changes such as title, description, status, acceptance criteria, and comments.
+    - Provider reconciliation operations are reported separately from canonical changes.
+    - 'A command that changes only canonical fields no longer appears as ''Operations: 0'' without also showing the canonical
+      changes that were saved.'
+    - The output makes it clear whether provider synchronization was required.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIKALsQ
+        database_id: 4842326961
+        number: 991
+        url: https://github.com/ggortsema/styxcd-docs/issues/991
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgyNP8g
+  - id: expand-cli-behavior-test-suite
+    type: issue
+    title: Expand CLI Behavior Test Suite
+    repository: ggortsema/styxcd-docs
+    status: Done
+    issue_state: OPEN
+    order: 34000
+    description: Establish CLI behavior tests as part of the Definition of Done for public commands. Expand the behavior suite
+      to validate command grammar, help output, and expected CLI behavior so future refactoring can occur safely.
+    acceptance_criteria:
+    - Behavior tests exist for all public backlog CLI commands.
+    - Behavior tests validate canonical command grammar.
+    - Behavior tests are executed using 'uv run pytest'.
+    comments:
+    - id: comment-cb3266a783584ff79f266c3cefda1f9b
+      body: Introduced the project's first CLI behavior test suite using pytest and Typer's CliRunner. Added tests covering
+        the canonical backlog grammar, grouped command structure, help output, and removal of legacy CLI commands. Established
+        behavior testing as part of the Definition of Done for public CLI functionality.
+      source: johnny-johnny
+      created_at: '2026-07-09T14:33:06.004971+00:00'
+      provider_metadata:
+        github: {}
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIOmaVw
+        database_id: 4847147607
+        number: 992
+        url: https://github.com/ggortsema/styxcd-docs/issues/992
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgySI1A
+  - id: add-end-to-end-cli-behavior-tests
+    type: issue
+    title: Add End-to-End CLI Behavior Tests
+    repository: ggortsema/styxcd-docs
+    status: Backlog
+    issue_state: OPEN
+    order: 35000
+    description: Expand the CLI behavior test suite to exercise complete user workflows against a temporary canonical backlog.
+      Verify create, describe, list, update, move, and delete operations while ensuring canonical state is preserved throughout
+      the workflow.
+    acceptance_criteria:
+    - Behavior tests create an epic in a temporary canonical backlog.
+    - Behavior tests create, describe, list, and update backlog items.
+    - Behavior tests validate that updates preserve unrelated fields such as acceptance criteria.
+    - Behavior tests validate move operations once implemented.
+    - Behavior tests delete temporary backlog items and leave the temporary backlog in a clean state.
+    comments: []
+    labels: []
+    assignees: []
+    milestone: null
+    provider_metadata:
+      github:
+        issue_id: I_kwDOR_b51c8AAAABIOpElg
+        database_id: 4847191190
+        number: 993
+        url: https://github.com/ggortsema/styxcd-docs/issues/993
+        project_item_id: PVTI_lAHOA_XBWs4BZotzzgySMNo
 - id: johnny-johnny-core-cli
   type: epic
   title: Johnny-Johnny Core CLI

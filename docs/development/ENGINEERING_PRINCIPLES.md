@@ -60,4 +60,38 @@ Commands should feel like one application.
 List commands should use consistent table formatting.
 Filtering should follow include/exclude conventions.
 
+### Behavior Before Implementation
+
+Define the desired behavior before deciding how it should be implemented.
+
+Behavior should be captured through:
+
+- domain language
+- acceptance criteria
+- behavior tests
+- documentation
+
+Implementation details may change over time.
+
+The expected behavior should remain stable.
+
+
+### Durable Knowledge
+
+Engineering knowledge should be preserved as durable project artifacts rather than remaining in conversation.
+
+When important knowledge emerges, promote it into the appropriate artifact:
+
+- ADRs
+- Working Agreement
+- Engineering Principles
+- Specifications
+- AI Collaboration documentation
+- Behavior tests
+- Backlog stories
+
+Do not rely on memory when an engineering artifact should exist.
+
+
+
 See `WORKING_AGREEMENT.md` for development workflow.

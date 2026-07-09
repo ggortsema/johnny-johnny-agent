@@ -4,54 +4,53 @@ import json
 import typer
 import uvicorn
 
+# Import for startup side effect: loads .env configuration.
 import johnny_johnny_agent.config
 
-
-from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
-    publish_backlog_from_markdown,
-)
-from johnny_johnny_agent.capabilities.backlog_sync.validator import (
-    validate_backlog_yaml,
-)
-from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
-from johnny_johnny_agent.capabilities.github.renderer import render_epic_body
-from johnny_johnny_agent.capabilities.backlog_sync.planner import (
-    AddIssueToProjectOperation,
-    AttachIssueToEpicOperation,
-    CreateEpicOperation,
-    CreateIssueOperation,
-    UpdateIssueStatusOperation,
-    plan_reconcile_backlog,
-    DeleteIssueOperation,
-)
 from johnny_johnny_agent.capabilities.backlog_sync.executor import (
     execute_reconciliation_plan,
-)
-from johnny_johnny_agent.capabilities.github.client import (
-    get_viewer_project_by_title,
-    list_project_issues,
-)
-from johnny_johnny_agent.capabilities.backlog_sync.purge import (
-    purge_johnny_managed_issues,
-)
-from johnny_johnny_agent.capabilities.github.backlog_exporter import (
-    generate_backlog_yaml_from_github_project,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
     create_epic,
     create_issue,
     delete_issue,
     find_backlog_item,
-    find_epic,
     find_epic_issues,
     update_issue,
 )
-from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
-    save_backlog_yaml,
+from johnny_johnny_agent.capabilities.backlog_sync.planner import (
+    AddIssueToProjectOperation,
+    AttachIssueToEpicOperation,
+    CreateEpicOperation,
+    CreateIssueOperation,
+    DeleteIssueOperation,
+    UpdateIssueStatusOperation,
+    plan_reconcile_backlog,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.purge import (
+    purge_johnny_managed_issues,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.renderers import (
     get_backlog_resource_renderer,
 )
+from johnny_johnny_agent.capabilities.backlog_sync.validator import (
+    validate_backlog_yaml,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
+    publish_backlog_from_markdown,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
+from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
+    save_backlog_yaml,
+)
+from johnny_johnny_agent.capabilities.github.backlog_exporter import (
+    generate_backlog_yaml_from_github_project,
+)
+from johnny_johnny_agent.capabilities.github.client import (
+    get_viewer_project_by_title,
+    list_project_issues,
+)
+from johnny_johnny_agent.capabilities.github.renderer import render_epic_body
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
 DEFAULT_GITHUB_OWNER = "ggortsema"
@@ -69,6 +68,11 @@ backlog_app = typer.Typer(
     no_args_is_help=True,
 )
 
+backlog_create_app = typer.Typer(
+    help="Create backlog objects",
+    no_args_is_help=True,
+)
+
 backlog_list_app = typer.Typer(
     help="List backlog objects",
     no_args_is_help=True,
@@ -81,6 +85,7 @@ maintenance_app = typer.Typer(
 
 app.add_typer(maintenance_app, name="maintenance")
 app.add_typer(backlog_app, name="backlog")
+backlog_app.add_typer(backlog_create_app, name="create")
 backlog_app.add_typer(backlog_list_app, name="list")
 
 
@@ -316,7 +321,7 @@ def pull_backlog(
     )
 
 
-@backlog_app.command("create-issue")
+@backlog_create_app.command("issue")
 def create_backlog_issue(
         epic: Annotated[
             str,
@@ -409,11 +414,11 @@ def create_backlog_issue(
         typer.echo(f"Saved hydrated metadata: {file}")
 
 
-@backlog_app.command("update-issue")
-def update_backlog_issue(
-        issue_id: Annotated[
+@backlog_app.command("update")
+def update_backlog_item(
+        item_id: Annotated[
             str,
-            typer.Argument(help="Stable Johnny-Johnny issue or epic id."),
+            typer.Argument(help="Stable Johnny-Johnny backlog item id."),
         ],
         file: Annotated[
             str,
@@ -484,7 +489,7 @@ def update_backlog_issue(
 
     item = update_issue(
         backlog=backlog,
-        issue_id=issue_id,
+        issue_id=item_id,
         title=title,
         description=description,
         status=status,
@@ -535,57 +540,7 @@ def update_backlog_issue(
         typer.echo(f"Saved hydrated metadata: {file}")
 
 
-@backlog_app.command("list-epics")
-def list_epics(
-        file: Annotated[
-            str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
-        output: Annotated[
-            str,
-            typer.Option("--output", "-o", help="Output format: human, yaml, json."),
-        ] = "human",
-) -> None:
-    """List canonical epics."""
-    _list_backlog_epics(
-        file=file,
-        output=output,
-    )
-
-@backlog_app.command("list-issues")
-def list_issues(
-        epic_id: Annotated[
-            str,
-            typer.Option("--epic", help="Parent epic id."),
-        ],
-        file: Annotated[
-            str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
-        status: Annotated[
-            list[str] | None,
-            typer.Option("--status", help="Status to include. Can be repeated."),
-        ] = None,
-        exclude_status: Annotated[
-            list[str] | None,
-            typer.Option("--exclude-status", help="Status to exclude. Can be repeated."),
-        ] = None,
-        output: Annotated[
-            str,
-            typer.Option("--output", "-o", help="Output format: human, yaml, json."),
-        ] = "human",
-) -> None:
-    """List canonical child issues for an epic."""
-    _list_backlog_items(
-        file=file,
-        epic_id=epic_id,
-        status=status,
-        exclude_status=exclude_status,
-        output=output,
-    )
-
-
-@backlog_app.command("create-epic")
+@backlog_create_app.command("epic")
 def create_backlog_epic(
         title: Annotated[
             str,
@@ -745,7 +700,7 @@ def delete_backlog_issue(
 
     issue = delete_issue(
         backlog=backlog,
-        issue_id=issue_id,
+        issue_id=item_id,
     )
 
     typer.echo(f"Deleted canonical issue: {issue.title}")
@@ -849,17 +804,6 @@ def _print_reconciliation_plan(plan) -> None:
 
     typer.echo()
     typer.echo(f"Operations: {len(plan.operations)}")
-
-def _print_backlog_items_table(items) -> None:
-    typer.echo(f"{'STATUS':<14} {'ID':<40} TITLE")
-    typer.echo(f"{'-' * 14} {'-' * 40} {'-' * 40}")
-
-    for item in items:
-        typer.echo(
-            f"{item.status:<14} "
-            f"{item.id:<40} "
-            f"{item.title}"
-        )
 
 def _list_backlog_epics(
         *,
