@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
+from pathlib import Path
 import re
 from typing import Any
 
@@ -39,8 +40,11 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     UpdateIssueStatusOperation,
     plan_reconcile_backlog,
 )
-from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
-from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import save_backlog_yaml
+from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import (
+    load_backlog_yaml,
+    load_backlog_yaml_text,
+)
+from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import render_backlog_yaml
 from johnny_johnny_agent.capabilities.github.client import (
     add_issue_to_project,
     add_sub_issue,
@@ -81,6 +85,15 @@ class BacklogSummary:
 class BacklogExportResult:
     location: BacklogLocation
     output_path: str
+    epic_count: int
+    issue_count: int
+    comment_count: int
+
+
+@dataclass(frozen=True)
+class BacklogYamlExportResult:
+    location: BacklogLocation
+    content: str
     epic_count: int
     issue_count: int
     comment_count: int
@@ -1910,9 +1923,9 @@ def _assert_move_parent_supported(
             "issue to the selected epic would cross GitHub owners."
         )
 
-def import_backlog_yaml_to_postgres(
+def import_backlog_to_postgres(
     *,
-    backlog_path: str,
+    backlog: Backlog,
     user_display_name: str,
     user_primary_email: str | None,
     provider_account_username: str,
@@ -1920,7 +1933,7 @@ def import_backlog_yaml_to_postgres(
     database_url: str | None = None,
     verify: bool = True,
 ) -> BacklogImportResult:
-    backlog = load_backlog_yaml(backlog_path)
+    """Replace one canonical snapshot from an explicit import document."""
     repository = PostgresBacklogRepository(resolve_database_url(database_url))
     return repository.replace(
         backlog,
@@ -1932,6 +1945,77 @@ def import_backlog_yaml_to_postgres(
     )
 
 
+def import_backlog_yaml_text_to_postgres(
+    *,
+    backlog_yaml: str,
+    user_display_name: str,
+    user_primary_email: str | None,
+    provider_account_username: str,
+    provider_account_display_name: str | None,
+    database_url: str | None = None,
+    verify: bool = True,
+) -> BacklogImportResult:
+    backlog = load_backlog_yaml_text(backlog_yaml)
+    return import_backlog_to_postgres(
+        backlog=backlog,
+        user_display_name=user_display_name,
+        user_primary_email=user_primary_email,
+        provider_account_username=provider_account_username,
+        provider_account_display_name=provider_account_display_name,
+        database_url=database_url,
+        verify=verify,
+    )
+
+
+def import_backlog_yaml_to_postgres(
+    *,
+    backlog_path: str,
+    user_display_name: str,
+    user_primary_email: str | None,
+    provider_account_username: str,
+    provider_account_display_name: str | None,
+    database_url: str | None = None,
+    verify: bool = True,
+) -> BacklogImportResult:
+    backlog = load_backlog_yaml(backlog_path)
+    return import_backlog_to_postgres(
+        backlog=backlog,
+        user_display_name=user_display_name,
+        user_primary_email=user_primary_email,
+        provider_account_username=provider_account_username,
+        provider_account_display_name=provider_account_display_name,
+        database_url=database_url,
+        verify=verify,
+    )
+
+
+def export_backlog_yaml_text_from_postgres(
+    *,
+    provider: str,
+    provider_account_username: str,
+    provider_project_title: str,
+    database_url: str | None = None,
+) -> BacklogYamlExportResult:
+    """Render one canonical PostgreSQL backlog as portable YAML text."""
+    location = BacklogLocation(
+        provider=provider,
+        provider_account_username=provider_account_username,
+        project_title=provider_project_title,
+    )
+    repository = PostgresBacklogRepository(resolve_database_url(database_url))
+    backlog = repository.load(location)
+    return BacklogYamlExportResult(
+        location=location,
+        content=render_backlog_yaml(backlog),
+        epic_count=len(backlog.epics),
+        issue_count=sum(len(epic.issues) for epic in backlog.epics),
+        comment_count=sum(
+            len(epic.comments) + sum(len(issue.comments) for issue in epic.issues)
+            for epic in backlog.epics
+        ),
+    )
+
+
 def export_backlog_yaml_from_postgres(
     *,
     provider: str,
@@ -1940,22 +2024,22 @@ def export_backlog_yaml_from_postgres(
     output_path: str,
     database_url: str | None = None,
 ) -> BacklogExportResult:
-    location = BacklogLocation(
+    rendered = export_backlog_yaml_text_from_postgres(
         provider=provider,
         provider_account_username=provider_account_username,
-        project_title=provider_project_title,
+        provider_project_title=provider_project_title,
+        database_url=database_url,
     )
-    repository = PostgresBacklogRepository(resolve_database_url(database_url))
-    backlog = repository.load(location)
-    save_backlog_yaml(backlog, output_path)
+    # Keep filesystem output in the CLI-oriented adapter while reusing the same
+    # PostgreSQL load and YAML rendering workflow as the REST API.
+    output_file = Path(output_path)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    output_file.write_text(rendered.content, encoding="utf-8")
 
     return BacklogExportResult(
-        location=location,
+        location=rendered.location,
         output_path=output_path,
-        epic_count=len(backlog.epics),
-        issue_count=sum(len(epic.issues) for epic in backlog.epics),
-        comment_count=sum(
-            len(epic.comments) + sum(len(issue.comments) for issue in epic.issues)
-            for epic in backlog.epics
-        ),
+        epic_count=rendered.epic_count,
+        issue_count=rendered.issue_count,
+        comment_count=rendered.comment_count,
     )

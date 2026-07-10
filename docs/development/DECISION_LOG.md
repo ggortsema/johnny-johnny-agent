@@ -111,3 +111,42 @@ Support both safe bounded execution and explicit `--all` execution for reconcile
 Reason:
 Bounded execution protects against provider limits, while `--all` supports unattended or disposable-environment workflows without requiring manual babysitting.
 
+
+---
+
+## 2026-07-10 — REST as a Peer Adapter
+
+Decision:
+Expose backlog behavior through a versioned FastAPI adapter at `/api/v1`. REST handlers import the same PostgreSQL-backed application workflows used by the CLI and never shell out to `jj`.
+
+Reason:
+CLI and server mode must preserve one set of domain, persistence, provider-synchronization, and failure semantics rather than creating parallel implementations.
+
+Related Story:
+`expose-backlog-workflows-through-rest-api`
+
+---
+
+## 2026-07-10 — Explicit REST Mutation Modes
+
+Decision:
+Require every REST mutation to declare `mode: dry-run` or `mode: confirmed`. Reconcile and purge use the same bounded/default/full scope rules as the CLI. YAML import carries mode in the query string because its body is the YAML document.
+
+Reason:
+Mutation intent must be explicit and machine-readable. Preview and committing behavior should not depend on HTTP-method inference or hidden defaults.
+
+Related Story:
+`expose-backlog-workflows-through-rest-api`
+
+---
+
+## 2026-07-10 — Server-Owned Database Configuration
+
+Decision:
+Do not accept `DATABASE_URL` through REST requests. The API server resolves database connectivity from its own environment. Provider and provider-account selection remain request parameters because they identify canonical backlog location rather than infrastructure credentials.
+
+Reason:
+Database topology and credentials are deployment concerns and should not cross the HTTP trust boundary.
+
+Related Story:
+`expose-backlog-workflows-through-rest-api`

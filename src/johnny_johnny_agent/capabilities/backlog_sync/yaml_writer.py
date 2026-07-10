@@ -1,3 +1,5 @@
+"""Render canonical backlog data at the explicit YAML exchange boundary."""
+
 from pathlib import Path
 from typing import Any
 
@@ -7,24 +9,25 @@ from johnny_johnny_agent.domain.backlog import Backlog, Comment, Epic, Issue
 
 
 def save_backlog_yaml(
-        backlog: Backlog,
-        backlog_path: str,
+    backlog: Backlog,
+    backlog_path: str,
 ) -> None:
     backlog_file = Path(backlog_path)
     backlog_file.parent.mkdir(parents=True, exist_ok=True)
+    backlog_file.write_text(render_backlog_yaml(backlog), encoding="utf-8")
 
-    backlog_file.write_text(
-        yaml.safe_dump(
-            _backlog_to_dict(backlog),
-            sort_keys=False,
-            allow_unicode=True,
-            width=120,
-        ),
-        encoding="utf-8",
+
+def render_backlog_yaml(backlog: Backlog) -> str:
+    """Return a portable canonical YAML snapshot without writing a file."""
+    return yaml.safe_dump(
+        backlog_to_dict(backlog),
+        sort_keys=False,
+        allow_unicode=True,
+        width=120,
     )
 
 
-def _backlog_to_dict(backlog: Backlog) -> dict[str, Any]:
+def backlog_to_dict(backlog: Backlog) -> dict[str, Any]:
     return {
         "version": 1,
         "project": {

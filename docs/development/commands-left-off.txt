@@ -1,10 +1,11 @@
-# Verify the full sandbox reconciliation completed and no work remains.
-uv run jj backlog reconcile \
-  --project "Johnny-Johnny Backlog Persistence Sandbox" \
-  --all \
-  --dry-run
+# Start the completed REST API on the trusted loopback interface.
+uv run jj serve --host 127.0.0.1 --port 8000
 
-# Expected result: 0 planned/remaining operations.
+# In another terminal, verify liveness and PostgreSQL readiness.
+curl -fsS http://127.0.0.1:8000/api/v1/health/live
+curl -fsS http://127.0.0.1:8000/api/v1/health/ready
 
-# Then apply the canonical backlog updates recorded in:
+# Follow the complete sandbox walkthrough in README.md to exercise every endpoint.
+
+# After live smoke validation, apply the canonical REST story completion update in:
 # docs/development/backlog-session-update-plan-2026-07-10.md

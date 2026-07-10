@@ -1,5 +1,7 @@
+"""Load canonical backlog documents from explicit YAML boundaries."""
+
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 import yaml
 
@@ -12,15 +14,27 @@ def load_backlog_yaml(backlog_path: str) -> Backlog:
     if not backlog_file.exists():
         raise RuntimeError(f"Backlog YAML not found: {backlog_file}")
 
-    data = yaml.safe_load(backlog_file.read_text(encoding="utf-8")) or {}
+    return load_backlog_yaml_text(backlog_file.read_text(encoding="utf-8"))
 
-    project_data = data["project"]
+
+def load_backlog_yaml_text(backlog_yaml: str) -> Backlog:
+    """Parse a canonical backlog from YAML text without implying runtime storage."""
+    data = yaml.safe_load(backlog_yaml) or {}
+    if not isinstance(data, Mapping):
+        raise RuntimeError("Backlog YAML root must be a mapping.")
+    return load_backlog_document(data)
+
+
+def load_backlog_document(data: Mapping[str, Any]) -> Backlog:
+    """Build the canonical domain model from an already-parsed document."""
+    project_data = _mapping(data["project"], "project")
 
     epics = []
-    for epic_data in data.get("epics", []):
+    for raw_epic_data in data.get("epics", []) or []:
+        epic_data = _mapping(raw_epic_data, "epic")
         issues = [
-            _load_issue(issue_data)
-            for issue_data in epic_data.get("issues", [])
+            _load_issue(_mapping(issue_data, "issue"))
+            for issue_data in epic_data.get("issues", []) or []
         ]
 
         epics.append(
@@ -55,7 +69,7 @@ def load_backlog_yaml(backlog_path: str) -> Backlog:
     )
 
 
-def _load_issue(issue_data: dict[str, Any]) -> Issue:
+def _load_issue(issue_data: Mapping[str, Any]) -> Issue:
     return Issue(
         id=issue_data["id"],
         type=issue_data["type"],
@@ -74,7 +88,7 @@ def _load_issue(issue_data: dict[str, Any]) -> Issue:
     )
 
 
-def _load_comments(data: dict[str, Any]) -> list[Comment]:
+def _load_comments(data: Mapping[str, Any]) -> list[Comment]:
     return [
         Comment(
             id=comment_data["id"],
@@ -83,14 +97,21 @@ def _load_comments(data: dict[str, Any]) -> list[Comment]:
             created_at=comment_data.get("created_at"),
             provider_metadata=comment_data.get("provider_metadata", {}),
         )
-        for comment_data in data.get("comments", []) or []
+        for raw_comment_data in data.get("comments", []) or []
+        for comment_data in [_mapping(raw_comment_data, "comment")]
     ]
 
 
-def _list(data: dict[str, Any], key: str) -> list[str]:
+def _list(data: Mapping[str, Any], key: str) -> list[str]:
     value = data.get(key)
 
     if value is None:
         return []
 
     return list(value)
+
+
+def _mapping(value: Any, name: str) -> Mapping[str, Any]:
+    if not isinstance(value, Mapping):
+        raise RuntimeError(f"Backlog {name} must be a mapping.")
+    return value

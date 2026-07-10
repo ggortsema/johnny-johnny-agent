@@ -10,14 +10,35 @@ Describe the runtime architecture after migrating Johnny-Johnny backlog commands
 ## Runtime Shape
 
 ```text
-CLI today ───────────┐
-REST API next ───────┼── application workflows ── canonical domain
-webhooks later ──────┘            │
-                                  ├── PostgreSQL repository
-                                  └── provider adapters (GitHub first)
+CLI ────────────────┐
+REST API ───────────┼── application workflows ── canonical domain
+webhooks later ────┘            │
+                                ├── PostgreSQL repository
+                                └── provider adapters (GitHub first)
 ```
 
-Presentation adapters must reuse application workflows. The REST server must not shell out to CLI commands.
+Presentation adapters reuse application workflows. The implemented REST server imports those workflows directly and never shells out to CLI commands.
+
+## REST Adapter Path
+
+```text
+HTTP request
+  -> typed FastAPI request model
+  -> explicit dry-run or confirmed mode
+  -> shared PostgreSQL-backed application workflow
+  -> typed response model or consistent HTTP error
+```
+
+Implemented REST behavior:
+
+- read parity for inspect, list epics, list items, and describe
+- targeted mutation parity for create epic, create issue, update, move, and delete issue
+- operational parity for database readiness, reconcile, purge, YAML import, and YAML export
+- one explicit `mode` contract for previews and confirmed mutations
+- server-owned database configuration; clients cannot submit database URLs
+- direct YAML request/response handling only at the portable import/export boundary
+
+See `docs/api/backlog-rest-api.md` for the endpoint and error contracts and ADR-003 for the adapter decision.
 
 ## Canonical Read Path
 
@@ -115,12 +136,11 @@ Runtime reconciliation does not search GitHub by title and silently rewrite the 
 
 ## Next Evolution
 
-Expose the same workflows through FastAPI endpoints with:
+The REST baseline is implemented. Later evolutions add:
 
-- typed request/response models
-- consistent domain error mapping
-- dry-run and confirmation semantics
-- no duplicated business logic
-- endpoint behavior tests mirroring CLI behavior tests
-
-Later evolutions add webhook ingestion, durable reconcile runs/operations, rate-aware workers, and audit history.
+- server authentication and authorization before binding beyond trusted interfaces
+- webhook ingestion
+- durable reconcile runs and operations
+- rate-aware workers and asynchronous operation resources where needed
+- audit history
+- explicit provider-project rebinding
