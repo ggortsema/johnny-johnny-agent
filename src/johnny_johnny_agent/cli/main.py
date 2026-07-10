@@ -7,6 +7,13 @@ import uvicorn
 # Import for startup side effect: loads .env configuration.
 import johnny_johnny_agent.config
 
+from johnny_johnny_agent.capabilities.backlog_persistence.workflow import (
+    check_postgres_backlog_database,
+    export_backlog_yaml_from_postgres,
+    import_backlog_yaml_to_postgres,
+    load_backlog_from_postgres,
+    summarize_backlog,
+)
 from johnny_johnny_agent.capabilities.backlog_sync.executor import (
     execute_reconciliation_plan,
 )
@@ -52,7 +59,6 @@ from johnny_johnny_agent.capabilities.github.client import (
     get_viewer_project_by_title,
     list_project_issues,
 )
-from johnny_johnny_agent.capabilities.github.renderer import render_epic_body
 
 DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
 DEFAULT_GITHUB_OWNER = "ggortsema"
@@ -80,6 +86,11 @@ backlog_list_app = typer.Typer(
     no_args_is_help=True,
 )
 
+backlog_database_app = typer.Typer(
+    help="PostgreSQL canonical backlog persistence commands",
+    no_args_is_help=True,
+)
+
 maintenance_app = typer.Typer(
     help="Maintenance and development commands",
     no_args_is_help=True,
@@ -89,6 +100,7 @@ app.add_typer(maintenance_app, name="maintenance")
 app.add_typer(backlog_app, name="backlog")
 backlog_app.add_typer(backlog_create_app, name="create")
 backlog_app.add_typer(backlog_list_app, name="list")
+backlog_app.add_typer(backlog_database_app, name="db")
 
 
 @app.command()
@@ -186,20 +198,216 @@ def validate_backlog(
 
 @backlog_app.command("inspect")
 def inspect_backlog(
+        project: Annotated[
+            str,
+            typer.Option("--project", "-p", help="Canonical provider project title."),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
+) -> None:
+    """Inspect a canonical backlog directly from PostgreSQL."""
+    _inspect_backlog(
+        project=project,
+        provider=provider,
+        provider_account_username=provider_account_username,
+        database_url=database_url,
+    )
+
+
+@backlog_database_app.command("check")
+def check_backlog_database(
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
+) -> None:
+    """Check connectivity and canonical backlog schema readiness."""
+    try:
+        status = check_postgres_backlog_database(database_url=database_url)
+    except Exception as ex:
+        typer.echo("PostgreSQL connection: FAILED")
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    typer.echo("PostgreSQL connection: OK")
+    typer.echo(f"Database: {status.database}")
+    typer.echo(f"User: {status.database_user}")
+    typer.echo(f"Server version: {status.server_version}")
+    typer.echo(f"Schema: {status.schema}")
+    typer.echo(
+        "Canonical tables: "
+        f"{status.present_expected_table_count}/{status.expected_table_count}"
+    )
+    typer.echo(f"Seeded providers: {status.provider_count}")
+
+    if not status.ready:
+        if status.missing_tables:
+            typer.echo(f"Missing tables: {', '.join(status.missing_tables)}")
+        if status.provider_count == 0:
+            typer.echo("Seeded providers: missing")
+        typer.echo("Canonical backlog persistence: not ready")
+        raise typer.Exit(code=1)
+
+    typer.echo("Canonical backlog persistence: ready")
+
+
+@backlog_database_app.command("import")
+def import_backlog_database(
         file: Annotated[
             str,
             typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ],
+        ] = "data/input/backlog/backlog-sandbox.yml",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        user_display_name: Annotated[
+            str,
+            typer.Option("--user-display-name", help="Canonical user display name."),
+        ] = "Grant Gortsema",
+        user_primary_email: Annotated[
+            str | None,
+            typer.Option("--user-email", help="Canonical user email, when known."),
+        ] = None,
+        dry_run: Annotated[
+            bool,
+            typer.Option("--dry-run", help="Inspect the replacement without connecting."),
+        ] = False,
+        confirm: Annotated[
+            bool,
+            typer.Option("--confirm", help="Replace the selected project snapshot."),
+        ] = False,
 ) -> None:
-    """Inspect a canonical backlog YAML file."""
-    backlog = load_backlog_yaml(file)
+    """Replace one canonical PostgreSQL backlog snapshot from YAML."""
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
 
-    issue_count = sum(len(epic.issues) for epic in backlog.epics)
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to import.")
+        raise typer.Exit(code=1)
 
-    typer.echo(f"Project: {backlog.project.name}")
-    typer.echo(f"Provider: {backlog.project.provider}")
-    typer.echo(f"Epics: {len(backlog.epics)}")
-    typer.echo(f"Issues: {issue_count}")
+    try:
+        backlog = load_backlog_yaml(file)
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    summary = summarize_backlog(backlog)
+    typer.echo("Mode: transactional snapshot replacement")
+    typer.echo(f"File: {file}")
+    typer.echo(
+        f"Project: {backlog.project.provider} / {provider_account_username} / {backlog.project.title}"
+    )
+    typer.echo(f"Epics: {summary.epic_count}")
+    typer.echo(f"Issues: {summary.issue_count}")
+    typer.echo(f"Acceptance criteria: {summary.acceptance_criterion_count}")
+    typer.echo(f"Comments: {summary.comment_count}")
+    typer.echo(f"Labels: {summary.label_count}")
+    typer.echo(f"Assignees: {summary.assignee_count}")
+
+    if dry_run:
+        typer.echo("No database changes made.")
+        return
+
+    try:
+        result = import_backlog_yaml_to_postgres(
+            backlog_path=file,
+            database_url=database_url,
+            user_display_name=user_display_name,
+            user_primary_email=user_primary_email,
+            provider_account_username=provider_account_username,
+            provider_account_display_name=user_display_name,
+            verify=True,
+        )
+    except Exception as ex:
+        typer.echo(f"PostgreSQL import failed: {ex}")
+        raise typer.Exit(code=1)
+
+    typer.echo("Imported canonical backlog into PostgreSQL.")
+    typer.echo(f"Project: {result.location.describe()}")
+    typer.echo(f"Epics: {result.epic_count}")
+    typer.echo(f"Issues: {result.issue_count}")
+    typer.echo(f"Round-trip verified: {'yes' if result.verified else 'no'}")
+
+
+@backlog_database_app.command("export")
+def export_backlog_database(
+        project: Annotated[
+            str,
+            typer.Option("--project", "-p", help="Canonical provider project title."),
+        ],
+        output: Annotated[
+            str,
+            typer.Option("--output", "-o", help="Path to write exported backlog YAML."),
+        ] = "data/output/backlog-from-db.yml",
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
+) -> None:
+    """Export one canonical PostgreSQL backlog snapshot to YAML."""
+    try:
+        result = export_backlog_yaml_from_postgres(
+            output_path=output,
+            provider_project_title=project,
+            provider=provider,
+            provider_account_username=provider_account_username,
+            database_url=database_url,
+        )
+    except Exception as ex:
+        typer.echo(f"PostgreSQL export failed: {ex}")
+        raise typer.Exit(code=1)
+
+    typer.echo("Exported canonical backlog from PostgreSQL.")
+    typer.echo(f"Project: {result.location.describe()}")
+    typer.echo(f"Epics: {result.epic_count}")
+    typer.echo(f"Issues: {result.issue_count}")
+    typer.echo(f"Comments: {result.comment_count}")
+    typer.echo(f"Wrote: {result.output_path}")
 
 
 @backlog_app.command("describe")
@@ -208,48 +416,42 @@ def describe_backlog_item(
             str,
             typer.Argument(help="Stable Johnny-Johnny backlog item id."),
         ],
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option("--project", "-p", help="Canonical provider project title."),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
         output: Annotated[
             str,
             typer.Option("--output", "-o", help="Output format: human, yaml, json."),
         ] = "human",
 ) -> None:
-    """Describe a canonical backlog item by stable id."""
-    backlog = load_backlog_yaml(file)
-
-    try:
-        item = find_backlog_item(backlog, item_id)
-        renderer = get_backlog_resource_renderer(output)
-    except RuntimeError as ex:
-        typer.echo(str(ex))
-        raise typer.Exit(code=1)
-
-    typer.echo(renderer(backlog, item))
-
-@backlog_app.command("preview-epic-body")
-def preview_epic_body(
-        file: Annotated[
-            str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ],
-        epic_id: Annotated[
-            str,
-            typer.Option("--epic-id", help="Canonical epic id."),
-        ],
-) -> None:
-    """Preview the GitHub issue body for a canonical epic."""
-    backlog = load_backlog_yaml(file)
-
-    for epic in backlog.epics:
-        if epic.id == epic_id:
-            typer.echo(render_epic_body(epic))
-            return
-
-    raise RuntimeError(f"Epic not found: {epic_id}")
-
+    """Describe a canonical backlog item directly from PostgreSQL."""
+    _describe_backlog_item(
+        item_id=item_id,
+        project=project,
+        provider=provider,
+        provider_account_username=provider_account_username,
+        database_url=database_url,
+        output=output,
+    )
 
 @backlog_app.command("reconcile")
 def reconcile_backlog(
@@ -705,32 +907,79 @@ def create_backlog_epic(
 
 @backlog_list_app.command("epics")
 def list_backlog_epics(
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option(
+                "--project",
+                "-p",
+                help="Canonical provider project title.",
+            ),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
         output: Annotated[
             str,
             typer.Option("--output", "-o", help="Output format: human, yaml, json."),
         ] = "human",
 ) -> None:
-    """List canonical epics."""
+    """List canonical epics directly from PostgreSQL."""
     _list_backlog_epics(
-        file=file,
+        project=project,
+        provider=provider,
+        provider_account_username=provider_account_username,
+        database_url=database_url,
         output=output,
     )
 
 
 @backlog_list_app.command("items")
 def list_backlog_items(
+        project: Annotated[
+            str,
+            typer.Option(
+                "--project",
+                "-p",
+                help="Canonical provider project title.",
+            ),
+        ],
         epic_id: Annotated[
             str | None,
             typer.Option("--epic", help="Parent epic id."),
         ] = None,
-        file: Annotated[
+        provider: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
         status: Annotated[
             list[str] | None,
             typer.Option("--status", help="Status to include. Can be repeated."),
@@ -744,10 +993,13 @@ def list_backlog_items(
             typer.Option("--output", "-o", help="Output format: human, yaml, json."),
         ] = "human",
 ) -> None:
-    """List canonical backlog items."""
+    """List canonical backlog items directly from PostgreSQL."""
     _list_backlog_items(
-        file=file,
+        project=project,
         epic_id=epic_id,
+        provider=provider,
+        provider_account_username=provider_account_username,
+        database_url=database_url,
         status=status,
         exclude_status=exclude_status,
         output=output,
@@ -889,13 +1141,76 @@ def _print_reconciliation_plan(plan) -> None:
     typer.echo()
     typer.echo(f"Operations: {len(plan.operations)}")
 
-def _list_backlog_epics(
+def _inspect_backlog(
         *,
-        file: str,
+        project: str,
+        provider: str,
+        provider_account_username: str,
+        database_url: str | None,
+) -> None:
+    try:
+        backlog = load_backlog_from_postgres(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            database_url=database_url,
+        )
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    issue_count = sum(len(epic.issues) for epic in backlog.epics)
+
+    typer.echo(f"Project: {backlog.project.title}")
+    typer.echo(f"Provider: {backlog.project.provider}")
+    typer.echo(f"Epics: {len(backlog.epics)}")
+    typer.echo(f"Issues: {issue_count}")
+
+
+def _describe_backlog_item(
+        *,
+        item_id: str,
+        project: str,
+        provider: str,
+        provider_account_username: str,
+        database_url: str | None,
         output: str,
 ) -> None:
-    backlog = load_backlog_yaml(file)
-    renderer = get_backlog_resource_renderer(output)
+    try:
+        backlog = load_backlog_from_postgres(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            database_url=database_url,
+        )
+        item = find_backlog_item(backlog, item_id)
+        renderer = get_backlog_resource_renderer(output)
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    typer.echo(renderer(backlog, item))
+
+
+def _list_backlog_epics(
+        *,
+        project: str,
+        provider: str,
+        provider_account_username: str,
+        database_url: str | None,
+        output: str,
+) -> None:
+    try:
+        backlog = load_backlog_from_postgres(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            database_url=database_url,
+        )
+        renderer = get_backlog_resource_renderer(output)
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
 
     epics = sorted(backlog.epics, key=lambda item: item.order)
     summaries = _to_backlog_item_summaries(epics)
@@ -905,8 +1220,11 @@ def _list_backlog_epics(
 
 def _list_backlog_items(
         *,
-        file: str,
+        project: str,
         epic_id: str | None,
+        provider: str,
+        provider_account_username: str,
+        database_url: str | None,
         status: list[str] | None,
         exclude_status: list[str] | None,
         output: str,
@@ -915,9 +1233,14 @@ def _list_backlog_items(
         typer.echo("Use either --status or --exclude-status, not both.")
         raise typer.Exit(code=1)
 
-    backlog = load_backlog_yaml(file)
-
     try:
+        backlog = load_backlog_from_postgres(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            database_url=database_url,
+        )
+
         if epic_id is not None:
             issues = find_epic_issues(
                 backlog=backlog,

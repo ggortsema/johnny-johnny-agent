@@ -31,6 +31,60 @@ def test_backlog_list_help_exposes_epics_and_items_collections():
     assert "items" in result.output
 
 
+def test_list_epics_help_uses_database_project_identity_not_yaml_file():
+    result = runner.invoke(app, ["backlog", "list", "epics", "--help"])
+
+    assert result.exit_code == 0
+    assert "--project" in result.output
+    assert "--provider" in result.output
+    assert "--provider-account" in result.output
+    assert "--database-url" in result.output
+    assert "--file" not in result.output
+
+
+def test_list_items_help_uses_database_project_identity_not_yaml_file():
+    result = runner.invoke(app, ["backlog", "list", "items", "--help"])
+
+    assert result.exit_code == 0
+    assert "--project" in result.output
+    assert "--provider" in result.output
+    assert "--provider-account" in result.output
+    assert "--database-url" in result.output
+    assert "--epic" in result.output
+    assert "--status" in result.output
+    assert "--exclude-status" in result.output
+    assert "--file" not in result.output
+
+
+def test_describe_help_uses_database_project_identity_not_yaml_file():
+    result = runner.invoke(app, ["backlog", "describe", "--help"])
+
+    assert result.exit_code == 0
+    assert "--project" in result.output
+    assert "--provider" in result.output
+    assert "--provider-account" in result.output
+    assert "--database-url" in result.output
+    assert "--file" not in result.output
+
+
+def test_inspect_help_uses_database_project_identity_not_yaml_file():
+    result = runner.invoke(app, ["backlog", "inspect", "--help"])
+
+    assert result.exit_code == 0
+    assert "--project" in result.output
+    assert "--provider" in result.output
+    assert "--provider-account" in result.output
+    assert "--database-url" in result.output
+    assert "--file" not in result.output
+
+
+def test_preview_epic_body_command_is_removed():
+    result = runner.invoke(app, ["backlog", "preview-epic-body", "--help"])
+
+    assert result.exit_code != 0
+    assert "No such command" in result.output
+
+
 def test_create_issue_help_is_available():
     result = runner.invoke(app, ["backlog", "create", "issue", "--help"])
 
