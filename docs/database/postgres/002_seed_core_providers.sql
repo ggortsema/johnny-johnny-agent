@@ -1,5 +1,5 @@
 -- Seed core providers
--- Status: Draft; do not run until reviewed.
+-- Status: Implemented baseline; applied to the sandbox environment.
 
 BEGIN;
 

@@ -2,8 +2,25 @@
 
 **Project:** Johnny-Johnny Agent  
 **Story:** design-canonical-backlog-persistence  
-**Status:** Draft  
+**Status:** Implemented baseline  
 **Purpose:** Map every current `backlog.yml` field to the first PostgreSQL canonical backlog schema.
+
+
+## Implementation Verification
+
+The mapping is implemented by the PostgreSQL repository and persistence workflows. The live sandbox import/export round trip verified 21 epics, 198 issues, 68 acceptance criteria, and 25 comments.
+
+The exported YAML was semantically identical to the imported document. Provider-metadata key order changed, which is acceptable because YAML mapping order is not domain state.
+
+Supported interfaces:
+
+```text
+jj backlog db check
+jj backlog db import
+jj backlog db export
+```
+
+Normal backlog reads and mutations use PostgreSQL directly and do not pass through YAML.
 
 ---
 

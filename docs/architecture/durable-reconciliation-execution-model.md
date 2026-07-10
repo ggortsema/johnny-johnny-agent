@@ -1,57 +1,72 @@
 # Durable Reconciliation Execution Model
 
-**Status:** Draft  
-**Date:** July 9, 2026  
+**Status:** Partially implemented; durable ledger remains planned  
+**Last Updated:** July 10, 2026  
 **Project:** Johnny-Johnny Agent
 
 ## Purpose
 
-This document describes the target execution model for provider reconciliation.
+Describe both the reconciliation behavior implemented today and the durable execution model still required for server-mode, provider-rate-aware operation.
 
-The immediate driver is GitHub Project reconciliation. However, the model should support future providers such as Jira, Linear, GitLab, and other project-management systems.
+## Implemented Baseline
 
-## Problem
+Reconciliation now reads canonical state directly from PostgreSQL and compares it with the provider project bound in `provider_projects`. YAML is not involved.
 
-The current reconcile command builds an in-memory plan and executes provider operations synchronously.
+The command supports:
 
-That model breaks down when a reconciliation produces many provider mutations, such as:
-
-```text
-CreateProviderIssue
-AddIssueToProject
-UpdateProviderStatus
-AttachProviderChildIssue
-CreateProviderComment
-HydrateProviderMetadata
+```bash
+jj backlog reconcile --project "..." --dry-run
+jj backlog reconcile --project "..." --max-operations 100 --confirm
+jj backlog reconcile --project "..." --all --confirm
 ```
 
-A full GitHub projection recreate can exceed provider content-generation limits. When this happens, a synchronous command may fail after partially mutating the provider, leaving the projection dirty and requiring manual recovery.
+`--max-operations` counts provider operations, not issues. One item can require multiple operations:
 
-## Design Goal
+```text
+create issue
+add issue to project
+set status
+attach issue to epic
+create each comment
+```
 
-Reconciliation should be:
+Acceptance criteria are rendered in the issue body and are not individual operations.
 
-- durable
-- observable
-- resumable
-- rate-limited
-- idempotent
-- provider-aware
-- safe after partial failure
+The operation budget is soft at item-group boundaries: Johnny-Johnny does not intentionally split one item's operation chain merely to hit the exact numeric limit.
 
-## Core Concepts
+## Current Resume Behavior
+
+If a run stops halfway:
+
+1. Fully completed item groups remain in GitHub and their provider metadata remains in PostgreSQL.
+2. The failing group attempts compensation where supported.
+3. The command reports failure rather than claiming success.
+4. A rerun reloads PostgreSQL and live provider state, rebuilds the plan, skips completed work, and continues.
+
+This is resumable by recalculation. It is not yet a persisted execution ledger.
+
+## Purge Baseline
+
+Provider purge supports bounded and full modes:
+
+```bash
+jj maintenance purge --project "..." --max-issues 50 --confirm
+jj maintenance purge --project "..." --all --confirm
+```
+
+Purge deletes Johnny-Johnny-managed GitHub issues but preserves canonical backlog rows. Provider metadata remains until the final chunk completes, then it is cleared to support deterministic recreation.
+
+## Remaining Problem
+
+GitHub content-generation limits can still stop large full projections. The current CLI does not persist run/operation state, wait on provider retry windows, or execute through a worker queue.
+
+Server mode and webhooks require a durable model that survives process termination and supports observability.
+
+## Target Durable Model
 
 ### Reconcile Run
 
-A reconcile run represents one requested reconciliation.
-
-Example:
-
-```text
-Reconcile the backlog from backlog.yml into the GitHub project "MycroftAI Engineering Roadmap".
-```
-
-A run has lifecycle state:
+A requested reconciliation with lifecycle state:
 
 ```text
 planned
@@ -64,179 +79,44 @@ cancelled
 
 ### Reconcile Operation
 
-A reconcile operation is one provider-facing or metadata-facing step.
+A stable provider-facing or metadata-facing step with:
 
-Examples:
-
-```text
-github:create-issue:gke-workflow
-github:add-to-project:gke-workflow
-github:update-status:gke-workflow
-github:attach-sub-issue:implement-gke-deployment-stage
-github:create-comment:comment-abc123
-```
-
-Each operation should have:
-
-- stable operation identity
-- sequence number
+- stable operation key
+- sequence and item group
 - operation type
-- target item id
-- provider
+- canonical item/comment identity
 - payload JSON
-- status
-- attempt count
-- last error
-- next attempt time
+- status and attempt count
+- last error and next-attempt time
 - provider result JSON
 
-## Database Shape
-
-Initial conceptual schema:
+Conceptual tables:
 
 ```text
 reconcile_runs
-  id
-  workspace_id
-  provider
-  provider_project_id
-  source_snapshot_id
-  source_file_path
-  status
-  created_at
-  started_at
-  completed_at
-  failure_reason
-  created_by
-
 reconcile_operations
-  id
-  reconcile_run_id
-  sequence
-  operation_key
-  operation_type
-  backlog_item_id
-  comment_id
-  provider
-  payload_json
-  status
-  attempts
-  last_error
-  next_attempt_at
-  provider_result_json
-  created_at
-  updated_at
 ```
 
-Operation statuses:
+The database is the execution ledger. A future queue dispatches work but is not the source of truth.
 
 ```text
-pending
-running
-succeeded
-failed
-paused
-skipped
-cancelled
+PostgreSQL = durable plan and result ledger
+Queue      = dispatch
+Worker     = provider execution
 ```
 
-## Queue Role
+## Rate and Failure Handling
 
-A message queue may dispatch operation execution.
+Provider adapters/workers should support:
 
-However, the queue is not the system of record.
+- content-mutation budgets
+- retry-after scheduling
+- exponential backoff
+- pause rather than crash on throttling
+- idempotency recovery by canonical hidden metadata
+- retry, cancel, and manual-review states
 
-```text
-Postgres = durable reconcile ledger
-Queue    = work dispatch
-Executor = provider mutation worker
-```
-
-This avoids losing the reconcile plan if a worker, process, or queue message disappears.
-
-## Execution Flow
-
-```text
-CLI/API request
-  -> load backlog
-  -> read provider state
-  -> build reconcile plan
-  -> persist reconcile_run
-  -> persist reconcile_operations
-  -> enqueue run or first operation
-  -> executor processes operations in order
-  -> after each operation, persist result
-  -> stop/pause on provider throttle or unrecoverable failure
-  -> resume later from pending/failed operations
-```
-
-## Rate Limiting
-
-Provider adapters should own provider-specific rate limits.
-
-For GitHub, the executor should avoid treating the API as an unlimited pipe. It should support:
-
-- minimum delay between content mutations
-- max operations per run
-- max content mutations per time window
-- retry-after / next-attempt scheduling
-- pause instead of crash when limits are reached
-
-## Idempotency
-
-Every operation should be safe to retry.
-
-Example:
-
-```text
-github:create-comment:comment-abc123
-```
-
-If the local process crashes after GitHub creates the comment but before Johnny-Johnny saves metadata, resume should:
-
-1. Read provider comments.
-2. Find the Johnny-Johnny metadata block for `comment-abc123`.
-3. Hydrate provider metadata.
-4. Mark the operation as succeeded.
-5. Avoid creating a duplicate comment.
-
-## Failure Routing
-
-Failures should not destroy the whole reconcile run.
-
-Possible failure handling:
-
-```text
-transient provider failure -> retry with backoff
-provider throttle -> pause until next_attempt_at
-validation failure -> failed/manual review
-idempotency recovery success -> succeeded
-unrecoverable provider error -> failed/dead-letter
-```
-
-## CLI Shape
-
-Potential commands:
-
-```bash
-jj backlog reconcile --file data/input/backlog/backlog.yml --confirm
-jj backlog reconcile status <run-id>
-jj backlog reconcile resume <run-id>
-jj backlog reconcile retry-failed <run-id>
-jj backlog reconcile cancel <run-id>
-```
-
-Near-term simpler option:
-
-```bash
-jj backlog reconcile --file data/input/backlog/backlog.yml --confirm --max-operations 100
-```
-
-This can be implemented before full messaging, as long as operations are persisted and resumable.
-
-## API Shape
-
-Potential endpoints:
+## Future API Shape
 
 ```text
 POST /reconcile-runs
@@ -246,26 +126,8 @@ POST /reconcile-runs/{id}/retry-failed
 POST /reconcile-runs/{id}/cancel
 ```
 
-## Relationship to Canonical Backlog Persistence
+The initial REST pass may expose the existing synchronous workflow, but it must reuse application services and preserve a path toward this durable run model.
 
-The database is not only storage for backlog items. It also becomes the execution ledger for synchronization.
+## Next Recommendation
 
-This distinction matters:
-
-```text
-backlog tables              = what Johnny-Johnny understands about work
-provider projection tables  = how providers represent that work
-reconcile tables            = what Johnny-Johnny attempted, succeeded, failed, or needs to resume
-```
-
-## Near-Term Recommendation
-
-Before another production-scale destructive recreate, implement at least:
-
-1. provider schema preflight
-2. guarded GitHub mutation responses
-3. max operation limit or mutation budget
-4. persisted reconcile run/operation state
-5. resume command
-
-Messaging can follow immediately after, or be introduced once the persisted operation ledger exists.
+After exposing current workflows through REST, implement persisted reconciliation runs and operations before relying on unattended production-scale provider recreation.

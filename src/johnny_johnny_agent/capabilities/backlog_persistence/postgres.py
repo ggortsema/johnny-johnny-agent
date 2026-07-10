@@ -130,6 +130,301 @@ class _SnapshotCounts:
     assignee_count: int = 0
 
 
+class PostgresBacklogTransaction:
+    """One explicit PostgreSQL unit of work for canonical mutations.
+
+    The caller controls the workflow performed while the transaction remains
+    open. This lets application workflows coordinate one canonical mutation
+    with a targeted provider projection before PostgreSQL commits.
+    """
+
+    def __init__(
+        self,
+        repository: "PostgresBacklogRepository",
+        connection: ConnectionLike,
+    ) -> None:
+        self._repository = repository
+        self._connection = connection
+
+    def load_backlog(
+        self,
+        location: BacklogLocation,
+        *,
+        lock_project: bool = False,
+    ) -> Backlog:
+        return self._repository._load_backlog(
+            self._connection,
+            location,
+            lock_project=lock_project,
+        )
+
+    def insert_epic(
+        self,
+        location: BacklogLocation,
+        epic: Epic,
+    ) -> Any:
+        if epic.type != "epic":
+            raise ValueError(
+                f"Expected an epic, received item type: {epic.type}"
+            )
+
+        project_row = self._repository._find_provider_project_row(
+            self._connection,
+            location,
+            lock_project=True,
+        )
+        epic_row_id = self._repository._insert_backlog_item(
+            self._connection,
+            provider_project_id=project_row["id"],
+            parent_item_id=None,
+            item=epic,
+            provider_key=location.provider,
+        )
+        self._repository._insert_item_children(
+            self._connection,
+            epic_row_id,
+            epic,
+        )
+        return epic_row_id
+
+    def insert_issue(
+        self,
+        location: BacklogLocation,
+        parent_epic_id: str,
+        issue: Issue,
+    ) -> Any:
+        if issue.type != "issue":
+            raise ValueError(
+                f"Expected an issue, received item type: {issue.type}"
+            )
+
+        project_row = self._repository._find_provider_project_row(
+            self._connection,
+            location,
+            lock_project=True,
+        )
+        parent_row = self._find_item_row(
+            project_row_id=project_row["id"],
+            canonical_id=parent_epic_id,
+            item_type="epic",
+        )
+        issue_row_id = self._repository._insert_backlog_item(
+            self._connection,
+            provider_project_id=project_row["id"],
+            parent_item_id=parent_row["id"],
+            item=issue,
+            provider_key=location.provider,
+        )
+        self._repository._insert_item_children(
+            self._connection,
+            issue_row_id,
+            issue,
+        )
+        return issue_row_id
+
+    def save_item(
+        self,
+        location: BacklogLocation,
+        item: Epic | Issue,
+        *,
+        parent_epic_id: str | None = None,
+    ) -> None:
+        project_row = self._repository._find_provider_project_row(
+            self._connection,
+            location,
+            lock_project=True,
+        )
+        parent_item_id = None
+        if isinstance(item, Issue):
+            if not parent_epic_id:
+                raise ValueError("parent_epic_id is required when saving an issue")
+            parent_row = self._find_item_row(
+                project_row_id=project_row["id"],
+                canonical_id=parent_epic_id,
+                item_type="epic",
+            )
+            parent_item_id = parent_row["id"]
+
+        provider_metadata = _copy_json(item.provider_metadata)
+        provider_values = _provider_values(
+            provider_metadata,
+            location.provider,
+        )
+        row = self._connection.execute(
+            """
+            UPDATE backlog_items
+            SET
+                parent_item_id = %s,
+                title = %s,
+                description = %s,
+                repository = %s,
+                status = %s,
+                issue_state = %s,
+                item_order = %s,
+                milestone = %s,
+                external_id = %s,
+                external_database_id = %s,
+                external_number = %s,
+                external_url = %s,
+                external_project_item_id = %s,
+                provider_metadata = %s
+            WHERE provider_project_id = %s
+              AND canonical_id = %s
+              AND item_type = %s
+              AND deleted_at IS NULL
+            RETURNING id
+            """,
+            (
+                parent_item_id,
+                item.title,
+                item.description,
+                item.repository,
+                item.status,
+                item.issue_state,
+                item.order,
+                item.milestone,
+                provider_values.get("issue_id")
+                or provider_values.get("id"),
+                provider_values.get("database_id"),
+                provider_values.get("number"),
+                provider_values.get("url"),
+                provider_values.get("project_item_id"),
+                _jsonb(provider_metadata),
+                project_row["id"],
+                item.id,
+                item.type,
+            ),
+        ).fetchone()
+
+        if not row:
+            raise BacklogPersistenceError(
+                f"Canonical {item.type} not found while saving: {item.id}"
+            )
+
+        backlog_item_id = row["id"]
+        self._connection.execute(
+            "DELETE FROM backlog_item_acceptance_criteria "
+            "WHERE backlog_item_id = %s",
+            (backlog_item_id,),
+        )
+        self._connection.execute(
+            "DELETE FROM backlog_item_comments WHERE backlog_item_id = %s",
+            (backlog_item_id,),
+        )
+        self._connection.execute(
+            "DELETE FROM backlog_item_labels WHERE backlog_item_id = %s",
+            (backlog_item_id,),
+        )
+        self._connection.execute(
+            "DELETE FROM backlog_item_assignees WHERE backlog_item_id = %s",
+            (backlog_item_id,),
+        )
+        self._repository._insert_item_children(
+            self._connection,
+            backlog_item_id,
+            item,
+        )
+
+    def update_epic_provider_metadata(
+        self,
+        location: BacklogLocation,
+        epic: Epic,
+    ) -> None:
+        self.save_item(location, epic)
+
+    def delete_issue(
+        self,
+        location: BacklogLocation,
+        issue_id: str,
+    ) -> None:
+        """Delete one canonical issue and its dependent child rows."""
+        project_row = self._repository._find_provider_project_row(
+            self._connection,
+            location,
+            lock_project=True,
+        )
+        row = self._connection.execute(
+            """
+            DELETE FROM backlog_items
+            WHERE provider_project_id = %s
+              AND canonical_id = %s
+              AND item_type = 'issue'
+              AND deleted_at IS NULL
+            RETURNING id
+            """,
+            (project_row["id"], issue_id),
+        ).fetchone()
+        if not row:
+            raise BacklogPersistenceError(
+                f"Canonical issue not found while deleting: {issue_id}"
+            )
+
+    def clear_provider_projection_metadata(
+        self,
+        location: BacklogLocation,
+        provider_key: str,
+    ) -> int:
+        """Clear one provider projection from every canonical item."""
+        project_row = self._repository._find_provider_project_row(
+            self._connection,
+            location,
+            lock_project=True,
+        )
+        result = self._connection.execute(
+            """
+            UPDATE backlog_items
+            SET
+                external_id = NULL,
+                external_database_id = NULL,
+                external_number = NULL,
+                external_url = NULL,
+                external_project_item_id = NULL,
+                provider_metadata = provider_metadata - %s
+            WHERE provider_project_id = %s
+              AND deleted_at IS NULL
+            """,
+            (provider_key, project_row["id"]),
+        )
+        self._connection.execute(
+            """
+            UPDATE backlog_item_comments AS comments
+            SET provider_metadata = comments.provider_metadata - %s
+            FROM backlog_items AS items
+            WHERE comments.backlog_item_id = items.id
+              AND items.provider_project_id = %s
+              AND items.deleted_at IS NULL
+              AND comments.deleted_at IS NULL
+            """,
+            (provider_key, project_row["id"]),
+        )
+        return int(result.rowcount or 0)
+
+    def _find_item_row(
+        self,
+        *,
+        project_row_id: Any,
+        canonical_id: str,
+        item_type: str,
+    ) -> Mapping[str, Any]:
+        row = self._connection.execute(
+            """
+            SELECT id
+            FROM backlog_items
+            WHERE provider_project_id = %s
+              AND canonical_id = %s
+              AND item_type = %s
+              AND deleted_at IS NULL
+            FOR UPDATE
+            """,
+            (project_row_id, canonical_id, item_type),
+        ).fetchone()
+        if not row:
+            raise BacklogPersistenceError(
+                f"Canonical {item_type} not found: {canonical_id}"
+            )
+        return row
+
+
 class PostgresBacklogRepository:
     """Persist and reconstruct canonical backlogs in PostgreSQL.
 
@@ -295,6 +590,29 @@ class PostgresBacklogRepository:
         """Load a persisted provider project into the canonical domain model."""
         with self._connection() as conn:
             return self._load_backlog(conn, location)
+
+    @contextmanager
+    def transaction(self) -> Iterator[PostgresBacklogTransaction]:
+        """Open an explicit canonical backlog unit of work.
+
+        Exceptions raised by the application workflow are preserved so the
+        caller can distinguish provider failures from persistence failures.
+        PostgreSQL rolls the transaction back when any exception escapes.
+        """
+        connection = self._make_connection()
+        with connection as conn:
+            conn.execute(f"SET search_path TO {DATABASE_SCHEMA}, public")
+            yield PostgresBacklogTransaction(self, conn)
+
+    def insert_epic(
+        self,
+        location: BacklogLocation,
+        epic: Epic,
+    ) -> Epic:
+        """Insert one canonical epic without replacing the project snapshot."""
+        with self.transaction() as transaction:
+            transaction.insert_epic(location, epic)
+        return epic
 
     @contextmanager
     def _connection(self) -> Iterator[ConnectionLike]:
@@ -597,13 +915,16 @@ class PostgresBacklogRepository:
                 (backlog_item_id, assignee),
             )
 
-    def _load_backlog(
-        self,
+    @staticmethod
+    def _find_provider_project_row(
         conn: ConnectionLike,
         location: BacklogLocation,
-    ) -> Backlog:
+        *,
+        lock_project: bool = False,
+    ) -> Mapping[str, Any]:
+        lock_clause = " FOR UPDATE OF pp" if lock_project else ""
         project_row = conn.execute(
-            """
+            f"""
             SELECT
                 pp.*,
                 p.key AS provider_key,
@@ -617,6 +938,7 @@ class PostgresBacklogRepository:
               AND pp.deleted_at IS NULL
               AND pa.deleted_at IS NULL
               AND p.deleted_at IS NULL
+            {lock_clause}
             """,
             (
                 location.provider,
@@ -629,6 +951,21 @@ class PostgresBacklogRepository:
             raise ProviderProjectNotFoundError(
                 f"Provider project not found: {location.describe()}"
             )
+
+        return project_row
+
+    def _load_backlog(
+        self,
+        conn: ConnectionLike,
+        location: BacklogLocation,
+        *,
+        lock_project: bool = False,
+    ) -> Backlog:
+        project_row = self._find_provider_project_row(
+            conn,
+            location,
+            lock_project=lock_project,
+        )
 
         provider_key = str(project_row["provider_key"])
         provider_project_id = project_row["id"]

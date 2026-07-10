@@ -28,16 +28,21 @@ from johnny_johnny_agent.capabilities.github.renderer import (
 def execute_reconciliation_plan(
         plan: ExecutionPlan,
         project_title: str,
+        project_id: str | None = None,
+        announce: bool = True,
 ) -> None:
-    project = get_viewer_project_by_title(project_title)
-    project_id = project["id"]
+    resolved_project_id = project_id
+    if resolved_project_id is None:
+        project = get_viewer_project_by_title(project_title)
+        resolved_project_id = project["id"]
 
     repositories: dict[str, dict] = {}
     created_epics: dict[str, dict] = {}
     created_issues: dict[str, dict] = {}
 
-    print(f"Reconciling GitHub project: {project_title}")
-    print()
+    if announce:
+        print(f"Reconciling GitHub project: {project_title}")
+        print()
 
     for operation in plan.operations:
         if isinstance(operation, CreateEpicOperation):
@@ -55,7 +60,12 @@ def execute_reconciliation_plan(
                 body=body,
             )
 
-            project_item = add_issue_to_project(project_id, issue["id"])
+            _hydrate_github_metadata(
+                item=epic,
+                issue=issue,
+            )
+
+            project_item = add_issue_to_project(resolved_project_id, issue["id"])
 
             _hydrate_github_metadata(
                 item=epic,
@@ -104,7 +114,7 @@ def execute_reconciliation_plan(
 
             print(f"Adding issue to project: {issue_model.title}")
 
-            project_item = add_issue_to_project(project_id, issue["id"])
+            project_item = add_issue_to_project(resolved_project_id, issue["id"])
 
             _hydrate_github_metadata(
                 item=issue_model,
@@ -149,7 +159,7 @@ def execute_reconciliation_plan(
             )
 
             update_project_item_status(
-                project_id=project_id,
+                project_id=resolved_project_id,
                 project_item_id=project_item_id,
                 status=operation.desired_status,
             )

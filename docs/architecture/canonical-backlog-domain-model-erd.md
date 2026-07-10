@@ -2,14 +2,14 @@
 
 **Project:** Johnny-Johnny Agent  
 **Story:** design-canonical-backlog-persistence  
-**Status:** Draft  
+**Status:** Implemented baseline  
 **Purpose:** Define the canonical relational model for PostgreSQL-backed backlog persistence while preserving `backlog.yml` as an import/export format.
 
 ---
 
 ## Design Intent
 
-Johnny-Johnny is moving from `backlog.yml` as the primary runtime persistence mechanism to PostgreSQL as the canonical system of record.
+Johnny-Johnny uses PostgreSQL as the canonical runtime system of record. `backlog.yml` is no longer a runtime persistence mechanism.
 
 `backlog.yml` remains an adapter-level exchange format:
 

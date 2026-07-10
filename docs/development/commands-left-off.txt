@@ -1,4 +1,10 @@
-jj backlog reconcile   --file data/input/backlog/backlog.yml   --confirm
+# Verify the full sandbox reconciliation completed and no work remains.
+uv run jj backlog reconcile \
+  --project "Johnny-Johnny Backlog Persistence Sandbox" \
+  --all \
+  --dry-run
 
-jj maintenance purge   --project "MycroftAI Engineering Roadmap"   --confirm
+# Expected result: 0 planned/remaining operations.
 
+# Then apply the canonical backlog updates recorded in:
+# docs/development/backlog-session-update-plan-2026-07-10.md

@@ -161,8 +161,6 @@ def move_issue(
         if existing_issue.id != issue_id
     ]
 
-    issue.repository = target_epic.repository
-    issue.milestone = target_epic.milestone
     issue.order = _next_issue_order(target_epic)
 
     target_epic.issues.append(issue)

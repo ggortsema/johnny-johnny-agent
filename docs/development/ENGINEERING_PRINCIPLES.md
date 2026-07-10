@@ -1,7 +1,7 @@
 # Engineering Principles
 
-Version: 1.0
-Last Updated: July 8, 2026
+Version: 1.1
+Last Updated: July 10, 2026
 
 ## Purpose
 
@@ -17,6 +17,20 @@ Provider-specific behavior belongs in adapters, not the domain.
 
 ### Stable IDs
 Canonical IDs are permanent identities.
+
+Provider identifiers, issue numbers, URLs, and project-item ids are projection metadata. They may change without changing canonical identity.
+
+### Canonical Runtime State
+
+PostgreSQL is the canonical runtime store for backlog state.
+
+Portable files such as YAML are explicit import/export boundaries. Normal runtime workflows must not use files as hidden intermediaries between the domain and persistence.
+
+### Explicit Cross-Boundary Consistency
+
+A database and an external provider cannot share one ACID transaction. Workflows that cross those boundaries must make partial failure behavior explicit through idempotency, compensation, durable state, or clear consistency errors.
+
+Never report success when canonical and required provider state are known to disagree.
 
 ### Organize by Domain Capability
 

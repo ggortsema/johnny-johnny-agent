@@ -45,6 +45,9 @@ def test_create_epic_workflow_commits_postgres_and_github_without_yaml(monkeypat
         fake_create_epic_in_postgres,
     )
     monkeypatch.setattr(cli_main, "load_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "save_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "_plan_reconcile", fail_if_called)
+    monkeypatch.setattr(cli_main, "execute_reconciliation_plan", fail_if_called)
 
     result = runner.invoke(
         app,
@@ -178,6 +181,8 @@ def test_create_issue_workflow_commits_postgres_and_github_without_yaml(monkeypa
 
     monkeypatch.setattr(cli_main, "create_issue_in_postgres", fake_create_issue_in_postgres)
     monkeypatch.setattr(cli_main, "load_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "save_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "execute_reconciliation_plan", fail_if_called)
 
     result = runner.invoke(
         app,
@@ -230,6 +235,8 @@ def test_update_issue_workflow_commits_postgres_and_github_without_yaml(monkeypa
 
     monkeypatch.setattr(cli_main, "update_item_in_postgres", fake_update_item_in_postgres)
     monkeypatch.setattr(cli_main, "load_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "save_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "execute_reconciliation_plan", fail_if_called)
 
     result = runner.invoke(
         app,
@@ -301,6 +308,8 @@ def test_move_issue_workflow_commits_postgres_and_github_without_yaml(monkeypatc
 
     monkeypatch.setattr(cli_main, "move_issue_in_postgres", fake_move_issue_in_postgres)
     monkeypatch.setattr(cli_main, "load_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "save_backlog_yaml", fail_if_called)
+    monkeypatch.setattr(cli_main, "execute_reconciliation_plan", fail_if_called)
 
     result = runner.invoke(
         app,

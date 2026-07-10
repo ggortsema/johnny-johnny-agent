@@ -100,36 +100,30 @@ def get_repository(owner: str, name: str) -> dict:
     return repository
 
 
-def list_project_issue_titles(project_id: str) -> set[str]:
+def get_issue(issue_id: str) -> dict:
     query = """
-    query ListProjectIssues($projectId: ID!) {
-      node(id: $projectId) {
-        ... on ProjectV2 {
-          items(first: 100) {
-            nodes {
-              content {
-                ... on Issue {
-                  title
-                }
-              }
-            }
+    query GetIssue($issueId: ID!) {
+      node(id: $issueId) {
+        ... on Issue {
+          id
+          databaseId
+          number
+          title
+          body
+          url
+          repository {
+            nameWithOwner
           }
         }
       }
     }
     """
 
-    data = execute_graphql(query, {"projectId": project_id})
-
-    items = data["node"]["items"]["nodes"]
-    titles: set[str] = set()
-
-    for item in items:
-        content = item.get("content")
-        if content and content.get("title"):
-            titles.add(content["title"])
-
-    return titles
+    data = execute_graphql(query, {"issueId": issue_id})
+    issue = data.get("node")
+    if not issue:
+        raise RuntimeError(f"GitHub issue not found: {issue_id}")
+    return issue
 
 
 def create_issue(repository_id: str, title: str, body: str = "") -> dict:
@@ -145,6 +139,7 @@ def create_issue(repository_id: str, title: str, body: str = "") -> dict:
           databaseId
           number
           title
+          body
           url
         }
       }
@@ -199,6 +194,27 @@ def add_issue_to_project(project_id: str, issue_id: str) -> dict:
     )
 
     return data["addProjectV2ItemById"]["item"]
+
+
+def delete_project_item(project_id: str, project_item_id: str) -> None:
+    mutation = """
+    mutation DeleteProjectItem($projectId: ID!, $projectItemId: ID!) {
+      deleteProjectV2Item(input: {
+        projectId: $projectId
+        itemId: $projectItemId
+      }) {
+        deletedItemId
+      }
+    }
+    """
+
+    execute_graphql(
+        mutation,
+        {
+            "projectId": project_id,
+            "projectItemId": project_item_id,
+        },
+    )
 
 
 def get_project_status_field(project_id: str) -> dict:
@@ -280,6 +296,38 @@ def update_project_item_status(
     )
 
     return data["updateProjectV2ItemFieldValue"]["projectV2Item"]
+
+
+def clear_project_item_status(
+        project_id: str,
+        project_item_id: str,
+) -> None:
+    status_field = get_project_status_field(project_id)
+    mutation = """
+    mutation ClearProjectItemStatus(
+      $projectId: ID!
+      $itemId: ID!
+      $fieldId: ID!
+    ) {
+      clearProjectV2ItemFieldValue(input: {
+        projectId: $projectId
+        itemId: $itemId
+        fieldId: $fieldId
+      }) {
+        projectV2Item {
+          id
+        }
+      }
+    }
+    """
+    execute_graphql(
+        mutation,
+        {
+            "projectId": project_id,
+            "itemId": project_item_id,
+            "fieldId": status_field["id"],
+        },
+    )
 
 
 def _canonical_status_to_github(status: str) -> str:
@@ -375,14 +423,106 @@ def add_sub_issue(
         repo: str,
         parent_issue_number: int,
         child_issue_database_id: int,
+        *,
+        replace_parent: bool = False,
 ) -> dict:
     return execute_rest(
         method="POST",
         path=f"/repos/{owner}/{repo}/issues/{parent_issue_number}/sub_issues",
         body={
             "sub_issue_id": child_issue_database_id,
+            "replace_parent": replace_parent,
         },
     )
+
+
+def remove_sub_issue(
+        owner: str,
+        repo: str,
+        parent_issue_number: int,
+        child_issue_database_id: int,
+) -> dict:
+    return execute_rest(
+        method="DELETE",
+        path=f"/repos/{owner}/{repo}/issues/{parent_issue_number}/sub_issue",
+        body={
+            "sub_issue_id": child_issue_database_id,
+        },
+    )
+
+
+def get_issue_parent(issue_id: str) -> dict | None:
+    query = """
+    query GetIssueParent($issueId: ID!) {
+      node(id: $issueId) {
+        ... on Issue {
+          parent {
+            id
+            databaseId
+            number
+            url
+            repository {
+              nameWithOwner
+            }
+          }
+        }
+      }
+    }
+    """
+
+    data = execute_graphql(query, {"issueId": issue_id})
+    node = data.get("node")
+    if not node:
+        raise RuntimeError(f"GitHub issue not found: {issue_id}")
+    return node.get("parent")
+
+
+def update_issue(
+        issue_id: str,
+        *,
+        title: str | None = None,
+        body: str | None = None,
+) -> dict:
+    mutation = """
+    mutation UpdateIssue($input: UpdateIssueInput!) {
+      updateIssue(input: $input) {
+        issue {
+          id
+          databaseId
+          number
+          title
+          body
+          url
+        }
+      }
+    }
+    """
+
+    input_value: dict[str, Any] = {"id": issue_id}
+    if title is not None:
+        input_value["title"] = title
+    if body is not None:
+        input_value["body"] = body
+
+    data = execute_graphql(mutation, {"input": input_value})
+    result = data.get("updateIssue") or {}
+    issue = result.get("issue")
+    if not issue:
+        raise RuntimeError(
+            f"GitHub updateIssue returned no issue payload for: {issue_id}"
+        )
+    return issue
+
+
+def delete_issue_comment(comment_id: str) -> None:
+    mutation = """
+    mutation DeleteIssueComment($commentId: ID!) {
+      deleteIssueComment(input: {id: $commentId}) {
+        clientMutationId
+      }
+    }
+    """
+    execute_graphql(mutation, {"commentId": comment_id})
 
 
 def list_project_issues(project_id: str) -> list[dict]:

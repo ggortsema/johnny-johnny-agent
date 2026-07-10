@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Export canonical PostgreSQL backlog records back to backlog.yml format.
+"""Historical prototype for exporting PostgreSQL backlog data to YAML.
 
-Draft script for design-canonical-backlog-persistence.
-Do not run until the schema and mapping have been reviewed.
+The supported runtime interface is now `jj backlog db export`. This script is
+retained as design history and should not be treated as the primary workflow.
 """
 
 from __future__ import annotations

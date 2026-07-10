@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Import a backlog.yml file into the canonical PostgreSQL backlog schema.
+"""Historical prototype for importing backlog YAML into PostgreSQL.
 
-Draft script for design-canonical-backlog-persistence.
-Do not run until the schema and mapping have been reviewed.
+The supported runtime interface is now `jj backlog db import`. This script is
+retained as design history and should not be treated as the primary workflow.
 """
 
 from __future__ import annotations

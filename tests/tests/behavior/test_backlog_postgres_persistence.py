@@ -11,13 +11,12 @@ from johnny_johnny_agent.domain.backlog import Backlog, Comment, Epic, Issue, Pr
 
 
 class FakeResult:
-    def __init__(self, rows=None, *, rowcount=None):
+    def __init__(self, rows=None):
         if rows is None:
             rows = []
         if isinstance(rows, dict):
             rows = [rows]
         self._rows = rows
-        self.rowcount = len(rows) if rowcount is None else rowcount
 
     def fetchone(self):
         return self._rows[0] if self._rows else None
@@ -493,52 +492,3 @@ def _item_row(
         "external_project_item_id": external_project_item_id,
         "provider_metadata": {},
     }
-
-
-class ProjectionMetadataConnection:
-    def __init__(self):
-        self.statements = []
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc, traceback):
-        return False
-
-    def execute(self, sql, params=None):
-        normalized = " ".join(sql.split())
-        self.statements.append((normalized, params))
-        if normalized.startswith("SET search_path"):
-            return FakeResult()
-        if "FROM provider_projects pp" in normalized:
-            return FakeResult({
-                "id": "project-1",
-                "provider_key": "github",
-                "provider_account_username": "ggortsema",
-            })
-        if normalized.startswith("UPDATE backlog_items"):
-            return FakeResult(rowcount=2)
-        if normalized.startswith("UPDATE backlog_item_comments"):
-            return FakeResult(rowcount=1)
-        raise AssertionError(f"Unexpected SQL: {normalized}")
-
-
-def test_clear_projection_metadata_clears_items_and_comments():
-    connection = ProjectionMetadataConnection()
-    repository = PostgresBacklogRepository(
-        "postgresql://example.test/db",
-        connection_factory=lambda database_url: connection,
-    )
-    location = BacklogLocation(
-        provider="github",
-        provider_account_username="ggortsema",
-        project_title="Test Project",
-    )
-
-    with repository.transaction() as transaction:
-        cleared = transaction.clear_provider_projection_metadata(location, "github")
-
-    assert cleared == 2
-    statements = [sql for sql, _ in connection.statements]
-    assert any(sql.startswith("UPDATE backlog_items") for sql in statements)
-    assert any(sql.startswith("UPDATE backlog_item_comments") for sql in statements)

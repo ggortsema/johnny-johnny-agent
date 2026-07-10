@@ -2,11 +2,11 @@
 
 ## Purpose
 
-The Johnny-Johnny Backlog YAML format is the canonical Source of Truth (SSOT) for project-management backlog data.
+The Johnny-Johnny Backlog YAML format is a portable import/export representation of the canonical backlog domain.
 
-The YAML is machine-owned. Johnny-Johnny loads the canonical model, performs domain mutations, validates the result, and deterministically serializes it back to YAML.
+PostgreSQL is the canonical runtime store. Normal read and mutation commands operate directly on PostgreSQL and do not use YAML as an intermediary. YAML remains useful for migration, backup, human inspection, schema validation, and interchange.
 
-GitHub Projects and future project-management providers are projections of this model rather than the source of truth.
+GitHub Projects and future project-management providers are projections of the canonical domain rather than the source of truth.
 
 ## Design Principles
 
@@ -15,9 +15,11 @@ GitHub Projects and future project-management providers are projections of this 
 - `status` represents project planning state.
 - `issue_state` represents provider issue lifecycle state.
 - Presentation order is independent of identity.
-- Serialization is deterministic.
-- Provider metadata is useful for reconciliation and diagnostics, but live provider state is authoritative during reconciliation.
-- Commands should mutate the canonical model and reconcile providers rather than requiring users to work directly in provider UIs.
+- Serialization is deterministic where practical.
+- YAML mapping-key order is not semantic domain data.
+- Provider metadata is preserved for reconciliation and diagnostics.
+- Importing YAML may establish or replace a stored provider-project binding; runtime commands then use that explicit stored binding.
+- Commands mutate PostgreSQL-backed canonical state and synchronize providers rather than requiring users to work directly in provider UIs.
 
 ## Version
 

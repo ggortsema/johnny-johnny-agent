@@ -8,23 +8,30 @@ import uvicorn
 import johnny_johnny_agent.config
 
 from johnny_johnny_agent.capabilities.backlog_persistence.workflow import (
+    BacklogPurgeResult,
     check_postgres_backlog_database,
+    create_epic_in_postgres,
+    create_issue_in_postgres,
+    delete_issue_in_postgres,
     export_backlog_yaml_from_postgres,
     import_backlog_yaml_to_postgres,
     load_backlog_from_postgres,
+    move_issue_in_postgres,
+    preview_delete_issue_in_postgres,
+    preview_create_epic_in_postgres,
+    preview_create_issue_in_postgres,
+    preview_move_issue_in_postgres,
+    preview_purge_backlog_projection,
+    preview_reconcile_backlog_from_postgres,
+    preview_update_item_in_postgres,
+    purge_backlog_projection_from_postgres,
+    reconcile_backlog_from_postgres,
     summarize_backlog,
-)
-from johnny_johnny_agent.capabilities.backlog_sync.executor import (
-    execute_reconciliation_plan,
+    update_item_in_postgres,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.mutations import (
-    create_epic,
-    create_issue,
-    delete_issue,
     find_backlog_item,
     find_epic_issues,
-    move_issue,
-    update_issue,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     AddIssueToProjectOperation,
@@ -33,11 +40,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     CreateIssueOperation,
     DeleteIssueOperation,
     UpdateIssueStatusOperation,
-    plan_reconcile_backlog,
     CreateCommentOperation,
-)
-from johnny_johnny_agent.capabilities.backlog_sync.purge import (
-    purge_johnny_managed_issues,
 )
 from johnny_johnny_agent.capabilities.backlog_sync.renderers import (
     get_backlog_resource_renderer,
@@ -45,13 +48,7 @@ from johnny_johnny_agent.capabilities.backlog_sync.renderers import (
 from johnny_johnny_agent.capabilities.backlog_sync.validator import (
     validate_backlog_yaml,
 )
-from johnny_johnny_agent.capabilities.backlog_sync.workflow import (
-    publish_backlog_from_markdown,
-)
 from johnny_johnny_agent.capabilities.backlog_sync.yaml_loader import load_backlog_yaml
-from johnny_johnny_agent.capabilities.backlog_sync.yaml_writer import (
-    save_backlog_yaml,
-)
 from johnny_johnny_agent.capabilities.github.backlog_exporter import (
     generate_backlog_yaml_from_github_project,
 )
@@ -60,9 +57,6 @@ from johnny_johnny_agent.capabilities.github.client import (
     list_project_issues,
 )
 
-DEFAULT_BACKLOG_PATH = "data/input/backlog/Backlog-as-Code-Synchronization-Epic.md"
-DEFAULT_GITHUB_OWNER = "ggortsema"
-DEFAULT_GITHUB_REPOSITORY = "styxcd-docs"
 DEFAULT_GITHUB_PROJECT_TITLE = "MycroftAI Engineering Roadmap"
 
 
@@ -127,6 +121,8 @@ def serve(
     )
 
 
+# TODO: Replace this file-oriented command with a renamed GitHub-to-PostgreSQL
+# import workflow after durable, rate-limited provider reconciliation is implemented.
 @backlog_app.command("generate")
 def generate_backlog_yaml(
         project: Annotated[
@@ -145,37 +141,6 @@ def generate_backlog_yaml(
     )
 
     typer.echo(f"Wrote canonical backlog YAML: {output}")
-
-
-@backlog_app.command("publish")
-def publish_backlog(
-        file: Annotated[
-            str,
-            typer.Option("--file", "-f", help="Path to the Markdown backlog file."),
-        ],
-        repository: Annotated[
-            str,
-            typer.Option("--repository", "-r", help="GitHub repository name."),
-        ],
-        project: Annotated[
-            str,
-            typer.Option("--project", "-p", help="GitHub ProjectV2 title."),
-        ],
-        owner: Annotated[
-            str,
-            typer.Option("--owner", "-o", help="GitHub repository owner."),
-        ] = DEFAULT_GITHUB_OWNER,
-) -> None:
-    """Publish a Markdown backlog into GitHub ProjectV2."""
-    typer.echo("Johnny-Johnny Agent")
-    typer.echo()
-
-    publish_backlog_from_markdown(
-        backlog_path=file,
-        owner=owner,
-        repository_name=repository,
-        project_title=project,
-    )
 
 
 @backlog_app.command("validate")
@@ -455,52 +420,127 @@ def describe_backlog_item(
 
 @backlog_app.command("reconcile")
 def reconcile_backlog(
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
+            typer.Option("--project", "-p", help="Canonical provider project title."),
         ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
+        max_operations: Annotated[
+            int | None,
+            typer.Option(
+                "--max-operations",
+                min=1,
+                help=(
+                    "Soft provider-operation budget. Complete item groups are "
+                    "never split. Defaults to 100 unless --all is used."
+                ),
+            ),
+        ] = None,
+        all_operations: Annotated[
+            bool,
+            typer.Option(
+                "--all",
+                help="Execute every currently planned reconciliation operation.",
+            ),
+        ] = False,
         dry_run: Annotated[
             bool,
-            typer.Option("--dry-run", help="Show the reconciliation plan without making changes."),
+            typer.Option(
+                "--dry-run",
+                help="Preview the selected reconciliation scope.",
+            ),
         ] = False,
         confirm: Annotated[
             bool,
-            typer.Option("--confirm", help="Execute the reconciliation plan."),
+            typer.Option(
+                "--confirm",
+                help="Execute the selected reconciliation scope.",
+            ),
         ] = False,
 ) -> None:
-    """Reconcile the configured provider from the canonical backlog."""
+    """Reconcile PostgreSQL canonical state to the bound provider project."""
     if dry_run and confirm:
         typer.echo("Use either --dry-run or --confirm, not both.")
         raise typer.Exit(code=1)
-
     if not dry_run and not confirm:
         typer.echo("Use --dry-run to preview or --confirm to execute.")
         raise typer.Exit(code=1)
+    if all_operations and max_operations is not None:
+        typer.echo("Use either --all or --max-operations, not both.")
+        raise typer.Exit(code=1)
 
-    backlog = load_backlog_yaml(file)
-    github_project = get_viewer_project_by_title(backlog.project.title)
-    current_project_issues = list_project_issues(github_project["id"])
+    operation_limit = None if all_operations else (max_operations or 100)
 
-    plan = plan_reconcile_backlog(
-        backlog=backlog,
-        current_project_issues=current_project_issues,
+    try:
+        if dry_run:
+            preview = preview_reconcile_backlog_from_postgres(
+                provider=provider,
+                provider_account_username=provider_account_username,
+                provider_project_title=project,
+                max_operations=operation_limit,
+                database_url=database_url,
+            )
+            _print_reconciliation_plan(preview.execution_plan)
+            typer.echo()
+            typer.echo(f"Total operations: {preview.total_operation_count}")
+            typer.echo(
+                f"Operations selected: {preview.execution_operation_count}"
+            )
+            typer.echo(
+                f"Operations remaining after selection: "
+                f"{preview.remaining_operation_count}"
+            )
+            typer.echo("No PostgreSQL or GitHub changes made.")
+            return
+
+        result = reconcile_backlog_from_postgres(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            max_operations=operation_limit,
+            database_url=database_url,
+        )
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        "Reconciliation complete."
+        if all_operations
+        else "Reconciliation chunk complete."
     )
-
-    if dry_run:
-        _print_reconciliation_plan(plan)
-        return
-
-    execute_reconciliation_plan(
-        plan=plan,
-        project_title=backlog.project.title,
+    typer.echo(f"Operation groups executed: {result.executed_group_count}")
+    typer.echo(
+        f"Provider operations executed: "
+        f"{result.preview.execution_operation_count}"
     )
-
-    save_backlog_yaml(
-        backlog=backlog,
-        backlog_path=file,
+    typer.echo(
+        f"Provider metadata hydrated: {result.hydrated_item_count} canonical items"
     )
-
-    typer.echo(f"Saved hydrated metadata: {file}")
+    typer.echo(
+        f"Operations remaining: {result.preview.remaining_operation_count}"
+    )
+    if result.preview.remaining_operation_count:
+        typer.echo("Rerun the same command to continue reconciliation.")
+    else:
+        typer.echo("Canonical and provider state reconciled.")
 
 
 @backlog_app.command("pull")
@@ -535,13 +575,38 @@ def create_backlog_issue(
             str,
             typer.Option("--title", "-t", help="Issue title."),
         ],
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option(
+                "--project",
+                "-p",
+                help="Canonical provider project title.",
+            ),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
         issue_id: Annotated[
             str | None,
-            typer.Option("--id", help="Stable Johnny-Johnny issue id. Defaults to a slugified title."),
+            typer.Option(
+                "--id",
+                help="Stable Johnny-Johnny issue id. Defaults to a slugified title.",
+            ),
         ] = None,
         description: Annotated[
             str,
@@ -549,73 +614,94 @@ def create_backlog_issue(
         ] = "",
         repository: Annotated[
             str | None,
-            typer.Option("--repository", "-r", help="Repository name with owner. Defaults to parent epic repository."),
+            typer.Option(
+                "--repository",
+                "-r",
+                help="Repository name with owner. Defaults to parent epic repository.",
+            ),
         ] = None,
         acceptance: Annotated[
             list[str] | None,
-            typer.Option("--acceptance", help="Acceptance criterion. Can be repeated."),
+            typer.Option(
+                "--acceptance",
+                help="Acceptance criterion. Can be repeated.",
+            ),
         ] = None,
         dry_run: Annotated[
             bool,
-            typer.Option("--dry-run", help="Preview reconciliation without saving."),
+            typer.Option(
+                "--dry-run",
+                help="Preview without changing PostgreSQL or GitHub.",
+            ),
         ] = False,
         confirm: Annotated[
             bool,
-            typer.Option("--confirm", help="Save and reconcile."),
+            typer.Option(
+                "--confirm",
+                help="Create the canonical issue and GitHub projection.",
+            ),
         ] = False,
 ) -> None:
-    """Create a new canonical backlog issue."""
+    """Create one canonical issue and immediately project it to GitHub."""
     if dry_run and confirm:
         typer.echo("Use either --dry-run or --confirm, not both.")
         raise typer.Exit(code=1)
-
     if not dry_run and not confirm:
-        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        typer.echo("Use --dry-run to preview or --confirm to create the issue.")
         raise typer.Exit(code=1)
 
-    backlog = load_backlog_yaml(file)
+    try:
+        if dry_run:
+            issue = preview_create_issue_in_postgres(
+                provider=provider,
+                provider_account_username=provider_account_username,
+                provider_project_title=project,
+                parent_epic_id=epic,
+                title=title,
+                issue_id=issue_id,
+                description=description,
+                repository_name=repository,
+                acceptance_criteria=acceptance or [],
+                database_url=database_url,
+            )
+            parent_epic_id = epic
+        else:
+            issue, parent_epic = create_issue_in_postgres(
+                provider=provider,
+                provider_account_username=provider_account_username,
+                provider_project_title=project,
+                parent_epic_id=epic,
+                title=title,
+                issue_id=issue_id,
+                description=description,
+                repository_name=repository,
+                acceptance_criteria=acceptance or [],
+                database_url=database_url,
+            )
+            parent_epic_id = parent_epic.id
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
 
-    issue = create_issue(
-        backlog=backlog,
-        title=title,
-        epic_id=epic,
-        issue_id=issue_id,
-        description=description,
-        repository=repository,
-        acceptance_criteria=acceptance or [],
+    typer.echo(
+        f"{'Canonical issue preview' if dry_run else 'Synchronized canonical issue'}: "
+        f"{issue.title}"
     )
-
-    typer.echo(f"Created canonical issue: {issue.title}")
     typer.echo(f"ID: {issue.id}")
-    typer.echo(f"Epic: {epic}")
+    typer.echo(f"Epic: {parent_epic_id}")
     typer.echo(f"Status: {issue.status}")
     typer.echo(f"Repository: {issue.repository}")
-
-    plan = _plan_reconcile(backlog)
-    _print_reconciliation_plan(plan)
+    typer.echo(f"Order: {issue.order}")
 
     if dry_run:
+        typer.echo("No PostgreSQL or GitHub changes made.")
         return
 
-    save_backlog_yaml(
-        backlog=backlog,
-        backlog_path=file,
-    )
-
-    typer.echo(f"Saved: {file}")
-
-    if plan.operations:
-        execute_reconciliation_plan(
-            plan=plan,
-            project_title=backlog.project.title,
-        )
-
-        save_backlog_yaml(
-            backlog=backlog,
-            backlog_path=file,
-        )
-
-        typer.echo(f"Saved hydrated metadata: {file}")
+    github_metadata = issue.provider_metadata.get("github", {})
+    typer.echo(f"Project: {provider} / {provider_account_username} / {project}")
+    typer.echo(f"GitHub issue: #{github_metadata.get('number')}")
+    typer.echo(f"GitHub URL: {github_metadata.get('url')}")
+    typer.echo("Canonical and provider state committed.")
 
 
 @backlog_app.command("update")
@@ -624,17 +710,43 @@ def update_backlog_item(
             str,
             typer.Argument(help="Stable Johnny-Johnny backlog item id."),
         ],
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option(
+                "--project",
+                "-p",
+                help="Canonical provider project title.",
+            ),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
         title: Annotated[
             str | None,
             typer.Option("--title", "-t", help="New title. Replaces the current title."),
         ] = None,
         description: Annotated[
             str | None,
-            typer.Option("--description", "-d", help="New description prose. Replaces the current description."),
+            typer.Option(
+                "--description",
+                "-d",
+                help="New description prose. Replaces the current description.",
+            ),
         ] = None,
         status: Annotated[
             str | None,
@@ -644,104 +756,81 @@ def update_backlog_item(
             list[str] | None,
             typer.Option(
                 "--acceptance",
-                help="Acceptance criterion. Can be repeated. Replaces the full acceptance criteria list.",
+                help="Acceptance criterion. Can be repeated. Replaces the full list.",
             ),
         ] = None,
         comment: Annotated[
             str | None,
-            typer.Option("--comment", help="Comment to append to the canonical backlog item."),
+            typer.Option("--comment", help="Comment to append to the backlog item."),
         ] = None,
         dry_run: Annotated[
             bool,
-            typer.Option("--dry-run", help="Preview reconciliation without saving."),
+            typer.Option(
+                "--dry-run",
+                help="Preview without changing PostgreSQL or GitHub.",
+            ),
         ] = False,
         confirm: Annotated[
             bool,
-            typer.Option("--confirm", help="Save and reconcile."),
+            typer.Option(
+                "--confirm",
+                help="Update the canonical item and GitHub projection.",
+            ),
         ] = False,
 ) -> None:
-    """Update a canonical backlog issue-like item by stable id.
-
-    This command can update both epics and child issues. Title, description,
-    status, and acceptance criteria are replaced when supplied. Comments are
-    appended. Parent-child relationships are intentionally not changed here.
-    """
+    """Update one canonical epic or issue and its GitHub projection."""
     if dry_run and confirm:
         typer.echo("Use either --dry-run or --confirm, not both.")
         raise typer.Exit(code=1)
-
     if not dry_run and not confirm:
-        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        typer.echo("Use --dry-run to preview or --confirm to update the item.")
         raise typer.Exit(code=1)
-
-    has_update = any(
-        value is not None
-        for value in [
-            title,
-            description,
-            status,
-            acceptance,
-            comment,
-        ]
-    )
-
-    if not has_update:
+    if not any(value is not None for value in [title, description, status, acceptance, comment]):
         typer.echo("Nothing to update.")
         raise typer.Exit(code=1)
 
-    backlog = load_backlog_yaml(file)
+    workflow = preview_update_item_in_postgres if dry_run else update_item_in_postgres
+    try:
+        item = workflow(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            item_id=item_id,
+            title=title,
+            description=description,
+            status=status,
+            acceptance_criteria=acceptance,
+            comment=comment,
+            database_url=database_url,
+        )
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
 
-    item = update_issue(
-        backlog=backlog,
-        issue_id=item_id,
-        title=title,
-        description=description,
-        status=status,
-        acceptance_criteria=acceptance,
-        comment=comment,
+    typer.echo(
+        f"{'Canonical update preview' if dry_run else 'Synchronized canonical'} "
+        f"{item.type}: {item.title}"
     )
-
-    typer.echo(f"Updated canonical {item.type}: {item.title}")
     typer.echo(f"ID: {item.id}")
     typer.echo(f"Status: {item.status}")
-
     if title is not None:
         typer.echo("Title: updated")
-
     if description is not None:
         typer.echo("Description: updated")
-
     if acceptance is not None:
         typer.echo(f"Acceptance criteria: replaced with {len(item.acceptance_criteria)} item(s)")
-
     if comment is not None:
         typer.echo(f"Comments: {len(item.comments)}")
 
-    plan = _plan_reconcile(backlog)
-    _print_reconciliation_plan(plan)
-
     if dry_run:
+        typer.echo("No PostgreSQL or GitHub changes made.")
         return
 
-    save_backlog_yaml(
-        backlog=backlog,
-        backlog_path=file,
-    )
+    github_metadata = item.provider_metadata.get("github", {})
+    typer.echo(f"GitHub issue: #{github_metadata.get('number')}")
+    typer.echo(f"GitHub URL: {github_metadata.get('url')}")
+    typer.echo("Canonical and provider state committed.")
 
-    typer.echo(f"Saved: {file}")
-
-    if plan.operations:
-        execute_reconciliation_plan(
-            plan=plan,
-            project_title=backlog.project.title,
-        )
-
-        save_backlog_yaml(
-            backlog=backlog,
-            backlog_path=file,
-        )
-
-        typer.echo(f"Saved hydrated metadata: {file}")
 
 @backlog_app.command("move")
 def move_backlog_issue(
@@ -753,71 +842,87 @@ def move_backlog_issue(
             str,
             typer.Option("--to-epic", help="Target parent epic id."),
         ],
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option(
+                "--project",
+                "-p",
+                help="Canonical provider project title.",
+            ),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
         dry_run: Annotated[
             bool,
-            typer.Option("--dry-run", help="Preview reconciliation without saving."),
+            typer.Option(
+                "--dry-run",
+                help="Preview without changing PostgreSQL or GitHub.",
+            ),
         ] = False,
         confirm: Annotated[
             bool,
-            typer.Option("--confirm", help="Save and reconcile."),
+            typer.Option(
+                "--confirm",
+                help="Move the canonical issue and GitHub parent relationship.",
+            ),
         ] = False,
 ) -> None:
-    """Move a canonical backlog issue to a different parent epic."""
+    """Move one canonical issue to a different epic and GitHub parent."""
     if dry_run and confirm:
         typer.echo("Use either --dry-run or --confirm, not both.")
         raise typer.Exit(code=1)
-
     if not dry_run and not confirm:
-        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        typer.echo("Use --dry-run to preview or --confirm to move the issue.")
         raise typer.Exit(code=1)
 
-    backlog = load_backlog_yaml(file)
-
+    workflow = preview_move_issue_in_postgres if dry_run else move_issue_in_postgres
     try:
-        issue = move_issue(
-            backlog=backlog,
+        issue, source_epic, target_epic = workflow(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
             issue_id=issue_id,
             target_epic_id=to_epic,
+            database_url=database_url,
         )
-
     except RuntimeError as ex:
         typer.echo(str(ex))
         raise typer.Exit(code=1)
 
-    typer.echo(f"Moved canonical issue: {issue.title}")
+    typer.echo(
+        f"{'Canonical move preview' if dry_run else 'Synchronized canonical issue'}: "
+        f"{issue.title}"
+    )
     typer.echo(f"ID: {issue.id}")
-    typer.echo(f"Epic: {to_epic}")
+    typer.echo(f"From epic: {source_epic.id}")
+    typer.echo(f"To epic: {target_epic.id}")
     typer.echo(f"Repository: {issue.repository}")
 
-    plan = _plan_reconcile(backlog)
-    _print_reconciliation_plan(plan)
-
     if dry_run:
+        typer.echo("No PostgreSQL or GitHub changes made.")
         return
 
-    save_backlog_yaml(
-        backlog=backlog,
-        backlog_path=file,
-    )
+    github_metadata = issue.provider_metadata.get("github", {})
+    typer.echo(f"GitHub issue: #{github_metadata.get('number')}")
+    typer.echo(f"GitHub URL: {github_metadata.get('url')}")
+    typer.echo("Canonical and provider state committed.")
 
-    typer.echo(f"Saved: {file}")
-
-    if plan.operations:
-        execute_reconciliation_plan(
-            plan=plan,
-            project_title=backlog.project.title,
-        )
-
-        save_backlog_yaml(
-            backlog=backlog,
-            backlog_path=file,
-        )
-
-        typer.echo(f"Saved hydrated metadata: {file}")
 
 @backlog_create_app.command("epic")
 def create_backlog_epic(
@@ -829,13 +934,38 @@ def create_backlog_epic(
             str,
             typer.Option("--repository", "-r", help="Repository name with owner."),
         ],
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option(
+                "--project",
+                "-p",
+                help="Canonical provider project title.",
+            ),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
         epic_id: Annotated[
             str | None,
-            typer.Option("--id", help="Stable Johnny-Johnny epic id. Defaults to a slugified title."),
+            typer.Option(
+                "--id",
+                help="Stable Johnny-Johnny epic id. Defaults to a slugified title.",
+            ),
         ] = None,
         description: Annotated[
             str,
@@ -843,67 +973,77 @@ def create_backlog_epic(
         ] = "",
         acceptance: Annotated[
             list[str] | None,
-            typer.Option("--acceptance", help="Acceptance criterion. Can be repeated."),
+            typer.Option(
+                "--acceptance",
+                help="Acceptance criterion. Can be repeated.",
+            ),
         ] = None,
         dry_run: Annotated[
             bool,
-            typer.Option("--dry-run", help="Preview reconciliation without saving."),
+            typer.Option(
+                "--dry-run",
+                help="Preview without changing PostgreSQL or GitHub.",
+            ),
         ] = False,
         confirm: Annotated[
             bool,
-            typer.Option("--confirm", help="Save and reconcile."),
+            typer.Option(
+                "--confirm",
+                help="Create the canonical epic and GitHub projection.",
+            ),
         ] = False,
 ) -> None:
-    """Create a new canonical backlog epic."""
+    """Create one canonical epic and immediately project it to GitHub."""
     if dry_run and confirm:
         typer.echo("Use either --dry-run or --confirm, not both.")
         raise typer.Exit(code=1)
 
     if not dry_run and not confirm:
-        typer.echo("Use --dry-run to preview or --confirm to save and reconcile.")
+        typer.echo("Use --dry-run to preview or --confirm to create the epic.")
         raise typer.Exit(code=1)
 
-    backlog = load_backlog_yaml(file)
-
-    epic = create_epic(
-        backlog=backlog,
-        title=title,
-        epic_id=epic_id,
-        description=description,
-        repository=repository,
-        acceptance_criteria=acceptance or [],
+    create_workflow = (
+        preview_create_epic_in_postgres
+        if dry_run
+        else create_epic_in_postgres
     )
 
-    typer.echo(f"Created canonical epic: {epic.title}")
+    try:
+        epic = create_workflow(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            title=title,
+            repository_name=repository,
+            epic_id=epic_id,
+            description=description,
+            acceptance_criteria=acceptance or [],
+            database_url=database_url,
+        )
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
+
+    if dry_run:
+        typer.echo(f"Canonical epic preview: {epic.title}")
+    else:
+        typer.echo(f"Synchronized canonical epic: {epic.title}")
+
     typer.echo(f"ID: {epic.id}")
     typer.echo(f"Status: {epic.status}")
     typer.echo(f"Repository: {epic.repository}")
-
-    plan = _plan_reconcile(backlog)
-    _print_reconciliation_plan(plan)
+    typer.echo(f"Order: {epic.order}")
 
     if dry_run:
+        typer.echo("No PostgreSQL or GitHub changes made.")
         return
 
-    save_backlog_yaml(
-        backlog=backlog,
-        backlog_path=file,
-    )
+    github_metadata = epic.provider_metadata.get("github", {})
+    typer.echo(f"Project: {provider} / {provider_account_username} / {project}")
+    typer.echo(f"GitHub issue: #{github_metadata.get('number')}")
+    typer.echo(f"GitHub URL: {github_metadata.get('url')}")
+    typer.echo("Canonical and provider state committed.")
 
-    typer.echo(f"Saved: {file}")
-
-    if plan.operations:
-        execute_reconciliation_plan(
-            plan=plan,
-            project_title=backlog.project.title,
-        )
-
-        save_backlog_yaml(
-            backlog=backlog,
-            backlog_path=file,
-        )
-
-        typer.echo(f"Saved hydrated metadata: {file}")
 
 @backlog_list_app.command("epics")
 def list_backlog_epics(
@@ -1011,83 +1151,191 @@ def delete_backlog_issue(
             str,
             typer.Argument(help="Stable Johnny-Johnny issue id."),
         ],
-        file: Annotated[
+        project: Annotated[
             str,
-            typer.Option("--file", "-f", help="Path to the backlog YAML file."),
-        ] = "data/input/backlog/backlog.yml",
+            typer.Option("--project", "-p", help="Canonical provider project title."),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
+        dry_run: Annotated[
+            bool,
+            typer.Option(
+                "--dry-run",
+                help="Preview without changing PostgreSQL or GitHub.",
+            ),
+        ] = False,
         confirm: Annotated[
             bool,
-            typer.Option("--confirm", help="Delete the canonical issue and reconcile deletion to GitHub."),
+            typer.Option(
+                "--confirm",
+                help="Delete the canonical issue and GitHub projection.",
+            ),
         ] = False,
 ) -> None:
-    """Maintenance command: delete a Johnny-managed issue for testing."""
-    if not confirm:
-        typer.echo("This is destructive. Use --confirm to delete the issue.")
+    """Delete one canonical issue and its targeted GitHub projection."""
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to delete the issue.")
         raise typer.Exit(code=1)
 
-    backlog = load_backlog_yaml(file)
-
-    issue = delete_issue(
-        backlog=backlog,
-        issue_id=item_id,
+    workflow = (
+        preview_delete_issue_in_postgres
+        if dry_run
+        else delete_issue_in_postgres
     )
+    try:
+        result = workflow(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            issue_id=issue_id,
+            database_url=database_url,
+        )
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
 
-    typer.echo(f"Deleted canonical issue: {issue.title}")
-    typer.echo(f"ID: {issue.id}")
-
-    save_backlog_yaml(
-        backlog=backlog,
-        backlog_path=file,
+    typer.echo(
+        f"{'Canonical deletion preview' if dry_run else 'Deleted canonical issue'}: "
+        f"{result.issue.title}"
     )
+    typer.echo(f"ID: {result.issue.id}")
+    typer.echo(f"Epic: {result.parent_epic.id}")
+    github_metadata = result.issue.provider_metadata.get("github", {})
+    if github_metadata.get("number") is not None:
+        typer.echo(f"GitHub issue: #{github_metadata['number']}")
 
-    typer.echo(f"Saved: {file}")
+    if dry_run:
+        typer.echo("No PostgreSQL or GitHub changes made.")
+        return
 
-    plan = _plan_reconcile(backlog)
-    _print_reconciliation_plan(plan)
-
-    if plan.operations:
-        execute_reconciliation_plan(
-            plan=plan,
-            project_title=backlog.project.title,
-        )
-
-        save_backlog_yaml(
-            backlog=backlog,
-            backlog_path=file,
-        )
-
-        typer.echo(f"Saved hydrated metadata: {file}")
+    typer.echo(
+        "GitHub projection: deleted"
+        if result.github_issue_deleted
+        else "GitHub projection: already absent"
+    )
+    typer.echo("Canonical and provider deletion committed.")
 
 
 @maintenance_app.command("purge")
 def purge_backlog_projection(
         project: Annotated[
             str,
-            typer.Option("--project", "-p", help="GitHub ProjectV2 title."),
-        ] = DEFAULT_GITHUB_PROJECT_TITLE,
+            typer.Option("--project", "-p", help="Canonical provider project title."),
+        ],
+        provider: Annotated[
+            str,
+            typer.Option("--provider", help="Provider key."),
+        ] = "github",
+        provider_account_username: Annotated[
+            str,
+            typer.Option(
+                "--provider-account",
+                help="Provider account username that owns the project.",
+            ),
+        ] = "ggortsema",
+        database_url: Annotated[
+            str | None,
+            typer.Option(
+                "--database-url",
+                help="PostgreSQL connection string. Defaults to DATABASE_URL.",
+            ),
+        ] = None,
+        max_issues: Annotated[
+            int | None,
+            typer.Option(
+                "--max-issues",
+                min=1,
+                help=(
+                    "Maximum GitHub issues to delete in this run. Defaults to "
+                    "50 unless --all is used."
+                ),
+            ),
+        ] = None,
+        all_issues: Annotated[
+            bool,
+            typer.Option(
+                "--all",
+                help="Delete every Johnny-Johnny-managed issue in the projection.",
+            ),
+        ] = False,
+        dry_run: Annotated[
+            bool,
+            typer.Option(
+                "--dry-run",
+                help="Preview the selected GitHub purge scope.",
+            ),
+        ] = False,
         confirm: Annotated[
             bool,
-            typer.Option("--confirm", help="Delete Johnny-managed GitHub issues."),
+            typer.Option(
+                "--confirm",
+                help="Delete the selected GitHub projection scope.",
+            ),
         ] = False,
 ) -> None:
-    """Delete Johnny-managed issues from a GitHub ProjectV2 projection."""
-    purge_johnny_managed_issues(
-        project_title=project,
-        confirm=confirm,
+    """Purge the provider projection while preserving canonical PostgreSQL data."""
+    if dry_run and confirm:
+        typer.echo("Use either --dry-run or --confirm, not both.")
+        raise typer.Exit(code=1)
+    if not dry_run and not confirm:
+        typer.echo("Use --dry-run to preview or --confirm to purge the projection.")
+        raise typer.Exit(code=1)
+    if all_issues and max_issues is not None:
+        typer.echo("Use either --all or --max-issues, not both.")
+        raise typer.Exit(code=1)
+
+    issue_limit = None if all_issues else (max_issues or 50)
+    selected_workflow = (
+        preview_purge_backlog_projection
+        if dry_run
+        else purge_backlog_projection_from_postgres
     )
+    try:
+        result = selected_workflow(
+            provider=provider,
+            provider_account_username=provider_account_username,
+            provider_project_title=project,
+            max_issues=issue_limit,
+            database_url=database_url,
+        )
+    except RuntimeError as ex:
+        typer.echo(str(ex))
+        raise typer.Exit(code=1)
 
+    _print_purge_result(result)
+    if dry_run:
+        typer.echo()
+        typer.echo("No PostgreSQL or GitHub changes made.")
+        return
 
-def _plan_reconcile(backlog):
-    github_project = get_viewer_project_by_title(backlog.project.title)
-
-    current_project_issues = list_project_issues(
-        github_project["id"],
-    )
-
-    return plan_reconcile_backlog(
-        backlog=backlog,
-        current_project_issues=current_project_issues,
-    )
+    typer.echo()
+    typer.echo(f"GitHub issues deleted: {result.deleted_issue_count}")
+    typer.echo(f"GitHub issues remaining: {result.remaining_issue_count}")
+    if result.projection_metadata_cleared:
+        typer.echo(f"Canonical items retained: {result.cleared_item_count}")
+        typer.echo("Canonical provider metadata cleared.")
+    else:
+        typer.echo("Canonical provider metadata retained until the final purge chunk.")
+        typer.echo("Rerun the same command to continue the purge.")
 
 
 def _print_reconciliation_plan(plan) -> None:
@@ -1140,6 +1388,14 @@ def _print_reconciliation_plan(plan) -> None:
 
     typer.echo()
     typer.echo(f"Operations: {len(plan.operations)}")
+
+
+def _print_purge_result(result: BacklogPurgeResult) -> None:
+    typer.echo(f"Project: {result.project_title}")
+    typer.echo(f"Johnny-managed GitHub issues found: {result.total_issue_count}")
+    typer.echo(f"Issues in next purge chunk: {len(result.issues)}")
+    for issue in result.issues:
+        typer.echo(f"- #{issue.get('number')} {issue.get('title')}")
 
 def _inspect_backlog(
         *,

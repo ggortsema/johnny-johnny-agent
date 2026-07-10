@@ -1,418 +1,118 @@
 # Johnny-Johnny Agent
 
-Johnny-Johnny Agent is the Python runtime for **Johnny-Johnny**, a personal engineering assistant designed to help software engineers build, understand, maintain, and automate software projects.
+Johnny-Johnny Agent is the Python runtime for Johnny-Johnny, a personal engineering assistant built around deterministic, reusable engineering workflows.
 
-Johnny-Johnny is project-agnostic. It is not tied to any specific product or codebase. It helps engineers organize work, reason about architecture, automate repetitive tasks, and build software through deterministic workflows backed by reusable capabilities.
+The same capabilities are intended to be reusable from CLI, FastAPI, chat, webhooks, and future UI adapters.
 
-Conversations are simply one interface to those capabilities.
+## Current Architecture
 
----
-
-# Vision
-
-Johnny-Johnny is built around a few core principles:
-
-- Build reusable capabilities before user interfaces.
-- Treat the CLI as the primary public interface.
-- Keep business logic independent from presentation layers.
-- Prefer deterministic workflows whenever possible.
-- Use AI where reasoning and intent resolution add value.
-- Make every capability reusable from:
-  - CLI
-  - FastAPI
-  - Future chat interfaces
-  - LangGraph
-  - Future desktop/web applications
-
-Johnny-Johnny is intended to become a personal engineering operating system rather than a collection of unrelated tools.
-
----
-
-# Design Principles
-
-## Canonical First
-
-The canonical domain model is the Source of Truth.
-
-External systems such as GitHub are provider projections.
-
-Users manipulate the canonical engineering model.
-
-Johnny-Johnny reconciles provider state.
-
----
-
-## Intent-Based Commands
-
-Commands describe the user's intent rather than implementation details.
-
-Examples:
-
-- create-issue
-- update-issue
-- create-epic
-- move-issue
-
-rather than low-level mutation commands.
-
----
-
-## Immediate Reconciliation
-
-Confirmed commands mutate the canonical model and immediately reconcile provider state.
-
-Johnny-Johnny intentionally avoids hidden state whenever practical.
-
-After a successful `--confirm`, the canonical model and provider projection should agree.
-
----
-
-## Provider Independence
-
-Users interact with engineering concepts.
-
-Johnny-Johnny understands provider-specific behavior.
-
-Provider implementations should not dictate the public command surface.
-
----
-
-## Grow Johnny-Johnny Instead of Workarounds
-
-When normal engineering work requires leaving Johnny-Johnny, prefer adding a new capability rather than teaching users provider-specific workflows.
-
----
-
-# Current Major Capability
-
-## Backlog-as-Code
-
-The first complete Johnny-Johnny capability is **Backlog-as-Code**.
-
-The canonical Source of Truth (SSOT) is:
-
-```
-backlog.yml
+```text
+CLI today ───────────┐
+REST API next ───────┼── application workflows ── canonical domain
+webhooks later ──────┘            │
+                                  ├── PostgreSQL canonical store
+                                  └── provider adapters (GitHub first)
 ```
 
-GitHub Projects are treated as a projection of that canonical backlog.
+PostgreSQL is the canonical runtime store for backlog state. GitHub Projects are provider projections. YAML is a portable import/export, migration, backup, validation, and inspection format—not a runtime intermediary.
 
-```
-CLI Command
-        ↓
-Load Canonical Model
-        ↓
-Mutate Domain
-        ↓
-Validate
-        ↓
-Planner
-        ↓
-Execution Plan
-        ↓
-Provider Adapter
-        ↓
-GitHub
+Stable Johnny-Johnny IDs are canonical identity. GitHub issue numbers, node IDs, URLs, and project-item IDs are provider metadata.
+
+## Configuration
+
+Place the PostgreSQL connection string in the project-root `.env` file:
+
+```env
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/styxcd
 ```
 
-The reconciliation engine is deterministic and idempotent.
+Then install/synchronize dependencies and verify persistence:
 
-Verified workflow:
-
-1. Generate canonical backlog from GitHub.
-2. Validate the YAML.
-3. Create canonical issues.
-4. Update canonical issues.
-5. Delete canonical issues (maintenance).
-6. Reconcile provider state.
-7. Regenerate canonical backlog.
-8. Dry-run reconciliation returns zero operations.
-
----
-
-# Canonical Model
-
-The canonical backlog separates:
-
-- Stable semantic identity
-- Planning state
-- Provider lifecycle state
-- Provider metadata
-
-Example:
-
-```yaml
-id: create-issue-command
-type: issue
-title: Create Issue Command
-status: Done
-issue_state: OPEN
-
-provider_metadata:
-  github:
-    issue_id: ...
-    project_item_id: ...
+```bash
+uv sync
+uv run jj backlog db check
 ```
 
-Planning state and provider lifecycle are intentionally independent.
+## PostgreSQL-Backed Reads
 
-Provider metadata is advisory.
+```bash
+uv run jj backlog inspect --project "PROJECT"
+uv run jj backlog list epics --project "PROJECT"
+uv run jj backlog list items --project "PROJECT"
+uv run jj backlog describe ITEM_ID --project "PROJECT"
+```
 
-Live provider state is authoritative during reconciliation.
+List and describe commands support their documented human, YAML, and JSON output formats. YAML output is rendering only.
 
----
+## Targeted Mutations
 
-# Current CLI
+```bash
+uv run jj backlog create epic ... --project "PROJECT" --dry-run
+uv run jj backlog create epic ... --project "PROJECT" --confirm
+
+uv run jj backlog create issue ... --project "PROJECT" --dry-run
+uv run jj backlog create issue ... --project "PROJECT" --confirm
+
+uv run jj backlog update ITEM_ID ... --project "PROJECT" --dry-run
+uv run jj backlog update ITEM_ID ... --project "PROJECT" --confirm
+
+uv run jj backlog move ISSUE_ID --to-epic EPIC_ID --project "PROJECT" --dry-run
+uv run jj backlog move ISSUE_ID --to-epic EPIC_ID --project "PROJECT" --confirm
+
+uv run jj maintenance delete-issue ISSUE_ID --project "PROJECT" --dry-run
+uv run jj maintenance delete-issue ISSUE_ID --project "PROJECT" --confirm
+```
+
+Confirmed mutations write PostgreSQL and synchronize the targeted GitHub projection before reporting success. Workflows use rollback, compensation, and idempotent repair because PostgreSQL and GitHub cannot share one transaction.
+
+## Reconcile and Purge
+
+```bash
+uv run jj backlog reconcile --project "PROJECT" --max-operations 100 --dry-run
+uv run jj backlog reconcile --project "PROJECT" --all --confirm
+
+uv run jj maintenance purge --project "PROJECT" --max-issues 50 --dry-run
+uv run jj maintenance purge --project "PROJECT" --all --confirm
+```
+
+Reconcile reads PostgreSQL and applies the provider plan. Purge removes the GitHub projection while preserving canonical PostgreSQL rows.
+
+## YAML Utilities
+
+```bash
+uv run jj backlog validate --file backlog.yml
+uv run jj backlog db import --file backlog.yml --dry-run
+uv run jj backlog db import --file backlog.yml --confirm
+uv run jj backlog db export --project "PROJECT" --output backlog.yml
+```
+
+`jj backlog pull` remains a raw GitHub diagnostic.
+
+`jj backlog generate` remains temporarily as a GitHub-to-YAML migration utility and is explicitly deferred for replacement by a direct GitHub-to-PostgreSQL import workflow.
+
+Removed legacy commands:
+
+```text
+jj backlog publish
+jj backlog preview-epic-body
+```
 
 ## API
 
 ```bash
-jj serve
+uv run jj serve
 ```
 
----
-
-## Backlog
-
-### Generate
-
-```bash
-jj backlog generate
-```
-
-Generate canonical backlog from GitHub.
-
----
-
-### Validate
-
-```bash
-jj backlog validate
-```
-
----
-
-### Inspect
-
-```bash
-jj backlog inspect
-```
-
----
-
-### List Epics
-
-```bash
-jj backlog list-epics
-```
-
----
-
-### Create Issue
-
-```bash
-jj backlog create-issue
-```
-
-Creates a canonical issue and immediately reconciles GitHub on confirmation.
-
----
-
-### Create Epic
-
-```bash
-jj backlog create-epic
-```
-
-Creates a canonical epic and immediately reconciles GitHub on confirmation.
-
----
-
-### Update Issue
-
-```bash
-jj backlog update-issue
-```
-
-Updates canonical planning state and reconciles GitHub.
-
----
-
-### Reconcile
-
-```bash
-jj backlog reconcile
-```
-
-Produces a reconciliation plan or executes it.
-
----
-
-## Maintenance
-
-### Purge
-
-```bash
-jj maintenance purge
-```
-
-Delete Johnny-managed GitHub issues.
-
----
-
-### Delete Issue
-
-```bash
-jj maintenance delete-issue
-```
-
-Developer-oriented command used for testing and backlog cleanup.
-
----
-
-# Architecture
-
-```
-CLI
-    ↓
-Capability
-    ↓
-Domain Mutation
-    ↓
-Validation
-    ↓
-Planner
-    ↓
-Execution Plan
-    ↓
-Provider Adapter
-```
-
-The planner computes the difference between:
-
-```
-Desired Canonical State
-
-and
-
-Live Provider State
-```
-
-The executor applies the resulting execution plan.
-
-Provider adapters contain provider-specific implementation.
-
-Business logic remains provider independent.
-
----
-
-# Current Status
-
-Completed:
-
-- Canonical backlog domain model
-- Canonical YAML specification
-- JSON Schema validation
-- GitHub exporter
-- GitHub renderer
-- Deterministic YAML generation
-- Planner
-- Executor
-- Live-state reconciliation
-- Idempotent synchronization
-- Dry-run planning
-- GitHub Project synchronization
-- GitHub Epic/Sub-Issue synchronization
-- Create Issue
-- Update Issue (status)
-- List Epics
-- Create Epic
-- Maintenance Delete Issue
-- Maintenance Purge
-- Dogfooded Backlog-as-Code on Johnny-Johnny itself
-
-The Backlog-as-Code capability has moved beyond import/export tooling into a complete canonical engineering workflow.
-
----
-
-# Next Milestone
-
-Complete the backlog capability:
-
-- Update Epic
-- Expand Update Issue
-- List Issues
-- Find Issue
-- Move Issue
-
-Then expand Johnny-Johnny into additional engineering domains:
-
-- GitHub
-- Gmail
-- Google Calendar
-- Documentation
-- Engineering Playbooks
-- AI-assisted engineering workflows
-
----
-
-# Development Philosophy
-
-Every capability grows through small validated vertical slices.
-
-```
-Define Domain
-        ↓
-Implement Domain Mutation
-        ↓
-Validate
-        ↓
-Add Planning Rule
-        ↓
-Add Provider Execution
-        ↓
-Dogfood Through CLI
-        ↓
-Expose Through AI
-```
-
-Whenever possible, Johnny-Johnny should automate provider workflows so users remain focused on engineering intent rather than provider mechanics.
-
----
-
-# Long-Term Direction
-
-Backlog management is the first complete Johnny-Johnny capability.
-
-The architecture established by Backlog-as-Code is intended to become the foundation for future capabilities including:
-
-- GitHub
-- Gmail
-- Calendar
-- Documentation
-- Knowledge Management
-- Project Planning
-- Engineering Automation
-- Playbook Execution
-
-Each capability should follow the same execution model:
-
-```
-Intent
-    ↓
-Canonical Model
-    ↓
-Planner
-    ↓
-Execution Plan
-    ↓
-Provider
-```
-
-This consistent architecture allows Johnny-Johnny to grow organically while preserving deterministic behavior and reusable engineering capabilities.
-
----
-
-# License
-
-TBD
+The current FastAPI app exposes only a minimal hello endpoint. The next implementation story is to expose the PostgreSQL-backed application workflows through typed REST endpoints without invoking the CLI.
+
+## Documentation
+
+Start with:
+
+- `docs/architecture/canonical-backlog-runtime-architecture.md`
+- `docs/architecture/adrs/ADR-001-postgresql-canonical-backlog-runtime.md`
+- `docs/architecture/adrs/ADR-002-targeted-provider-synchronization.md`
+- `docs/database/postgres/README.md`
+- `docs/specifications/backlog-v1.md`
+- `docs/development/ENGINEERING_PRINCIPLES.md`
+- `docs/development/WORKING_AGREEMENT.md`

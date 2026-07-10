@@ -1,6 +1,6 @@
 -- Canonical backlog persistence schema
 -- Story: design-canonical-backlog-persistence
--- Status: Draft; do not run until reviewed.
+-- Status: Implemented baseline; applied to the sandbox environment.
 
 BEGIN;
 
