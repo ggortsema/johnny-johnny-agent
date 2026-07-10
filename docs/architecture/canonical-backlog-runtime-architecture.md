@@ -1,6 +1,6 @@
 # Canonical Backlog Runtime Architecture
 
-**Status:** Implemented baseline  
+**Status:** Implemented baseline
 **Date:** July 10, 2026
 
 ## Purpose
@@ -134,13 +134,30 @@ The command option `--project` identifies the stored `provider_projects` row. Th
 
 Runtime reconciliation does not search GitHub by title and silently rewrite the binding. Rebinding must be an explicit future capability.
 
+## Security and Deployment Boundary
+
+The REST baseline is intentionally loopback-only while it has no authentication middleware.
+
+Normal REST clients will authenticate with OAuth 2.0/OpenID Connect bearer tokens. The API will validate identity and enforce authorization independently of any UI.
+
+GitHub webhook deliveries use a separate trust boundary: a public HTTPS endpoint verifies the HMAC-SHA256 signature in `X-Hub-Signature-256` with a server-owned webhook secret and deduplicates deliveries using `X-GitHub-Delivery`.
+
+In local development the process binds to `127.0.0.1`. In an EKS pod it binds to `0.0.0.0`, while the Kubernetes Service, ingress, TLS, network policy, and application security control exposure.
+
+See ADR-004 and `api-security-deployment-and-client-evolution.md`.
+
 ## Next Evolution
 
-The REST baseline is implemented. Later evolutions add:
+The agreed order is:
 
-- server authentication and authorization before binding beyond trusted interfaces
-- webhook ingestion
+1. secure the existing REST API with OAuth/OIDC and authorization
+2. deploy the secured service to EKS over HTTPS
+3. add signed GitHub webhook ingestion and provider-to-canonical synchronization
+
+Later evolutions add:
+
 - durable reconcile runs and operations
 - rate-aware workers and asynchronous operation resources where needed
 - audit history
 - explicit provider-project rebinding
+- responsive web and native mobile clients over the same authenticated backend

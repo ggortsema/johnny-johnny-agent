@@ -47,6 +47,14 @@ The default host is loopback-only because the current server does not yet includ
 uv run jj serve --host 127.0.0.1 --port 8000
 ```
 
+For a future container or EKS deployment, bind the process to the pod network interface:
+
+```bash
+uv run jj serve --host 0.0.0.0 --port 8000
+```
+
+`0.0.0.0` makes the process reachable through the pod network; it is not an authentication control. Do not expose the current unauthenticated API publicly. The next planned story adds OAuth/OIDC authentication and authorization before EKS deployment.
+
 API resources:
 
 ```text

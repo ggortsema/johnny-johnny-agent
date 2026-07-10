@@ -148,10 +148,11 @@ No CLI command was removed or renamed by this story.
 Python compilation: passed
 README bash syntax: 39/39 blocks passed `bash -n`
 Generated OpenAPI: 13 paths / 15 HTTP operations
-Behavior suite: 86 passed, 1 skipped
-Live server smoke: liveness 200; OpenAPI generated with 13 paths
+Behavior suite in applied project: 87 passed
+Live server smoke: liveness and readiness exercised successfully
+Live curl walkthrough: most endpoint classes exercised successfully
 ```
 
 The automated endpoint tests call the ASGI application directly and verify every v1 path, dry-run/confirmed dispatch, shared workflow arguments, typed serialization, scope validation, YAML import/export, readiness behavior, and stable errors.
 
-Live PostgreSQL/GitHub destructive examples were not executed during the implementation pass. The README marks full import, purge, and reconciliation commands as sandbox-only and puts previews before confirmed operations.
+After applying the change set, the user ran the complete local test suite and confirmed `87 passed`. Most README curl examples were also exercised successfully against the running API. The REST purge and reconciliation endpoints were intentionally not live-tested during this session because they are destructive or broad provider operations. Their behavior remains covered by endpoint tests and the README keeps previews before confirmed execution.

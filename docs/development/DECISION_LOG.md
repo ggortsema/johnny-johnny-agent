@@ -150,3 +150,36 @@ Database topology and credentials are deployment concerns and should not cross t
 
 Related Story:
 `expose-backlog-workflows-through-rest-api`
+
+---
+
+## 2026-07-10 — Separate Human and Webhook Authentication
+
+Decision:
+Secure normal REST endpoints with OAuth 2.0/OpenID Connect bearer-token validation and API-side authorization. Authenticate inbound GitHub webhook deliveries separately by verifying the HMAC-SHA256 payload signature with a server-owned webhook secret and using the GitHub delivery ID for idempotency.
+
+Reason:
+Interactive users and GitHub webhook deliveries use different supported trust mechanisms. The UI must not become the security perimeter, and GitHub does not send a human OAuth token with webhook requests.
+
+Related ADR:
+`ADR-004-separate-human-and-webhook-authentication-boundaries.md`
+
+---
+
+## 2026-07-10 — Security Before Public EKS Deployment
+
+Decision:
+Complete the next work in this order: secure the existing REST API, deploy the secured service to EKS over HTTPS, then implement inbound GitHub synchronization.
+
+Reason:
+GitHub requires a reachable HTTPS endpoint for live webhook delivery, but the existing backlog API must not be exposed publicly before authentication and authorization are enforced.
+
+---
+
+## 2026-07-10 — Shared Backend for Web and Native Clients
+
+Decision:
+Treat a responsive Next.js UI and a future native iPhone application as peer clients of the same secured REST and AI APIs. Prefer the web UI as the first visual control room; defer native implementation until speech, Siri, Action Button, notification, or other iOS integrations provide concrete value.
+
+Reason:
+The web client can exercise backlog, chat, review, and initial microphone workflows quickly. Native iOS should be introduced for capabilities unique to the operating system rather than creating a second backend contract.

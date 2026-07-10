@@ -8,7 +8,8 @@ This directory contains Johnny-Johnny engineering guidance and session artifacts
 - `backlog-persistence-test-strategy.md` — automated and live validation strategy.
 - `../api/backlog-rest-api.md` — versioned REST endpoint, execution-mode, and error contracts.
 - `rest-api-implementation-summary-2026-07-10.md` — REST change inventory, method/import changes, and verification evidence.
-- `backlog-session-update-plan-2026-07-10.md` — canonical backlog changes to apply through Johnny-Johnny.
+- `backlog-session-update-plan-2026-07-10.md` — REST completion and the next security/deployment/synchronization story sequence.
+- `../architecture/api-security-deployment-and-client-evolution.md` — authentication boundaries, EKS binding, webhook trust, and client direction.
 - `ENGINEERING-SESSION-CLOSURE.md` — closure checklist supplied to engineering sessions.
 - `session-index.md` — prior persistence-session navigation document; regenerate it during engineering-session closure.
 

@@ -1,11 +1,14 @@
-# Start the completed REST API on the trusted loopback interface.
-uv run jj serve --host 127.0.0.1 --port 8000
+# Confirm the REST story is marked Done in the canonical backlog.
+uv run jj backlog describe expose-backlog-workflows-through-rest-api \
+  --project "Johnny-Johnny Backlog Persistence Sandbox"
 
-# In another terminal, verify liveness and PostgreSQL readiness.
-curl -fsS http://127.0.0.1:8000/api/v1/health/live
-curl -fsS http://127.0.0.1:8000/api/v1/health/ready
-
-# Follow the complete sandbox walkthrough in README.md to exercise every endpoint.
-
-# After live smoke validation, apply the canonical REST story completion update in:
+# If needed, apply the completion update recorded in:
 # docs/development/backlog-session-update-plan-2026-07-10.md
+
+# Begin the next story by reviewing the security decision and evolution plan:
+# docs/architecture/adrs/ADR-004-separate-human-and-webhook-authentication-boundaries.md
+# docs/architecture/api-security-deployment-and-client-evolution.md
+
+# Immediate next design task:
+# select the OIDC identity provider and define the initial route/authorization policy
+# before editing FastAPI authentication code.

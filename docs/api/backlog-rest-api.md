@@ -50,6 +50,24 @@ http://127.0.0.1:8000/openapi.json
 
 The current server has no authentication middleware. Keep it bound to a trusted interface, normally `127.0.0.1`, until server authentication and authorization are implemented.
 
+A future container or EKS pod must bind to `0.0.0.0` so its Kubernetes Service can reach it:
+
+```bash
+uv run jj serve --host 0.0.0.0 --port 8000
+```
+
+That bind address provides reachability only. Public deployment additionally requires HTTPS, application authentication/authorization, secret management, and platform network controls.
+
+The agreed security sequence is:
+
+```text
+OAuth/OIDC for existing REST endpoints
+  -> deploy secured API to EKS
+  -> add HMAC-authenticated GitHub webhook synchronization
+```
+
+See ADR-004 and `docs/architecture/api-security-deployment-and-client-evolution.md`.
+
 ## Project Selection
 
 Backlog routes identify a project by its stored provider project title in the URL path. The `provider` and `provider_account` query parameters complete the canonical location:
