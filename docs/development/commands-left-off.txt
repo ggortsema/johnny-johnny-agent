@@ -1,0 +1,4 @@
+jj backlog reconcile   --file data/input/backlog/backlog.yml   --confirm
+
+jj maintenance purge   --project "MycroftAI Engineering Roadmap"   --confirm
+
