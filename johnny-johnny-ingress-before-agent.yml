@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"alb.ingress.kubernetes.io/scheme":"internet-facing","alb.ingress.kubernetes.io/target-type":"ip"},"name":"johnny-johnny-ingress","namespace":"johnny-johnny"},"spec":{"ingressClassName":"alb","rules":[{"host":"johnny-johnny.mycroftai.org","http":{"paths":[{"backend":{"service":{"name":"johnny-johnny-ui","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}},{"host":"api.johnny-johnny.mycroftai.org","http":{"paths":[{"backend":{"service":{"name":"johnny-johnny-backend","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
+  creationTimestamp: "2026-06-22T23:17:56Z"
+  finalizers:
+  - ingress.k8s.aws/resources
+  generation: 2
+  name: johnny-johnny-ingress
+  namespace: johnny-johnny
+  resourceVersion: "69515"
+  uid: bbc31b16-8661-4834-b9c8-695898c832f7
+spec:
+  ingressClassName: alb
+  rules:
+  - host: johnny-johnny.mycroftai.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: johnny-johnny-ui
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: api.johnny-johnny.mycroftai.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: johnny-johnny-backend
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - hostname: k8s-johnnyjo-johnnyjo-31a4af4980-1937427624.us-east-1.elb.amazonaws.com
+      ports:
+      - port: 80
+        protocol: ""

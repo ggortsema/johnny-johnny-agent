@@ -77,7 +77,47 @@ The session index should contain:
 
 The session index should summarize and reference durable artifacts rather than duplicating them.
 
-## 5. Completion Checklist
+
+## 5. Generate Command Cheat Sheet
+
+Create a downloadable Markdown file containing every command the user was instructed to run during the engineering session.
+
+Name the file using this format:
+
+```text
+command-cheat-sheet-<timestamp>.md
+```
+
+Use a sortable timestamp such as:
+
+```text
+command-cheat-sheet-2026-07-10-204500.md
+```
+
+Requirements:
+
+- Include the commands exactly as they were run or instructed.
+- Place every command in a fenced code block.
+- Add a short explanation of what each command did.
+- Group commands by command type or tool, such as:
+  - Bash / shell
+  - Git
+  - Docker
+  - AWS CLI
+  - kubectl
+  - Helm
+  - PostgreSQL / psql
+  - Python / uv
+  - Other tools as applicable
+- Preserve important flags, namespaces, regions, resource names, and paths.
+- Never include secret values, tokens, passwords, private keys, or other sensitive data.
+- Replace sensitive values with clearly labeled placeholders when necessary.
+- Include commands even when they failed, when the failure taught something useful; label the result or lesson briefly.
+- Avoid duplicate entries unless the repeated command served a meaningfully different purpose.
+
+The command cheat sheet is intended to become part of a future searchable personal engineering cookbook.
+
+## 6. Completion Checklist
 
 Report the result of reviewing each category.
 
@@ -92,6 +132,7 @@ Example:
 ✓ AI Collaboration Documentation
 ✓ Behavior Tests
 ✓ Backlog
+✓ Command Cheat Sheet Generated
 ✓ Session Index Generated
 
 ## Guiding Principle

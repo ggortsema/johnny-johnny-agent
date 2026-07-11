@@ -2,241 +2,458 @@
 
 **Date:** July 10, 2026  
 **Project:** Johnny-Johnny Agent  
-**Project Version:** 0.1.0  
 **Git Branch:** dev  
-**Completed Story:** `secure-backlog-rest-api`  
-**Next Story:** `deploy-johnny-johnny-api-to-eks`  
-**Following Story:** `synchronize-github-project-events-to-canonical-backlog`
+**Current Story:** `deploy-johnny-johnny-api-to-eks`  
+**Immediate Status:** Manual EKS deployment in progress; pod is running but readiness is failing because `DATABASE_URL` in AWS Secrets Manager was created with the literal text `echo` prefixed to the URL.
 
-## Session Summary
+## Session Goal
 
-This session secured the existing FastAPI backlog adapter with Auth0 access-token validation and API-side authorization.
-
-The implementation now validates Auth0 `RS256` access tokens against a trusted, server-configured issuer/JWKS and enforces one of four OAuth permissions before a backlog workflow is dispatched:
+Prove the direct Johnny-Johnny deployment path manually before integrating it into StyxCD:
 
 ```text
-read:backlogs
-write:backlogs
-operate:backlogs
-admin:backlogs
+test
+→ build image
+→ push to ECR
+→ configure AWS-managed secrets
+→ configure EKS workload identity
+→ deploy to EKS
+→ configure ALB/HTTPS/DNS
+→ run public and authenticated smoke tests
 ```
 
-Liveness and readiness remain unauthenticated for Kubernetes and load-balancer probes but return only minimal operational state. A protected `/api/v1/auth/whoami` endpoint provides a real-token smoke test without connecting to PostgreSQL or GitHub.
+## Completed This Session
 
-The applied-project behavior suite completed with:
+### Local container validation
+
+- Built the Docker image successfully.
+- Ran the image locally with `.env`.
+- Confirmed Uvicorn started on `0.0.0.0:8000`.
+- Confirmed the public liveness endpoint returned:
+  ```json
+  {"service":"johnny-johnny-agent","version":"0.1.0","status":"ok"}
+  ```
+
+### EKS cluster validation
+
+- Confirmed EKS cluster `johnny-johnny-dev` exists and is `ACTIVE`.
+- Refreshed kubeconfig.
+- Confirmed cluster version `1.34`.
+- Confirmed worker architecture is `x86_64`, so deployment images must target:
+  ```text
+  linux/amd64
+  ```
+
+### ECR
+
+- Existing repositories:
+  ```text
+  johnny-johnny/johnny-johnny-ui
+  johnny-johnny/johnny-johnny-backend
+  ```
+- Created:
+  ```text
+  johnny-johnny/johnny-johnny-agent
+  ```
+- Repository URI:
+  ```text
+  359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-agent
+  ```
+- Authenticated Docker to ECR.
+- Built and pushed:
+  ```text
+  359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-agent:0.1.0
+  ```
+- Verified digest:
+  ```text
+  sha256:444b226e5db356486e0017b3d863706cd9c372abb0b473ab7e013295d446376a
+  ```
+
+### Secrets Manager
+
+Created secrets:
 
 ```text
-109 passed, 1 skipped
+DATABASE_URL
+GITHUB_TOKEN
 ```
 
-The generated OpenAPI surface contains:
+Secret ARNs:
 
 ```text
-14 paths / 16 HTTP operations
+arn:aws:secretsmanager:us-east-1:359546647832:secret:DATABASE_URL-kwT9cC
+arn:aws:secretsmanager:us-east-1:359546647832:secret:GITHUB_TOKEN-eyDU2F
 ```
 
-The skipped test requires live GitHub provider access. The Auth0 validation and route-authorization tests are self-contained and make no Auth0 network calls.
+Important current problem:
 
-## Completed Story
+- `DATABASE_URL` was entered incorrectly with literal `echo` text in front of the URL.
+- The running container therefore receives an invalid database connection string.
+- The next session must update the existing `DATABASE_URL` secret with the correct value.
 
-### `secure-backlog-rest-api`
+Do not paste secret values into chat.
 
-Implemented behavior includes:
+### EKS Pod Identity
 
-- Auth0 selected as the initial OAuth 2.0/OpenID Connect provider
-- required server-owned `AUTH0_DOMAIN` and `AUTH0_AUDIENCE`
-- application startup that fails closed when security configuration is missing
-- fixed `RS256` token validation through the configured tenant JWKS
-- signature, issuer, audience, expiration, issued-at, optional not-before, subject, and key-ID validation
-- rejection of token-selected `jku`/`x5u` key sources and unsupported critical headers
-- support for Auth0 default and RFC 9068 client metadata claims
-- authorization from the standard space-delimited `scope` claim
-- no privilege escalation from the optional Auth0 `permissions` claim
-- stable `401 Unauthorized`, `403 Forbidden`, and authentication-service `503 Service Unavailable` errors
-- route-level read, write, operate, and admin permission policy
-- identical permission checks for dry-run and confirmed operations
-- public minimal `/api/v1/health/live` and `/api/v1/health/ready`
-- protected token-only `/api/v1/auth/whoami`
-- optional removal of Swagger UI, ReDoc, and OpenAPI in deployments
-- an application factory with an injectable verifier for behavior tests and no production authentication-bypass switch
-- complete Auth0 API, permission, RBAC, role, M2M, token, and curl instructions in the root README
+- Installed EKS managed add-on:
+  ```text
+  eks-pod-identity-agent
+  ```
+- Verified DaemonSet is ready.
+- Created IAM policy file:
+  ```text
+  johnny-johnny-secrets-policy.json
+  ```
+- Created IAM policy:
+  ```text
+  arn:aws:iam::359546647832:policy/JohnnyJohnnyRuntimeSecretsRead
+  ```
+- Policy allows only:
+  ```text
+  secretsmanager:GetSecretValue
+  secretsmanager:DescribeSecret
+  ```
+  for the two Johnny-Johnny secret ARNs.
+- Created Pod Identity trust policy:
+  ```text
+  johnny-johnny-pod-identity-trust-policy.json
+  ```
+- Created IAM role:
+  ```text
+  arn:aws:iam::359546647832:role/JohnnyJohnnyAgentPodIdentityRole
+  ```
+- Attached `JohnnyJohnnyRuntimeSecretsRead`.
+- Created Kubernetes ServiceAccount:
+  ```text
+  namespace: johnny-johnny
+  serviceAccount: johnny-johnny-agent
+  ```
+- Created EKS Pod Identity association:
+  ```text
+  association id: a-768ibt7adlppkyfuc
+  namespace: johnny-johnny
+  service account: johnny-johnny-agent
+  role: JohnnyJohnnyAgentPodIdentityRole
+  ```
 
-The canonical completion command and comment are recorded in:
+### Secrets Store CSI Driver / AWS provider
+
+- Added Helm repo:
+  ```text
+  aws-secrets-manager
+  ```
+- Installed release:
+  ```text
+  secrets-provider-aws
+  ```
+  in:
+  ```text
+  kube-system
+  ```
+- Initial install failed because the single `t3.small` worker had reached its 11-pod limit.
+- Node group:
+  ```text
+  ng-7996e69b
+  ```
+- Original scaling:
+  ```text
+  min=1
+  desired=1
+  max=1
+  ```
+- Updated scaling:
+  ```text
+  min=1
+  desired=2
+  max=2
+  ```
+- Second worker joined and became ready.
+- Old Johnny-Johnny UI and Java backend Deployments were scaled to zero to free pod slots:
+  ```text
+  johnny-johnny-ui
+  johnny-johnny-backend
+  ```
+- Helm release eventually reached:
+  ```text
+  STATUS: deployed
+  ```
+- Both DaemonSets are healthy on both nodes:
+  ```text
+  secrets-store-csi-driver
+  secrets-provider-aws-secrets-store-csi-driver-provider-aws
+  ```
+
+### SecretProviderClass
+
+Created and applied:
 
 ```text
-docs/development/backlog-session-update-plan-2026-07-10.md
+johnny-johnny-secret-provider-class.yml
 ```
 
-## Authorization Policy
-
-| Surface | Authentication | Required permission |
-|---|---|---|
-| Liveness | Public | none |
-| Readiness | Public, minimal response | none |
-| `/api/v1/auth/whoami` | Valid Auth0 access token | none |
-| Summary, list, detail, export | Valid access token | `read:backlogs` |
-| Create, update, move, delete | Valid access token | `write:backlogs` |
-| Reconciliation | Valid access token | `operate:backlogs` |
-| YAML import and provider purge | Valid access token | `admin:backlogs` |
-
-`admin:backlogs` is not a wildcard. Human Auth0 roles should be cumulative, and M2M client grants should remain least privilege.
-
-## Auth0 Tenant Work Remaining
-
-The code and documentation are ready. Tenant-side configuration still needs to be completed in the user's Auth0 account:
-
-1. Create the Johnny-Johnny API with a stable identifier and `RS256` signing.
-2. Add the four exact permissions.
-3. Enable RBAC for the API.
-4. Create a least-privilege Machine-to-Machine smoke application.
-5. Put the tenant domain and API identifier into the local `.env` as `AUTH0_DOMAIN` and `AUTH0_AUDIENCE`.
-6. Obtain a client-credentials access token and exercise `/api/v1/auth/whoami` using the README command.
-7. Add broader smoke permissions only when intentionally testing mutations, reconciliation, import, or purge.
-
-Auth0 client credentials belong to the caller and are deliberately not part of the API `.env.example`.
-
-## Architectural Decisions
-
-1. Auth0 is the initial identity provider, while the API remains a standards-based OAuth resource server.
-2. Auth0 configuration is confined to the HTTP security boundary; the canonical domain and application workflows remain provider independent.
-3. The API authorizes from `scope`, not role names and not the optional `permissions` claim.
-4. The accepted signing algorithm and JWKS location are server controlled.
-5. Every backlog operation is protected independently of browser, mobile, ingress, or network controls.
-6. Health probes remain public because Kubernetes and load balancers need them, but they expose no connection strings, exception text, table names, migration details, or credentials.
-7. Dry-run is a mutation preview, not an authorization bypass.
-8. GitHub webhook authentication remains a separate future HMAC-SHA256 trust boundary.
-9. Binding to `0.0.0.0` inside a pod provides reachability only; Auth0 authorization and HTTPS ingress remain required.
-10. The next deployment loop must not put database credentials, GitHub tokens, Auth0 client secrets, or bearer tokens in source control, image layers, manifests, command-line arguments, or shell traces.
-
-See:
+Resource:
 
 ```text
-docs/architecture/adrs/ADR-004-separate-human-and-webhook-authentication-boundaries.md
-docs/architecture/adrs/ADR-005-auth0-access-token-and-permission-policy.md
-docs/architecture/api-security-deployment-and-client-evolution.md
+kind: SecretProviderClass
+name: johnny-johnny-agent-secrets
+namespace: johnny-johnny
+provider: aws
+usePodIdentity: "true"
 ```
 
-## Production Files Added
+It maps:
 
 ```text
-.env.example
-src/johnny_johnny_agent/api/security.py
-tests/behavior/test_auth0_access_token_validation.py
+DATABASE_URL
+GITHUB_TOKEN
 ```
 
-## Production Files Updated
+from Secrets Manager to mounted files under:
 
 ```text
-.gitignore
-pyproject.toml
-uv.lock
-src/johnny_johnny_agent/config.py
-src/johnny_johnny_agent/api/app.py
-src/johnny_johnny_agent/api/errors.py
-src/johnny_johnny_agent/api/models.py
-src/johnny_johnny_agent/api/routes.py
-src/johnny_johnny_agent/api/serialization.py
-src/johnny_johnny_agent/cli/main.py
-tests/behavior/test_backlog_rest_api.py
+/mnt/secrets-store
 ```
 
-## Documentation Added
+### Johnny-Johnny Kubernetes Deployment
+
+Created and applied:
 
 ```text
-docs/architecture/adrs/ADR-005-auth0-access-token-and-permission-policy.md
-docs/deployment/README.md
-docs/deployment/eks-fast-testing-loop.md
-docs/development/security-implementation-summary-2026-07-10.md
+johnny-johnny-agent-deployment.yml
 ```
 
-## Documentation Updated
+Deployment:
 
 ```text
-README.md
-docs/api/backlog-rest-api.md
-docs/architecture/adrs/ADR-003-rest-api-is-a-peer-adapter.md
-docs/architecture/adrs/ADR-004-separate-human-and-webhook-authentication-boundaries.md
-docs/architecture/api-security-deployment-and-client-evolution.md
-docs/architecture/canonical-backlog-runtime-architecture.md
-docs/development/DECISION_LOG.md
-docs/development/README.md
-docs/development/backlog-persistence-test-strategy.md
-docs/development/backlog-session-update-plan-2026-07-10.md
-docs/development/commands-left-off.txt
-docs/development/rest-api-implementation-summary-2026-07-10.md
-docs/development/session-index.md
-session-index.md
+name: johnny-johnny-agent
+namespace: johnny-johnny
+replicas: 1
+serviceAccountName: johnny-johnny-agent
+image: 359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-agent:0.1.0
 ```
 
-## Verification
+The container startup command reads mounted secrets and exports them before starting the API:
+
+```sh
+export DATABASE_URL="$(cat /mnt/secrets-store/DATABASE_URL)"
+export GITHUB_TOKEN="$(cat /mnt/secrets-store/GITHUB_TOKEN)"
+exec jj serve --host 0.0.0.0 --port 8000
+```
+
+Non-secret runtime configuration:
 
 ```text
-Python behavior suite: 109 passed, 1 skipped
-OpenAPI surface: 14 paths / 16 operations
-Bearer security scheme: generated
-Public probes: no OpenAPI bearer requirement
-Protected routes: Auth0 bearer requirement generated
-Auth0 validation: self-contained RSA/JWT tests passed
-Route authorization: read/write/operate/admin positive and independent-denial behavior passed
-Interactive docs removal: behavior-tested
-README token and endpoint exercises: documented
+AUTH0_DOMAIN=dev-ude3gljkecu7ylzt.us.auth0.com
+AUTH0_AUDIENCE=https://johnny-johnny.mycroftai.org
+JOHNNY_JOHNNY_API_DOCS_ENABLED=false
+AUTH0_CLOCK_SKEW_SECONDS=30
+AUTH0_JWKS_TIMEOUT_SECONDS=5
+AUTH0_JWKS_CACHE_SECONDS=300
 ```
 
-No live Auth0 tenant call was made because the tenant was being created during this session. No live REST purge or reconciliation was executed because those remain broad or destructive provider operations.
-
-## Next Story
-
-### `deploy-johnny-johnny-api-to-eks`
-
-The deployment contract is ready in:
+Health probes:
 
 ```text
-docs/deployment/eks-fast-testing-loop.md
+readiness: /api/v1/health/ready
+liveness:  /api/v1/health/live
 ```
 
-The next phase should add:
+## Current Runtime State
 
-- container build definition and ignore rules
-- immutable ECR image publication
-- Kubernetes namespace/configuration/secret integration
-- Deployment, ClusterIP Service, probes, resources, and security context
-- HTTPS ingress and DNS/certificate wiring
-- private PostgreSQL connectivity
-- controlled Auth0/GitHub egress
-- rollout and rollback behavior
-- a Bash build/push/deploy/wait/authenticated-smoke loop
+Pod:
 
-The EKS story needs the concrete AWS account, region, cluster, namespace, repository, DNS, ingress, certificate, secret-management, PostgreSQL-network, and IAM choices before deployment artifacts can be finalized.
+```text
+johnny-johnny-agent-575bddfb67-t5bs6
+```
 
-## Following Story
+State:
 
-### `synchronize-github-project-events-to-canonical-backlog`
+```text
+STATUS: Running
+READY: 0/1
+RESTARTS: 0
+```
 
-After the secured EKS endpoint exists, add the public GitHub webhook route, raw-body HMAC-SHA256 verification, delivery idempotency, provider-state refresh, and provider-to-canonical synchronization. This endpoint must not reuse or weaken the Auth0 bearer boundary.
+Liveness succeeds:
 
-## Category Review
+```text
+GET /api/v1/health/live → 200
+```
 
-- **ADRs:** Updated; ADR-005 records the concrete Auth0 decision and ADR-004 retains the separate webhook boundary.
-- **Architecture documentation:** Updated for the implemented security path and next EKS boundary.
-- **API contract:** Updated with token validation, scopes, public probes, errors, and the `whoami` smoke endpoint.
-- **Deployment documentation:** Added an EKS fast-loop implementation contract; no Kubernetes resources or deploy script are falsely claimed complete.
-- **Specifications:** Reviewed; no canonical backlog or YAML specification change was required.
-- **Database documentation:** Reviewed; no schema or persistence decision changed.
-- **Engineering Principles:** Reviewed; the existing domain-first, provider-adapter, explicit-boundary, behavior-first, and durable-knowledge principles already cover this phase.
-- **Working Agreement:** Reviewed; no process change was required.
-- **AI Collaboration documentation:** Reviewed; no collaboration-process change was required.
-- **Behavior tests:** Expanded and passing.
-- **Backlog:** Durable completion command recorded; canonical mutation remains to be applied through `jj` if not already done.
+Readiness fails:
 
-## Immediate First Task
+```text
+GET /api/v1/health/ready → 503
+```
 
-Complete the Auth0 dashboard setup in `README.md`, start the API, obtain a least-privilege M2M token, and exercise:
+Readiness body:
+
+```json
+{
+  "service": "johnny-johnny-agent",
+  "version": "0.1.0",
+  "status": "not-ready",
+  "checks": {
+    "database": "unavailable",
+    "canonical_schema": "unknown"
+  }
+}
+```
+
+The mounted secret and process environment were inspected manually. The cause was found:
+
+```text
+DATABASE_URL begins with literal "echo"
+```
+
+This is why database readiness fails.
+
+## Immediate First Task Next Session
+
+Update the existing `DATABASE_URL` secret safely.
+
+Use a hidden prompt:
 
 ```bash
-curl -fsS \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  http://127.0.0.1:8000/api/v1/auth/whoami \
-  | python3 -m json.tool
+read -s -p "DATABASE_URL: " DATABASE_URL_SECRET
 ```
 
-Then confirm `secure-backlog-rest-api` is Done in the canonical backlog and begin the EKS story from `docs/deployment/eks-fast-testing-loop.md`.
+Paste only the actual PostgreSQL URL and press Enter.
+
+Then update the existing AWS secret:
+
+```bash
+aws secretsmanager put-secret-value   --secret-id DATABASE_URL   --region us-east-1   --secret-string "$DATABASE_URL_SECRET"
+```
+
+Then restore terminal echo if needed:
+
+```bash
+stty echo
+```
+
+Clear the local shell variable:
+
+```bash
+unset DATABASE_URL_SECRET
+```
+
+Because Secrets Store CSI-mounted files may not refresh immediately and the environment variables are exported only at container startup, restart the Deployment after the secret is corrected:
+
+```bash
+kubectl rollout restart deployment/johnny-johnny-agent -n johnny-johnny
+```
+
+Poll rather than wait:
+
+```bash
+kubectl get pods -n johnny-johnny -l app=johnny-johnny-agent
+```
+
+Then poll:
+
+```bash
+kubectl get deployment johnny-johnny-agent -n johnny-johnny
+```
+
+Expected:
+
+```text
+READY 1/1
+AVAILABLE 1
+```
+
+Then verify readiness from inside the container or through a Service once created.
+
+## Remaining Manual Deployment Work
+
+After database readiness is fixed:
+
+1. Create the Kubernetes `Service` for `johnny-johnny-agent`.
+2. Confirm service-to-pod connectivity.
+3. Confirm or request ACM certificate for:
+   ```text
+   johnny-johnny.mycroftai.org
+   ```
+4. Create ALB Ingress with HTTPS listener and certificate ARN.
+5. Configure Route53 alias to the ALB.
+6. Validate:
+   - public liveness → `200`
+   - protected endpoint without token → `401`
+   - valid Auth0 read token → `200`
+   - insufficient scope → `403`
+7. Build a repeatable Bash deployment loop.
+8. Stop and create a separate StyxCD integration story.
+
+## StyxCD Design Insight Exposed
+
+Current `EksDeployApplication` handles secrets as:
+
+```text
+Jenkins credentials
+→ kubectl create secret generic
+→ Kubernetes Secret
+→ env.secretKeyRef
+```
+
+The new AWS-native capability should support:
+
+```text
+AWS Secrets Manager
+→ IAM policy
+→ Pod Identity role
+→ EKS Pod Identity association
+→ Secrets Store CSI Driver / AWS provider
+→ SecretProviderClass
+→ mounted runtime secret
+```
+
+Recommended future StyxCD split:
+
+```text
+Cluster capability stage:
+- ensure Pod Identity Agent
+- ensure Secrets Store CSI Driver
+- ensure AWS provider
+
+Application identity stage:
+- IAM policy
+- IAM role
+- Pod Identity association
+
+Deploy application stage:
+- ServiceAccount
+- SecretProviderClass
+- Deployment
+- Service
+```
+
+Do not hide all IAM and cluster setup inside `EksDeployApplication`.
+
+## Working Preference Reinforced
+
+Provide exactly one shell command at a time. Do not include follow-on commands until the user returns the result.
+
+The user prefers polling commands over commands that wait indefinitely, such as:
+
+```text
+kubectl rollout status
+kubectl get ... -w
+```
+
+## Files Created Locally During This Session
+
+```text
+johnny-johnny-secrets-policy.json
+johnny-johnny-pod-identity-trust-policy.json
+johnny-johnny-secret-provider-class.yml
+johnny-johnny-agent-deployment.yml
+```
+
+These should be reviewed and moved into an appropriate deployment directory before commit.
+
+## Important Temporary Infrastructure State
+
+- Node group currently has two `t3.small` workers.
+- Old UI and Java backend Deployments are scaled to zero, not deleted.
+- The Helm secret-provider release is deployed and healthy.
+- The Johnny-Johnny agent Deployment exists but is not ready until `DATABASE_URL` is corrected.

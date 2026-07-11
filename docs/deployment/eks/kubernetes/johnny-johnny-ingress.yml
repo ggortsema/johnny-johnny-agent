@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: johnny-johnny-ingress
+  namespace: johnny-johnny
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:359546647832:certificate/abaebef4-45a5-4f2c-9652-d119353b054c
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/healthcheck-path: /api/v1/health/ready
+    alb.ingress.kubernetes.io/success-codes: '200'
+spec:
+  ingressClassName: alb
+  rules:
+    - host: johnny-johnny.mycroftai.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: johnny-johnny-agent
+                port:
+                  number: 80

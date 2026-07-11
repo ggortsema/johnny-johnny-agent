@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: johnny-johnny-agent
+  namespace: johnny-johnny
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: johnny-johnny-agent
+  template:
+    metadata:
+      labels:
+        app: johnny-johnny-agent
+    spec:
+      serviceAccountName: johnny-johnny-agent
+      containers:
+        - name: johnny-johnny-agent
+          image: 359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-agent:0.1.0
+          imagePullPolicy: Always
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              export DATABASE_URL="$(cat /mnt/secrets-store/DATABASE_URL)"
+              export GITHUB_TOKEN="$(cat /mnt/secrets-store/GITHUB_TOKEN)"
+              exec jj serve --host 0.0.0.0 --port 8000
+          env:
+            - name: AUTH0_DOMAIN
+              value: "dev-ude3gljkecu7ylzt.us.auth0.com"
+            - name: AUTH0_AUDIENCE
+              value: "https://johnny-johnny.mycroftai.org"
+            - name: JOHNNY_JOHNNY_API_DOCS_ENABLED
+              value: "false"
+            - name: AUTH0_CLOCK_SKEW_SECONDS
+              value: "30"
+            - name: AUTH0_JWKS_TIMEOUT_SECONDS
+              value: "5"
+            - name: AUTH0_JWKS_CACHE_SECONDS
+              value: "300"
+          ports:
+            - name: http
+              containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health/ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health/live
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          volumeMounts:
+            - name: runtime-secrets
+              mountPath: /mnt/secrets-store
+              readOnly: true
+      volumes:
+        - name: runtime-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: johnny-johnny-agent-secrets
