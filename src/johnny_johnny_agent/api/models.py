@@ -28,17 +28,17 @@ class ServiceStatusResponse(ApiModel):
     status: str
 
 
-class DatabaseStatusResponse(ApiModel):
-    ready: bool
-    database: str
-    database_user: str
-    server_version: str
-    schema_name: str = Field(alias="schema")
-    expected_table_count: int
-    present_expected_table_count: int
-    available_tables: list[str]
-    missing_tables: list[str]
-    provider_count: int
+class ServiceReadinessResponse(ApiModel):
+    service: str
+    version: str
+    status: str
+    checks: dict[str, str]
+
+
+class AuthenticatedPrincipalResponse(ApiModel):
+    subject: str
+    client_id: str | None = None
+    scopes: list[str]
 
 
 class ProjectResponse(ApiModel):

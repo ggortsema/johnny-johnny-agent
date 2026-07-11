@@ -23,11 +23,19 @@ The behavior suite covers:
 - provider compensation and explicit consistency errors
 - proof that migrated commands do not call the YAML loader
 
-Validated suite at closure:
+Historical persistence-story suite at closure:
 
 ```text
 70 passed, 1 skipped
 ```
+
+The later REST and Auth0 security stories extended the same applied behavior suite to:
+
+```text
+109 passed, 1 skipped
+```
+
+The current result includes the original persistence/provider coverage plus REST endpoint dispatch, Auth0 JWT validation, and read/write/operate/admin authorization behavior.
 
 ## Live Sandbox Validation
 
@@ -53,17 +61,19 @@ Validated live behaviors:
 - full provider purge while retaining canonical data
 - full reconciliation launched from PostgreSQL after purge
 
-The final full-reconcile completion and zero-operation follow-up were not confirmed before session closure and remain the first verification step next session.
+The persistence migration's full CLI reconciliation and clean follow-up were confirmed in the later REST session. Live REST purge and reconciliation remain intentionally deferred because they are broad or destructive provider operations; their HTTP dispatch and response behavior are covered by automated tests.
 
-## REST Endpoint Testing Requirement
+## REST Endpoint Coverage
 
-The next server-mode pass should mirror each workflow test through FastAPI:
+The server-mode pass now mirrors the workflows through FastAPI:
 
 ```text
 HTTP request
-  -> application workflow
+  -> Auth0 bearer validation
+  -> route scope authorization
+  -> shared application workflow
   -> PostgreSQL/provider fakes or controlled sandbox
   -> response and side-effect assertions
 ```
 
-Endpoint tests must not invoke the CLI process. CLI and REST are peer adapters over shared workflows.
+Endpoint tests do not invoke the CLI process. CLI and REST remain peer adapters over shared workflows. The route suite verifies every v1 backlog operation, dry-run and confirmed dispatch, stable errors, public minimal probes, and the read/write/operate/admin authorization policy.

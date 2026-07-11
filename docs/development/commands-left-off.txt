@@ -1,14 +1,37 @@
-# Confirm the REST story is marked Done in the canonical backlog.
+# 1. Configure the local server from the committed example.
+cp .env.example .env
+# Set DATABASE_URL, GITHUB_TOKEN, AUTH0_DOMAIN, and AUTH0_AUDIENCE.
+
+# 2. In Auth0, create/configure the API and least-privilege M2M smoke client.
+# Follow the exact dashboard sequence and token command in README.md.
+
+# 3. Verify the applied project.
+uv sync
+uv run pytest
+
+# 4. Start the secured API locally.
+uv run jj serve --host 127.0.0.1 --port 8000
+
+# 5. In another terminal, obtain an Auth0 client-credentials access token using
+# the README command, then prove the token boundary without PostgreSQL.
+curl -fsS \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  http://127.0.0.1:8000/api/v1/auth/whoami \
+  | python3 -m json.tool
+
+# 6. Exercise a read-scoped PostgreSQL endpoint using the README variables.
+curl -fsS \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  "http://127.0.0.1:8000/api/v1/backlogs/${PROJECT_PATH}/summary?provider=github&provider_account=${PROVIDER_ACCOUNT}" \
+  | python3 -m json.tool
+
+# 7. Confirm the REST and security stories in the canonical backlog.
 uv run jj backlog describe expose-backlog-workflows-through-rest-api \
   --project "Johnny-Johnny Backlog Persistence Sandbox"
-
-# If needed, apply the completion update recorded in:
+uv run jj backlog describe secure-backlog-rest-api \
+  --project "Johnny-Johnny Backlog Persistence Sandbox"
+# Apply completion commands from:
 # docs/development/backlog-session-update-plan-2026-07-10.md
 
-# Begin the next story by reviewing the security decision and evolution plan:
-# docs/architecture/adrs/ADR-004-separate-human-and-webhook-authentication-boundaries.md
-# docs/architecture/api-security-deployment-and-client-evolution.md
-
-# Immediate next design task:
-# select the OIDC identity provider and define the initial route/authorization policy
-# before editing FastAPI authentication code.
+# 8. Begin the EKS story with the deployment contract and concrete AWS inputs.
+# docs/deployment/eks-fast-testing-loop.md

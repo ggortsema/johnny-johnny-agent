@@ -6,12 +6,10 @@ from johnny_johnny_agent.api.models import (
     BacklogItemResponse,
     BacklogItemSummaryResponse,
     CommentResponse,
-    DatabaseStatusResponse,
     ProjectResponse,
     PurgeIssueResponse,
     ReconcileOperationResponse,
 )
-from johnny_johnny_agent.capabilities.backlog_persistence.postgres import DatabaseStatus
 from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     AddIssueToProjectOperation,
     AttachIssueToEpicOperation,
@@ -23,21 +21,6 @@ from johnny_johnny_agent.capabilities.backlog_sync.planner import (
     UpdateIssueStatusOperation,
 )
 from johnny_johnny_agent.domain.backlog import Comment, Epic, Issue, Project
-
-
-def database_status_response(status: DatabaseStatus) -> DatabaseStatusResponse:
-    return DatabaseStatusResponse(
-        ready=status.ready,
-        database=status.database,
-        database_user=status.database_user,
-        server_version=status.server_version,
-        schema=status.schema,
-        expected_table_count=status.expected_table_count,
-        present_expected_table_count=status.present_expected_table_count,
-        available_tables=list(status.available_tables),
-        missing_tables=list(status.missing_tables),
-        provider_count=status.provider_count,
-    )
 
 
 def project_response(project: Project) -> ProjectResponse:

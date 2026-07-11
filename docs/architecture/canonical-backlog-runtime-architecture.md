@@ -1,28 +1,31 @@
 # Canonical Backlog Runtime Architecture
 
-**Status:** Implemented baseline
+**Status:** Implemented secured baseline  
 **Date:** July 10, 2026
 
 ## Purpose
 
-Describe the runtime architecture after migrating Johnny-Johnny backlog commands from YAML-backed state to PostgreSQL-backed canonical persistence.
+Describe the runtime architecture after migrating backlog commands to PostgreSQL canonical persistence, exposing shared workflows through REST, and securing the HTTP boundary with Auth0.
 
 ## Runtime Shape
 
 ```text
-CLI ────────────────┐
-REST API ───────────┼── application workflows ── canonical domain
-webhooks later ────┘            │
-                                ├── PostgreSQL repository
-                                └── provider adapters (GitHub first)
+CLI ───────────────────────┐
+Auth0-secured REST API ────┼── application workflows ── canonical domain
+signed webhooks later ─────┘            │
+                                        ├── PostgreSQL repository
+                                        └── provider adapters (GitHub first)
 ```
 
-Presentation adapters reuse application workflows. The implemented REST server imports those workflows directly and never shells out to CLI commands.
+Presentation adapters reuse application workflows. The REST server imports those workflows directly and never shells out to CLI commands. Authentication is an HTTP adapter concern and does not enter the canonical domain.
 
-## REST Adapter Path
+## Secured REST Adapter Path
 
 ```text
 HTTP request
+  -> bearer extraction
+  -> Auth0 RS256/JWKS, issuer, audience, and time validation
+  -> route-scope authorization
   -> typed FastAPI request model
   -> explicit dry-run or confirmed mode
   -> shared PostgreSQL-backed application workflow
@@ -31,14 +34,33 @@ HTTP request
 
 Implemented REST behavior:
 
-- read parity for inspect, list epics, list items, and describe
+- token-only identity exercise at `/api/v1/auth/whoami`
+- public minimal liveness and readiness
+- read parity for inspect, list epics, list items, describe, and export
 - targeted mutation parity for create epic, create issue, update, move, and delete issue
-- operational parity for database readiness, reconcile, purge, YAML import, and YAML export
+- operational parity for reconcile, purge, and YAML import
 - one explicit `mode` contract for previews and confirmed mutations
-- server-owned database configuration; clients cannot submit database URLs
+- server-owned database and identity-provider configuration
 - direct YAML request/response handling only at the portable import/export boundary
 
-See `docs/api/backlog-rest-api.md` for the endpoint and error contracts and ADR-003 for the adapter decision.
+See `docs/api/backlog-rest-api.md`, ADR-003, ADR-004, and ADR-005.
+
+## Authentication and Authorization Boundary
+
+Auth0 is the initial OAuth 2.0/OpenID Connect provider. The API is an OAuth resource server and requires audience-specific bearer access tokens.
+
+```text
+read:backlogs     summary, list, detail, export
+write:backlogs    create, update, move, delete issue
+operate:backlogs  reconcile
+admin:backlogs    import, purge
+```
+
+The API authorizes from `scope`. Auth0 role names and the optional `permissions` claim are not application policy inputs.
+
+Dry-run and confirmed forms use the same permission. A preview does not bypass authorization.
+
+The production application has no runtime “disable auth” switch. Tests inject an `AccessTokenVerifier` into the FastAPI application factory.
 
 ## Canonical Read Path
 
@@ -83,13 +105,13 @@ jj backlog move
 jj maintenance delete-issue
 ```
 
-See ADR-002 for failure and compensation behavior.
+REST invokes the same workflows only after access-token and route-scope checks. See ADR-002 for failure and compensation behavior.
 
 ## Full Projection Workflows
 
 ### Reconcile
 
-`jj backlog reconcile` compares PostgreSQL canonical state with the bound GitHub Project and executes a provider plan.
+`jj backlog reconcile` and the `operate:backlogs` REST endpoint compare PostgreSQL canonical state with the bound GitHub Project and execute a provider plan.
 
 - Default bounded scope: 100 provider operations.
 - `--max-operations N`: soft budget; complete item groups are not intentionally split.
@@ -100,7 +122,7 @@ An operation means a provider action, not an issue. One item may require create,
 
 ### Purge
 
-`jj maintenance purge` deletes Johnny-Johnny-managed GitHub issues while preserving canonical PostgreSQL state.
+`jj maintenance purge` and the `admin:backlogs` REST endpoint delete Johnny-Johnny-managed GitHub issues while preserving canonical PostgreSQL state.
 
 - Default bounded scope: 50 issues.
 - `--max-issues N`: bounded provider deletion.
@@ -117,7 +139,9 @@ jj backlog db import
 jj backlog db export
 ```
 
-`jj backlog generate` remains temporarily as a GitHub-to-YAML migration utility. It is explicitly deferred for replacement by a renamed GitHub-to-PostgreSQL import workflow after durable provider execution is implemented.
+REST YAML import requires `admin:backlogs`. REST YAML export requires `read:backlogs`.
+
+`jj backlog generate` remains temporarily as a GitHub-to-YAML migration utility. It is deferred for replacement by a renamed GitHub-to-PostgreSQL import workflow after durable provider execution is implemented.
 
 `jj backlog pull` remains a raw GitHub diagnostic.
 
@@ -130,27 +154,36 @@ jj backlog preview-epic-body
 
 ## Provider Project Binding
 
-The command option `--project` identifies the stored `provider_projects` row. The row's external ID determines the GitHub Project target.
+The command option `--project` and REST path identify the stored `provider_projects` row. The row's external ID determines the GitHub Project target.
 
 Runtime reconciliation does not search GitHub by title and silently rewrite the binding. Rebinding must be an explicit future capability.
 
-## Security and Deployment Boundary
+## Probe and Deployment Boundary
 
-The REST baseline is intentionally loopback-only while it has no authentication middleware.
+Public operational routes:
 
-Normal REST clients will authenticate with OAuth 2.0/OpenID Connect bearer tokens. The API will validate identity and enforce authorization independently of any UI.
+```text
+GET /api/v1/health/live
+GET /api/v1/health/ready
+```
 
-GitHub webhook deliveries use a separate trust boundary: a public HTTPS endpoint verifies the HMAC-SHA256 signature in `X-Hub-Signature-256` with a server-owned webhook secret and deduplicates deliveries using `X-GitHub-Delivery`.
+They expose only minimal categories needed by Kubernetes and a load balancer. `/api/v1/auth/whoami` is protected and validates token identity without database access.
 
-In local development the process binds to `127.0.0.1`. In an EKS pod it binds to `0.0.0.0`, while the Kubernetes Service, ingress, TLS, network policy, and application security control exposure.
+Local development normally binds to `127.0.0.1`. An EKS pod binds to `0.0.0.0`; Kubernetes Service, HTTPS ingress, network policy, secret delivery, and application authorization together control exposure.
 
-See ADR-004 and `api-security-deployment-and-client-evolution.md`.
+Auth0 issuer and audience are server configuration. Database and GitHub credentials are server secrets. Auth0 M2M client secrets belong to callers and must not be deployed with the API.
+
+## Separate Webhook Boundary
+
+Future GitHub webhook deliveries use HMAC-SHA256 verification over the raw request body and deduplication by `X-GitHub-Delivery`. They do not use Auth0 access tokens.
+
+Inbound webhook verification credentials and outbound GitHub provider credentials remain separate.
 
 ## Next Evolution
 
-The agreed order is:
+The agreed order is now:
 
-1. secure the existing REST API with OAuth/OIDC and authorization
+1. ~~secure the REST API~~ completed with Auth0 and scope authorization
 2. deploy the secured service to EKS over HTTPS
 3. add signed GitHub webhook ingestion and provider-to-canonical synchronization
 
@@ -158,6 +191,7 @@ Later evolutions add:
 
 - durable reconcile runs and operations
 - rate-aware workers and asynchronous operation resources where needed
-- audit history
+- audit history and authenticated-subject attribution
 - explicit provider-project rebinding
+- project/resource-level authorization if needed
 - responsive web and native mobile clients over the same authenticated backend

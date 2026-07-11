@@ -5,7 +5,7 @@ import typer
 import uvicorn
 
 # Import for startup side effect: loads .env configuration.
-import johnny_johnny_agent.config
+import johnny_johnny_agent.config  # noqa: F401
 
 from johnny_johnny_agent.capabilities.backlog_persistence.workflow import (
     BacklogPurgeResult,
@@ -114,10 +114,11 @@ def serve(
 ) -> None:
     """Start the Johnny-Johnny API server."""
     uvicorn.run(
-        "johnny_johnny_agent.api.app:app",
+        "johnny_johnny_agent.api.app:create_app",
         host=host,
         port=port,
         reload=reload,
+        factory=True,
     )
 
 

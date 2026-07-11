@@ -14,9 +14,9 @@ from johnny_johnny_agent.api.models import (
     BacklogItemListResponse,
     BacklogItemResponse,
     BacklogSummaryResponse,
+    AuthenticatedPrincipalResponse,
     CreateEpicRequest,
     CreateIssueRequest,
-    DatabaseStatusResponse,
     DeleteIssueResponse,
     ErrorResponse,
     ExecutionMode,
@@ -27,16 +27,22 @@ from johnny_johnny_agent.api.models import (
     PurgeResponse,
     ReconcileRequest,
     ReconcileResponse,
+    ServiceReadinessResponse,
     ServiceStatusResponse,
     UpdateBacklogItemRequest,
 )
 from johnny_johnny_agent.api.serialization import (
-    database_status_response,
     item_response,
     item_summary_response,
     project_response,
     purge_issue_response,
     reconcile_operation_response,
+)
+from johnny_johnny_agent.api.security import (
+    ApiPermission,
+    AuthenticatedPrincipal,
+    authenticated_principal,
+    require_scopes,
 )
 from johnny_johnny_agent.capabilities.backlog_persistence.workflow import (
     check_postgres_backlog_database,
@@ -78,15 +84,25 @@ DEFAULT_PROVIDER_ACCOUNT_USERNAME = os.environ.get(
 )
 
 ERROR_RESPONSES = {
+    401: {"model": ErrorResponse, "description": "Missing or invalid bearer token"},
+    403: {"model": ErrorResponse, "description": "Bearer token lacks required scope"},
     400: {"model": ErrorResponse, "description": "Invalid cross-field request"},
     404: {"model": ErrorResponse, "description": "Backlog resource not found"},
     409: {"model": ErrorResponse, "description": "Conflict or consistency failure"},
     422: {"model": ErrorResponse, "description": "Validation or domain failure"},
     502: {"model": ErrorResponse, "description": "Provider operation failed"},
-    503: {"model": ErrorResponse, "description": "Persistence unavailable"},
+    503: {
+        "model": ErrorResponse,
+        "description": "Persistence or authentication dependency unavailable",
+    },
 }
 
 router = APIRouter(prefix=f"/api/{API_VERSION}", responses=ERROR_RESPONSES)
+
+REQUIRE_BACKLOG_READ = Depends(require_scopes(ApiPermission.READ_BACKLOGS))
+REQUIRE_BACKLOG_WRITE = Depends(require_scopes(ApiPermission.WRITE_BACKLOGS))
+REQUIRE_BACKLOG_OPERATE = Depends(require_scopes(ApiPermission.OPERATE_BACKLOGS))
+REQUIRE_BACKLOG_ADMIN = Depends(require_scopes(ApiPermission.ADMIN_BACKLOGS))
 
 
 @dataclass(frozen=True)
@@ -112,6 +128,26 @@ def provider_context(
 
 
 ProviderContextDependency = Annotated[ProviderContext, Depends(provider_context)]
+AuthenticatedPrincipalDependency = Annotated[
+    AuthenticatedPrincipal,
+    Depends(authenticated_principal),
+]
+
+
+@router.get(
+    "/auth/whoami",
+    response_model=AuthenticatedPrincipalResponse,
+    tags=["authentication"],
+)
+def whoami(
+    principal: AuthenticatedPrincipalDependency,
+) -> AuthenticatedPrincipalResponse:
+    """Confirm token validation without exposing the token's raw claims."""
+    return AuthenticatedPrincipalResponse(
+        subject=principal.subject,
+        client_id=principal.client_id,
+        scopes=sorted(principal.scopes),
+    )
 
 
 @router.get("/health/live", response_model=ServiceStatusResponse, tags=["health"])
@@ -125,25 +161,45 @@ def liveness() -> ServiceStatusResponse:
 
 @router.get(
     "/health/ready",
-    response_model=DatabaseStatusResponse,
+    response_model=ServiceReadinessResponse,
     responses={
         503: {
-            "model": DatabaseStatusResponse,
-            "description": "PostgreSQL is reachable but canonical schema readiness failed",
+            "model": ServiceReadinessResponse,
+            "description": "PostgreSQL or canonical schema readiness failed",
         }
     },
     tags=["health"],
 )
-def readiness(response: Response) -> DatabaseStatusResponse:
-    status = check_postgres_backlog_database()
-    if not status.ready:
+def readiness(response: Response) -> ServiceReadinessResponse:
+    try:
+        database_status = check_postgres_backlog_database()
+    except Exception:
         response.status_code = 503
-    return database_status_response(status)
+        return ServiceReadinessResponse(
+            service="johnny-johnny-agent",
+            version=PROJECT_VERSION,
+            status="not-ready",
+            checks={"database": "unavailable", "canonical_schema": "unknown"},
+        )
+
+    ready = database_status.ready
+    if not ready:
+        response.status_code = 503
+    return ServiceReadinessResponse(
+        service="johnny-johnny-agent",
+        version=PROJECT_VERSION,
+        status="ready" if ready else "not-ready",
+        checks={
+            "database": "ok",
+            "canonical_schema": "ok" if ready else "unavailable",
+        },
+    )
 
 
 @router.get(
     "/backlogs/{project_title}/summary",
     response_model=BacklogSummaryResponse,
+    dependencies=[REQUIRE_BACKLOG_READ],
     tags=["backlog reads"],
 )
 def inspect_backlog(
@@ -166,6 +222,7 @@ def inspect_backlog(
 @router.get(
     "/backlogs/{project_title}/epics",
     response_model=BacklogItemListResponse,
+    dependencies=[REQUIRE_BACKLOG_READ],
     tags=["backlog reads"],
 )
 def list_epics(
@@ -187,6 +244,7 @@ def list_epics(
 @router.get(
     "/backlogs/{project_title}/items",
     response_model=BacklogItemListResponse,
+    dependencies=[REQUIRE_BACKLOG_READ],
     tags=["backlog reads"],
 )
 def list_items(
@@ -240,6 +298,7 @@ def list_items(
 @router.get(
     "/backlogs/{project_title}/items/{item_id}",
     response_model=BacklogItemResponse,
+    dependencies=[REQUIRE_BACKLOG_READ],
     tags=["backlog reads"],
 )
 def describe_item(
@@ -250,9 +309,7 @@ def describe_item(
     backlog = _load_backlog(project_title, context)
     item = find_backlog_item(backlog, item_id)
     parent_epic_id = (
-        find_parent_epic(backlog, item.id).id
-        if isinstance(item, Issue)
-        else None
+        find_parent_epic(backlog, item.id).id if isinstance(item, Issue) else None
     )
     return item_response(item, parent_epic_id=parent_epic_id)
 
@@ -260,6 +317,7 @@ def describe_item(
 @router.post(
     "/backlogs/{project_title}/epics",
     response_model=ItemMutationResponse,
+    dependencies=[REQUIRE_BACKLOG_WRITE],
     tags=["backlog mutations"],
 )
 def create_epic(
@@ -297,6 +355,7 @@ def create_epic(
 @router.post(
     "/backlogs/{project_title}/issues",
     response_model=ItemMutationResponse,
+    dependencies=[REQUIRE_BACKLOG_WRITE],
     tags=["backlog mutations"],
 )
 def create_issue(
@@ -346,6 +405,7 @@ def create_issue(
 @router.patch(
     "/backlogs/{project_title}/items/{item_id}",
     response_model=ItemMutationResponse,
+    dependencies=[REQUIRE_BACKLOG_WRITE],
     tags=["backlog mutations"],
 )
 def update_item(
@@ -381,6 +441,7 @@ def update_item(
 @router.post(
     "/backlogs/{project_title}/issues/{issue_id}/move",
     response_model=MoveIssueResponse,
+    dependencies=[REQUIRE_BACKLOG_WRITE],
     tags=["backlog mutations"],
 )
 def move_issue(
@@ -414,6 +475,7 @@ def move_issue(
 @router.delete(
     "/backlogs/{project_title}/issues/{issue_id}",
     response_model=DeleteIssueResponse,
+    dependencies=[REQUIRE_BACKLOG_WRITE],
     tags=["backlog mutations"],
 )
 def delete_issue(
@@ -443,9 +505,7 @@ def delete_issue(
         issue=item_response(result.issue, parent_epic_id=result.parent_epic.id),
         parent_epic=item_summary_response(result.parent_epic),
         github_issue_deleted=(
-            result.github_issue_deleted
-            if mode is ExecutionMode.CONFIRMED
-            else None
+            result.github_issue_deleted if mode is ExecutionMode.CONFIRMED else None
         ),
     )
 
@@ -453,6 +513,7 @@ def delete_issue(
 @router.post(
     "/backlogs/{project_title}/reconciliation",
     response_model=ReconcileResponse,
+    dependencies=[REQUIRE_BACKLOG_OPERATE],
     tags=["projection operations"],
 )
 def reconcile(
@@ -498,6 +559,7 @@ def reconcile(
 @router.post(
     "/backlogs/{project_title}/purge",
     response_model=PurgeResponse,
+    dependencies=[REQUIRE_BACKLOG_ADMIN],
     tags=["projection operations"],
 )
 def purge(
@@ -535,6 +597,7 @@ def purge(
 @router.post(
     "/backlogs/import",
     response_model=BacklogImportResponse,
+    dependencies=[REQUIRE_BACKLOG_ADMIN],
     tags=["portable YAML boundary"],
 )
 def import_backlog(
@@ -597,6 +660,7 @@ def import_backlog(
             "description": "Portable canonical backlog YAML snapshot",
         }
     },
+    dependencies=[REQUIRE_BACKLOG_READ],
     tags=["portable YAML boundary"],
 )
 def export_backlog(

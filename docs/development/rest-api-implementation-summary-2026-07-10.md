@@ -4,6 +4,8 @@
 **Status:** Implemented and behavior-tested
 **Base path:** `/api/v1`
 
+> **Security follow-up:** This document preserves the point-in-time evidence for the REST exposure story. The API has since been secured with Auth0 bearer-token validation and scope authorization, the compatibility `/hello` route has been removed, and `/api/v1/auth/whoami` has been added. The current applied-project result is `109 passed, 1 skipped`, and the current OpenAPI surface is documented in `docs/development/security-implementation-summary-2026-07-10.md` and `docs/api/backlog-rest-api.md`.
+
 ## Change Summary
 
 Johnny-Johnny now exposes every supported PostgreSQL-backed backlog workflow through FastAPI. The REST server is a peer adapter to the CLI: handlers call the same application workflows directly, never invoke `jj` as a subprocess, and preserve the established PostgreSQL/GitHub consistency behavior.

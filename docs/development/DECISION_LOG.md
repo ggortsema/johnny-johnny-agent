@@ -183,3 +183,55 @@ Treat a responsive Next.js UI and a future native iPhone application as peer cli
 
 Reason:
 The web client can exercise backlog, chat, review, and initial microphone workflows quickly. Native iOS should be introduced for capabilities unique to the operating system rather than creating a second backend contract.
+
+---
+
+## 2026-07-10 — Auth0 as the Initial API Identity Provider
+
+Decision:
+Use Auth0 as the initial OAuth 2.0/OpenID Connect provider. Configure Johnny-Johnny as an audience-specific resource server that validates RS256 access tokens against the issuer JWKS. Keep Auth0 integration in the HTTP security boundary rather than the canonical domain or backlog workflows.
+
+Reason:
+Auth0 supports the planned browser, native, and M2M client types while allowing one independently secured API contract. A standards-based verifier preserves future provider flexibility.
+
+Related ADR:
+`ADR-005-auth0-access-token-and-permission-policy.md`
+
+---
+
+## 2026-07-10 — Authorize from OAuth Scopes
+
+Decision:
+Enforce `read:backlogs`, `write:backlogs`, `operate:backlogs`, and `admin:backlogs` from the access token's space-delimited `scope` claim. Do not authorize from Auth0 role names or treat the optional `permissions` claim as effective requested scope. Permissions are independent; Auth0 roles should be cumulative.
+
+Reason:
+Scopes are the stable resource-server contract across interactive and M2M clients. Using `scope` preserves request down-scoping and avoids coupling route policy to provider administration concepts.
+
+Related Story:
+`secure-backlog-rest-api`
+
+---
+
+## 2026-07-10 — Public Minimal Probes and Protected Whoami
+
+Decision:
+Keep liveness and readiness public for Kubernetes and load balancers, but return only minimal status. Add `/api/v1/auth/whoami` as a protected token-validation exercise that returns subject, client ID, and scopes without accessing PostgreSQL or echoing raw claims.
+
+Reason:
+EKS needs unauthenticated probes, while Auth0 setup needs an endpoint that isolates token and ingress verification from database state. Minimal output avoids exposing infrastructure details.
+
+Related Story:
+`secure-backlog-rest-api`
+
+---
+
+## 2026-07-10 — No Runtime Authentication Bypass
+
+Decision:
+Do not ship an environment variable that disables API authentication. Build the FastAPI app through a factory and inject a test verifier only in behavior tests. Production startup fails closed when Auth0 domain or audience is absent.
+
+Reason:
+A local bypass is a deployment footgun. Dependency injection gives deterministic tests without weakening the production configuration surface.
+
+Related Story:
+`secure-backlog-rest-api`

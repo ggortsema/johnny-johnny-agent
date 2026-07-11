@@ -49,6 +49,10 @@ The HTTP path contains the stored provider project title. Query parameters selec
 
 YAML import accepts an `application/yaml` request body. YAML export returns `application/yaml`. Normal runtime reads and mutations remain PostgreSQL-backed and do not use YAML as an intermediary.
 
+### Security Boundary
+
+The HTTP adapter authenticates Auth0 bearer access tokens and enforces route scopes before calling an application workflow. The security dependency belongs to the presentation boundary; the canonical domain and shared workflows remain identity-provider independent. Public health probes are minimal, and tests inject a verifier through the application factory rather than enabling a runtime bypass. See ADR-005.
+
 ### Error Mapping
 
 Application and adapter failures map to one error envelope and stable status categories:
@@ -78,7 +82,7 @@ The v1 endpoints are synchronous because the underlying workflows are synchronou
 ### Costs
 
 - Long reconcile and purge requests hold an HTTP connection until the bounded workflow completes.
-- The current API has no authentication or authorization middleware and must remain on a trusted interface.
+- Protected routes now depend on Auth0 issuer-key availability when a required key is not cached.
 - Provider-specific failures still originate in the provider adapter and require careful stable HTTP classification.
 - Breaking v1 contract changes require an explicit versioning decision.
 

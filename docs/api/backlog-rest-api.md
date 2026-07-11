@@ -1,7 +1,7 @@
 # Backlog REST API
 
-**Status:** Implemented v1
-**Base path:** `/api/v1`
+**Status:** Implemented, Auth0-secured v1  
+**Base path:** `/api/v1`  
 **Server command:** `uv run jj serve`
 
 ## Purpose
@@ -9,38 +9,155 @@
 The REST API is a peer presentation adapter to the Johnny-Johnny CLI. It calls the same PostgreSQL-backed application workflows directly and never shells out to `jj`.
 
 ```text
-CLI ─────┐
-REST ────┼── application workflows ── canonical domain
-         │            │
-         │            ├── PostgreSQL canonical store
-         │            └── GitHub provider adapter
-         └── typed request/response contracts
+CLI ───────────────────────┐
+Auth0-secured REST API ────┼── application workflows ── canonical domain
+                           │            │
+                           │            ├── PostgreSQL canonical store
+                           │            └── GitHub provider adapter
+                           └── typed request/response contracts
 ```
 
 PostgreSQL remains canonical runtime state. GitHub remains a provider projection. YAML appears only at the explicit import/export boundary.
 
+## Security Boundary
+
+### Authentication
+
+Protected requests carry an Auth0 access token issued for the Johnny-Johnny API audience. An ID token or Auth0 Management API token is not accepted:
+
+```http
+Authorization: Bearer ACCESS_TOKEN
+```
+
+The API validates the token as an RS256 JWT using the public key selected from the configured Auth0 JWKS endpoint. Validation requires:
+
+- a token signing algorithm of exactly `RS256`
+- a signing-key ID in `kid`
+- a signature valid for the selected issuer key
+- an `iss` claim equal to `https://AUTH0_DOMAIN/`
+- an `aud` claim containing the configured `AUTH0_AUDIENCE`
+- valid `exp`, `iat`, and optional `nbf` times
+- a non-empty `sub` claim
+
+The JWKS URL is constructed only from server-owned `AUTH0_DOMAIN`. Token headers cannot redirect key retrieval: `jku`, `x5u`, and unsupported critical headers are rejected.
+
+The verifier accepts both Auth0's default access-token profile and the RFC 9068 profile. It reads a calling application ID from `azp` or `client_id`, but authorization is based only on granted OAuth scopes.
+
+### Authorization
+
+Johnny-Johnny enforces the space-delimited `scope` claim. The optional Auth0 `permissions` claim is not accepted as a substitute for requested and granted scopes.
+
+| Surface | Required permission |
+|---|---|
+| `/api/v1/auth/whoami` | valid access token; no API permission required |
+| Backlog summary, lists, detail, export | `read:backlogs` |
+| Create epic, create issue, update, move, delete issue | `write:backlogs` |
+| Reconciliation | `operate:backlogs` |
+| YAML import and provider purge | `admin:backlogs` |
+
+Permissions are independent. `admin:backlogs` is not a wildcard. Auth0 roles should be cumulative when a human operator needs multiple capabilities.
+
+### Public probes
+
+These routes remain unauthenticated for Kubernetes and load-balancer probes:
+
+| Method | Path | Public response |
+|---|---|---|
+| `GET` | `/api/v1/health/live` | service, version, `ok` |
+| `GET` | `/api/v1/health/ready` | service, version, ready/not-ready, minimal database/schema checks |
+
+Readiness never returns database hostnames, usernames, server versions, table names, exception messages, or connection details.
+
+### Authentication exercise
+
+`GET /api/v1/auth/whoami` validates a real token without calling PostgreSQL or GitHub. It returns only:
+
+```json
+{
+  "subject": "CLIENT_ID@clients",
+  "client_id": "CLIENT_ID",
+  "scopes": ["read:backlogs"]
+}
+```
+
+It does not echo the raw access token or arbitrary claims.
+
+## Auth0 Resource Setup
+
+Create one Auth0 API with:
+
+```text
+Name: Johnny-Johnny API
+Identifier / audience: https://api.johnny-johnny.local
+Signing algorithm: RS256
+RBAC: enabled
+```
+
+Add these API permissions exactly:
+
+```text
+read:backlogs
+write:backlogs
+operate:backlogs
+admin:backlogs
+```
+
+The API reads `scope`, so Auth0's **Add Permissions in the Access Token** setting may remain disabled. For local curl testing, create a Machine-to-Machine application, select the Johnny-Johnny API, and grant only the permissions needed for the test.
+
+The project README contains the complete dashboard walkthrough, token request, 401 test, `/auth/whoami` test, and PostgreSQL-backed endpoint exercise.
+
 ## Runtime Configuration
 
-The server process reads configuration from the environment or project-root `.env` file:
+The process reads the project-root `.env` file and environment variables:
 
 ```env
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/styxcd
 GITHUB_TOKEN=github-token-with-required-project-and-issue-permissions
 JOHNNY_JOHNNY_PROVIDER_ACCOUNT=ggortsema
+
+AUTH0_DOMAIN=your-tenant.us.auth0.com
+AUTH0_AUDIENCE=https://api.johnny-johnny.local
+JOHNNY_JOHNNY_API_DOCS_ENABLED=true
+
+AUTH0_CLOCK_SKEW_SECONDS=30
+AUTH0_JWKS_TIMEOUT_SECONDS=5
+AUTH0_JWKS_CACHE_SECONDS=300
 ```
 
-`JOHNNY_JOHNNY_PROVIDER_ACCOUNT` is optional and defaults to `ggortsema` to match the current CLI default.
+| Setting | Required for server | Purpose |
+|---|---:|---|
+| `DATABASE_URL` | for persistence workflows/readiness | Canonical PostgreSQL connection |
+| `GITHUB_TOKEN` | for confirmed provider workflows | Outbound GitHub credential |
+| `JOHNNY_JOHNNY_PROVIDER_ACCOUNT` | no | Default provider account |
+| `AUTH0_DOMAIN` | yes | Trusted issuer hostname and JWKS origin |
+| `AUTH0_AUDIENCE` | yes | Exact Auth0 API identifier |
+| `JOHNNY_JOHNNY_API_DOCS_ENABLED` | no | Serve or remove Swagger UI, ReDoc, and OpenAPI; default `true` |
+| `AUTH0_CLOCK_SKEW_SECONDS` | no | Non-negative JWT time leeway; default `30` |
+| `AUTH0_JWKS_TIMEOUT_SECONDS` | no | Positive JWKS request timeout; default `5` |
+| `AUTH0_JWKS_CACHE_SECONDS` | no | Positive JWKS set cache lifetime; default `300` |
 
-The API deliberately does not accept a database URL from HTTP clients. Database topology and credentials are server configuration, not request data.
+The server fails closed when Auth0 issuer configuration is missing or malformed. It does not need an Auth0 client ID or client secret. Client credentials belong to the calling application and must not be deployed with the API.
+
+HTTP clients cannot submit a database URL, GitHub token, Auth0 domain, audience, JWKS URL, or other server security settings.
 
 ## Starting the Server
+
+Local loopback:
 
 ```bash
 uv sync
 uv run jj serve --host 127.0.0.1 --port 8000
 ```
 
-Interactive contracts are available at:
+Container or EKS pod:
+
+```bash
+uv run jj serve --host 0.0.0.0 --port 8000
+```
+
+Binding to `0.0.0.0` provides pod-network reachability only. EKS deployment must add HTTPS ingress, server-owned secret delivery, network controls, and rollout/smoke-test behavior.
+
+When enabled, interactive contracts are available at:
 
 ```text
 http://127.0.0.1:8000/docs
@@ -48,25 +165,7 @@ http://127.0.0.1:8000/redoc
 http://127.0.0.1:8000/openapi.json
 ```
 
-The current server has no authentication middleware. Keep it bound to a trusted interface, normally `127.0.0.1`, until server authentication and authorization are implemented.
-
-A future container or EKS pod must bind to `0.0.0.0` so its Kubernetes Service can reach it:
-
-```bash
-uv run jj serve --host 0.0.0.0 --port 8000
-```
-
-That bind address provides reachability only. Public deployment additionally requires HTTPS, application authentication/authorization, secret management, and platform network controls.
-
-The agreed security sequence is:
-
-```text
-OAuth/OIDC for existing REST endpoints
-  -> deploy secured API to EKS
-  -> add HMAC-authenticated GitHub webhook synchronization
-```
-
-See ADR-004 and `docs/architecture/api-security-deployment-and-client-evolution.md`.
+Swagger UI exposes an **Authorize** control for pasting a bearer token. Paste the token value itself, without adding a second `Bearer` prefix.
 
 ## Project Selection
 
@@ -103,16 +202,21 @@ or:
 
 Delete and YAML import carry `mode` as a required query parameter because delete has no JSON body and import uses its body for raw YAML.
 
+Authentication and authorization happen before either preview or confirmed workflow dispatch. A dry run does not bypass the route permission.
+
 ## Endpoint Inventory
 
-### Health
+### Authentication and health
 
-| Method | Path | Behavior |
-|---|---|---|
-| `GET` | `/api/v1/health/live` | Process liveness and API version |
-| `GET` | `/api/v1/health/ready` | PostgreSQL connectivity and canonical schema readiness; returns `503` when not ready |
+| Method | Path | Access | Behavior |
+|---|---|---|---|
+| `GET` | `/api/v1/auth/whoami` | valid token | Confirm token identity and granted scopes without database access |
+| `GET` | `/api/v1/health/live` | public | Process liveness and API version |
+| `GET` | `/api/v1/health/ready` | public | Minimal PostgreSQL/schema readiness; `503` when not ready |
 
 ### Reads
+
+All read routes require `read:backlogs`.
 
 | Method | Path | Behavior |
 |---|---|---|
@@ -120,16 +224,13 @@ Delete and YAML import carry `mode` as a required query parameter because delete
 | `GET` | `/api/v1/backlogs/{project_title}/epics` | Ordered epic summaries |
 | `GET` | `/api/v1/backlogs/{project_title}/items` | Ordered issue summaries with optional epic and status filters |
 | `GET` | `/api/v1/backlogs/{project_title}/items/{item_id}` | Full epic or issue detail |
+| `GET` | `/api/v1/backlogs/{project_title}/export` | Portable canonical YAML snapshot |
 
-`GET .../items` accepts:
+`GET .../items` accepts `epic_id`, repeated `status`, or repeated `exclude_status`. `status` and `exclude_status` are mutually exclusive, matching CLI behavior.
 
-- `epic_id`
-- repeated `status`
-- repeated `exclude_status`
+### Targeted mutations
 
-`status` and `exclude_status` are mutually exclusive, matching the CLI behavior.
-
-### Targeted Mutations
+All targeted mutation routes require `write:backlogs`.
 
 | Method | Path | Behavior |
 |---|---|---|
@@ -139,16 +240,16 @@ Delete and YAML import carry `mode` as a required query parameter because delete
 | `POST` | `/api/v1/backlogs/{project_title}/issues/{issue_id}/move` | Preview or move an issue to another epic |
 | `DELETE` | `/api/v1/backlogs/{project_title}/issues/{issue_id}` | Preview or delete a canonical issue and targeted GitHub projection |
 
-Confirmed targeted mutations report success only after the required GitHub synchronization and canonical PostgreSQL commit succeed. The shared application workflows retain their rollback, compensation, idempotent repair, and explicit consistency-error behavior.
+Confirmed targeted mutations report success only after required GitHub synchronization and the canonical PostgreSQL commit succeed. Shared workflows retain rollback, compensation, idempotent repair, and explicit consistency-error behavior.
 
-### Projection Operations
+### Projection operations
 
-| Method | Path | Behavior |
-|---|---|---|
-| `POST` | `/api/v1/backlogs/{project_title}/reconciliation` | Preview or execute a bounded/full provider reconciliation |
-| `POST` | `/api/v1/backlogs/{project_title}/purge` | Preview or delete a bounded/full GitHub projection while retaining canonical data |
+| Method | Path | Permission | Behavior |
+|---|---|---|---|
+| `POST` | `/api/v1/backlogs/{project_title}/reconciliation` | `operate:backlogs` | Preview or execute a bounded/full provider reconciliation |
+| `POST` | `/api/v1/backlogs/{project_title}/purge` | `admin:backlogs` | Preview or delete a bounded/full GitHub projection while retaining canonical data |
 
-Reconciliation body scope:
+Reconciliation scope:
 
 ```json
 {"mode": "dry-run", "max_operations": 100}
@@ -160,7 +261,7 @@ or:
 {"mode": "confirmed", "all": true}
 ```
 
-Purge body scope:
+Purge scope:
 
 ```json
 {"mode": "dry-run", "max_issues": 50}
@@ -174,12 +275,12 @@ or:
 
 `all` is mutually exclusive with the corresponding maximum. Omitting both uses the CLI-compatible defaults: 100 provider operations for reconciliation and 50 issues for purge.
 
-### Portable YAML Boundary
+### Portable YAML boundary
 
-| Method | Path | Behavior |
-|---|---|---|
-| `POST` | `/api/v1/backlogs/import?mode=...` | Parse or transactionally replace one canonical snapshot from an `application/yaml` body |
-| `GET` | `/api/v1/backlogs/{project_title}/export` | Return an `application/yaml` canonical snapshot |
+| Method | Path | Permission | Behavior |
+|---|---|---|---|
+| `POST` | `/api/v1/backlogs/import?mode=...` | `admin:backlogs` | Parse or transactionally replace one canonical snapshot from an `application/yaml` body |
+| `GET` | `/api/v1/backlogs/{project_title}/export` | `read:backlogs` | Return an `application/yaml` canonical snapshot |
 
 Import dry-run parses and summarizes the document without connecting to PostgreSQL. Confirmed import performs the same verified snapshot replacement used by the CLI.
 
@@ -198,9 +299,11 @@ Errors use one JSON shape:
 ```json
 {
   "error": {
-    "code": "resource_not_found",
-    "message": "Backlog item not found: missing-item",
-    "details": null
+    "code": "insufficient_scope",
+    "message": "The access token does not grant the permission required for this operation.",
+    "details": {
+      "required_scopes": ["write:backlogs"]
+    }
   }
 }
 ```
@@ -209,28 +312,56 @@ Status mapping:
 
 | HTTP status | Error category |
 |---|---|
-| `400` | Invalid cross-field request, such as simultaneous include/exclude filters |
+| `400` | Invalid cross-field request |
+| `401` | Missing, malformed, expired, or otherwise invalid bearer token |
+| `403` | Valid token without the required route scope |
 | `404` | Canonical item, epic, issue, or stored provider project not found |
 | `409` | Resource conflict, round-trip failure, or cross-boundary consistency failure |
 | `422` | Request-model, backlog-document, or domain validation failure |
 | `502` | GitHub/provider operation failure |
-| `503` | PostgreSQL persistence unavailable or readiness incomplete |
+| `503` | PostgreSQL unavailable/readiness incomplete, or issuer signing keys temporarily unavailable |
 | `500` | Unexpected internal failure without implementation details in the response |
+
+Authentication failures include a `WWW-Authenticate` response header. `401` distinguishes missing credentials from an invalid token through stable error codes. `403` includes the route's required scopes but does not return the token's raw claims.
 
 ## Test Coverage
 
-`tests/behavior/test_backlog_rest_api.py` exercises every v1 endpoint and verifies:
+`tests/behavior/test_auth0_access_token_validation.py` verifies:
 
-- PostgreSQL-backed read workflow reuse
-- dry-run versus confirmed workflow dispatch
-- typed operation serialization
-- bounded versus full reconcile and purge scope
-- raw YAML import and YAML export
-- readiness status behavior
-- stable error mapping
+- valid RS256 signature, issuer, audience, expiry, subject, and scope extraction
+- wrong issuer, audience, expiry, subject, signing key, and algorithm rejection
+- rejection of token-controlled remote-key and critical headers
+- strict string handling for the `scope` claim
+- no authorization escalation from the optional `permissions` claim
+- JWKS outage classification
+- fail-closed Auth0 configuration and application-factory startup
+- explicit removal of Swagger UI, ReDoc, and OpenAPI when docs are disabled
 
-The API tests do not require `httpx`; they drive the ASGI application directly through a small dependency-free test client.
+`tests/behavior/test_backlog_rest_api.py` verifies:
 
-## Full Curl Walkthrough
+- public minimal health probes
+- protected OpenAPI operations and bearer security scheme
+- token-only `/auth/whoami`
+- `401`, `403`, and authentication-service `503` behavior before workflow dispatch
+- read/write/operate/admin route policy, including independent-scope denials and proof that admin is not a wildcard
+- every v1 backlog endpoint and shared workflow dispatch
+- typed operation serialization, YAML import/export, and stable application errors
 
-The project README contains a sequential sandbox walkthrough with runnable `curl` commands for every endpoint, including safe previews before confirmed operations.
+Current applied-project result:
+
+```text
+109 passed, 1 skipped
+```
+
+The skipped test requires live GitHub provider access.
+
+## Curl Walkthrough
+
+The project README contains:
+
+1. exact Auth0 dashboard setup
+2. a client-credentials token command
+3. an unauthenticated `401` exercise
+4. a successful `/api/v1/auth/whoami` exercise
+5. a PostgreSQL-backed summary request
+6. a sequential sandbox walkthrough for the complete protected backlog surface

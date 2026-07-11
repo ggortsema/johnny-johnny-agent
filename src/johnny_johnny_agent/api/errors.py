@@ -1,4 +1,4 @@
-"""Consistent HTTP error mapping for application and adapter failures."""
+"""Consistent HTTP error mapping for authentication and application failures."""
 
 from __future__ import annotations
 
@@ -11,6 +11,12 @@ from fastapi.responses import JSONResponse
 from yaml import YAMLError
 
 from johnny_johnny_agent.api.models import ErrorDetail, ErrorResponse
+from johnny_johnny_agent.api.security import (
+    AuthenticationRequiredError,
+    AuthenticationServiceUnavailableError,
+    InsufficientScopeError,
+    InvalidAccessTokenError,
+)
 from johnny_johnny_agent.capabilities.backlog_persistence.postgres import (
     BacklogPersistenceError,
     ProviderProjectNotFoundError,
@@ -32,6 +38,13 @@ class ApiRequestError(RuntimeError):
 
 def install_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(RequestValidationError, _request_validation_error)
+    app.add_exception_handler(AuthenticationRequiredError, _authentication_required)
+    app.add_exception_handler(InvalidAccessTokenError, _invalid_access_token)
+    app.add_exception_handler(InsufficientScopeError, _insufficient_scope)
+    app.add_exception_handler(
+        AuthenticationServiceUnavailableError,
+        _authentication_service_unavailable,
+    )
     app.add_exception_handler(BacklogDocumentError, _backlog_document_error)
     app.add_exception_handler(ApiRequestError, _api_request_error)
     app.add_exception_handler(ProviderProjectNotFoundError, _provider_project_not_found)
@@ -60,6 +73,56 @@ async def _request_validation_error(
         code="request_validation_error",
         message="The request did not satisfy the API contract.",
         details=jsonable_encoder(exc.errors()),
+    )
+
+
+async def _authentication_required(
+    request: Request,
+    exc: AuthenticationRequiredError,
+) -> JSONResponse:
+    return _response(
+        401,
+        "authentication_required",
+        str(exc),
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+
+async def _invalid_access_token(
+    request: Request,
+    exc: InvalidAccessTokenError,
+) -> JSONResponse:
+    return _response(
+        401,
+        "invalid_access_token",
+        str(exc),
+        headers={"WWW-Authenticate": 'Bearer error="invalid_token"'},
+    )
+
+
+async def _insufficient_scope(
+    request: Request,
+    exc: InsufficientScopeError,
+) -> JSONResponse:
+    required = sorted(exc.required_scopes)
+    challenge = 'Bearer error="insufficient_scope", scope="' + " ".join(required) + '"'
+    return _response(
+        403,
+        "insufficient_scope",
+        str(exc),
+        details={"required_scopes": required},
+        headers={"WWW-Authenticate": challenge},
+    )
+
+
+async def _authentication_service_unavailable(
+    request: Request,
+    exc: AuthenticationServiceUnavailableError,
+) -> JSONResponse:
+    return _response(
+        503,
+        "authentication_service_unavailable",
+        str(exc),
     )
 
 
@@ -165,6 +228,7 @@ def _response(
     code: str,
     message: str,
     details: Any | None = None,
+    headers: dict[str, str] | None = None,
 ) -> JSONResponse:
     body = ErrorResponse(
         error=ErrorDetail(
@@ -173,4 +237,8 @@ def _response(
             details=details,
         )
     )
-    return JSONResponse(status_code=status_code, content=body.model_dump(mode="json"))
+    return JSONResponse(
+        status_code=status_code,
+        content=body.model_dump(mode="json"),
+        headers=headers,
+    )
