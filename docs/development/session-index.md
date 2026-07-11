@@ -1,459 +1,263 @@
 # Session Index
 
 **Date:** July 10, 2026  
-**Project:** Johnny-Johnny Agent  
+**Project Version:** 0.1.0  
 **Git Branch:** dev  
-**Current Story:** `deploy-johnny-johnny-api-to-eks`  
-**Immediate Status:** Manual EKS deployment in progress; pod is running but readiness is failing because `DATABASE_URL` in AWS Secrets Manager was created with the literal text `echo` prefixed to the URL.
+**Completed Story:** `deploy-johnny-johnny-api-to-eks`  
+**Current Story:** None; deployment story completed and released  
+**Next Story:** `implement-assistant-response-endpoint`  
+**Following Story:** Minimal authenticated web UI  
+**Deferred Story:** Integrate proven deployment contract into StyxCD
 
-## Session Goal
+## Session Summary
 
-Prove the direct Johnny-Johnny deployment path manually before integrating it into StyxCD:
+The Johnny-Johnny Python API was deployed manually to EKS, secured with HTTPS and Auth0 OAuth 2.0, connected successfully to PostgreSQL, and then wrapped in a tested developer fast loop.
 
-```text
-test
-→ build image
-→ push to ECR
-→ configure AWS-managed secrets
-→ configure EKS workload identity
-→ deploy to EKS
-→ configure ALB/HTTPS/DNS
-→ run public and authenticated smoke tests
-```
-
-## Completed This Session
-
-### Local container validation
-
-- Built the Docker image successfully.
-- Ran the image locally with `.env`.
-- Confirmed Uvicorn started on `0.0.0.0:8000`.
-- Confirmed the public liveness endpoint returned:
-  ```json
-  {"service":"johnny-johnny-agent","version":"0.1.0","status":"ok"}
-  ```
-
-### EKS cluster validation
-
-- Confirmed EKS cluster `johnny-johnny-dev` exists and is `ACTIVE`.
-- Refreshed kubeconfig.
-- Confirmed cluster version `1.34`.
-- Confirmed worker architecture is `x86_64`, so deployment images must target:
-  ```text
-  linux/amd64
-  ```
-
-### ECR
-
-- Existing repositories:
-  ```text
-  johnny-johnny/johnny-johnny-ui
-  johnny-johnny/johnny-johnny-backend
-  ```
-- Created:
-  ```text
-  johnny-johnny/johnny-johnny-agent
-  ```
-- Repository URI:
-  ```text
-  359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-agent
-  ```
-- Authenticated Docker to ECR.
-- Built and pushed:
-  ```text
-  359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-agent:0.1.0
-  ```
-- Verified digest:
-  ```text
-  sha256:444b226e5db356486e0017b3d863706cd9c372abb0b473ab7e013295d446376a
-  ```
-
-### Secrets Manager
-
-Created secrets:
+The work moved from a running but unready pod to a complete public deployment:
 
 ```text
-DATABASE_URL
-GITHUB_TOKEN
+Route 53
+→ HTTPS ALB
+→ Kubernetes Ingress
+→ ClusterIP Service
+→ EKS Pod
+→ FastAPI
+→ PostgreSQL
 ```
 
-Secret ARNs:
-
-```text
-arn:aws:secretsmanager:us-east-1:359546647832:secret:DATABASE_URL-kwT9cC
-arn:aws:secretsmanager:us-east-1:359546647832:secret:GITHUB_TOKEN-eyDU2F
-```
-
-Important current problem:
-
-- `DATABASE_URL` was entered incorrectly with literal `echo` text in front of the URL.
-- The running container therefore receives an invalid database connection string.
-- The next session must update the existing `DATABASE_URL` secret with the correct value.
-
-Do not paste secret values into chat.
-
-### EKS Pod Identity
-
-- Installed EKS managed add-on:
-  ```text
-  eks-pod-identity-agent
-  ```
-- Verified DaemonSet is ready.
-- Created IAM policy file:
-  ```text
-  johnny-johnny-secrets-policy.json
-  ```
-- Created IAM policy:
-  ```text
-  arn:aws:iam::359546647832:policy/JohnnyJohnnyRuntimeSecretsRead
-  ```
-- Policy allows only:
-  ```text
-  secretsmanager:GetSecretValue
-  secretsmanager:DescribeSecret
-  ```
-  for the two Johnny-Johnny secret ARNs.
-- Created Pod Identity trust policy:
-  ```text
-  johnny-johnny-pod-identity-trust-policy.json
-  ```
-- Created IAM role:
-  ```text
-  arn:aws:iam::359546647832:role/JohnnyJohnnyAgentPodIdentityRole
-  ```
-- Attached `JohnnyJohnnyRuntimeSecretsRead`.
-- Created Kubernetes ServiceAccount:
-  ```text
-  namespace: johnny-johnny
-  serviceAccount: johnny-johnny-agent
-  ```
-- Created EKS Pod Identity association:
-  ```text
-  association id: a-768ibt7adlppkyfuc
-  namespace: johnny-johnny
-  service account: johnny-johnny-agent
-  role: JohnnyJohnnyAgentPodIdentityRole
-  ```
-
-### Secrets Store CSI Driver / AWS provider
-
-- Added Helm repo:
-  ```text
-  aws-secrets-manager
-  ```
-- Installed release:
-  ```text
-  secrets-provider-aws
-  ```
-  in:
-  ```text
-  kube-system
-  ```
-- Initial install failed because the single `t3.small` worker had reached its 11-pod limit.
-- Node group:
-  ```text
-  ng-7996e69b
-  ```
-- Original scaling:
-  ```text
-  min=1
-  desired=1
-  max=1
-  ```
-- Updated scaling:
-  ```text
-  min=1
-  desired=2
-  max=2
-  ```
-- Second worker joined and became ready.
-- Old Johnny-Johnny UI and Java backend Deployments were scaled to zero to free pod slots:
-  ```text
-  johnny-johnny-ui
-  johnny-johnny-backend
-  ```
-- Helm release eventually reached:
-  ```text
-  STATUS: deployed
-  ```
-- Both DaemonSets are healthy on both nodes:
-  ```text
-  secrets-store-csi-driver
-  secrets-provider-aws-secrets-store-csi-driver-provider-aws
-  ```
-
-### SecretProviderClass
-
-Created and applied:
-
-```text
-johnny-johnny-secret-provider-class.yml
-```
-
-Resource:
-
-```text
-kind: SecretProviderClass
-name: johnny-johnny-agent-secrets
-namespace: johnny-johnny
-provider: aws
-usePodIdentity: "true"
-```
-
-It maps:
-
-```text
-DATABASE_URL
-GITHUB_TOKEN
-```
-
-from Secrets Manager to mounted files under:
-
-```text
-/mnt/secrets-store
-```
-
-### Johnny-Johnny Kubernetes Deployment
-
-Created and applied:
-
-```text
-johnny-johnny-agent-deployment.yml
-```
-
-Deployment:
-
-```text
-name: johnny-johnny-agent
-namespace: johnny-johnny
-replicas: 1
-serviceAccountName: johnny-johnny-agent
-image: 359546647832.dkr.ecr.us-east-1.amazonaws.com/johnny-johnny/johnny-johnny-agent:0.1.0
-```
-
-The container startup command reads mounted secrets and exports them before starting the API:
-
-```sh
-export DATABASE_URL="$(cat /mnt/secrets-store/DATABASE_URL)"
-export GITHUB_TOKEN="$(cat /mnt/secrets-store/GITHUB_TOKEN)"
-exec jj serve --host 0.0.0.0 --port 8000
-```
-
-Non-secret runtime configuration:
-
-```text
-AUTH0_DOMAIN=dev-ude3gljkecu7ylzt.us.auth0.com
-AUTH0_AUDIENCE=https://johnny-johnny.mycroftai.org
-JOHNNY_JOHNNY_API_DOCS_ENABLED=false
-AUTH0_CLOCK_SKEW_SECONDS=30
-AUTH0_JWKS_TIMEOUT_SECONDS=5
-AUTH0_JWKS_CACHE_SECONDS=300
-```
-
-Health probes:
-
-```text
-readiness: /api/v1/health/ready
-liveness:  /api/v1/health/live
-```
-
-## Current Runtime State
-
-Pod:
-
-```text
-johnny-johnny-agent-575bddfb67-t5bs6
-```
-
-State:
-
-```text
-STATUS: Running
-READY: 0/1
-RESTARTS: 0
-```
-
-Liveness succeeds:
-
-```text
-GET /api/v1/health/live → 200
-```
-
-Readiness fails:
-
-```text
-GET /api/v1/health/ready → 503
-```
-
-Readiness body:
-
-```json
-{
-  "service": "johnny-johnny-agent",
-  "version": "0.1.0",
-  "status": "not-ready",
-  "checks": {
-    "database": "unavailable",
-    "canonical_schema": "unknown"
-  }
-}
-```
-
-The mounted secret and process environment were inspected manually. The cause was found:
-
-```text
-DATABASE_URL begins with literal "echo"
-```
-
-This is why database readiness fails.
-
-## Immediate First Task Next Session
-
-Update the existing `DATABASE_URL` secret safely.
-
-Use a hidden prompt:
-
-```bash
-read -s -p "DATABASE_URL: " DATABASE_URL_SECRET
-```
-
-Paste only the actual PostgreSQL URL and press Enter.
-
-Then update the existing AWS secret:
-
-```bash
-aws secretsmanager put-secret-value   --secret-id DATABASE_URL   --region us-east-1   --secret-string "$DATABASE_URL_SECRET"
-```
-
-Then restore terminal echo if needed:
-
-```bash
-stty echo
-```
-
-Clear the local shell variable:
-
-```bash
-unset DATABASE_URL_SECRET
-```
-
-Because Secrets Store CSI-mounted files may not refresh immediately and the environment variables are exported only at container startup, restart the Deployment after the secret is corrected:
-
-```bash
-kubectl rollout restart deployment/johnny-johnny-agent -n johnny-johnny
-```
-
-Poll rather than wait:
-
-```bash
-kubectl get pods -n johnny-johnny -l app=johnny-johnny-agent
-```
-
-Then poll:
-
-```bash
-kubectl get deployment johnny-johnny-agent -n johnny-johnny
-```
-
-Expected:
-
-```text
-READY 1/1
-AVAILABLE 1
-```
-
-Then verify readiness from inside the container or through a Service once created.
-
-## Remaining Manual Deployment Work
-
-After database readiness is fixed:
-
-1. Create the Kubernetes `Service` for `johnny-johnny-agent`.
-2. Confirm service-to-pod connectivity.
-3. Confirm or request ACM certificate for:
-   ```text
-   johnny-johnny.mycroftai.org
-   ```
-4. Create ALB Ingress with HTTPS listener and certificate ARN.
-5. Configure Route53 alias to the ALB.
-6. Validate:
-   - public liveness → `200`
-   - protected endpoint without token → `401`
-   - valid Auth0 read token → `200`
-   - insufficient scope → `403`
-7. Build a repeatable Bash deployment loop.
-8. Stop and create a separate StyxCD integration story.
-
-## StyxCD Design Insight Exposed
-
-Current `EksDeployApplication` handles secrets as:
-
-```text
-Jenkins credentials
-→ kubectl create secret generic
-→ Kubernetes Secret
-→ env.secretKeyRef
-```
-
-The new AWS-native capability should support:
+Runtime secrets are delivered through:
 
 ```text
 AWS Secrets Manager
-→ IAM policy
-→ Pod Identity role
-→ EKS Pod Identity association
-→ Secrets Store CSI Driver / AWS provider
-→ SecretProviderClass
-→ mounted runtime secret
+→ EKS Pod Identity
+→ Secrets Store CSI
+→ mounted files
+→ process environment
 ```
 
-Recommended future StyxCD split:
+The deployment automation was committed, merged to `main`, tagged, and development returned to `dev`. The exact tag name was not captured in the session.
+
+## Stories Completed
+
+### Deploy Johnny-Johnny API to EKS
+
+Completed and validated:
+
+- Docker image built for `linux/amd64`.
+- Image pushed to ECR.
+- EKS Pod Identity Agent installed.
+- Secrets Store CSI Driver and AWS provider installed.
+- Runtime IAM policy and role created.
+- Pod Identity association created.
+- `DATABASE_URL` and `GITHUB_TOKEN` projected from AWS Secrets Manager.
+- Deployment readiness passed.
+- ClusterIP Service created and validated.
+- Existing ALB and Ingress reused.
+- ACM certificate issued for MycroftAI and StyxCD apex/wildcard names.
+- Route 53 DNS validation completed.
+- HTTPS listener and HTTP redirect configured.
+- public liveness returned `200`.
+- protected call without token returned `401`.
+- Auth0 M2M token was validated.
+- authenticated backlog read returned `200`.
+- valid token missing reconciliation authority returned `403`.
+- fast-loop automation was created and successfully executed.
+- rollout polling race was found and fixed.
+- work was committed, merged, tagged, and returned to `dev`.
+
+## Engineering Artifacts Created During the Session
+
+Repository artifacts:
 
 ```text
-Cluster capability stage:
-- ensure Pod Identity Agent
-- ensure Secrets Store CSI Driver
-- ensure AWS provider
-
-Application identity stage:
-- IAM policy
-- IAM role
-- Pod Identity association
-
-Deploy application stage:
-- ServiceAccount
-- SecretProviderClass
-- Deployment
-- Service
+docs/deployment/eks/kubernetes/johnny-johnny-namespace.yml
+docs/deployment/eks/kubernetes/johnny-johnny-agent-service-account.yml
+docs/deployment/eks/kubernetes/johnny-johnny-agent-service.yml
+docs/deployment/eks/kubernetes/johnny-johnny-ingress.yml
+scripts/fast-loop.sh
 ```
 
-Do not hide all IAM and cluster setup inside `EksDeployApplication`.
-
-## Working Preference Reinforced
-
-Provide exactly one shell command at a time. Do not include follow-on commands until the user returns the result.
-
-The user prefers polling commands over commands that wait indefinitely, such as:
+Previously created deployment artifacts organized during this session:
 
 ```text
-kubectl rollout status
-kubectl get ... -w
+docs/deployment/eks/iam/johnny-johnny-pod-identity-trust-policy.json
+docs/deployment/eks/iam/johnny-johnny-secrets-policy.json
+docs/deployment/eks/kubernetes/johnny-johnny-agent-deployment.yml
+docs/deployment/eks/kubernetes/johnny-johnny-secret-provider-class.yml
 ```
 
-## Files Created Locally During This Session
+Session-closure artifacts generated now:
 
 ```text
-johnny-johnny-secrets-policy.json
-johnny-johnny-pod-identity-trust-policy.json
-johnny-johnny-secret-provider-class.yml
-johnny-johnny-agent-deployment.yml
+ADR-JOHNNY-JOHNNY-EKS-DEPLOYMENT.md
+EKS-DEPLOYMENT-FAST-LOOP.md
+ASSISTANT-RESPONSE-ENDPOINT-STORY.md
+BACKLOG-UPDATE-2026-07-10.md
+command-cheat-sheet-2026-07-10-234606.md
+session-index.md
+engineering-session-closure-report.md
 ```
 
-These should be reviewed and moved into an appropriate deployment directory before commit.
+## Engineering Artifacts Updated
 
-## Important Temporary Infrastructure State
+- Engineering Session Closure process now requires a timestamped command cheat sheet.
+- The deployment manifest set became fully declarative.
+- The Service and ServiceAccount exports were cleaned of cluster-generated fields.
+- The Ingress now routes the public Johnny-Johnny hostname to the Python API and terminates HTTPS.
+- The fast loop now uses a generation-aware, exact-image rollout gate.
 
-- Node group currently has two `t3.small` workers.
-- Old UI and Java backend Deployments are scaled to zero, not deleted.
-- The Helm secret-provider release is deployed and healthy.
-- The Johnny-Johnny agent Deployment exists but is not ready until `DATABASE_URL` is corrected.
+## Architectural Decisions
+
+- The Python agent replaces the Java backend as the active backend.
+- The old Java and UI Deployments remain scaled to zero for now.
+- Reuse the existing ALB and Ingress instead of creating a temporary ALB.
+- Until the UI exists, `johnny-johnny.mycroftai.org/` routes to the Python agent.
+- When the UI exists, route `/` to the UI and `/api/v1` to the Python agent.
+- Use AWS Secrets Manager, EKS Pod Identity, and CSI-mounted secrets rather than Kubernetes Secrets.
+- Keep the public Johnny-Johnny API reachable over HTTPS for web, iPhone, and future webhook clients.
+- Keep OAuth bearer-token authorization separate from future GitHub webhook HMAC verification.
+- Treat the Bash fast loop as an executable deployment contract, not the final platform.
+- Defer StyxCD integration into a separate story.
+- Before the UI, implement one minimal provider-neutral assistant response endpoint.
+- Protect the assistant endpoint with a dedicated `invoke:assistant` scope.
+- Keep `OPENAI_API_KEY` server-side and AWS-managed.
+- Use a language-model provider port so later RAG work does not require changing the public endpoint.
+
+## Bugs Found and Fixed
+
+### Invalid `DATABASE_URL`
+
+The AWS secret contained the literal text `echo` before the PostgreSQL URL. The secret was safely replaced, the Deployment restarted, and readiness became healthy.
+
+### Rollout false-success race
+
+The first fast-loop poll could potentially pass while an old ready pod still satisfied readiness and the new pod was starting.
+
+The replacement gate now requires:
+
+- expected generation observed;
+- old pod removed;
+- exact final pod count;
+- every pod on the exact new image;
+- every pod ready;
+- zero unavailable replicas.
+
+### Incorrect project path
+
+An authenticated request using `johnny-johnny` returned `404`. The correct database identity is the URL-encoded provider project title:
+
+```text
+Johnny-Johnny Backlog Persistence Sandbox
+```
+
+### AWS CLI table query shape
+
+A certificate query mixed a scalar and nested rows, which `--output table` could not render. Separate queries were used.
+
+### Certificate wildcard depth
+
+`*.mycroftai.org` does not cover `api.johnny-johnny.mycroftai.org`. Reusing `johnny-johnny.mycroftai.org` avoided the nested-hostname problem.
+
+## Testing and Validation
+
+- Full Python test suite passed through `uv run pytest` during the fast loop.
+- Kubernetes manifest directory passed client-side dry-run validation.
+- Internal Service routing returned healthy JSON.
+- Public HTTPS liveness and readiness passed.
+- Auth0 `whoami` returned the M2M subject and scopes.
+- Authenticated PostgreSQL-backed read passed.
+- Missing-token and missing-scope boundaries passed.
+- Complete fast loop passed after the rollout gate was strengthened.
+
+## Lessons Learned
+
+- A pod can be running while readiness correctly blocks traffic.
+- A Kubernetes Service forwards to selected Pod IPs and target ports; it does not redirect HTTP.
+- `kubectl get ingress` is not the authoritative source for actual ALB listeners.
+- ALB default listener action can be a fixed response while host rules route application traffic.
+- ACM may reuse one validation CNAME for an apex/wildcard pair.
+- `curl -f` is useful for success-only scripts but hides expected authorization response bodies.
+- Bash is excellent for proving an orchestration contract and poor as the long-term extensibility boundary.
+- The manually proven script provides concrete StyxCD use cases rather than theoretical requirements.
+
+## Outstanding Work
+
+### Immediate product work
+
+- Implement the assistant-response endpoint.
+- Add the OpenAI provider adapter and provider-neutral port.
+- Add `invoke:assistant` to Auth0.
+- Store `OPENAI_API_KEY` in AWS Secrets Manager.
+- Add the new key to the IAM policy and SecretProviderClass.
+- Add `OPENAI_MODEL` as non-secret deployment configuration.
+- Add tests and deploy with the fast loop.
+- Build the minimal web UI.
+- Continue toward the native iPhone controller and RAG.
+
+### Deployment cleanup and hardening
+
+- Decide whether to archive or delete `johnny-johnny-ingress-before-agent.yml`.
+- Retire the Java backend resources when no longer needed.
+- Replace or update the old UI when the new web client is ready.
+- Consider adding ShellCheck and behavior tests for `fast-loop.sh`.
+- Consider ECR lifecycle policy for timestamped images.
+- Consider rollback behavior and failed-rollout diagnostics.
+- Confirm the release tag name in project history if needed.
+- Review the temporary two-node `t3.small` development posture and cost.
+
+### Deferred platform work
+
+- Convert the proven deployment contract into StyxCD capabilities.
+- Keep Forge-specific automation and StyxCD code/configuration legally and technically separate.
+
+## Next Recommended Starting Point
+
+Create or move the `implement-assistant-response-endpoint` backlog item to In Progress.
+
+Then inspect the existing route, authentication, configuration, error-handling, and behavior-test structure before designing code changes.
+
+## Files Likely Needed Next Session
+
+```text
+ASSISTANT-RESPONSE-ENDPOINT-STORY.md
+BACKLOG-UPDATE-2026-07-10.md
+pyproject.toml
+src/johnny_johnny_agent/config.py
+src/johnny_johnny_agent/api/routes.py
+existing authentication and authorization modules
+existing API error models and handlers
+tests/behavior/
+docs/deployment/eks/kubernetes/johnny-johnny-agent-deployment.yml
+docs/deployment/eks/kubernetes/johnny-johnny-secret-provider-class.yml
+docs/deployment/eks/iam/johnny-johnny-secrets-policy.json
+scripts/fast-loop.sh
+```
+
+## Immediate First Task
+
+Inspect the implementation files for:
+
+```text
+API routing
+scope enforcement
+dependency construction
+configuration loading
+error translation
+behavior-test conventions
+```
+
+Then design the provider-neutral assistant use case and OpenAI adapter before editing code.
+
+## Session Completion State
+
+The EKS deployment story is complete.
+
+The next engineering phase is:
+
+```text
+minimal assistant endpoint
+→ deploy through fast loop
+→ minimal web UI
+→ RAG capability
+→ native iPhone controller
+```
