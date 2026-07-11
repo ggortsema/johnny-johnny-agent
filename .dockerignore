@@ -1,0 +1,78 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environment
+.venv/
+venv/
+ENV/
+env/
+
+# uv cache
+.uv/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Testing
+.pytest_cache/
+tests/
+*.pytest_cache
+
+# Documentation
+docs/
+
+# Build artifacts
+build/
+
+# Data directories
+data/
+
+# Archive
+archive/
+
+# Scripts
+scripts/
+
+# Development session files
+session-index.md
+*.json
+!pyproject.toml
+mycroftai-roadmap.json
+
+# IDE
+.vscode/
+.idea/
+
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+.venv
+.pytest_cache
+__pycache__
+*.py[cod]
+build
+dist
+*.egg-info
+coverage.xml
+.coverage
+htmlcov
+tests
+docs
+data
+archive
+scripts
+*.zip
+*.sha256
