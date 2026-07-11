@@ -12,6 +12,7 @@ dependencies = [
     "python-dotenv",
     "psycopg[binary]>=3.2,<4",
     "pyjwt[crypto]>=2.13,<3",
+    "openai>=2.45,<3",
 ]
 
 [dependency-groups]

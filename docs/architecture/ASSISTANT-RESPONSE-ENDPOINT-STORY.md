@@ -1,8 +1,8 @@
 # Story: Implement Minimal Assistant Response Endpoint
 
-**Date Drafted:** July 10, 2026  
-**Suggested ID:** `implement-assistant-response-endpoint`  
-**Suggested Status:** Ready  
+**Date Drafted:** July 10, 2026
+**Suggested ID:** `implement-assistant-response-endpoint`
+**Status:** Implemented locally; deployment acceptance pending
 **Suggested Epic:** AI Assistant / RAG Foundation
 
 ## Goal
@@ -46,6 +46,10 @@ Response:
 ```
 
 The public contract must remain provider-neutral. Do not return the raw OpenAI response object.
+
+## Required architectural statement
+
+> The endpoint is an assistant-orchestration boundary, not an OpenAI proxy. Retrieval, memory, tool execution, prompt construction, and provider selection may be added behind the application use case without changing the route.
 
 ## Internal design
 
@@ -153,6 +157,7 @@ Do not leak provider credentials, internal stack traces, or raw provider error b
 - The OpenAI implementation is isolated in a provider adapter.
 - The OpenAI Responses API is used for text generation.
 - The API response is normalized and does not expose the raw provider schema.
+- Future retrieval-augmented generation must be implementable behind `GenerateAssistantResponse` without requiring a new public endpoint or breaking the original request and response contract.
 - `OPENAI_API_KEY` is read from AWS Secrets Manager through the existing mounted-secret path.
 - `OPENAI_MODEL` is externally configurable and non-secret.
 - Unit tests cover the use case with a fake provider.
@@ -190,3 +195,24 @@ docs/deployment/eks/kubernetes/johnny-johnny-secret-provider-class.yml
 docs/deployment/eks/kubernetes/johnny-johnny-agent-deployment.yml
 scripts/fast-loop.sh
 ```
+
+## Implementation status
+
+Completed in the repository:
+
+- provider-neutral assistant models, port, and use case;
+- OpenAI Responses API adapter;
+- authenticated route and `invoke:assistant` authorization;
+- strict request validation and normalized response contract;
+- controlled provider error mapping;
+- unit and API behavior tests;
+- OpenAI runtime configuration and locked dependency;
+- AWS secret projection, IAM policy, Deployment model setting, and fast-loop smoke support;
+- assistant API and extensibility documentation.
+
+External acceptance still required in the target environment:
+
+- create or update the Auth0 `invoke:assistant` permission and grant it to a smoke-test client;
+- create the AWS Secrets Manager `OPENAI_API_KEY` value and apply the IAM policy update;
+- deploy through the fast loop;
+- run the authenticated public assistant smoke test with `ASSISTANT_ACCESS_TOKEN`.

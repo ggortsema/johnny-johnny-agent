@@ -1,4 +1,4 @@
-"""FastAPI routes over the shared PostgreSQL-backed application workflows."""
+"""FastAPI routes over Johnny-Johnny application capability boundaries."""
 
 from __future__ import annotations
 
@@ -6,10 +6,12 @@ from dataclasses import dataclass
 import os
 from typing import Annotated
 
-from fastapi import APIRouter, Body, Depends, Query, Response
+from fastapi import APIRouter, Body, Depends, Query, Request, Response
 
 from johnny_johnny_agent.api.errors import ApiRequestError, BacklogDocumentError
 from johnny_johnny_agent.api.models import (
+    AssistantResponsePayload,
+    AssistantResponseRequest,
     BacklogImportResponse,
     BacklogItemListResponse,
     BacklogItemResponse,
@@ -29,6 +31,7 @@ from johnny_johnny_agent.api.models import (
     ReconcileResponse,
     ServiceReadinessResponse,
     ServiceStatusResponse,
+    TokenUsageResponse,
     UpdateBacklogItemRequest,
 )
 from johnny_johnny_agent.api.serialization import (
@@ -43,6 +46,15 @@ from johnny_johnny_agent.api.security import (
     AuthenticatedPrincipal,
     authenticated_principal,
     require_scopes,
+)
+from johnny_johnny_agent.capabilities.assistant.models import (
+    AssistantResponseRequest as ApplicationAssistantResponseRequest,
+)
+from johnny_johnny_agent.capabilities.assistant.provider import (
+    LanguageModelUnavailableError,
+)
+from johnny_johnny_agent.capabilities.assistant.use_case import (
+    GenerateAssistantResponse,
 )
 from johnny_johnny_agent.capabilities.backlog_persistence.workflow import (
     check_postgres_backlog_database,
@@ -93,8 +105,9 @@ ERROR_RESPONSES = {
     502: {"model": ErrorResponse, "description": "Provider operation failed"},
     503: {
         "model": ErrorResponse,
-        "description": "Persistence or authentication dependency unavailable",
+        "description": "Required application dependency unavailable",
     },
+    504: {"model": ErrorResponse, "description": "Provider request timed out"},
 }
 
 router = APIRouter(prefix=f"/api/{API_VERSION}", responses=ERROR_RESPONSES)
@@ -103,6 +116,9 @@ REQUIRE_BACKLOG_READ = Depends(require_scopes(ApiPermission.READ_BACKLOGS))
 REQUIRE_BACKLOG_WRITE = Depends(require_scopes(ApiPermission.WRITE_BACKLOGS))
 REQUIRE_BACKLOG_OPERATE = Depends(require_scopes(ApiPermission.OPERATE_BACKLOGS))
 REQUIRE_BACKLOG_ADMIN = Depends(require_scopes(ApiPermission.ADMIN_BACKLOGS))
+REQUIRE_ASSISTANT_INVOKE = Depends(
+    require_scopes(ApiPermission.INVOKE_ASSISTANT)
+)
 
 
 @dataclass(frozen=True)
@@ -131,6 +147,21 @@ ProviderContextDependency = Annotated[ProviderContext, Depends(provider_context)
 AuthenticatedPrincipalDependency = Annotated[
     AuthenticatedPrincipal,
     Depends(authenticated_principal),
+]
+
+
+def assistant_response_generator(request: Request) -> GenerateAssistantResponse:
+    generator = getattr(request.app.state, "generate_assistant_response", None)
+    if generator is None:
+        raise LanguageModelUnavailableError(
+            "Assistant response generation is not configured."
+        )
+    return generator
+
+
+AssistantResponseGeneratorDependency = Annotated[
+    GenerateAssistantResponse,
+    Depends(assistant_response_generator),
 ]
 
 
@@ -193,6 +224,31 @@ def readiness(response: Response) -> ServiceReadinessResponse:
             "database": "ok",
             "canonical_schema": "ok" if ready else "unavailable",
         },
+    )
+
+
+@router.post(
+    "/assistant/responses",
+    response_model=AssistantResponsePayload,
+    dependencies=[REQUIRE_ASSISTANT_INVOKE],
+    tags=["assistant"],
+)
+def generate_assistant_response(
+    request: AssistantResponseRequest,
+    generator: AssistantResponseGeneratorDependency,
+) -> AssistantResponsePayload:
+    """Generate one provider-neutral Johnny-Johnny assistant response."""
+    response = generator.execute(
+        ApplicationAssistantResponseRequest(text=request.text)
+    )
+    return AssistantResponsePayload(
+        response_id=response.response_id,
+        text=response.text,
+        model=response.model,
+        usage=TokenUsageResponse(
+            input_tokens=response.usage.input_tokens,
+            output_tokens=response.usage.output_tokens,
+        ),
     )
 
 

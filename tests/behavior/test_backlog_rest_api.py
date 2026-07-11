@@ -4,6 +4,7 @@ import asyncio
 import json
 from urllib.parse import unquote, urlencode, urlsplit
 
+import pytest
 
 import johnny_johnny_agent.api.routes as api_routes
 from johnny_johnny_agent.api.app import create_app
@@ -12,6 +13,21 @@ from johnny_johnny_agent.api.security import (
     AuthenticatedPrincipal,
     AuthenticationServiceUnavailableError,
     InvalidAccessTokenError,
+)
+from johnny_johnny_agent.capabilities.assistant.models import (
+    AssistantResponse,
+    AssistantResponseRequest,
+    TokenUsage,
+)
+from johnny_johnny_agent.capabilities.assistant.provider import (
+    LanguageModelAuthenticationError,
+    LanguageModelInvalidResponseError,
+    LanguageModelProviderError,
+    LanguageModelTimeoutError,
+    LanguageModelUnavailableError,
+)
+from johnny_johnny_agent.capabilities.assistant.use_case import (
+    GenerateAssistantResponse,
 )
 from johnny_johnny_agent.capabilities.backlog_persistence.postgres import (
     BacklogImportResult,
@@ -200,6 +216,7 @@ class _TestAccessTokenVerifier:
                 {"read:backlogs", "write:backlogs", "operate:backlogs"}
             ),
             "test-admin-only": frozenset({"admin:backlogs"}),
+            "test-assistant": frozenset({"invoke:assistant"}),
             "test-unprivileged": frozenset(),
         }
         scopes = scopes_by_token.get(token)
@@ -213,8 +230,19 @@ class _TestAccessTokenVerifier:
         )
 
 
+class _UnexpectedLanguageModelProvider:
+    def generate(self, request: AssistantResponseRequest) -> AssistantResponse:
+        raise AssertionError("the assistant provider was not configured for this test")
+
+
+_default_assistant_response_generator = GenerateAssistantResponse(
+    _UnexpectedLanguageModelProvider()
+)
+
+
 app = create_app(
     access_token_verifier=_TestAccessTokenVerifier(),
+    assistant_response_generator=_default_assistant_response_generator,
     api_docs_enabled=True,
 )
 client = _AsgiTestClient(
@@ -234,7 +262,12 @@ admin_only_client = _AsgiTestClient(
     app,
     default_headers={"Authorization": "Bearer test-admin-only"},
 )
+assistant_client = _AsgiTestClient(
+    app,
+    default_headers={"Authorization": "Bearer test-assistant"},
+)
 PROJECT_PATH = "/api/v1/backlogs/Test%20Project"
+ASSISTANT_PATH = "/api/v1/assistant/responses"
 
 
 def test_liveness_and_openapi_expose_the_versioned_api():
@@ -254,11 +287,13 @@ def test_liveness_and_openapi_expose_the_versioned_api():
     )
     assert "/api/v1/backlogs/import" in openapi["paths"]
     assert "/api/v1/auth/whoami" in openapi["paths"]
+    assert ASSISTANT_PATH in openapi["paths"]
 
 
 def test_application_can_remove_openapi_and_interactive_docs():
     private_app = create_app(
         access_token_verifier=_TestAccessTokenVerifier(),
+        assistant_response_generator=_default_assistant_response_generator,
         api_docs_enabled=False,
     )
     private_client = _AsgiTestClient(private_app)
@@ -291,6 +326,7 @@ def test_openapi_marks_backlog_routes_as_bearer_protected():
         "get"
     ]
     whoami_operation = openapi["paths"]["/api/v1/auth/whoami"]["get"]
+    assistant_operation = openapi["paths"][ASSISTANT_PATH]["post"]
     live_operation = openapi["paths"]["/api/v1/health/live"]["get"]
 
     assert openapi["components"]["securitySchemes"]["Auth0Bearer"] == {
@@ -303,7 +339,142 @@ def test_openapi_marks_backlog_routes_as_bearer_protected():
     }
     assert protected_operation["security"] == [{"Auth0Bearer": []}]
     assert whoami_operation["security"] == [{"Auth0Bearer": []}]
+    assert assistant_operation["security"] == [{"Auth0Bearer": []}]
     assert "security" not in live_operation
+
+
+def test_assistant_response_requires_authentication_and_invoke_scope():
+    missing = anonymous_client.post(
+        ASSISTANT_PATH,
+        json={"text": "Hello"},
+    )
+    missing_scope = anonymous_client.post(
+        ASSISTANT_PATH,
+        headers={"Authorization": "Bearer test-reader"},
+        json={"text": "Hello"},
+    )
+
+    assert missing.status_code == 401
+    assert missing.json()["error"]["code"] == "authentication_required"
+    assert missing_scope.status_code == 403
+    assert missing_scope.headers["www-authenticate"] == (
+        'Bearer error="insufficient_scope", scope="invoke:assistant"'
+    )
+    assert missing_scope.json()["error"]["details"] == {
+        "required_scopes": ["invoke:assistant"]
+    }
+
+
+def test_assistant_response_validates_text_before_invoking_the_use_case(monkeypatch):
+    class ShouldNotRun:
+        def execute(self, request):
+            raise AssertionError("invalid input must not reach the use case")
+
+    monkeypatch.setattr(app.state, "generate_assistant_response", ShouldNotRun())
+
+    response = assistant_client.post(
+        ASSISTANT_PATH,
+        json={"text": "  \n\t  "},
+    )
+
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "request_validation_error"
+
+
+def test_assistant_response_invokes_the_application_boundary_and_normalizes_output(
+    monkeypatch,
+):
+    class RecordingProvider:
+        def __init__(self):
+            self.requests = []
+
+        def generate(self, request):
+            self.requests.append(request)
+            return AssistantResponse(
+                response_id="response-123",
+                text="The next priority is the UI story.",
+                model="configured-model",
+                usage=TokenUsage(input_tokens=12, output_tokens=8),
+            )
+
+    provider = RecordingProvider()
+    monkeypatch.setattr(
+        app.state,
+        "generate_assistant_response",
+        GenerateAssistantResponse(provider),
+    )
+
+    response = assistant_client.post(
+        ASSISTANT_PATH,
+        json={"text": "  What should we work on next?  "},
+    )
+
+    assert response.status_code == 200
+    assert provider.requests == [
+        AssistantResponseRequest(text="What should we work on next?")
+    ]
+    assert response.json() == {
+        "response_id": "response-123",
+        "text": "The next priority is the UI story.",
+        "model": "configured-model",
+        "usage": {"input_tokens": 12, "output_tokens": 8},
+    }
+
+
+@pytest.mark.parametrize(
+    ("provider_error", "expected_status", "expected_code"),
+    [
+        (
+            LanguageModelAuthenticationError("sensitive provider body"),
+            502,
+            "assistant_provider_authentication_failed",
+        ),
+        (
+            LanguageModelTimeoutError("sensitive timeout details"),
+            504,
+            "assistant_provider_timeout",
+        ),
+        (
+            LanguageModelUnavailableError("sensitive network details"),
+            503,
+            "assistant_provider_unavailable",
+        ),
+        (
+            LanguageModelInvalidResponseError("sensitive raw response"),
+            502,
+            "assistant_provider_invalid_response",
+        ),
+        (
+            LanguageModelProviderError("sensitive provider error"),
+            502,
+            "assistant_provider_failed",
+        ),
+    ],
+)
+def test_assistant_provider_failures_are_controlled_and_do_not_leak_details(
+    monkeypatch,
+    provider_error,
+    expected_status,
+    expected_code,
+):
+    class FailingProvider:
+        def generate(self, request):
+            raise provider_error
+
+    monkeypatch.setattr(
+        app.state,
+        "generate_assistant_response",
+        GenerateAssistantResponse(FailingProvider()),
+    )
+
+    response = assistant_client.post(
+        ASSISTANT_PATH,
+        json={"text": "Hello"},
+    )
+
+    assert response.status_code == expected_status
+    assert response.json()["error"]["code"] == expected_code
+    assert "sensitive" not in response.text
 
 
 def test_protected_route_rejects_missing_and_invalid_tokens(monkeypatch):

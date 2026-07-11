@@ -16,6 +16,7 @@ PUBLIC_BASE_URL="${PUBLIC_BASE_URL:-https://johnny-johnny.mycroftai.org}"
 PROVIDER="${PROVIDER:-github}"
 PROVIDER_ACCOUNT="${PROVIDER_ACCOUNT:-ggortsema}"
 PROJECT_TITLE="${PROJECT_TITLE:-Johnny-Johnny Backlog Persistence Sandbox}"
+ASSISTANT_SMOKE_TEXT="${ASSISTANT_SMOKE_TEXT:-Confirm that the Johnny-Johnny assistant endpoint is responding.}"
 
 MANIFEST_DIR="${MANIFEST_DIR:-${ROOT_DIR}/docs/deployment/eks/kubernetes}"
 EXPECTED_RECONCILE_STATUS="${EXPECTED_RECONCILE_STATUS:-403}"
@@ -103,6 +104,7 @@ PY
 LOCATION_QUERY="provider=${PROVIDER}&provider_account=${PROVIDER_ACCOUNT}"
 BACKLOG_ITEMS_URL="${PUBLIC_BASE_URL}/api/v1/backlogs/${PROJECT_PATH}/items?${LOCATION_QUERY}"
 RECONCILIATION_URL="${PUBLIC_BASE_URL}/api/v1/backlogs/${PROJECT_PATH}/reconciliation?${LOCATION_QUERY}"
+ASSISTANT_URL="${PUBLIC_BASE_URL}/api/v1/assistant/responses"
 
 TEMP_DIR="$(mktemp -d)"
 RENDERED_DEPLOYMENT="${TEMP_DIR}/johnny-johnny-agent-deployment.yml"
@@ -435,6 +437,27 @@ fi
 
 echo "Unauthenticated request correctly returned 401."
 
+print_step "Verify assistant endpoint rejects missing token"
+UNAUTHENTICATED_ASSISTANT_STATUS="$(
+  curl -sS \
+    -o "${HTTP_BODY}" \
+    -w '%{http_code}' \
+    -X POST \
+    -H 'Content-Type: application/json' \
+    --data-binary '{"text":"Hello"}' \
+    "${ASSISTANT_URL}"
+)"
+
+if [[ "${UNAUTHENTICATED_ASSISTANT_STATUS}" != "401" ]]; then
+  cat "${HTTP_BODY}" >&2
+  echo \
+    "Expected unauthenticated assistant status 401, received ${UNAUTHENTICATED_ASSISTANT_STATUS}." \
+    >&2
+  exit 1
+fi
+
+echo "Unauthenticated assistant request correctly returned 401."
+
 if [[ -n "${ACCESS_TOKEN:-}" ]]; then
   print_step "Verify authenticated backlog read"
 
@@ -482,7 +505,67 @@ if [[ -n "${ACCESS_TOKEN:-}" ]]; then
 else
   echo
   echo "ACCESS_TOKEN is not set."
-  echo "Authenticated 200 and authorization 403 smoke tests were skipped."
+  echo "Authenticated backlog 200 and authorization 403 smoke tests were skipped."
+fi
+
+if [[ -n "${ASSISTANT_ACCESS_TOKEN:-}" ]]; then
+  print_step "Verify authenticated assistant response"
+
+  ASSISTANT_REQUEST="${TEMP_DIR}/assistant-request.json"
+  ASSISTANT_SMOKE_TEXT="${ASSISTANT_SMOKE_TEXT}" \
+  python3 - <<'PY' > "${ASSISTANT_REQUEST}"
+import json
+import os
+
+print(json.dumps({"text": os.environ["ASSISTANT_SMOKE_TEXT"]}))
+PY
+
+  ASSISTANT_STATUS="$(
+    curl -sS \
+      -o "${HTTP_BODY}" \
+      -w '%{http_code}' \
+      -X POST \
+      -H "Authorization: Bearer ${ASSISTANT_ACCESS_TOKEN}" \
+      -H 'Content-Type: application/json' \
+      --data-binary @"${ASSISTANT_REQUEST}" \
+      "${ASSISTANT_URL}"
+  )"
+
+  if [[ "${ASSISTANT_STATUS}" != "200" ]]; then
+    cat "${HTTP_BODY}" >&2
+    echo \
+      "Expected authenticated assistant status 200, received ${ASSISTANT_STATUS}." \
+      >&2
+    exit 1
+  fi
+
+  ASSISTANT_RESPONSE_FILE="${HTTP_BODY}" python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+body = json.loads(Path(os.environ["ASSISTANT_RESPONSE_FILE"]).read_text())
+
+for field in ("response_id", "text", "model"):
+    value = body.get(field)
+    if not isinstance(value, str) or not value.strip():
+        raise SystemExit(f"Assistant response field {field!r} is missing or empty.")
+
+usage = body.get("usage")
+if not isinstance(usage, dict):
+    raise SystemExit("Assistant response usage is missing.")
+
+for field in ("input_tokens", "output_tokens"):
+    value = usage.get(field)
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise SystemExit(f"Assistant usage field {field!r} is invalid.")
+PY
+
+  echo "Authenticated assistant request correctly returned normalized generated text."
+else
+  echo
+  echo "ASSISTANT_ACCESS_TOKEN is not set."
+  echo "Authenticated assistant generation smoke test was skipped."
 fi
 
 print_step "Fast loop completed successfully"

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import os
 from urllib.parse import urlparse
 
@@ -23,6 +23,14 @@ class Auth0Settings:
     clock_skew_seconds: int = 30
     jwks_timeout_seconds: float = 5.0
     jwks_cache_seconds: float = 300.0
+
+
+@dataclass(frozen=True)
+class OpenAISettings:
+    """Server-owned OpenAI provider settings."""
+
+    api_key: str = field(repr=False)
+    model: str
 
 
 def resolve_database_url(explicit_database_url: str | None = None) -> str:
@@ -60,6 +68,14 @@ def resolve_auth0_settings() -> Auth0Settings:
             "AUTH0_JWKS_CACHE_SECONDS",
             default=300.0,
         ),
+    )
+
+
+def resolve_openai_settings() -> OpenAISettings:
+    """Resolve the OpenAI credential and configured model for the API."""
+    return OpenAISettings(
+        api_key=_required_environment_value("OPENAI_API_KEY"),
+        model=_required_environment_value("OPENAI_MODEL"),
     )
 
 

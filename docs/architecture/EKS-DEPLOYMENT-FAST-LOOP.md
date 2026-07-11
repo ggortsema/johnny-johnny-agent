@@ -41,12 +41,13 @@ Current runtime secrets:
 ```text
 DATABASE_URL
 GITHUB_TOKEN
+OPENAI_API_KEY
 ```
 
-Future assistant capability:
+Current non-secret assistant configuration:
 
 ```text
-OPENAI_API_KEY
+OPENAI_MODEL
 ```
 
 Secret values must never be committed, printed into logs, placed in command cheat sheets, or sent to clients.
@@ -94,8 +95,9 @@ The script:
 13. requires every final pod to use the exact new image;
 14. requires every final pod to be ready;
 15. validates liveness and readiness;
-16. validates `401` without a token;
-17. when `ACCESS_TOKEN` is set, validates authenticated read access and the expected reconciliation authorization result.
+16. validates `401` without a token on backlog and assistant endpoints;
+17. when `ACCESS_TOKEN` is set, validates authenticated backlog read access and the expected reconciliation authorization result;
+18. when `ASSISTANT_ACCESS_TOKEN` is set, validates a public generated assistant response and its normalized response shape.
 
 ## Rollout completion contract
 
@@ -127,7 +129,7 @@ The fast loop assumes these already exist and are healthy:
 - AWS Secrets Store provider
 - IAM policy and Pod Identity role
 - EKS Pod Identity association
-- AWS Secrets Manager values
+- AWS Secrets Manager values, including `OPENAI_API_KEY`
 - AWS Load Balancer Controller
 - Route 53 hosted zone
 - ACM certificate and validation records
@@ -140,6 +142,8 @@ The fast loop assumes these already exist and are healthy:
 - `johnny-johnny.mycroftai.org` currently routes directly to the Python agent.
 - When the UI is ready, use `/` for the UI and `/api/v1` for the Python API.
 - Updating a Secrets Manager value requires a pod restart because the process exports mounted values only at startup.
+- The assistant smoke token must grant `invoke:assistant` and is supplied only to the local fast-loop process through `ASSISTANT_ACCESS_TOKEN`.
+- `OPENAI_MODEL` is non-secret Deployment configuration and can be changed independently of the public endpoint.
 - `kubectl get ingress` may continue showing port 80 even when the ALB has both HTTP and HTTPS listeners; use the ELBv2 API to inspect the authoritative listener state.
 
 ## Failure lessons captured

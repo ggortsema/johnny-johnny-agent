@@ -11,7 +11,8 @@ CLI ───────────────────────┐
 Auth0-secured REST API ────┼── application workflows ── canonical domain
 signed webhooks later ─────┘            │
                                         ├── PostgreSQL canonical store
-                                        └── provider adapters (GitHub first)
+                                        ├── GitHub provider adapter
+                                        └── language-model provider adapters
 ```
 
 PostgreSQL is the canonical runtime store for backlog state. GitHub Projects are provider projections. YAML is a portable import/export, migration, backup, validation, and inspection format—not a runtime intermediary.
@@ -37,6 +38,8 @@ The API process uses these settings:
 ```env
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/styxcd
 GITHUB_TOKEN=github-token-with-required-project-and-issue-permissions
+OPENAI_API_KEY=server-owned-openai-key
+OPENAI_MODEL=gpt-5.6
 JOHNNY_JOHNNY_PROVIDER_ACCOUNT=ggortsema
 
 AUTH0_DOMAIN=your-tenant.us.auth0.com
@@ -44,7 +47,7 @@ AUTH0_AUDIENCE=https://api.johnny-johnny.local
 JOHNNY_JOHNNY_API_DOCS_ENABLED=true
 ```
 
-`AUTH0_DOMAIN` and `AUTH0_AUDIENCE` are required when the REST server starts. The API deliberately does **not** need an Auth0 client ID or client secret; those belong to calling applications, not the resource server. `DATABASE_URL` and `GITHUB_TOKEN` are also server-owned and cannot be overridden by an HTTP request.
+`AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `OPENAI_API_KEY`, and `OPENAI_MODEL` are required when the REST server starts. The API deliberately does **not** need an Auth0 client ID or client secret; those belong to calling applications, not the resource server. `DATABASE_URL`, `GITHUB_TOKEN`, and `OPENAI_API_KEY` are server-owned and cannot be overridden by an HTTP request. The OpenAI key is never returned to a web or native client.
 
 Verify persistence independently of HTTP authentication:
 
@@ -76,6 +79,7 @@ On the API **Permissions** tab, create these permissions exactly:
 | `write:backlogs` | Create, update, move, and delete targeted backlog items |
 | `operate:backlogs` | Reconcile PostgreSQL state to the provider projection |
 | `admin:backlogs` | Import a canonical snapshot or purge a provider projection |
+| `invoke:assistant` | Generate a provider-neutral Johnny-Johnny assistant response |
 
 On the API **Settings** tab, enable **RBAC**. The server authorizes from the standard space-delimited `scope` claim. **Add Permissions in the Access Token** may remain disabled; Johnny-Johnny intentionally does not treat the optional `permissions` claim as a substitute for requested/granted scopes.
 
@@ -92,10 +96,11 @@ Use cumulative roles:
 
 | Suggested role | Permissions |
 |---|---|
+| Assistant user | `invoke:assistant` |
 | Reader | `read:backlogs` |
 | Editor | `read:backlogs`, `write:backlogs` |
 | Operator | Reader + Editor + `operate:backlogs` |
-| Administrator | all four permissions |
+| Administrator | all five permissions |
 
 The API does not authorize from role names. Roles are an Auth0 management convenience that grants API permissions, while the API enforces the resulting `scope` values. `admin:backlogs` is not a wildcard; an administrator role must include every permission it needs.
 
@@ -107,7 +112,7 @@ For command-line testing:
 2. Name it `Johnny-Johnny Local Smoke Test`.
 3. Select **Machine to Machine Applications**.
 4. Select the Johnny-Johnny API.
-5. Initially authorize only `read:backlogs`. Add broader permissions only when intentionally exercising mutations or operational endpoints.
+5. Initially authorize only the capability being tested, such as `read:backlogs` or `invoke:assistant`. Add broader permissions only when intentionally exercising other endpoints.
 6. Record the application client ID and client secret. Keep the secret out of Git, shell history, the API `.env`, container images, and Kubernetes manifests.
 
 The client grant is the maximum permission set the M2M application can receive. A fresh access token is required after changing its grant.
@@ -120,7 +125,7 @@ Local development can remain loopback-only:
 uv run jj serve --host 127.0.0.1 --port 8000
 ```
 
-The server fails closed at startup if `AUTH0_DOMAIN` or `AUTH0_AUDIENCE` is missing. In a container or EKS pod, bind the process to the pod network interface:
+The server fails closed at startup if `AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `OPENAI_API_KEY`, or `OPENAI_MODEL` is missing. In a container or EKS pod, bind the process to the pod network interface:
 
 ```bash
 uv run jj serve --host 0.0.0.0 --port 8000
@@ -218,6 +223,25 @@ Example shape:
 }
 ```
 
+
+### Exercise the assistant boundary
+
+Obtain a token that includes `invoke:assistant`, then call the provider-neutral endpoint:
+
+```bash
+export ASSISTANT_ACCESS_TOKEN="${ACCESS_TOKEN}"
+
+curl -fsS \
+  -X POST \
+  -H "Authorization: Bearer ${ASSISTANT_ACCESS_TOKEN}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{"text":"What should we work on next?"}' \
+  'http://127.0.0.1:8000/api/v1/assistant/responses' \
+  | python3 -m json.tool
+```
+
+The server sends the text through `GenerateAssistantResponse` and returns a normalized response. The client never receives or supplies `OPENAI_API_KEY`. See `docs/api/assistant-responses.md` for the complete contract.
+
 Finally exercise a PostgreSQL-backed read after setting the existing project values:
 
 ```bash
@@ -236,12 +260,13 @@ A valid token with the wrong audience, issuer, signature, algorithm, expiry, or 
 
 | Result | Most likely cause | Check |
 |---|---|---|
-| Startup fails with `AUTH0_DOMAIN is required` or `AUTH0_AUDIENCE is required` | Server configuration is incomplete | Copy `.env.example`, use the tenant/custom-domain hostname only, and use the API's exact Identifier as the audience |
+| Startup fails because `AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `OPENAI_API_KEY`, or `OPENAI_MODEL` is required | Server configuration is incomplete | Copy `.env.example`; use the tenant/custom-domain hostname, the API's exact Identifier, a server-owned OpenAI key, and an available configured model |
 | `401 authentication_required` | No bearer token reached the API | Confirm the header is exactly `Authorization: Bearer TOKEN` |
 | `401 invalid_access_token` | Wrong issuer/audience, expired token, wrong signing key/algorithm, malformed token, or ID token used by mistake | Obtain a fresh access token from the same configured domain and audience |
 | `403 insufficient_scope` | The token is valid but its `scope` omits the route permission | Grant the M2M client or human role the permission, request it in the client flow when applicable, and obtain a fresh token |
 | `503 authentication_service_unavailable` | The API could not retrieve a needed Auth0 signing key | Verify DNS/HTTPS egress to the configured Auth0 domain and retry after connectivity is restored |
 | `whoami` works but a backlog call fails with `503 persistence_unavailable` | Auth0 is correct; PostgreSQL is not ready | Check `DATABASE_URL` and `/api/v1/health/ready` |
+| `502/503/504 assistant_provider_*` | The token and request reached the assistant boundary, but the configured provider credential, response, availability, or timeout failed | Check the server-side OpenAI key/model and provider connectivity; no provider body is exposed to the caller |
 
 Do not paste bearer tokens or client secrets into online JWT decoders, tickets, logs, chat, or screenshots. Use `/api/v1/auth/whoami` to confirm the validated identity and scopes without exposing raw claims.
 
@@ -252,6 +277,7 @@ Do not paste bearer tokens or client secrets into online JWT decoders, tickets, 
 | `/api/v1/health/live` | Public | none |
 | `/api/v1/health/ready` | Public | none; response is deliberately minimal |
 | `/api/v1/auth/whoami` | Valid Auth0 access token | none |
+| Assistant response generation | Valid access token | `invoke:assistant` |
 | Backlog summary, lists, detail, export | Valid access token | `read:backlogs` |
 | Create, update, move, delete issue | Valid access token | `write:backlogs` |
 | Reconciliation | Valid access token | `operate:backlogs` |
@@ -301,7 +327,7 @@ See `docs/api/backlog-rest-api.md` for the complete security, endpoint, and erro
 
 The following sequence exercises the protected backlog surface. Use a disposable or explicitly designated sandbox project for confirmed mutations, especially import, purge, and full reconciliation.
 
-The token used for the complete sequence must contain all four API permissions. Grant them only to a temporary administrative smoke-test M2M application, obtain a fresh token using the earlier token command, and revoke or rotate that client after testing.
+The token used for the complete sequence must contain all five API permissions. Grant them only to a temporary administrative smoke-test M2M application, obtain a fresh token using the earlier token command, and revoke or rotate that client after testing.
 
 Open a second terminal after starting the server and set these values:
 
@@ -353,6 +379,19 @@ Download the generated OpenAPI contract:
 ```bash
 curl -fsS 'http://127.0.0.1:8000/openapi.json' \
   -o /tmp/johnny-johnny-openapi.json
+```
+
+
+Generate one assistant response:
+
+```bash
+curl -fsS \
+  -X POST \
+  -H "${AUTH_HEADER}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{"text":"Summarize the next engineering priority."}' \
+  "${API}/assistant/responses" \
+  | python3 -m json.tool
 ```
 
 ## 2. PostgreSQL-Backed Reads
@@ -871,13 +910,15 @@ Run the full behavior suite:
 uv run pytest
 ```
 
-The current implementation includes endpoint behavior coverage for every REST v1 path, Auth0 JWT validation, scope authorization, CLI parity, PostgreSQL persistence, targeted synchronization, reconciliation, and purge. The current applied-project result is `109 passed, 1 skipped`.
+The current implementation includes endpoint behavior coverage for every REST v1 path, Auth0 JWT validation, scope authorization, the provider-neutral assistant boundary and OpenAI adapter, CLI parity, PostgreSQL persistence, targeted synchronization, reconciliation, and purge. The current applied-project result is `137 passed, 1 skipped`.
 
 ## Documentation
 
 Start with:
 
 - `docs/api/backlog-rest-api.md`
+- `docs/api/assistant-responses.md`
+- `docs/architecture/ASSISTANT-ENDPOINT-EXTENSIBILITY.md`
 - `docs/architecture/adrs/ADR-005-auth0-access-token-and-permission-policy.md`
 - `docs/deployment/eks-fast-testing-loop.md`
 - `docs/development/security-implementation-summary-2026-07-10.md`

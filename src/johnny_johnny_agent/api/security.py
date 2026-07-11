@@ -26,6 +26,7 @@ class ApiPermission(StrEnum):
     WRITE_BACKLOGS = "write:backlogs"
     OPERATE_BACKLOGS = "operate:backlogs"
     ADMIN_BACKLOGS = "admin:backlogs"
+    INVOKE_ASSISTANT = "invoke:assistant"
 
 
 ALL_API_PERMISSIONS = frozenset(permission.value for permission in ApiPermission)

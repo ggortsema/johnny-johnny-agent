@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class ApiModel(BaseModel):
@@ -39,6 +39,30 @@ class AuthenticatedPrincipalResponse(ApiModel):
     subject: str
     client_id: str | None = None
     scopes: list[str]
+
+
+class AssistantResponseRequest(ApiModel):
+    text: str = Field(min_length=1)
+
+    @field_validator("text")
+    @classmethod
+    def require_non_blank_text(cls, value: str) -> str:
+        text = value.strip()
+        if not text:
+            raise ValueError("Text must contain at least one non-whitespace character.")
+        return text
+
+
+class TokenUsageResponse(ApiModel):
+    input_tokens: int = Field(ge=0)
+    output_tokens: int = Field(ge=0)
+
+
+class AssistantResponsePayload(ApiModel):
+    response_id: str
+    text: str
+    model: str
+    usage: TokenUsageResponse
 
 
 class ProjectResponse(ApiModel):

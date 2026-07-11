@@ -80,6 +80,7 @@ Non-secret configuration:
 ```text
 AUTH0_DOMAIN
 AUTH0_AUDIENCE
+OPENAI_MODEL
 JOHNNY_JOHNNY_PROVIDER_ACCOUNT
 JOHNNY_JOHNNY_API_DOCS_ENABLED
 AUTH0_CLOCK_SKEW_SECONDS
@@ -92,6 +93,7 @@ Server secrets:
 ```text
 DATABASE_URL
 GITHUB_TOKEN
+OPENAI_API_KEY
 ```
 
 Caller secrets that must **not** be mounted into the API pod:
@@ -193,8 +195,9 @@ Suggested optional flags:
 13. Obtain a smoke-test access token from Auth0 outside the pod.
 14. Call `/api/v1/auth/whoami` with the bearer token.
 15. Optionally call one configured read-only backlog endpoint with `read:backlogs`.
-16. On failure, print deployment events, pod status, recent logs, ingress status, and the prior image reference.
-17. Emit the deployed image digest, public URL, rollout revision, and smoke-test result.
+16. Call `POST /api/v1/assistant/responses` with a separate short-lived token granting `invoke:assistant` and validate the normalized response shape.
+17. On failure, print deployment events, pod status, recent logs, ingress status, and the prior image reference.
+18. Emit the deployed image digest, public URL, rollout revision, and smoke-test result.
 
 ## Smoke Authentication
 
@@ -212,7 +215,7 @@ The first authenticated check should be:
 GET /api/v1/auth/whoami
 ```
 
-This separates Auth0, ingress, and application verification from database diagnostics. A second read-only summary call can then verify PostgreSQL and route scope together.
+This separates Auth0, ingress, and application verification from database diagnostics. A second read-only summary call can then verify PostgreSQL and route scope together. A third assistant call should use a separate `ASSISTANT_ACCESS_TOKEN` with `invoke:assistant`; that token remains outside the pod and is unset after the smoke test.
 
 ## Fast-Loop Safety Rules
 

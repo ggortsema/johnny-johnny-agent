@@ -17,6 +17,13 @@ from johnny_johnny_agent.api.security import (
     InsufficientScopeError,
     InvalidAccessTokenError,
 )
+from johnny_johnny_agent.capabilities.assistant.provider import (
+    LanguageModelAuthenticationError,
+    LanguageModelInvalidResponseError,
+    LanguageModelProviderError,
+    LanguageModelTimeoutError,
+    LanguageModelUnavailableError,
+)
 from johnny_johnny_agent.capabilities.backlog_persistence.postgres import (
     BacklogPersistenceError,
     ProviderProjectNotFoundError,
@@ -47,6 +54,26 @@ def install_exception_handlers(app: FastAPI) -> None:
     )
     app.add_exception_handler(BacklogDocumentError, _backlog_document_error)
     app.add_exception_handler(ApiRequestError, _api_request_error)
+    app.add_exception_handler(
+        LanguageModelAuthenticationError,
+        _language_model_authentication_error,
+    )
+    app.add_exception_handler(
+        LanguageModelTimeoutError,
+        _language_model_timeout_error,
+    )
+    app.add_exception_handler(
+        LanguageModelUnavailableError,
+        _language_model_unavailable_error,
+    )
+    app.add_exception_handler(
+        LanguageModelInvalidResponseError,
+        _language_model_invalid_response_error,
+    )
+    app.add_exception_handler(
+        LanguageModelProviderError,
+        _language_model_provider_error,
+    )
     app.add_exception_handler(ProviderProjectNotFoundError, _provider_project_not_found)
     app.add_exception_handler(
         TargetedBacklogMutationConsistencyError,
@@ -138,6 +165,61 @@ async def _api_request_error(
     exc: ApiRequestError,
 ) -> JSONResponse:
     return _response(400, "invalid_request", str(exc))
+
+
+async def _language_model_authentication_error(
+    request: Request,
+    exc: LanguageModelAuthenticationError,
+) -> JSONResponse:
+    return _response(
+        502,
+        "assistant_provider_authentication_failed",
+        "The assistant provider rejected the server credential.",
+    )
+
+
+async def _language_model_timeout_error(
+    request: Request,
+    exc: LanguageModelTimeoutError,
+) -> JSONResponse:
+    return _response(
+        504,
+        "assistant_provider_timeout",
+        "The assistant provider did not respond before the request deadline.",
+    )
+
+
+async def _language_model_unavailable_error(
+    request: Request,
+    exc: LanguageModelUnavailableError,
+) -> JSONResponse:
+    return _response(
+        503,
+        "assistant_provider_unavailable",
+        "The assistant provider is temporarily unavailable.",
+    )
+
+
+async def _language_model_invalid_response_error(
+    request: Request,
+    exc: LanguageModelInvalidResponseError,
+) -> JSONResponse:
+    return _response(
+        502,
+        "assistant_provider_invalid_response",
+        "The assistant provider returned an unusable response.",
+    )
+
+
+async def _language_model_provider_error(
+    request: Request,
+    exc: LanguageModelProviderError,
+) -> JSONResponse:
+    return _response(
+        502,
+        "assistant_provider_failed",
+        "The assistant provider could not complete the request.",
+    )
 
 
 async def _provider_project_not_found(

@@ -1,7 +1,7 @@
-# Backlog REST API
+# Johnny-Johnny REST API
 
-**Status:** Implemented, Auth0-secured v1  
-**Base path:** `/api/v1`  
+**Status:** Implemented locally, Auth0-secured v1; assistant deployment acceptance pending
+**Base path:** `/api/v1`
 **Server command:** `uv run jj serve`
 
 ## Purpose
@@ -13,7 +13,8 @@ CLI ───────────────────────┐
 Auth0-secured REST API ────┼── application workflows ── canonical domain
                            │            │
                            │            ├── PostgreSQL canonical store
-                           │            └── GitHub provider adapter
+                           │            ├── GitHub provider adapter
+                           │            └── language-model provider adapter
                            └── typed request/response contracts
 ```
 
@@ -50,6 +51,7 @@ Johnny-Johnny enforces the space-delimited `scope` claim. The optional Auth0 `pe
 | Surface | Required permission |
 |---|---|
 | `/api/v1/auth/whoami` | valid access token; no API permission required |
+| Assistant response generation | `invoke:assistant` |
 | Backlog summary, lists, detail, export | `read:backlogs` |
 | Create epic, create issue, update, move, delete issue | `write:backlogs` |
 | Reconciliation | `operate:backlogs` |
@@ -100,11 +102,12 @@ read:backlogs
 write:backlogs
 operate:backlogs
 admin:backlogs
+invoke:assistant
 ```
 
 The API reads `scope`, so Auth0's **Add Permissions in the Access Token** setting may remain disabled. For local curl testing, create a Machine-to-Machine application, select the Johnny-Johnny API, and grant only the permissions needed for the test.
 
-The project README contains the complete dashboard walkthrough, token request, 401 test, `/auth/whoami` test, and PostgreSQL-backed endpoint exercise.
+The project README contains the complete dashboard walkthrough, token request, 401 test, `/auth/whoami` test, assistant exercise, and PostgreSQL-backed endpoint exercise.
 
 ## Runtime Configuration
 
@@ -113,6 +116,8 @@ The process reads the project-root `.env` file and environment variables:
 ```env
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/styxcd
 GITHUB_TOKEN=github-token-with-required-project-and-issue-permissions
+OPENAI_API_KEY=server-owned-openai-key
+OPENAI_MODEL=gpt-5.6
 JOHNNY_JOHNNY_PROVIDER_ACCOUNT=ggortsema
 
 AUTH0_DOMAIN=your-tenant.us.auth0.com
@@ -128,6 +133,8 @@ AUTH0_JWKS_CACHE_SECONDS=300
 |---|---:|---|
 | `DATABASE_URL` | for persistence workflows/readiness | Canonical PostgreSQL connection |
 | `GITHUB_TOKEN` | for confirmed provider workflows | Outbound GitHub credential |
+| `OPENAI_API_KEY` | yes | Server-owned OpenAI credential for assistant responses |
+| `OPENAI_MODEL` | yes | Externally configurable assistant model |
 | `JOHNNY_JOHNNY_PROVIDER_ACCOUNT` | no | Default provider account |
 | `AUTH0_DOMAIN` | yes | Trusted issuer hostname and JWKS origin |
 | `AUTH0_AUDIENCE` | yes | Exact Auth0 API identifier |
@@ -136,9 +143,9 @@ AUTH0_JWKS_CACHE_SECONDS=300
 | `AUTH0_JWKS_TIMEOUT_SECONDS` | no | Positive JWKS request timeout; default `5` |
 | `AUTH0_JWKS_CACHE_SECONDS` | no | Positive JWKS set cache lifetime; default `300` |
 
-The server fails closed when Auth0 issuer configuration is missing or malformed. It does not need an Auth0 client ID or client secret. Client credentials belong to the calling application and must not be deployed with the API.
+The server fails closed when Auth0 issuer configuration or required OpenAI configuration is missing or malformed. It does not need an Auth0 client ID or client secret. Client credentials belong to the calling application and must not be deployed with the API. `OPENAI_API_KEY` is server-owned and must not be delivered to a web or native client.
 
-HTTP clients cannot submit a database URL, GitHub token, Auth0 domain, audience, JWKS URL, or other server security settings.
+HTTP clients cannot submit a database URL, GitHub token, OpenAI key, model override, Auth0 domain, audience, JWKS URL, or other server security settings.
 
 ## Starting the Server
 
@@ -166,6 +173,46 @@ http://127.0.0.1:8000/openapi.json
 ```
 
 Swagger UI exposes an **Authorize** control for pasting a bearer token. Paste the token value itself, without adding a second `Bearer` prefix.
+
+## Assistant Response Endpoint
+
+```http
+POST /api/v1/assistant/responses
+Authorization: Bearer ACCESS_TOKEN
+Content-Type: application/json
+```
+
+Required permission:
+
+```text
+invoke:assistant
+```
+
+Request:
+
+```json
+{
+  "text": "What should we work on next?"
+}
+```
+
+Response:
+
+```json
+{
+  "response_id": "resp_123",
+  "text": "The next priority is...",
+  "model": "configured-or-returned-model",
+  "usage": {
+    "input_tokens": 18,
+    "output_tokens": 9
+  }
+}
+```
+
+The route calls `GenerateAssistantResponse`, which depends on the provider-neutral `LanguageModelProvider` port. The OpenAI adapter uses the Responses API and translates provider output and failures into Johnny-Johnny contracts. Retrieval, memory, tools, prompt construction, and provider selection can be introduced behind the use case without changing this route.
+
+See `assistant-responses.md` for the complete assistant contract and smoke-test command.
 
 ## Project Selection
 
@@ -318,8 +365,9 @@ Status mapping:
 | `404` | Canonical item, epic, issue, or stored provider project not found |
 | `409` | Resource conflict, round-trip failure, or cross-boundary consistency failure |
 | `422` | Request-model, backlog-document, or domain validation failure |
-| `502` | GitHub/provider operation failure |
-| `503` | PostgreSQL unavailable/readiness incomplete, or issuer signing keys temporarily unavailable |
+| `502` | GitHub operation failure or controlled assistant-provider rejection/invalid response |
+| `503` | PostgreSQL unavailable/readiness incomplete, issuer signing keys unavailable, or assistant provider unavailable |
+| `504` | Assistant provider request timed out |
 | `500` | Unexpected internal failure without implementation details in the response |
 
 Authentication failures include a `WWW-Authenticate` response header. `401` distinguishes missing credentials from an invalid token through stable error codes. `403` includes the route's required scopes but does not return the token's raw claims.
@@ -343,14 +391,26 @@ Authentication failures include a `WWW-Authenticate` response header. `401` dist
 - protected OpenAPI operations and bearer security scheme
 - token-only `/auth/whoami`
 - `401`, `403`, and authentication-service `503` behavior before workflow dispatch
-- read/write/operate/admin route policy, including independent-scope denials and proof that admin is not a wildcard
+- read/write/operate/admin/invoke route policy, including independent-scope denials and proof that admin is not a wildcard
+- assistant `401`, `403`, `422`, success, and controlled `502`/`503`/`504` behavior
+- proof that assistant provider details are not leaked through public errors
 - every v1 backlog endpoint and shared workflow dispatch
 - typed operation serialization, YAML import/export, and stable application errors
+
+
+`tests/unit/test_assistant_response.py`, `tests/unit/test_openai_language_model.py`, and `tests/unit/test_openai_configuration.py` verify:
+
+- the stable use-case boundary with a fake provider;
+- request trimming and blank-input rejection;
+- OpenAI Responses API request shaping and normalized output;
+- malformed provider response rejection;
+- SDK authentication, timeout, connection, rate-limit, and status error translation;
+- fail-closed OpenAI key and model configuration.
 
 Current applied-project result:
 
 ```text
-109 passed, 1 skipped
+137 passed, 1 skipped
 ```
 
 The skipped test requires live GitHub provider access.
