@@ -9,6 +9,7 @@ import openai
 from openai import OpenAI
 
 from johnny_johnny_agent.capabilities.assistant.models import (
+    AssistantModel,
     AssistantResponse,
     AssistantResponseRequest,
     TokenUsage,
@@ -19,6 +20,7 @@ from johnny_johnny_agent.capabilities.assistant.provider import (
     LanguageModelProviderError,
     LanguageModelTimeoutError,
     LanguageModelUnavailableError,
+    UnsupportedLanguageModelError,
 )
 from johnny_johnny_agent.config import OpenAISettings
 
@@ -41,13 +43,29 @@ class OpenAILanguageModelProvider:
         *,
         client: _OpenAIClient | None = None,
     ) -> None:
-        self._model = settings.model
+        self._default_model = settings.model
+        self._models = settings.models
         self._client = client or OpenAI(api_key=settings.api_key)
 
+    def available_models(self) -> tuple[AssistantModel, ...]:
+        """Return only model identifiers explicitly allowed by server settings."""
+        return tuple(
+            AssistantModel(
+                id=model,
+                label=model,
+                is_default=model == self._default_model,
+            )
+            for model in self._models
+        )
+
     def generate(self, request: AssistantResponseRequest) -> AssistantResponse:
+        selected_model = request.model or self._default_model
+        if selected_model not in self._models:
+            raise UnsupportedLanguageModelError(selected_model, self._models)
+
         try:
             response = self._client.responses.create(
-                model=self._model,
+                model=selected_model,
                 input=request.text,
                 store=False,
             )
@@ -88,7 +106,7 @@ class OpenAILanguageModelProvider:
         return AssistantResponse(
             response_id=response_id,
             text=output_text,
-            model=configured_or_returned_model or self._model,
+            model=configured_or_returned_model or selected_model,
             usage=TokenUsage(
                 input_tokens=_non_negative_int(usage, "input_tokens"),
                 output_tokens=_non_negative_int(usage, "output_tokens"),

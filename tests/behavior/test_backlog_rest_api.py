@@ -15,6 +15,7 @@ from johnny_johnny_agent.api.security import (
     InvalidAccessTokenError,
 )
 from johnny_johnny_agent.capabilities.assistant.models import (
+    AssistantModel,
     AssistantResponse,
     AssistantResponseRequest,
     TokenUsage,
@@ -25,6 +26,7 @@ from johnny_johnny_agent.capabilities.assistant.provider import (
     LanguageModelProviderError,
     LanguageModelTimeoutError,
     LanguageModelUnavailableError,
+    UnsupportedLanguageModelError,
 )
 from johnny_johnny_agent.capabilities.assistant.use_case import (
     GenerateAssistantResponse,
@@ -231,6 +233,15 @@ class _TestAccessTokenVerifier:
 
 
 class _UnexpectedLanguageModelProvider:
+    def available_models(self) -> tuple[AssistantModel, ...]:
+        return (
+            AssistantModel(
+                id="configured-model",
+                label="Configured model",
+                is_default=True,
+            ),
+        )
+
     def generate(self, request: AssistantResponseRequest) -> AssistantResponse:
         raise AssertionError("the assistant provider was not configured for this test")
 
@@ -268,6 +279,7 @@ assistant_client = _AsgiTestClient(
 )
 PROJECT_PATH = "/api/v1/backlogs/Test%20Project"
 ASSISTANT_PATH = "/api/v1/assistant/responses"
+ASSISTANT_MODELS_PATH = "/api/v1/assistant/models"
 
 
 def test_liveness_and_openapi_expose_the_versioned_api():
@@ -288,6 +300,7 @@ def test_liveness_and_openapi_expose_the_versioned_api():
     assert "/api/v1/backlogs/import" in openapi["paths"]
     assert "/api/v1/auth/whoami" in openapi["paths"]
     assert ASSISTANT_PATH in openapi["paths"]
+    assert ASSISTANT_MODELS_PATH in openapi["paths"]
 
 
 def test_application_can_remove_openapi_and_interactive_docs():
@@ -327,6 +340,7 @@ def test_openapi_marks_backlog_routes_as_bearer_protected():
     ]
     whoami_operation = openapi["paths"]["/api/v1/auth/whoami"]["get"]
     assistant_operation = openapi["paths"][ASSISTANT_PATH]["post"]
+    assistant_models_operation = openapi["paths"][ASSISTANT_MODELS_PATH]["get"]
     live_operation = openapi["paths"]["/api/v1/health/live"]["get"]
 
     assert openapi["components"]["securitySchemes"]["Auth0Bearer"] == {
@@ -340,6 +354,7 @@ def test_openapi_marks_backlog_routes_as_bearer_protected():
     assert protected_operation["security"] == [{"Auth0Bearer": []}]
     assert whoami_operation["security"] == [{"Auth0Bearer": []}]
     assert assistant_operation["security"] == [{"Auth0Bearer": []}]
+    assert assistant_models_operation["security"] == [{"Auth0Bearer": []}]
     assert "security" not in live_operation
 
 
@@ -353,6 +368,11 @@ def test_assistant_response_requires_authentication_and_invoke_scope():
         headers={"Authorization": "Bearer test-reader"},
         json={"text": "Hello"},
     )
+    missing_models = anonymous_client.get(ASSISTANT_MODELS_PATH)
+    missing_models_scope = anonymous_client.get(
+        ASSISTANT_MODELS_PATH,
+        headers={"Authorization": "Bearer test-reader"},
+    )
 
     assert missing.status_code == 401
     assert missing.json()["error"]["code"] == "authentication_required"
@@ -362,6 +382,55 @@ def test_assistant_response_requires_authentication_and_invoke_scope():
     )
     assert missing_scope.json()["error"]["details"] == {
         "required_scopes": ["invoke:assistant"]
+    }
+    assert missing_models.status_code == 401
+    assert missing_models_scope.status_code == 403
+    assert missing_models_scope.json()["error"]["details"] == {
+        "required_scopes": ["invoke:assistant"]
+    }
+
+
+def test_assistant_model_catalog_uses_the_application_boundary(monkeypatch):
+    class CatalogProvider:
+        def available_models(self):
+            return (
+                AssistantModel(
+                    id="configured-model",
+                    label="Configured model",
+                    is_default=True,
+                ),
+                AssistantModel(
+                    id="alternate-model",
+                    label="Alternate model",
+                ),
+            )
+
+        def generate(self, request):
+            raise AssertionError("catalog request must not generate a response")
+
+    monkeypatch.setattr(
+        app.state,
+        "generate_assistant_response",
+        GenerateAssistantResponse(CatalogProvider()),
+    )
+
+    response = assistant_client.get(ASSISTANT_MODELS_PATH)
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "default_model": "configured-model",
+        "models": [
+            {
+                "id": "configured-model",
+                "label": "Configured model",
+                "is_default": True,
+            },
+            {
+                "id": "alternate-model",
+                "label": "Alternate model",
+                "is_default": False,
+            },
+        ],
     }
 
 
@@ -388,12 +457,22 @@ def test_assistant_response_invokes_the_application_boundary_and_normalizes_outp
         def __init__(self):
             self.requests = []
 
+        def available_models(self):
+            return (
+                AssistantModel(
+                    id="configured-model",
+                    label="Configured model",
+                    is_default=True,
+                ),
+                AssistantModel(id="alternate-model", label="Alternate model"),
+            )
+
         def generate(self, request):
             self.requests.append(request)
             return AssistantResponse(
                 response_id="response-123",
                 text="The next priority is the UI story.",
-                model="configured-model",
+                model=request.model or "configured-model",
                 usage=TokenUsage(input_tokens=12, output_tokens=8),
             )
 
@@ -406,18 +485,65 @@ def test_assistant_response_invokes_the_application_boundary_and_normalizes_outp
 
     response = assistant_client.post(
         ASSISTANT_PATH,
-        json={"text": "  What should we work on next?  "},
+        json={
+            "text": "  What should we work on next?  ",
+            "model": "  alternate-model  ",
+        },
     )
 
     assert response.status_code == 200
     assert provider.requests == [
-        AssistantResponseRequest(text="What should we work on next?")
+        AssistantResponseRequest(
+            text="What should we work on next?",
+            model="alternate-model",
+        )
     ]
     assert response.json() == {
         "response_id": "response-123",
         "text": "The next priority is the UI story.",
-        "model": "configured-model",
+        "model": "alternate-model",
         "usage": {"input_tokens": 12, "output_tokens": 8},
+    }
+
+
+def test_assistant_response_rejects_unconfigured_model_without_provider_call(
+    monkeypatch,
+):
+    class RestrictedProvider:
+        def available_models(self):
+            return (
+                AssistantModel(
+                    id="configured-model",
+                    label="Configured model",
+                    is_default=True,
+                ),
+            )
+
+        def generate(self, request):
+            raise UnsupportedLanguageModelError(
+                request.model or "configured-model",
+                ("configured-model",),
+            )
+
+    monkeypatch.setattr(
+        app.state,
+        "generate_assistant_response",
+        GenerateAssistantResponse(RestrictedProvider()),
+    )
+
+    response = assistant_client.post(
+        ASSISTANT_PATH,
+        json={"text": "Hello", "model": "not-allowed"},
+    )
+
+    assert response.status_code == 422
+    assert response.json()["error"] == {
+        "code": "assistant_model_not_available",
+        "message": "The requested assistant model is not available.",
+        "details": {
+            "requested_model": "not-allowed",
+            "available_models": ["configured-model"],
+        },
     }
 
 

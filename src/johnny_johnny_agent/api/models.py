@@ -43,6 +43,7 @@ class AuthenticatedPrincipalResponse(ApiModel):
 
 class AssistantResponseRequest(ApiModel):
     text: str = Field(min_length=1)
+    model: str | None = None
 
     @field_validator("text")
     @classmethod
@@ -51,6 +52,27 @@ class AssistantResponseRequest(ApiModel):
         if not text:
             raise ValueError("Text must contain at least one non-whitespace character.")
         return text
+
+    @field_validator("model")
+    @classmethod
+    def require_non_blank_model(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        model = value.strip()
+        if not model:
+            raise ValueError("Model must not be blank when provided.")
+        return model
+
+
+class AssistantModelResponse(ApiModel):
+    id: str
+    label: str
+    is_default: bool = False
+
+
+class AssistantModelListResponse(ApiModel):
+    default_model: str
+    models: list[AssistantModelResponse]
 
 
 class TokenUsageResponse(ApiModel):

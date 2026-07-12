@@ -19,10 +19,17 @@ spec:
     - host: johnny-johnny.mycroftai.org
       http:
         paths:
-          - path: /
+          - path: /api/v1
             pathType: Prefix
             backend:
               service:
                 name: johnny-johnny-agent
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: johnny-johnny-ui
                 port:
                   number: 80

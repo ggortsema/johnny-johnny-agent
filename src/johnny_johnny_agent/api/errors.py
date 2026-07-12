@@ -23,6 +23,7 @@ from johnny_johnny_agent.capabilities.assistant.provider import (
     LanguageModelProviderError,
     LanguageModelTimeoutError,
     LanguageModelUnavailableError,
+    UnsupportedLanguageModelError,
 )
 from johnny_johnny_agent.capabilities.backlog_persistence.postgres import (
     BacklogPersistenceError,
@@ -54,6 +55,10 @@ def install_exception_handlers(app: FastAPI) -> None:
     )
     app.add_exception_handler(BacklogDocumentError, _backlog_document_error)
     app.add_exception_handler(ApiRequestError, _api_request_error)
+    app.add_exception_handler(
+        UnsupportedLanguageModelError,
+        _unsupported_language_model_error,
+    )
     app.add_exception_handler(
         LanguageModelAuthenticationError,
         _language_model_authentication_error,
@@ -165,6 +170,21 @@ async def _api_request_error(
     exc: ApiRequestError,
 ) -> JSONResponse:
     return _response(400, "invalid_request", str(exc))
+
+
+async def _unsupported_language_model_error(
+    request: Request,
+    exc: UnsupportedLanguageModelError,
+) -> JSONResponse:
+    return _response(
+        422,
+        "assistant_model_not_available",
+        "The requested assistant model is not available.",
+        details={
+            "requested_model": exc.model,
+            "available_models": list(exc.available_models),
+        },
+    )
 
 
 async def _language_model_authentication_error(

@@ -118,6 +118,7 @@ DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/styxcd
 GITHUB_TOKEN=github-token-with-required-project-and-issue-permissions
 OPENAI_API_KEY=server-owned-openai-key
 OPENAI_MODEL=gpt-5.6
+OPENAI_MODELS=gpt-5.6
 JOHNNY_JOHNNY_PROVIDER_ACCOUNT=ggortsema
 
 AUTH0_DOMAIN=your-tenant.us.auth0.com
@@ -134,7 +135,8 @@ AUTH0_JWKS_CACHE_SECONDS=300
 | `DATABASE_URL` | for persistence workflows/readiness | Canonical PostgreSQL connection |
 | `GITHUB_TOKEN` | for confirmed provider workflows | Outbound GitHub credential |
 | `OPENAI_API_KEY` | yes | Server-owned OpenAI credential for assistant responses |
-| `OPENAI_MODEL` | yes | Externally configurable assistant model |
+| `OPENAI_MODEL` | yes | Default assistant model |
+| `OPENAI_MODELS` | no | Comma-separated server allow-list exposed to authenticated clients; default model is always included |
 | `JOHNNY_JOHNNY_PROVIDER_ACCOUNT` | no | Default provider account |
 | `AUTH0_DOMAIN` | yes | Trusted issuer hostname and JWKS origin |
 | `AUTH0_AUDIENCE` | yes | Exact Auth0 API identifier |
@@ -145,7 +147,7 @@ AUTH0_JWKS_CACHE_SECONDS=300
 
 The server fails closed when Auth0 issuer configuration or required OpenAI configuration is missing or malformed. It does not need an Auth0 client ID or client secret. Client credentials belong to the calling application and must not be deployed with the API. `OPENAI_API_KEY` is server-owned and must not be delivered to a web or native client.
 
-HTTP clients cannot submit a database URL, GitHub token, OpenAI key, model override, Auth0 domain, audience, JWKS URL, or other server security settings.
+HTTP clients cannot submit a database URL, GitHub token, OpenAI key, arbitrary model identifier, Auth0 domain, audience, JWKS URL, or other server security settings. An assistant request may select only a model returned by the server-owned `/assistant/models` catalog.
 
 ## Starting the Server
 
@@ -174,9 +176,10 @@ http://127.0.0.1:8000/openapi.json
 
 Swagger UI exposes an **Authorize** control for pasting a bearer token. Paste the token value itself, without adding a second `Bearer` prefix.
 
-## Assistant Response Endpoint
+## Assistant Endpoints
 
 ```http
+GET /api/v1/assistant/models
 POST /api/v1/assistant/responses
 Authorization: Bearer ACCESS_TOKEN
 Content-Type: application/json
@@ -188,13 +191,27 @@ Required permission:
 invoke:assistant
 ```
 
-Request:
+Model catalog response:
 
 ```json
 {
-  "text": "What should we work on next?"
+  "default_model": "gpt-5.6",
+  "models": [
+    {"id": "gpt-5.6", "label": "gpt-5.6", "is_default": true}
+  ]
 }
 ```
+
+Generation request:
+
+```json
+{
+  "text": "What should we work on next?",
+  "model": "gpt-5.6"
+}
+```
+
+`model` is optional. When omitted, the configured default is used. When supplied, it must be present in the authenticated catalog.
 
 Response:
 

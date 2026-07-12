@@ -9,11 +9,44 @@ from johnny_johnny_agent.config import OpenAISettings, resolve_openai_settings
 def test_openai_configuration_requires_and_trims_key_and_model(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "  test-secret  ")
     monkeypatch.setenv("OPENAI_MODEL", "  configured-model  ")
+    monkeypatch.delenv("OPENAI_MODELS", raising=False)
 
     assert resolve_openai_settings() == OpenAISettings(
         api_key="test-secret",
         model="configured-model",
+        models=("configured-model",),
     )
+
+
+def test_openai_configuration_parses_deduplicates_and_orders_allowed_models(
+    monkeypatch,
+):
+    monkeypatch.setenv("OPENAI_API_KEY", "test-secret")
+    monkeypatch.setenv("OPENAI_MODEL", "configured-model")
+    monkeypatch.setenv(
+        "OPENAI_MODELS",
+        " alternate-model, configured-model, alternate-model, third-model, ",
+    )
+
+    settings = resolve_openai_settings()
+
+    assert settings.model == "configured-model"
+    assert settings.models == (
+        "configured-model",
+        "alternate-model",
+        "third-model",
+    )
+
+
+def test_openai_settings_normalizes_direct_construction():
+    settings = OpenAISettings(
+        api_key="test-secret",
+        model="  default-model  ",
+        models=(" alternate-model ", "default-model", "alternate-model", ""),
+    )
+
+    assert settings.model == "default-model"
+    assert settings.models == ("default-model", "alternate-model")
 
 
 @pytest.mark.parametrize("missing_name", ["OPENAI_API_KEY", "OPENAI_MODEL"])

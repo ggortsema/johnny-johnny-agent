@@ -27,10 +27,27 @@ class Auth0Settings:
 
 @dataclass(frozen=True)
 class OpenAISettings:
-    """Server-owned OpenAI provider settings."""
+    """Server-owned OpenAI provider settings and allowed model catalog."""
 
     api_key: str = field(repr=False)
     model: str
+    models: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        default_model = self.model.strip()
+        if not default_model:
+            raise ValueError("OpenAI default model must not be blank.")
+
+        normalized_models: list[str] = [default_model]
+        seen = {default_model}
+        for candidate in self.models:
+            normalized = candidate.strip()
+            if normalized and normalized not in seen:
+                normalized_models.append(normalized)
+                seen.add(normalized)
+
+        object.__setattr__(self, "model", default_model)
+        object.__setattr__(self, "models", tuple(normalized_models))
 
 
 def resolve_database_url(explicit_database_url: str | None = None) -> str:
@@ -72,10 +89,16 @@ def resolve_auth0_settings() -> Auth0Settings:
 
 
 def resolve_openai_settings() -> OpenAISettings:
-    """Resolve the OpenAI credential and configured model for the API."""
+    """Resolve the OpenAI credential and server-allowed model catalog."""
+    configured_models = tuple(
+        candidate.strip()
+        for candidate in os.environ.get("OPENAI_MODELS", "").split(",")
+        if candidate.strip()
+    )
     return OpenAISettings(
         api_key=_required_environment_value("OPENAI_API_KEY"),
         model=_required_environment_value("OPENAI_MODEL"),
+        models=configured_models,
     )
 
 

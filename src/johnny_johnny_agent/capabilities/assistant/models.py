@@ -1,4 +1,4 @@
-"""Provider-neutral assistant request and response models."""
+"""Provider-neutral assistant request, model, and response contracts."""
 
 from __future__ import annotations
 
@@ -10,6 +10,16 @@ class AssistantResponseRequest:
     """Text submitted to the Johnny-Johnny assistant capability."""
 
     text: str
+    model: str | None = None
+
+
+@dataclass(frozen=True)
+class AssistantModel:
+    """One server-allowed language-model choice exposed to clients."""
+
+    id: str
+    label: str
+    is_default: bool = False
 
 
 @dataclass(frozen=True)

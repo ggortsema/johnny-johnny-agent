@@ -40,6 +40,7 @@ DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/styxcd
 GITHUB_TOKEN=github-token-with-required-project-and-issue-permissions
 OPENAI_API_KEY=server-owned-openai-key
 OPENAI_MODEL=gpt-5.6
+OPENAI_MODELS=gpt-5.6
 JOHNNY_JOHNNY_PROVIDER_ACCOUNT=ggortsema
 
 AUTH0_DOMAIN=your-tenant.us.auth0.com
@@ -47,7 +48,7 @@ AUTH0_AUDIENCE=https://api.johnny-johnny.local
 JOHNNY_JOHNNY_API_DOCS_ENABLED=true
 ```
 
-`AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `OPENAI_API_KEY`, and `OPENAI_MODEL` are required when the REST server starts. The API deliberately does **not** need an Auth0 client ID or client secret; those belong to calling applications, not the resource server. `DATABASE_URL`, `GITHUB_TOKEN`, and `OPENAI_API_KEY` are server-owned and cannot be overridden by an HTTP request. The OpenAI key is never returned to a web or native client.
+`AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `OPENAI_API_KEY`, and `OPENAI_MODEL` are required when the REST server starts. `OPENAI_MODELS` is an optional comma-separated allow-list exposed through the authenticated model catalog; the default model is always included. The API deliberately does **not** need an Auth0 client ID or client secret; those belong to calling applications, not the resource server. `DATABASE_URL`, `GITHUB_TOKEN`, and `OPENAI_API_KEY` are server-owned and cannot be overridden by an HTTP request. The OpenAI key is never returned to a web or native client.
 
 Verify persistence independently of HTTP authentication:
 
@@ -226,21 +227,26 @@ Example shape:
 
 ### Exercise the assistant boundary
 
-Obtain a token that includes `invoke:assistant`, then call the provider-neutral endpoint:
+Obtain a token that includes `invoke:assistant`, inspect the server allow-list, then call the provider-neutral endpoint:
 
 ```bash
 export ASSISTANT_ACCESS_TOKEN="${ACCESS_TOKEN}"
 
 curl -fsS \
+  -H "Authorization: Bearer ${ASSISTANT_ACCESS_TOKEN}" \
+  'http://127.0.0.1:8000/api/v1/assistant/models' \
+  | python3 -m json.tool
+
+curl -fsS \
   -X POST \
   -H "Authorization: Bearer ${ASSISTANT_ACCESS_TOKEN}" \
   -H 'Content-Type: application/json' \
-  --data-binary '{"text":"What should we work on next?"}' \
+  --data-binary '{"text":"What should we work on next?","model":"gpt-5.6"}' \
   'http://127.0.0.1:8000/api/v1/assistant/responses' \
   | python3 -m json.tool
 ```
 
-The server sends the text through `GenerateAssistantResponse` and returns a normalized response. The client never receives or supplies `OPENAI_API_KEY`. See `docs/api/assistant-responses.md` for the complete contract.
+The server sends the text through `GenerateAssistantResponse` and returns a normalized response. A client may select only an identifier returned by `/assistant/models`; it never receives or supplies `OPENAI_API_KEY`. See `docs/api/assistant-responses.md` for the complete contract.
 
 Finally exercise a PostgreSQL-backed read after setting the existing project values:
 
@@ -381,6 +387,15 @@ curl -fsS 'http://127.0.0.1:8000/openapi.json' \
   -o /tmp/johnny-johnny-openapi.json
 ```
 
+
+List allowed assistant models:
+
+```bash
+curl -fsS \
+  -H "${AUTH_HEADER}" \
+  "${API}/assistant/models" \
+  | python3 -m json.tool
+```
 
 Generate one assistant response:
 

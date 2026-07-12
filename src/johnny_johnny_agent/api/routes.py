@@ -10,6 +10,8 @@ from fastapi import APIRouter, Body, Depends, Query, Request, Response
 
 from johnny_johnny_agent.api.errors import ApiRequestError, BacklogDocumentError
 from johnny_johnny_agent.api.models import (
+    AssistantModelListResponse,
+    AssistantModelResponse,
     AssistantResponsePayload,
     AssistantResponseRequest,
     BacklogImportResponse,
@@ -227,6 +229,34 @@ def readiness(response: Response) -> ServiceReadinessResponse:
     )
 
 
+@router.get(
+    "/assistant/models",
+    response_model=AssistantModelListResponse,
+    dependencies=[REQUIRE_ASSISTANT_INVOKE],
+    tags=["assistant"],
+)
+def list_assistant_models(
+    generator: AssistantResponseGeneratorDependency,
+) -> AssistantModelListResponse:
+    """List the server-allowed model choices for assistant generation."""
+    models = generator.available_models()
+    if not models:
+        raise LanguageModelUnavailableError("No assistant models are configured.")
+
+    default_model = next((model.id for model in models if model.is_default), models[0].id)
+    return AssistantModelListResponse(
+        default_model=default_model,
+        models=[
+            AssistantModelResponse(
+                id=model.id,
+                label=model.label,
+                is_default=model.is_default,
+            )
+            for model in models
+        ],
+    )
+
+
 @router.post(
     "/assistant/responses",
     response_model=AssistantResponsePayload,
@@ -239,7 +269,7 @@ def generate_assistant_response(
 ) -> AssistantResponsePayload:
     """Generate one provider-neutral Johnny-Johnny assistant response."""
     response = generator.execute(
-        ApplicationAssistantResponseRequest(text=request.text)
+        ApplicationAssistantResponseRequest(text=request.text, model=request.model)
     )
     return AssistantResponsePayload(
         response_id=response.response_id,

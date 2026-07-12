@@ -30,6 +30,8 @@ spec:
           env:
             - name: OPENAI_MODEL
               value: "gpt-5.6"
+            - name: OPENAI_MODELS
+              value: "gpt-5.6"
             - name: AUTH0_DOMAIN
               value: "dev-ude3gljkecu7ylzt.us.auth0.com"
             - name: AUTH0_AUDIENCE
