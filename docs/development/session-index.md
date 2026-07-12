@@ -1,263 +1,209 @@
 # Session Index
 
-**Date:** July 10, 2026  
+**Date:** July 11, 2026  
 **Project Version:** 0.1.0  
-**Git Branch:** dev  
-**Completed Story:** `deploy-johnny-johnny-api-to-eks`  
-**Current Story:** None; deployment story completed and released  
-**Next Story:** `implement-assistant-response-endpoint`  
-**Following Story:** Minimal authenticated web UI  
-**Deferred Story:** Integrate proven deployment contract into StyxCD
+**Git Branch:** `dev`  
+**Completed Story:** `implement-assistant-response-endpoint`  
+**Current Story:** None; assistant endpoint story completed  
+**Next Recommended Story:** `update-johnny-johnny-ui-for-authenticated-agent-access`
 
 ## Session Summary
 
-The Johnny-Johnny Python API was deployed manually to EKS, secured with HTTPS and Auth0 OAuth 2.0, connected successfully to PostgreSQL, and then wrapped in a tested developer fast loop.
+The generated assistant-endpoint implementation was safely integrated into the canonical `johnny-johnny-agent` Git repository, tested, committed, deployed to EKS, authorized through Auth0, and validated with a live public OpenAI request.
 
-The work moved from a running but unready pod to a complete public deployment:
-
-```text
-Route 53
-→ HTTPS ALB
-→ Kubernetes Ingress
-→ ClusterIP Service
-→ EKS Pod
-→ FastAPI
-→ PostgreSQL
-```
-
-Runtime secrets are delivered through:
+The completed path is:
 
 ```text
-AWS Secrets Manager
-→ EKS Pod Identity
-→ Secrets Store CSI
-→ mounted files
-→ process environment
+Browser/service access token
+→ Auth0 validation and invoke:assistant authorization
+→ public Johnny-Johnny HTTPS endpoint
+→ EKS FastAPI service
+→ GenerateAssistantResponse
+→ LanguageModelProvider
+→ OpenAI provider adapter
+→ normalized assistant response
 ```
 
-The deployment automation was committed, merged to `main`, tagged, and development returned to `dev`. The exact tag name was not captured in the session.
+The full repository suite passed with `138 passed`. The public response returned generated text, `gpt-5.6-sol`, and token usage.
 
 ## Stories Completed
 
-### Deploy Johnny-Johnny API to EKS
+### `implement-assistant-response-endpoint`
 
-Completed and validated:
+Completed:
 
-- Docker image built for `linux/amd64`.
-- Image pushed to ECR.
-- EKS Pod Identity Agent installed.
-- Secrets Store CSI Driver and AWS provider installed.
-- Runtime IAM policy and role created.
-- Pod Identity association created.
-- `DATABASE_URL` and `GITHUB_TOKEN` projected from AWS Secrets Manager.
-- Deployment readiness passed.
-- ClusterIP Service created and validated.
-- Existing ALB and Ingress reused.
-- ACM certificate issued for MycroftAI and StyxCD apex/wildcard names.
-- Route 53 DNS validation completed.
-- HTTPS listener and HTTP redirect configured.
-- public liveness returned `200`.
-- protected call without token returned `401`.
-- Auth0 M2M token was validated.
-- authenticated backlog read returned `200`.
-- valid token missing reconciliation authority returned `403`.
-- fast-loop automation was created and successfully executed.
-- rollout polling race was found and fixed.
-- work was committed, merged, tagged, and returned to `dev`.
+- provider-neutral assistant request, response, and usage models;
+- `LanguageModelProvider` port;
+- `GenerateAssistantResponse` use case;
+- OpenAI Responses API adapter;
+- authenticated assistant route;
+- `invoke:assistant` permission enforcement;
+- controlled provider error mapping;
+- OpenAI configuration and secret handling;
+- unit and behavior tests;
+- AWS IAM update;
+- CSI/EKS secret projection;
+- fast-loop deployment;
+- Auth0 permission and M2M grant;
+- public authenticated generation acceptance test.
 
-## Engineering Artifacts Created During the Session
-
-Repository artifacts:
+## Engineering Artifacts Created
 
 ```text
-docs/deployment/eks/kubernetes/johnny-johnny-namespace.yml
-docs/deployment/eks/kubernetes/johnny-johnny-agent-service-account.yml
-docs/deployment/eks/kubernetes/johnny-johnny-agent-service.yml
-docs/deployment/eks/kubernetes/johnny-johnny-ingress.yml
-scripts/fast-loop.sh
-```
-
-Previously created deployment artifacts organized during this session:
-
-```text
-docs/deployment/eks/iam/johnny-johnny-pod-identity-trust-policy.json
-docs/deployment/eks/iam/johnny-johnny-secrets-policy.json
-docs/deployment/eks/kubernetes/johnny-johnny-agent-deployment.yml
-docs/deployment/eks/kubernetes/johnny-johnny-secret-provider-class.yml
-```
-
-Session-closure artifacts generated now:
-
-```text
-ADR-JOHNNY-JOHNNY-EKS-DEPLOYMENT.md
-EKS-DEPLOYMENT-FAST-LOOP.md
-ASSISTANT-RESPONSE-ENDPOINT-STORY.md
-BACKLOG-UPDATE-2026-07-10.md
-command-cheat-sheet-2026-07-10-234606.md
-session-index.md
-engineering-session-closure-report.md
+docs/development/assistant-response-endpoint-deployment-acceptance-2026-07-11.md
+docs/development/BACKLOG-UPDATE-2026-07-11.md
+docs/development/cookbooks/command-cheat-sheet-2026-07-11-030655.md
+docs/development/session-index.md
 ```
 
 ## Engineering Artifacts Updated
 
-- Engineering Session Closure process now requires a timestamped command cheat sheet.
-- The deployment manifest set became fully declarative.
-- The Service and ServiceAccount exports were cleaned of cluster-generated fields.
-- The Ingress now routes the public Johnny-Johnny hostname to the Python API and terminates HTTPS.
-- The fast loop now uses a generation-aware, exact-image rollout gate.
+The implementation already updated:
+
+```text
+README.md
+docs/api/assistant-responses.md
+docs/api/backlog-rest-api.md
+docs/architecture/ASSISTANT-ENDPOINT-EXTENSIBILITY.md
+docs/architecture/ASSISTANT-RESPONSE-ENDPOINT-STORY.md
+docs/architecture/EKS-DEPLOYMENT-FAST-LOOP.md
+docs/deployment/README.md
+docs/deployment/eks-fast-testing-loop.md
+docs/development/assistant-response-endpoint-implementation-summary-2026-07-11.md
+```
+
+The new deployment-acceptance artifact supersedes the implementation summary's former statement that external Auth0/AWS/EKS acceptance was pending.
+
+## Production Files Changed
+
+### Assistant capability and provider
+
+```text
+src/johnny_johnny_agent/capabilities/assistant/__init__.py
+src/johnny_johnny_agent/capabilities/assistant/models.py
+src/johnny_johnny_agent/capabilities/assistant/provider.py
+src/johnny_johnny_agent/capabilities/assistant/use_case.py
+src/johnny_johnny_agent/providers/openai_language_model.py
+```
+
+### API and configuration
+
+```text
+src/johnny_johnny_agent/config.py
+src/johnny_johnny_agent/api/app.py
+src/johnny_johnny_agent/api/errors.py
+src/johnny_johnny_agent/api/models.py
+src/johnny_johnny_agent/api/routes.py
+src/johnny_johnny_agent/api/security.py
+pyproject.toml
+uv.lock
+.env.example
+```
+
+### Tests
+
+```text
+tests/unit/test_assistant_response.py
+tests/unit/test_openai_configuration.py
+tests/unit/test_openai_language_model.py
+tests/behavior/test_backlog_rest_api.py
+```
+
+### Deployment
+
+```text
+docs/deployment/eks/iam/johnny-johnny-secrets-policy.json
+docs/deployment/eks/kubernetes/johnny-johnny-agent-deployment.yml
+docs/deployment/eks/kubernetes/johnny-johnny-secret-provider-class.yml
+scripts/fast-loop.sh
+```
 
 ## Architectural Decisions
 
-- The Python agent replaces the Java backend as the active backend.
-- The old Java and UI Deployments remain scaled to zero for now.
-- Reuse the existing ALB and Ingress instead of creating a temporary ALB.
-- Until the UI exists, `johnny-johnny.mycroftai.org/` routes to the Python agent.
-- When the UI exists, route `/` to the UI and `/api/v1` to the Python agent.
-- Use AWS Secrets Manager, EKS Pod Identity, and CSI-mounted secrets rather than Kubernetes Secrets.
-- Keep the public Johnny-Johnny API reachable over HTTPS for web, iPhone, and future webhook clients.
-- Keep OAuth bearer-token authorization separate from future GitHub webhook HMAC verification.
-- Treat the Bash fast loop as an executable deployment contract, not the final platform.
-- Defer StyxCD integration into a separate story.
-- Before the UI, implement one minimal provider-neutral assistant response endpoint.
-- Protect the assistant endpoint with a dedicated `invoke:assistant` scope.
-- Keep `OPENAI_API_KEY` server-side and AWS-managed.
-- Use a language-model provider port so later RAG work does not require changing the public endpoint.
+- The public endpoint represents the Johnny-Johnny assistant capability, not an OpenAI proxy.
+- OpenAI-specific types and failures remain inside the provider adapter.
+- Future RAG, memory, tools, prompt construction, and provider selection remain behind `GenerateAssistantResponse`.
+- AWS Secrets Manager is authoritative for runtime provider credentials.
+- The web UI must use an Auth0 SPA and Authorization Code Flow with PKCE rather than the M2M client.
+- The first chat transcript may be held locally for display, but conversation orchestration must remain a backend responsibility.
+- The existing fast loop remains the executable deployment contract until its proven behavior is integrated into StyxCD.
 
-## Bugs Found and Fixed
+## Bugs and Risks Avoided
 
-### Invalid `DATABASE_URL`
+### Destructive rsync preview
 
-The AWS secret contained the literal text `echo` before the PostgreSQL URL. The secret was safely replaced, the Deployment restarted, and readiness became healthy.
-
-### Rollout false-success race
-
-The first fast-loop poll could potentially pass while an old ready pod still satisfied readiness and the new pod was starting.
-
-The replacement gate now requires:
-
-- expected generation observed;
-- old pod removed;
-- exact final pod count;
-- every pod on the exact new image;
-- every pod ready;
-- zero unavailable replicas.
-
-### Incorrect project path
-
-An authenticated request using `johnny-johnny` returned `404`. The correct database identity is the URL-encoded provider project title:
+An initial dry run using `rsync --delete` showed that it would remove:
 
 ```text
-Johnny-Johnny Backlog Persistence Sandbox
+.env
+build/
 ```
 
-### AWS CLI table query shape
+No destructive copy was run. The actual copy excluded those paths and omitted deletion behavior.
 
-A certificate query mixed a scalar and nested rows, which `--output table` could not render. Separate queries were used.
+### Incorrect secret-authority assumption
 
-### Certificate wildcard depth
+The available local OpenAI key file was initially treated as a possible update source. This was corrected before mutation: the existing known-working AWS Secrets Manager value remained authoritative.
 
-`*.mycroftai.org` does not cover `api.johnny-johnny.mycroftai.org`. Reusing `johnny-johnny.mycroftai.org` avoided the nested-hostname problem.
+### Incomplete pod identity listing
 
-## Testing and Validation
+`list-pod-identity-associations` returned the association ID but not the role ARN in the selected output. `describe-pod-identity-association` was required to retrieve the role.
 
-- Full Python test suite passed through `uv run pytest` during the fast loop.
-- Kubernetes manifest directory passed client-side dry-run validation.
-- Internal Service routing returned healthy JSON.
-- Public HTTPS liveness and readiness passed.
-- Auth0 `whoami` returned the M2M subject and scopes.
-- Authenticated PostgreSQL-backed read passed.
-- Missing-token and missing-scope boundaries passed.
-- Complete fast loop passed after the rollout gate was strengthened.
+### Stale OAuth token scopes
+
+A previously issued token cannot gain a newly granted permission. A fresh token was obtained after granting `invoke:assistant`.
 
 ## Lessons Learned
 
-- A pod can be running while readiness correctly blocks traffic.
-- A Kubernetes Service forwards to selected Pod IPs and target ports; it does not redirect HTTP.
-- `kubectl get ingress` is not the authoritative source for actual ALB listeners.
-- ALB default listener action can be a fixed response while host rules route application traffic.
-- ACM may reuse one validation CNAME for an apex/wildcard pair.
-- `curl -f` is useful for success-only scripts but hides expected authorization response bodies.
-- Bash is excellent for proving an orchestration contract and poor as the long-term extensibility boundary.
-- The manually proven script provides concrete StyxCD use cases rather than theoretical requirements.
+- Dry-run file synchronization is essential before copying generated work into a canonical repository.
+- A generated implementation archive should never replace repository history or local runtime configuration.
+- Runtime cloud secrets should not be overwritten from local files without explicit evidence that the local value is authoritative.
+- OAuth permission configuration has two parts: define the API permission and grant it to the client/role.
+- The public response proved that the normalized boundary works independently of the raw provider schema.
+- A web UI is now the best next test harness for OAuth, assistant interaction, API errors, and eventual mobile interaction patterns.
 
 ## Outstanding Work
 
-### Immediate product work
-
-- Implement the assistant-response endpoint.
-- Add the OpenAI provider adapter and provider-neutral port.
-- Add `invoke:assistant` to Auth0.
-- Store `OPENAI_API_KEY` in AWS Secrets Manager.
-- Add the new key to the IAM policy and SecretProviderClass.
-- Add `OPENAI_MODEL` as non-secret deployment configuration.
-- Add tests and deploy with the fast loop.
-- Build the minimal web UI.
-- Continue toward the native iPhone controller and RAG.
-
-### Deployment cleanup and hardening
-
-- Decide whether to archive or delete `johnny-johnny-ingress-before-agent.yml`.
-- Retire the Java backend resources when no longer needed.
-- Replace or update the old UI when the new web client is ready.
-- Consider adding ShellCheck and behavior tests for `fast-loop.sh`.
-- Consider ECR lifecycle policy for timestamped images.
-- Consider rollback behavior and failed-rollout diagnostics.
-- Confirm the release tag name in project history if needed.
-- Review the temporary two-node `t3.small` development posture and cost.
-
-### Deferred platform work
-
-- Convert the proven deployment contract into StyxCD capabilities.
-- Keep Forge-specific automation and StyxCD code/configuration legally and technically separate.
+- Confirm the completed `dev` commit is present on `origin/dev` if not already verified.
+- Update the canonical backlog item to Done if that status was not already changed.
+- Begin the authenticated UI story after receiving the user's UI guidelines.
+- Configure an Auth0 SPA for the web UI with PKCE and appropriate user permissions.
+- Later add conversation persistence, RAG, source references, memory, tools, and the native iPhone controller.
+- Optionally narrow the IAM policy to the exact OpenAI secret ARN.
 
 ## Next Recommended Starting Point
 
-Create or move the `implement-assistant-response-endpoint` backlog item to In Progress.
+Inspect the existing `johnny-johnny-ui` before changing it:
 
-Then inspect the existing route, authentication, configuration, error-handling, and behavior-test structure before designing code changes.
+```text
+framework and package configuration
+existing routes and components
+current deployment path
+current API client behavior
+existing Auth0 or authentication code
+environment-variable conventions
+styling and responsive layout
+tests
+```
+
+Then convert the user's UI guidelines into a focused story and acceptance criteria before coding.
 
 ## Files Likely Needed Next Session
 
 ```text
-ASSISTANT-RESPONSE-ENDPOINT-STORY.md
-BACKLOG-UPDATE-2026-07-10.md
-pyproject.toml
-src/johnny_johnny_agent/config.py
-src/johnny_johnny_agent/api/routes.py
-existing authentication and authorization modules
-existing API error models and handlers
-tests/behavior/
-docs/deployment/eks/kubernetes/johnny-johnny-agent-deployment.yml
-docs/deployment/eks/kubernetes/johnny-johnny-secret-provider-class.yml
-docs/deployment/eks/iam/johnny-johnny-secrets-policy.json
-scripts/fast-loop.sh
+docs/development/session-index.md
+docs/development/WORKING_AGREEMENT.md
+docs/development/ENGINEERING_PRINCIPLES.md
+docs/api/assistant-responses.md
+docs/development/assistant-response-endpoint-deployment-acceptance-2026-07-11.md
+johnny-johnny-ui/package.json
+johnny-johnny-ui source tree
+johnny-johnny-ui environment examples
+johnny-johnny-ui deployment manifests or Amplify configuration
+existing Auth0 tenant/application settings
+existing Johnny-Johnny API client code
 ```
 
 ## Immediate First Task
 
-Inspect the implementation files for:
-
-```text
-API routing
-scope enforcement
-dependency construction
-configuration loading
-error translation
-behavior-test conventions
-```
-
-Then design the provider-neutral assistant use case and OpenAI adapter before editing code.
-
-## Session Completion State
-
-The EKS deployment story is complete.
-
-The next engineering phase is:
-
-```text
-minimal assistant endpoint
-→ deploy through fast loop
-→ minimal web UI
-→ RAG capability
-→ native iPhone controller
-```
+Receive the user's UI guidelines, inspect the `johnny-johnny-ui` project, and define the smallest authenticated UI story that exercises both the assistant endpoint and the existing agent API without moving orchestration responsibilities into the browser.
