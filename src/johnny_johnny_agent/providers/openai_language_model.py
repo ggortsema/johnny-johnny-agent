@@ -38,10 +38,10 @@ class OpenAILanguageModelProvider:
     """Translate OpenAI Responses API data into Johnny-Johnny models."""
 
     def __init__(
-        self,
-        settings: OpenAISettings,
-        *,
-        client: _OpenAIClient | None = None,
+            self,
+            settings: OpenAISettings,
+            *,
+            client: _OpenAIClient | None = None,
     ) -> None:
         self._default_model = settings.model
         self._models = settings.models
@@ -63,12 +63,16 @@ class OpenAILanguageModelProvider:
         if selected_model not in self._models:
             raise UnsupportedLanguageModelError(selected_model, self._models)
 
+        provider_request: dict[str, Any] = {
+            "model": selected_model,
+            "input": request.text,
+            "store": False,
+        }
+        if request.instructions is not None:
+            provider_request["instructions"] = request.instructions
+
         try:
-            response = self._client.responses.create(
-                model=selected_model,
-                input=request.text,
-                store=False,
-            )
+            response = self._client.responses.create(**provider_request)
         except (openai.AuthenticationError, openai.PermissionDeniedError) as exc:
             raise LanguageModelAuthenticationError(
                 "The language-model provider rejected the configured credential."
@@ -95,7 +99,11 @@ class OpenAILanguageModelProvider:
             ) from exc
 
         response_id = _required_string(response, "id")
-        output_text = _required_string(response, "output_text", allow_whitespace=True)
+        output_text = _required_string(
+            response,
+            "output_text",
+            allow_whitespace=True,
+        )
         if not output_text.strip():
             raise LanguageModelInvalidResponseError(
                 "The language-model provider returned no generated text."
@@ -130,10 +138,10 @@ def _optional_string(source: Any, name: str) -> str | None:
 
 
 def _required_string(
-    source: Any,
-    name: str,
-    *,
-    allow_whitespace: bool = False,
+        source: Any,
+        name: str,
+        *,
+        allow_whitespace: bool = False,
 ) -> str:
     value = _value(source, name)
     if not isinstance(value, str):

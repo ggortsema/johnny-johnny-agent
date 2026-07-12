@@ -49,6 +49,24 @@ class OpenAISettings:
         object.__setattr__(self, "model", default_model)
         object.__setattr__(self, "models", tuple(normalized_models))
 
+@dataclass(frozen=True)
+class OpenAIEmbeddingSettings:
+    """Server-owned OpenAI embedding configuration."""
+
+    api_key: str = field(repr=False)
+    model: str
+    dimensions: int
+
+    def __post_init__(self) -> None:
+        model = self.model.strip()
+        if not model:
+            raise ValueError("OpenAI embedding model must not be blank.")
+        if self.dimensions <= 0:
+            raise ValueError(
+                "OpenAI embedding dimensions must be greater than zero."
+            )
+
+        object.__setattr__(self, "model", model)
 
 def resolve_database_url(explicit_database_url: str | None = None) -> str:
     """Resolve PostgreSQL connectivity without coupling to its network path."""
@@ -101,6 +119,15 @@ def resolve_openai_settings() -> OpenAISettings:
         models=configured_models,
     )
 
+def resolve_openai_embedding_settings() -> OpenAIEmbeddingSettings:
+    """Resolve OpenAI settings used to create semantic embeddings."""
+    return OpenAIEmbeddingSettings(
+        api_key=_required_environment_value("OPENAI_API_KEY"),
+        model=_required_environment_value("OPENAI_EMBEDDING_MODEL"),
+        dimensions=_positive_int_environment_value(
+            "OPENAI_EMBEDDING_DIMENSIONS"
+        ),
+    )
 
 def resolve_api_docs_enabled() -> bool:
     """Resolve whether Swagger UI, ReDoc, and the OpenAPI document are served."""
@@ -157,4 +184,16 @@ def _positive_float_environment_value(name: str, *, default: float) -> float:
         raise RuntimeError(f"{name} must be a number.") from exc
     if value <= 0:
         raise RuntimeError(f"{name} must be greater than zero.")
+    return value
+
+def _positive_int_environment_value(name: str) -> int:
+    raw = _required_environment_value(name)
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise RuntimeError(f"{name} must be an integer.") from exc
+
+    if value <= 0:
+        raise RuntimeError(f"{name} must be greater than zero.")
+
     return value

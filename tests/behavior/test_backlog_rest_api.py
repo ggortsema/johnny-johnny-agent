@@ -451,7 +451,7 @@ def test_assistant_response_validates_text_before_invoking_the_use_case(monkeypa
 
 
 def test_assistant_response_invokes_the_application_boundary_and_normalizes_output(
-    monkeypatch,
+        monkeypatch,
 ):
     class RecordingProvider:
         def __init__(self):
@@ -469,6 +469,15 @@ def test_assistant_response_invokes_the_application_boundary_and_normalizes_outp
 
         def generate(self, request):
             self.requests.append(request)
+
+            if len(self.requests) == 1:
+                return AssistantResponse(
+                    response_id="classification-123",
+                    text="general_chat",
+                    model=request.model or "configured-model",
+                    usage=TokenUsage(input_tokens=4, output_tokens=1),
+                )
+
             return AssistantResponse(
                 response_id="response-123",
                 text="The next priority is the UI story.",
@@ -492,19 +501,29 @@ def test_assistant_response_invokes_the_application_boundary_and_normalizes_outp
     )
 
     assert response.status_code == 200
-    assert provider.requests == [
-        AssistantResponseRequest(
-            text="What should we work on next?",
-            model="alternate-model",
-        )
-    ]
+    assert len(provider.requests) == 2
+
+    classification_request = provider.requests[0]
+    assert classification_request.text == "What should we work on next?"
+    assert classification_request.model == "alternate-model"
+    assert classification_request.instructions is not None
+    assert "general_chat" in classification_request.instructions
+    assert "backlog" in classification_request.instructions
+
+    assert provider.requests[1] == AssistantResponseRequest(
+        text="What should we work on next?",
+        model="alternate-model",
+    )
+
     assert response.json() == {
         "response_id": "response-123",
         "text": "The next priority is the UI story.",
         "model": "alternate-model",
-        "usage": {"input_tokens": 12, "output_tokens": 8},
+        "usage": {
+            "input_tokens": 16,
+            "output_tokens": 9,
+        },
     }
-
 
 def test_assistant_response_rejects_unconfigured_model_without_provider_call(
     monkeypatch,

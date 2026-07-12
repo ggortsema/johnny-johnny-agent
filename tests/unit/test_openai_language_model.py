@@ -271,3 +271,29 @@ def test_openai_adapter_translates_sdk_failures(
         _provider(_FakeResponses(failure=provider_error)).generate(
             AssistantResponseRequest(text="Hello")
         )
+
+def test_openai_adapter_passes_internal_instructions_separately():
+    responses = _FakeResponses(
+        result=SimpleNamespace(
+            id="resp_route",
+            output_text="general_chat",
+            model="configured-model",
+            usage=SimpleNamespace(input_tokens=8, output_tokens=1),
+        )
+    )
+
+    _provider(responses).generate(
+        AssistantResponseRequest(
+            text="What is the airspeed velocity of a laden swallow?",
+            instructions="Classify the request.",
+        )
+    )
+
+    assert responses.requests == [
+        {
+            "model": "configured-model",
+            "input": "What is the airspeed velocity of a laden swallow?",
+            "instructions": "Classify the request.",
+            "store": False,
+        }
+    ]

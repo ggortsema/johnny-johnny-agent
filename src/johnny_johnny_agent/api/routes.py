@@ -50,7 +50,8 @@ from johnny_johnny_agent.api.security import (
     require_scopes,
 )
 from johnny_johnny_agent.capabilities.assistant.models import (
-    AssistantResponseRequest as ApplicationAssistantResponseRequest,
+    AssistantInvocationRequest,
+    AssistantPrincipal,
 )
 from johnny_johnny_agent.capabilities.assistant.provider import (
     LanguageModelUnavailableError,
@@ -264,12 +265,21 @@ def list_assistant_models(
     tags=["assistant"],
 )
 def generate_assistant_response(
-    request: AssistantResponseRequest,
-    generator: AssistantResponseGeneratorDependency,
+        request: AssistantResponseRequest,
+        principal: AuthenticatedPrincipalDependency,
+        generator: AssistantResponseGeneratorDependency,
 ) -> AssistantResponsePayload:
-    """Generate one provider-neutral Johnny-Johnny assistant response."""
+    """Generate one authenticated Johnny-Johnny assistant response."""
     response = generator.execute(
-        ApplicationAssistantResponseRequest(text=request.text, model=request.model)
+        AssistantInvocationRequest(
+            text=request.text,
+            model=request.model,
+            principal=AssistantPrincipal(
+                subject=principal.subject,
+                scopes=principal.scopes,
+                client_id=principal.client_id,
+            ),
+        )
     )
     return AssistantResponsePayload(
         response_id=response.response_id,

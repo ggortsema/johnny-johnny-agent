@@ -1,282 +1,254 @@
 # Session Index
 
 **Date:** July 12, 2026  
-**Project:** Johnny-Johnny Native iPhone Voice Controller  
-**iOS App Version:** 1.0.0 baseline  
+**Project:** Johnny-Johnny Agent  
+**Project Version:** 0.1.0  
 **Git Branch:** `dev`  
-**Completed Story:** Native iPhone Voice Controller  
-**Next Story:** Guided pgvector + LangChain + LangGraph RAG and Safe Tool Execution  
-**Follow-on iPhone Story:** Automatically Send Voice Messages from Action-Button Invocation
+**Current Story:** Johnny-Johnny RAG and Tool-Execution Learning Story  
+**Current Phase:** Authenticated routing and semantic retrieval foundation  
+**Next Story:** Continue the current RAG story; do not begin a new story yet
 
 ## Session Summary
 
-The first native Johnny-Johnny iPhone application was opened in Xcode, connected to a dedicated GitHub repository, configured for Apple signing, installed on Grant's iPhone 17 Pro Max, connected to a dedicated Auth0 Native application, and validated against the live Johnny-Johnny backend.
+This session began with a conceptual walkthrough of how Johnny-Johnny will convert a natural-language backlog request into a safe canonical mutation.
 
-The end-to-end native path is working:
+The design was refined to account for Johnny-Johnny's broad future scope. A model-based router now classifies each authenticated message before any domain retrieval. General chat continues through the existing assistant path. Backlog requests enter a dedicated path and currently stop at a deterministic placeholder.
 
-```text
-Action Button / App Shortcut
-→ Johnny-Johnny launches
-→ native speech recognition
-→ authenticated assistant API
-→ model response
-→ displayed and spoken response
-```
-
-The app was validated on a physical iPhone 17 Pro Max. Auth0 Universal Login, user-delegated API access, model loading, voice capture, assistant responses, local app settings, and the **Talk to Johnny-Johnny** App Shortcut all worked.
-
-A first implementation of **Send on release** was also tested successfully for in-app push-to-talk. It does not yet complete the Action-button hands-free path because App Intents do not expose the physical Action-button release event to the application. That behavior has been split into a dedicated follow-on story based on silence completion.
-
-## Stories Completed
-
-### Native iPhone Voice Controller
-
-Completed and physically validated:
-
-- SwiftUI application opened and built in Xcode;
-- dedicated `johnny-johnny-ios` Git repository established;
-- Apple Developer Program agreement accepted;
-- automatic signing and provisioning configured;
-- physical iPhone registered and paired;
-- app installed on iPhone 17 Pro Max;
-- Auth0 Native application created;
-- Authorization Code Flow with PKCE validated;
-- user-delegated `invoke:assistant` access configured;
-- Auth0 SSO behavior validated;
-- authenticated model catalog loaded;
-- voice transcription validated;
-- assistant response display validated;
-- assistant spoken response path validated;
-- App Shortcut registered;
-- Action button assigned to **Talk to Johnny-Johnny**;
-- Action-button launch into listening mode validated.
-
-## Current Story State
-
-The native iPhone controller is operational and suitable as the client for the next RAG/tool-execution story.
-
-The checked-in repository baseline is:
+The session then built the semantic retrieval foundation:
 
 ```text
-3b3ad86 initial build of jj
+canonical backlog item
+→ deterministic retrieval document
+→ SHA-256 source hash
+→ OpenAI embedding
+→ PostgreSQL pgvector row
+→ refresh decision
 ```
 
-Development is on:
+The pgvector table was created successfully. A real OpenAI embedding call returned a validated 1,536-value vector. Repository and refresh behavior were proven with focused tests.
 
-```text
-dev
-```
+The session ended before the first real canonical backlog item was persisted through the refresh use case.
 
-The optional in-app **Send on release** change was reapplied after troubleshooting and worked when tested from inside the app.
+## Story Progress
 
-## Next Recommended Story
+### Current Story: Johnny-Johnny RAG and Tool-Execution Learning Story
 
-Proceed with:
+Completed in this session:
 
-```text
-Johnny-Johnny RAG and Tool-Execution Learning Story
-```
+- authenticated principal propagation;
+- provider-boundary identity sanitization;
+- model-based assistant route classification;
+- live general-chat and backlog-route verification;
+- deterministic backlog retrieval documents;
+- source hashing;
+- embedding configuration;
+- provider-neutral embedding interface;
+- OpenAI embedding adapter;
+- real embedding generation;
+- pgvector table migration;
+- embedding repository;
+- embedding refresh decision use case.
 
-The next story is a guided learning implementation using:
+Not yet completed:
 
-- PostgreSQL;
-- pgvector;
-- LangChain;
-- LangGraph;
-- OpenAI embeddings and language models;
-- the existing authenticated assistant endpoint;
-- the existing canonical backlog mutation capability;
-- explicit human confirmation before mutation.
-
-The first supported AI tool will update one existing backlog item's status and optionally append one comment through the existing canonical mutation and GitHub synchronization path.
-
-## Follow-on iPhone Story
-
-A durable story was created for hands-free completion:
-
-```text
-Automatically Send Voice Messages from Action-Button Invocation
-```
-
-The Action button launches an App Intent but does not provide a physical button-release event to the app. Therefore the correct hands-free behavior is:
-
-```text
-Action button launches Johnny-Johnny
-→ listening begins
-→ silence is detected
-→ recognition finalizes
-→ non-empty transcript sends automatically
-```
+- full-suite verification after the final refresh changes;
+- real embedding persistence through the application use case;
+- similarity search;
+- bulk backlog ingestion;
+- canonical candidate reload;
+- structured mutation interpretation;
+- confirmation persistence;
+- LangChain integration;
+- LangGraph orchestration;
+- confirmed mutation execution.
 
 ## Engineering Artifacts Created
 
-```text
-docs/development/johnny-johnny-native-iphone-deployment-acceptance-2026-07-12.md
-docs/development/johnny-johnny-action-button-auto-send-story.md
-docs/development/BACKLOG-UPDATE-2026-07-12-native-iphone.md
-docs/development/cookbooks/command-cheat-sheet-2026-07-12-044500.md
-docs/development/session-index.md
-```
+- `ADR-assistant-routing-and-semantic-retrieval-2026-07-12.md`
+- `semantic-retrieval-database-design-2026-07-12.md`
+- `BACKLOG-UPDATE-2026-07-12-rag-foundations.md`
+- `command-cheat-sheet-2026-07-12-182916.md`
+- `session-index.md`
 
-## Engineering Artifacts Reviewed — No Update Required
+## Engineering Artifacts Updated in the Repository
 
-### ADRs
-
-Reviewed. No new ADR is required. The session implemented previously agreed architecture rather than introducing a new system-wide architecture decision.
-
-### Architecture Documentation
-
-Reviewed. The deployment acceptance document captures the validated native-client architecture and boundaries. No broader architecture document requires amendment.
-
-### Specifications
-
-Reviewed. The native iPhone story remains the governing specification. A separate follow-on specification was created for Action-button automatic send after silence.
-
-### Database Documentation
-
-Reviewed. No database schema or persistence behavior changed during this session.
-
-### Engineering Principles
-
-Reviewed. No new engineering principle was introduced. The implementation continues to preserve provider boundaries, server-owned orchestration, and explicit behavior.
-
-### Working Agreement
-
-Reviewed. No workflow amendment is required.
-
-### AI Collaboration Documentation
-
-Reviewed. The next RAG story already establishes the guided, one-concept-at-a-time teaching workflow.
-
-### Behavior Tests
-
-Reviewed. No repository behavior tests were added during this physical-device deployment session. The follow-on Action-button auto-send story explicitly requires tests for silence completion, empty transcripts, late final recognition, and API failure.
-
-## Files Changed During the Session
-
-Primary repository files configured or changed:
+Expected changed or added files based on the session work:
 
 ```text
-JohnnyJohnny/Resources/Auth0.plist
-JohnnyJohnny/Services/AppSettings.swift
-JohnnyJohnny/ViewModels/AssistantViewModel.swift
-JohnnyJohnny/Views/AssistantView.swift
-JohnnyJohnny/Views/SettingsView.swift
+.env
+.env.example
+docs/database/postgres/003_create_backlog_item_embeddings.sql
+docs/deployment/eks/kubernetes/johnny-johnny-agent-deployment.yml
+
+src/johnny_johnny_agent/api/routes.py
+src/johnny_johnny_agent/capabilities/assistant/models.py
+src/johnny_johnny_agent/capabilities/assistant/use_case.py
+src/johnny_johnny_agent/config.py
+src/johnny_johnny_agent/providers/openai_language_model.py
+
+src/johnny_johnny_agent/capabilities/backlog_retrieval/__init__.py
+src/johnny_johnny_agent/capabilities/backlog_retrieval/documents.py
+src/johnny_johnny_agent/capabilities/backlog_retrieval/postgres.py
+src/johnny_johnny_agent/capabilities/backlog_retrieval/refresh.py
+
+src/johnny_johnny_agent/capabilities/semantic_retrieval/__init__.py
+src/johnny_johnny_agent/capabilities/semantic_retrieval/embeddings.py
+src/johnny_johnny_agent/providers/openai_embeddings.py
+
+tests/behavior/test_backlog_rest_api.py
+tests/unit/test_assistant_response.py
+tests/unit/test_openai_language_model.py
+tests/unit/test_backlog_retrieval_documents.py
+tests/unit/test_openai_embedding_configuration.py
+tests/unit/test_openai_embeddings.py
+tests/unit/test_backlog_retrieval_postgres.py
+tests/unit/test_backlog_embedding_refresh.py
 ```
 
-Xcode also created or updated local signing, provisioning, package-resolution, indexing, and derived build state outside the logical application behavior.
+The next session should verify this list against the new project archive and `git status`.
 
-## Architectural Decisions Confirmed
+## Architectural Decisions
 
-- The iPhone app is a separate deployable Git repository beside the agent and web UI repositories.
-- Xcode opens and edits the repository files in place; it does not copy the project.
-- The native app uses its own Auth0 **Native** application.
-- The native app uses Authorization Code Flow with PKCE.
-- No client secret is stored in the app.
-- API access is user-delegated, not machine-to-machine.
-- Existing Auth0 SSO may eliminate a repeated username/password prompt.
-- The Action button invokes an App Shortcut/App Intent.
-- Physical Action-button release is not available to the app as a continuous input event.
-- Hands-free automatic send should therefore use silence completion and final speech-recognition output.
-- The backend remains responsible for assistant orchestration, model policy, RAG, tools, authorization, and mutation execution.
+- Route before retrieval for Johnny-Johnny.
+- Use a model classifier, not Python keyword matching.
+- Retain authenticated subject and scopes inside orchestration.
+- Do not send identity or scopes to OpenAI.
+- Invoke internal application use cases directly rather than calling Johnny-Johnny's REST API from itself.
+- Reserve `conversation_id` now; defer full chat memory.
+- Use domain-specific retrieval tables with a shared embedding interface.
+- Store one current embedding per backlog item.
+- Embed both epics and issues.
+- Include parent epic title and canonical ID in issue documents.
+- Exclude status and comments initially.
+- Reload operational state from canonical tables after retrieval.
+- Use `text-embedding-3-small` at 1,536 dimensions.
+- Keep pgvector extension objects in `public`.
+- Keep application tables in `johnny_johnny`.
+- Use exact vector search initially; defer HNSW/IVFFlat.
+- Refresh only when source hash, model, or dimensions differ.
+
+## Database Decisions
+
+- Created `johnny_johnny.backlog_item_embeddings`.
+- `backlog_item_id` is the primary key and foreign key.
+- `ON DELETE CASCADE` removes derived embedding rows.
+- `source_hash` must be a lowercase 64-character SHA-256 hex value.
+- `embedding_dimensions` is constrained to 1,536.
+- `embedding` uses `public.vector(1536)`.
+- No approximate vector index was added.
 
 ## Bugs Discovered and Resolved
 
-### SwiftUI Section initializer compilation error
+### Wrong `models.py` edited
 
-`SettingsView.swift` initially used a `Section` form that Xcode resolved against the wrong initializer. The section declarations were replaced with explicit content/header/footer closures.
+The assistant contracts were initially pasted into `api/models.py` instead of `capabilities/assistant/models.py`.
 
-### Auth0 client not authorized
+The on-disk path check exposed the mismatch.
 
-The dedicated Auth0 Native application initially lacked user-delegated API access. Grant enabled user-delegated access with the `invoke:assistant` permission.
+### Assistant provider method misplaced
 
-### Device pairing and symbol preparation
+A method replacement left `generate()` outside `OpenAILanguageModelProvider`.
 
-The iPhone was initially unavailable while pairing and registration were incomplete. Reconnecting after registration allowed Xcode to copy symbols and complete device preparation.
+A whole-file replacement restored the class structure.
 
-### White-screen launch and stuck process
+### Duplicate pasted provider content
 
-After reinstall/build cycles, the app sometimes remained on a white screen. Device logs showed that an application process already existed instead of a normal crash. Rebooting the iPhone cleared the stuck process and restored normal operation.
+`openai_embeddings.py` temporarily contained duplicate content, placing a `from __future__` import below existing code.
 
-### Slow debug interaction
+The file was fully replaced.
 
-Settings toggles briefly responded slowly while the app was attached to Xcode and completing first-run debugger work. Performance normalized when running independently from Xcode.
+### Circular self-import
 
-### Send-on-release scope mismatch
+Provider-specific imports were accidentally placed in the provider-neutral `semantic_retrieval/embeddings.py`, causing a circular import.
 
-The first implementation worked for the in-app push-to-talk gesture but not for Action-button invocation. This was not a simple defect in the toggle; it exposed a separate hands-free workflow requiring silence completion.
+The interface file was restored to provider-neutral contracts only.
+
+### Kubernetes YAML editor folding confusion
+
+IntelliJ visually folded `name` and `value` mappings, making correct YAML appear similar to invalid shorthand. The actual manifest uses standard Kubernetes environment mappings.
 
 ## Lessons Learned
 
-- Put the iOS app in its own repository before ongoing development.
-- Xcode source control and terminal Git operate on the same files and repository.
-- Physical-device deployment includes Apple agreement, device registration, pairing, Developer Mode, provisioning, and symbol preparation.
-- A public Auth0 Client ID is configuration, not a secret.
-- Auth0 Native applications need user-delegated API authorization for signed-in user flows.
-- Auth0 SSO can make a native login appear passwordless when a browser session already exists.
-- Xcode and device-console warnings contain large amounts of unrelated operating-system noise.
-- Filter logs by application process or bundle identifier before diagnosing.
-- A white screen can be a stuck iOS process rather than an application crash.
-- The Action button invokes a shortcut; it does not behave like an app-owned press-and-release control.
-- Device-bound interaction behavior must be tested on the physical device, even when source parsing and compilation pass.
+- Verify the exact file path when multiple modules have the same filename.
+- Prefer complete file replacement when structural indentation is uncertain.
+- Run focused import or unit tests after every interface change.
+- Keep authentication context separate from model-provider payloads.
+- Vector search always returns nearest rows; route unrelated messages before retrieval.
+- Embeddings represent searchable meaning, not canonical truth.
+- Stable descriptive fields reduce re-embedding churn.
+- Exact structured filters can be combined with vector ranking later.
+- The vector index is inexpensive and rebuildable at the current corpus size.
+
+## Test Checkpoint
+
+Verified:
+
+```text
+151 passed
+```
+
+This full-suite checkpoint occurred before the final embedding repository and refresh work.
+
+All subsequent focused tests passed.
+
+Not yet verified:
+
+```text
+uv run pytest
+```
+
+after the final refresh-interface changes.
 
 ## Outstanding Work
 
-### Native iPhone follow-on
-
-- rename **Send on release** to a broader setting such as **Automatically send voice messages**;
-- use silence completion for Action-button/App Shortcut invocation;
-- wait for the final speech-recognition result;
-- automatically send only non-empty transcripts;
-- preserve review-before-send when automatic send is disabled;
-- add behavior tests;
-- commit and tag the proven iPhone state.
-
-### Native app validation
-
-- validate token refresh over time;
-- validate logout and forced reauthentication;
-- validate Bluetooth input/output routing;
-- validate VoiceOver and larger Dynamic Type sizes;
-- validate recovery from offline and API failure states;
-- validate repeated Action-button invocations;
-- decide whether to distribute later through TestFlight.
-
-### RAG and safe tool execution
-
-- inspect current assistant and backlog mutation capabilities;
-- verify pgvector;
-- choose embedding model and dimension;
-- define retrieval documents;
-- persist and query embeddings;
-- add LangChain retrieval;
-- add LangGraph state and confirmation interruption;
-- execute confirmed mutations through the existing application use case.
+- run the full test suite;
+- inspect `git status`;
+- persist one real canonical backlog item embedding;
+- verify the row through PostgreSQL;
+- add exact similarity search;
+- create controlled bulk refresh/ingestion;
+- evaluate known natural-language prompts;
+- connect backlog routing to retrieval;
+- reload canonical candidate records;
+- add structured action interpretation;
+- add conversation and workflow persistence;
+- add explicit confirmation;
+- authorize proposed actions using principal scopes;
+- exercise the existing mutation use case;
+- normalize partial provider-sync failures;
+- add LangChain;
+- add LangGraph.
 
 ## Next Recommended Starting Point
 
-Begin the RAG story exactly as written: inspect the current authenticated assistant use case and the existing targeted backlog status/comment mutation capability before selecting libraries or changing schema.
+Use the newly uploaded current project archive as the source of truth.
+
+First run:
+
+```bash
+uv run pytest
+```
+
+Do not proceed until the complete suite passes.
+
+Then wire one known canonical issue and its parent epic into `RefreshBacklogItemEmbedding`, persist one real row, and read it back.
 
 ## Files Likely Needed Next Session
 
 ```text
-johnny-johnny-agent repository on branch dev
-johnny-johnny-rag-tool-execution-story.md
+current johnny-johnny-agent archive from branch dev
 docs/development/WORKING_AGREEMENT.md
 docs/development/ENGINEERING_PRINCIPLES.md
-docs/development/session-index.md
-johnny-johnny-ios repository for later end-to-end validation
-johnny-johnny-ui repository for later confirmation UI validation
+johnny-johnny-rag-tool-execution-story.md
+ADR-assistant-routing-and-semantic-retrieval-2026-07-12.md
+semantic-retrieval-database-design-2026-07-12.md
+BACKLOG-UPDATE-2026-07-12-rag-foundations.md
+docs/database/postgres/003_create_backlog_item_embeddings.sql
 ```
 
 ## Immediate First Task
 
-In the agent repository, locate and inspect:
-
-1. the authenticated assistant request use case;
-2. the canonical backlog item read capability;
-3. the existing status/comment mutation use case;
-4. the provider synchronization boundary;
-5. the current PostgreSQL connection and migration structure.
-
-Do not implement LangChain or LangGraph until these reuse boundaries are understood.
+1. Extract and inspect the new archive.
+2. Run the full suite.
+3. Compare actual changed files with this index.
+4. Persist one real backlog-item embedding through the refresh use case.
